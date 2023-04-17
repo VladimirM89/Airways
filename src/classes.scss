@@ -1,0 +1,56 @@
+@mixin btn-hover-effect() {
+  &:hover {
+    transform: translateY(-.2rem);
+    box-shadow: 2px 2px 3px rgba(29, 29, 29, 0.2);
+  }
+  &:active {
+    box-shadow: -1px -1px 3px rgba(29, 29, 29, 0.2);
+  }
+}
+
+.wrapper {
+  max-width: 120rem;
+  padding: 0 2rem;
+  margin: 2rem auto;
+}
+
+.title {
+  color: var(--primary-color);
+}
+
+.link {
+  color: var(--secondary-color);
+}
+
+.primary-btn {
+  @include btn-hover-effect();
+  background-color: var(--primary-color);
+  color: var(--contrast-color);
+}
+
+.secondary-btn {
+  @include btn-hover-effect();
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);  
+}
+
+.ghost-btn {
+  @include btn-hover-effect();
+  background-color: transparent;
+  border: none;
+  color: var(--primary-color);
+}
+
+.highlight-btn {
+  @include btn-hover-effect();
+  color: var(--contrast-color);
+  border: 1px solid var(--primary-color);
+  background: linear-gradient(108.75deg, #0090BD 59.91%, #073590 95.36%);
+}
+
+.error {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--error-color);
+}
