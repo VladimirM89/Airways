@@ -8,7 +8,6 @@
   color: var(--main-color);
 }
 
-
 * {
   box-sizing: border-box;
 }
@@ -61,6 +60,7 @@ label {
   border: none;
   outline: none;
   transition: all .3s;
+  width: fit-content;
   
   &:hover {
     cursor: pointer;

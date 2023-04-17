@@ -49,8 +49,12 @@
   background: linear-gradient(108.75deg, #0090BD 59.91%, #073590 95.36%);
 }
 
-.error {
+.validation {
   font-size: 1.2rem;
   line-height: 1.6rem;
-  color: var(--error-color);
+  color: var(--auxiliary-color);
+
+  .error-message {
+    color: var(--error-color);
+  }
 }
