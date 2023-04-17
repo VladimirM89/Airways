@@ -1,0 +1,56 @@
+.breadcrumbs-list {
+  display: flex;
+  gap: 10rem
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    background-color: #242424;
+    width: 8rem;
+    margin-left: calc(100% + 15px);
+    top: 50%;
+  }
+
+  &:last-child {
+    &::after {
+      content: none;
+    }
+  }
+}
+
+.icon {
+  display: inline-flex;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  background-image: url(../../../../../../assets/step-bg.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.icon-step {
+  display: inline-flex;
+  align-items: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.active {
+  background-image: url(../../../../../../assets/step-active.svg);
+}
+
+.done {
+  background-image: url(../../../../../../assets/step-done.svg);
+}
+

@@ -1,0 +1,16 @@
+<ol class="breadcrumbs-list">
+  <li class="breadcrumb" clas="" *ngFor="let breadcrumb of breadcrumbs, let i = index">
+    <span
+      class="icon"
+      [ngClass]="{'active': breadcrumb.isActive, 'done': breadcrumb.isDone}">
+        <span
+          class="icon-step"
+          *ngIf="!breadcrumb.isActive && !breadcrumb.isDone">
+            {{i + 1}}
+        </span>
+    </span>
+    <span>
+      {{ breadcrumb.label }}
+    </span>
+  </li>
+</ol>
