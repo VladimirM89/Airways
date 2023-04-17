@@ -1,6 +1,7 @@
 .breadcrumbs-list {
   display: flex;
-  gap: 10rem
+  gap: 10rem;
+  color: var(--auxiliary-color);
 }
 
 .breadcrumb {
@@ -13,9 +14,9 @@
     content: '';
     position: absolute;
     height: 2px;
-    background-color: #242424;
+    background-color: var(--auxiliary-color);
     width: 8rem;
-    margin-left: calc(100% + 15px);
+    margin-left: calc(100% + 1.5rem);
     top: 50%;
   }
 
@@ -40,10 +41,10 @@
 .icon-step {
   display: inline-flex;
   align-items: center;
-  color: white;
-  font-size: 16px;
+  color: var(--contrast-color);
+  font-size: 1.2rem;
   font-weight: 600;
-  line-height: 16px;
+  line-height: 1.6rem;
 }
 
 .active {
