@@ -1,5 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+
+@mixin font-main($size: 1.6rem, $line-height: 2.4rem) {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: $size;
+  line-height: $line-height;
+  color: var(--main-color);
+}
+
 * {
   box-sizing: border-box;
+}
+
+html {
+  font-size: var(--base-size);
 }
 
 html,
@@ -34,31 +48,65 @@ ol {
 
 a {
   text-decoration: none;
+  color: var(--secondary-color);
+
   &:hover {
     cursor: pointer;
   }
 }
 
-button,
 input,
 label {
   border: none;
   outline: none;
+  transition: all .3s;
+  width: fit-content;
+  
   &:hover {
     cursor: pointer;
   }
 }
 
-.wrapper {
-  max-width: 120rem;
-  padding: 0 2rem;
-  margin: 0 auto;
+label {
+  color: var(--auxiliary-color);
 }
 
 body {
+  @include font-main();
+  background-color: var(--bg-main-color);
+}
+
+app-root {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   align-items: center;
-  background-color: var(--bg-main);
+}
+
+h1,
+h2,
+h3 {
+  @include font-main($size: 2.4rem, $line-height: 2.8rem);
+}
+
+button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  @include font-main();
+  transition: all .3s;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  border-radius: .5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+:disabled {
+  pointer-events: none;
 }

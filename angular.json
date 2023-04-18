@@ -31,7 +31,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/variables.scss"
+              "src/variables.scss",
+              "src/classes.scss"
             ],
             "scripts": []
           },
@@ -94,7 +95,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/variables.scss",
+              "src/classes.scss"
             ],
             "scripts": []
           }
