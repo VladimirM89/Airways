@@ -8,6 +8,8 @@ export interface FlightItem {
   departureTime: string;
   destinationTime: string;
   flightDuration: string;
-  price: number;
+  flightFare: number;
+  tax: number;
+  luggageFare: number;
   seats: number;
 }

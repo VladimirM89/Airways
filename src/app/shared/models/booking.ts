@@ -30,5 +30,6 @@ export interface Passenger {
   lastName: string;
   sex: string;
   dateOfBirth: string;
-  specialAssistance?: boolean;
+  specialAssistance: boolean;
+  luggage: boolean;
 }
