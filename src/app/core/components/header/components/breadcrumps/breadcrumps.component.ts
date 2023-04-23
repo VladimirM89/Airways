@@ -17,6 +17,8 @@ export class BreadcrumpsComponent implements OnInit {
 
   private activeIndex = -1;
 
+  public isBookingPage = false;
+
   public ngOnInit(): void {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -31,6 +33,7 @@ export class BreadcrumpsComponent implements OnInit {
     this.breadcrumbs.map((item, index) => {
       if (item.url === url) {
         this.activeIndex = index;
+        this.isBookingPage = true;
       }
     });
   }

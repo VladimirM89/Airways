@@ -1,0 +1,12 @@
+:host {
+  width: 100%;
+  display: flex;
+  background-color: var(--auxiliary-color-opacity02);
+}
+
+.wrapper-header {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+
+}

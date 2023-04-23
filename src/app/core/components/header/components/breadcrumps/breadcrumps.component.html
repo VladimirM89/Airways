@@ -1,16 +1,23 @@
-<ol class="breadcrumbs-list">
-  <li class="breadcrumb" clas="" *ngFor="let breadcrumb of breadcrumbs, let i = index">
-    <span
-      class="icon"
-      [ngClass]="{'active': breadcrumb.isActive, 'done': breadcrumb.isDone}">
-        <span
-          class="icon-step"
-          *ngIf="!breadcrumb.isActive && !breadcrumb.isDone">
-            {{i + 1}}
-        </span>
-    </span>
-    <span>
-      {{ breadcrumb.label }}
-    </span>
-  </li>
-</ol>
+<div *ngIf="isBookingPage; else mainPage">
+  <ul class="breadcrumbs-list">
+    <li class="breadcrumb" clas="" *ngFor="let breadcrumb of breadcrumbs, let i = index">
+      <span
+        class="icon"
+        [ngClass]="{'active': breadcrumb.isActive, 'done': breadcrumb.isDone}">
+          <span
+            class="icon-step"
+            *ngIf="!breadcrumb.isActive && !breadcrumb.isDone">
+              {{i + 1}}
+          </span>
+      </span>
+      <span>
+        {{ breadcrumb.label }}
+      </span>
+    </li>
+  </ul>
+</div>
+<ng-template #mainPage>
+  <div class="breadcrumps-plug">
+    Book flights
+  </div>
+</ng-template>

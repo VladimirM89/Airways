@@ -1,6 +1,11 @@
+:host {
+  width: 50rem;
+  display: block;
+}
+
 .breadcrumbs-list {
   display: flex;
-  gap: 10rem;
+  justify-content: space-between;
   color: var(--auxiliary-color);
 }
 
@@ -9,22 +14,7 @@
   align-items: center;
   gap: 1rem;
   position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    height: 2px;
-    background-color: var(--auxiliary-color);
-    width: 8rem;
-    margin-left: calc(100% + 1.5rem);
-    top: 50%;
-  }
-
-  &:last-child {
-    &::after {
-      content: none;
-    }
-  }
+  flex-grow: 0;
 }
 
 .icon {
@@ -53,5 +43,12 @@
 
 .done {
   background-image: url(../../../../../../assets/step-done.svg);
+}
+
+.breadcrumps-plug {
+  font-size: 1.6rem;
+  color: var(--contrast-color);
+  line-height: 2.4rem;
+  text-align: end;
 }
 
