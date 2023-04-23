@@ -7,7 +7,18 @@ import { Nullable } from 'src/app/shared/models/types';
   providedIn: 'root',
 })
 export class BookingService {
-  private bookingInformation: Nullable<BookingInfo> = null;
+  private bookingInformation: Nullable<BookingInfo> = {
+    roundTrip: true,
+    departureCity: 'Moscow',
+    destinationCity: 'Baku',
+    departureDate: '18.04.2023',
+    returnDate: '20.04.2023',
+    passengers: {
+      adults: 2,
+      child: 0,
+      infants: 0,
+    },
+  };
 
   private passangersInfomation: Nullable<PassangersInfo> = null;
 
