@@ -1,11 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookingRoutingModule } from './booking-routing.module';
 import { BookingComponent } from './booking.component';
+import { BookingSettingsPanelComponent } from './components/booking-settings-panel/booking-settings-panel.component';
 
 @NgModule({
-  declarations: [BookingComponent],
-  imports: [CommonModule, BookingRoutingModule],
+  declarations: [BookingComponent, BookingSettingsPanelComponent],
+  imports: [
+    CommonModule,
+    BookingRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class BookingModule {}
