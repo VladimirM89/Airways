@@ -12,3 +12,69 @@
   color: var(--contrast-color);
   font-weight: 500;
 }
+
+.auth-popup {
+  width: 53rem;
+  display: flex;
+  position: absolute;
+  left: -200vw;
+  top: 10rem;
+  z-index: 10;
+  display: flex;
+  gap: 1rem;
+}
+
+.close {
+  width: 1.4rem;
+  height: 1.4rem;
+  background-image: url(../../../../../../assets/close-icon.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+
+.active {
+  left: calc(50% - 53rem/2);
+}
+
+.overlay {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: inherit;
+}
+
+.popup-container {
+  max-width: 50rem;
+  padding: 3.2rem 2.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.2rem;
+  flex-grow: 1;
+  background-color: var(--accent-bg-color);
+  border-radius: 0.5rem;
+}
+
+.btns-container {
+  width: 100%;
+  display: flex;
+  border: 0.5px solid var(--auxiliary-color);
+  border-radius: 0.5rem;
+}
+
+.sign-btn {
+  flex-grow: 1;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.selected-form {
+  outline: 0.5px solid var(--auxiliary-color);
+  border-bottom: 2px solid var(--primary-color);
+  margin-bottom: -2px;
+  color: var(--primary-color);
+}

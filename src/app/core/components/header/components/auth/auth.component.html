@@ -1,7 +1,42 @@
-<button class="select-btn select-btn__medium">
+<div [ngClass]="{'overlay': isPopupActive}" (click)="togglePopup()"></div>
+
+<button class="select-btn select-btn__medium" (click)="togglePopup()">
   <span class="logo"></span>
   <span class="user-state-title" *ngIf="isUserLogin; else userLogout">Sign out</span>
   <ng-template #userLogout>
     <span class="user-state-title">Sign in</span>
   </ng-template>
 </button>
+
+<div class="auth-popup" [ngClass]="{'active': isPopupActive}">
+  <div class="popup-container">
+
+    <div class="btns-container">
+      <button
+        class="sign-btn"
+        (click)="toggleAuthForms()"
+        [ngClass]="{'selected-form': isLoginInSelect}"
+      >
+        Login in
+      </button>
+      <button
+        class="sign-btn"
+        (click)="toggleAuthForms()"
+        [ngClass]="{'selected-form': !isLoginInSelect}"
+      >
+        Sign up
+      </button>
+    </div>
+
+    <div *ngIf="isLoginInSelect; else signUpForm">
+      <app-login-form></app-login-form>
+    </div>
+    <ng-template #signUpForm>
+      <app-register-form></app-register-form>
+    </ng-template>
+
+  </div>
+  <div class="close" (click)="togglePopup()"></div>
+</div>
+
+

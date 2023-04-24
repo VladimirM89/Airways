@@ -28,6 +28,8 @@ export class ProfileComponent {
   public currencyFormats: ProfileFormat[] = [
     { value: 'EUR', viewValue: 'EUR' },
     { value: 'USD', viewValue: 'USD' },
+    { value: 'PLN', viewValue: 'PLN' },
+    { value: 'RUB', viewValue: 'RUB' },
   ];
 
   public currencyControl = new FormControl(this.currencyFormats[0].value);

@@ -8,6 +8,8 @@ import { LogoComponent } from './components/header/components/logo/logo.componen
 import { BreadcrumpsComponent } from './components/header/components/breadcrumps/breadcrumps.component';
 import { ProfileComponent } from './components/header/components/profile/profile.component';
 import { AuthComponent } from './components/header/components/auth/auth.component';
+import { LoginFormComponent } from './components/header/components/auth/components/login-form/login-form.component';
+import { RegisterFormComponent } from './components/header/components/auth/components/register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { AuthComponent } from './components/header/components/auth/auth.componen
     BreadcrumpsComponent,
     ProfileComponent,
     AuthComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
   ],
   exports: [
     HeaderComponent,
