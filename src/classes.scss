@@ -32,7 +32,7 @@
   @include btn-hover-effect();
   background-color: transparent;
   color: var(--primary-color);
-  border: 1px solid var(--primary-color);  
+  border: 1px solid var(--primary-color);
 }
 
 .ghost-btn {
@@ -40,6 +40,8 @@
   background-color: transparent;
   border: none;
   color: var(--primary-color);
+  display: flex;
+  gap: 2rem
 }
 
 .highlight-btn {

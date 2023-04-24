@@ -1,6 +1,7 @@
 :host {
-  width: 50rem;
+  max-width: 50rem;
   display: block;
+  flex-grow: 1;
 }
 
 .breadcrumbs-list {

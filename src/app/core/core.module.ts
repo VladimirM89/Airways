@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { SharedModule } from '../shared/shared.module';
 import { LogoComponent } from './components/header/components/logo/logo.component';
 import { BreadcrumpsComponent } from './components/header/components/breadcrumps/breadcrumps.component';
+import { ProfileComponent } from './components/header/components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { BreadcrumpsComponent } from './components/header/components/breadcrumps
     FooterComponent,
     LogoComponent,
     BreadcrumpsComponent,
+    ProfileComponent,
   ],
   exports: [
     HeaderComponent,
