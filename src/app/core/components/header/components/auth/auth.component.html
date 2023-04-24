@@ -28,6 +28,14 @@
       </button>
     </div>
 
+    <app-social-media-form></app-social-media-form>
+
+    <div class="separator-container">
+      <span class="separator-line"></span>
+      <span class="separator">or log in with your email</span>
+      <span class="separator-line"></span>
+    </div>
+
     <div *ngIf="isLoginInSelect; else signUpForm">
       <app-login-form></app-login-form>
     </div>

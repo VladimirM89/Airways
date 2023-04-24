@@ -10,6 +10,7 @@ import { ProfileComponent } from './components/header/components/profile/profile
 import { AuthComponent } from './components/header/components/auth/auth.component';
 import { LoginFormComponent } from './components/header/components/auth/components/login-form/login-form.component';
 import { RegisterFormComponent } from './components/header/components/auth/components/register-form/register-form.component';
+import { SocialMediaFormComponent } from './components/header/components/auth/components/social-media-form/social-media-form.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { RegisterFormComponent } from './components/header/components/auth/compo
     AuthComponent,
     LoginFormComponent,
     RegisterFormComponent,
+    SocialMediaFormComponent,
   ],
   exports: [
     HeaderComponent,
