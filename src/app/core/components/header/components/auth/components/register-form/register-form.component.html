@@ -1,1 +1,145 @@
-<p>register-form works!</p>
+<form class="form-container" [formGroup]="loginForm" (submit)="onSubmit()">
+
+  <mat-form-field class="input-container" [ngClass]="{'invalid': email!.invalid && email!.touched}">
+    <mat-label>Email</mat-label>
+    <input matInput
+      formControlName="email"
+      type="text">
+  </mat-form-field>
+
+  <div
+    *ngIf="email!.invalid && email!.touched"
+    class="validation">
+      <small class="error-message"
+        *ngIf="emailErrors?.['required']">
+          Please enter a login email.
+      </small>
+      <small class="error-message"
+      *ngIf="emailErrors?.['email']">
+        The login email is invalid.
+      </small>
+  </div>
+
+  <mat-form-field class="input-container" [ngClass]="{'invalid': pass!.invalid && pass!.touched}">
+    <mat-label>Password</mat-label>
+    <input matInput
+    autocomplete="on"
+    formControlName="pass"
+    [type]="hide ? 'password' : 'text'">
+    <button mat-icon-button matSuffix
+      type="button"
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+    >
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div
+    *ngIf="pass!.invalid && pass!.touched"
+    class="validation">
+      <small class="error-message"
+        *ngIf="passErrors?.['required']">
+          Please enter a password.
+      </small>
+      <div *ngIf="passErrors?.['checkStrongPassword']
+      && !passErrors?.['required']"
+    >
+      <small class="error-message">Your password isn't strong enough. Should contain:</small>
+      <ul class="errors-list">
+        <li *ngFor="let error of passErrors?.['checkStrongPassword']">
+          <small>{{error}}</small>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <mat-form-field class="input-container"
+    [ngClass]="{'invalid': firstName!.invalid && firstName!.touched}"
+  >
+    <mat-label>First name</mat-label>
+    <input matInput
+      formControlName="firstName"
+      type="text">
+    <mat-icon matSuffix
+      *ngIf="!(firstName!.invalid && firstName!.touched); else errorFirstNameIcon"
+      >error_outline
+    </mat-icon>
+    <ng-template #errorFirstNameIcon>
+      <mat-icon matSuffix class="invalid-icon">error</mat-icon>
+    </ng-template>
+
+  </mat-form-field>
+
+  <div
+  *ngIf="firstName!.invalid && firstName!.touched"
+  class="validation">
+    <small class="error-message"
+      *ngIf="firstNameErrors?.['required']">
+        Please enter first name.
+    </small>
+    <small class="error-message"
+    *ngIf="firstNameErrors?.['pattern']">
+      Invalid character.
+    </small>
+    <small class="error-message"
+    *ngIf="firstNameErrors?.['minlength']?.['requiredLength']">
+      The first name is too short (minimum 3 letters)
+    </small>
+  </div>
+
+  <mat-form-field class="input-container" [ngClass]="{'invalid': lastName!.invalid && lastName!.touched}">
+    <mat-label>Last name</mat-label>
+    <input matInput
+      formControlName="lastName"
+      type="text">
+      <mat-icon matSuffix
+      *ngIf="!(lastName!.invalid && lastName!.touched); else errorLastNameIcon"
+      >error_outline
+    </mat-icon>
+    <ng-template #errorLastNameIcon>
+      <mat-icon matSuffix class="invalid-icon">error</mat-icon>
+    </ng-template>
+  </mat-form-field>
+
+  <div
+  *ngIf="lastName!.invalid && lastName!.touched"
+  class="validation">
+    <small class="error-message"
+      *ngIf="lastNameErrors?.['required']">
+        Please enter last name.
+    </small>
+    <small class="error-message"
+    *ngIf="lastNameErrors?.['pattern']">
+      Invalid character.
+    </small>
+    <small class="error-message"
+    *ngIf="lastNameErrors?.['minlength']?.['requiredLength']">
+      The last name is too short.
+    </small>
+  </div>
+
+  <mat-form-field appearance="fill" class="input-container">
+    <mat-label>Date of birth</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="date">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <div *ngIf="date!.invalid && date!.touched" class="validation">
+    <small class="error-message"
+      *ngIf="dateErrors?.['required']">
+        Please enter a correct creation date
+    </small>
+    <small class="error-message"
+      *ngIf="dateErrors?.['isFutureDate'] && !dateErrors?.['required']">
+        The date is invalid. You choose future date.
+    </small>
+</div>
+
+  <button mat-button type="submit"
+    class="primary-btn"
+    [disabled]="loginForm.invalid"
+  >Login</button>
+</form>
+
