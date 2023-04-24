@@ -51,6 +51,25 @@
   background: linear-gradient(108.75deg, #0090BD 59.91%, #073590 95.36%);
 }
 
+.select-btn {
+  display: flex;
+  gap: 1rem;
+  width: 16.2rem;
+  height: 4rem;
+  padding: 0;
+  background: var(--neutral-color-90);
+  border: 0.5px solid var(--contrast-color);
+  border-radius: 0.4rem;
+
+  &__medium {
+    width: 11.5rem;
+  }
+
+  &__small {
+    width: 8rem;
+  }
+}
+
 .validation {
   font-size: 1.2rem;
   line-height: 1.6rem;

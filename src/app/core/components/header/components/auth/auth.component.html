@@ -1,0 +1,7 @@
+<button class="select-btn select-btn__medium">
+  <span class="logo"></span>
+  <span class="user-state-title" *ngIf="isUserLogin; else userLogout">Sign out</span>
+  <ng-template #userLogout>
+    <span class="user-state-title">Sign in</span>
+  </ng-template>
+</button>

@@ -3,19 +3,6 @@
   gap: 1.6rem;
 }
 
-.select-btn {
-  width: 16.2rem;
-  height: 4rem;
-  padding: 0;
-  background: var(--neutral-color-90);
-  border: 0.5px solid var(--contrast-color);
-  border-radius: 0.4rem;
-
-  &__small {
-    width: 8rem;
-  }
-}
-
 .option {
   display: flex;
   gap: 1rem;

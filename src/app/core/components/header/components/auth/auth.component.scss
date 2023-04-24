@@ -1,0 +1,14 @@
+.logo {
+  display: inline-flex;
+  width: 1.4rem;
+  height: 1.5rem;
+  background-image: url(../../../../../../assets/auth_logo.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.user-state-title {
+  color: var(--contrast-color);
+  font-weight: 500;
+}

@@ -3,7 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { Breadcrumbs } from 'src/app/constants/constants';
+import { Breadcrumbs } from 'src/app/core/components/header/components/breadcrumps/constants/breadcrumbs-constant';
 
 @Component({
   selector: 'app-breadcrumps',

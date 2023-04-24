@@ -1,5 +1,6 @@
-import { BreadcrumbsLabel, Paths } from '../types/enums';
-import { BreadcrumbInterface } from '../types/interfaces';
+import { Paths } from '../../../../../../types/enums';
+import { BreadcrumbInterface } from '../../../../../../types/interfaces';
+import { BreadcrumbsLabel } from './breadcrumbs-enum';
 
 export const Breadcrumbs: BreadcrumbInterface[] = [
   {
