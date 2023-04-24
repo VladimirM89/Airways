@@ -1,4 +1,4 @@
-<div [ngClass]="{'overlay': isPopupActive}" (click)="togglePopup()"></div>
+<div [ngClass]="{'overlay': authService.isPopupActive}" (click)="togglePopup()"></div>
 
 <button class="select-btn select-btn__medium" (click)="togglePopup()">
   <span class="logo"></span>
@@ -8,7 +8,7 @@
   </ng-template>
 </button>
 
-<div class="auth-popup" [ngClass]="{'active': isPopupActive}">
+<div class="auth-popup" [ngClass]="{'active': authService.isPopupActive}">
   <div class="popup-container">
 
     <div class="btns-container">
@@ -36,9 +36,9 @@
       <span class="separator-line"></span>
     </div>
 
-    <div *ngIf="isLoginInSelect; else signUpForm">
+    <ng-container *ngIf="isLoginInSelect; else signUpForm">
       <app-login-form></app-login-form>
-    </div>
+    </ng-container>
     <ng-template #signUpForm>
       <app-register-form></app-register-form>
     </ng-template>

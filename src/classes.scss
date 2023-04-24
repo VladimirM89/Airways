@@ -26,6 +26,10 @@
   @include btn-hover-effect();
   background-color: var(--primary-color);
   color: var(--contrast-color);
+
+  &:disabled {
+    background-color: var(--auxiliary-color);
+  }
 }
 
 .secondary-btn {
