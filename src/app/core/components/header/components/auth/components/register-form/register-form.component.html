@@ -135,7 +135,102 @@
       *ngIf="dateErrors?.['isFutureDate'] && !dateErrors?.['required']">
         The date is invalid. You choose future date.
     </small>
-</div>
+  </div>
+
+  <div class="gender-container">
+    <button
+      class="gender-btn gender-btn__left"
+      type="button"
+      (click)="toggleGender()"
+      [ngClass]="{'selected-gender': isMale}"
+    >
+      <span [ngClass]="{'select-icon': isMale}"></span>
+      Male
+    </button>
+    <button
+      class="gender-btn gender-btn__right"
+      type="button"
+      (click)="toggleGender()"
+      [ngClass]="{'selected-gender': !isMale}"
+    >
+      <span [ngClass]="{'select-icon': !isMale}"></span>
+      Female
+    </button>
+  </div>
+
+  <div class="number-container">
+
+    <div class="number-content">
+      <mat-form-field class="input-container" appearance="fill">
+        <mat-label>Country code</mat-label>
+        <input type="text"
+               matInput
+               formControlName="countryCode"
+               [matAutocomplete]="autoCode"
+        >
+        <mat-autocomplete #autoCode="matAutocomplete">
+          <mat-option
+            *ngFor="let country of countries | countryCodeFilter: countryCode!.value"
+            [value]="country.name + ' ' + '(' + country.dial_code + ')'"
+          >
+            {{country.name}} ({{country.dial_code}})
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div *ngIf="countryCode!.invalid && countryCode!.touched" class="validation">
+        <small class="error-message"
+          *ngIf="countryCodeErrors?.['required']">
+            Please select country
+        </small>
+        <small class="error-message"
+        *ngIf="countryCodeErrors?.['isIncorrectValue'] && !countryCodeErrors?.['required']">
+          Please enter in correct format
+      </small>
+      </div>
+
+    </div>
+
+    <div class="number-content">
+      <mat-form-field class="input-container" [ngClass]="{'invalid': lastName!.invalid && lastName!.touched}">
+        <mat-label>Mobile phone number</mat-label>
+        <input matInput
+          formControlName="number"
+          type="tel">
+      </mat-form-field>
+
+      <div *ngIf="number!.invalid && number!.touched" class="validation">
+        <small class="error-message"
+          *ngIf="numberErrors?.['required']">
+            Please enter phone number
+        </small>
+        <small class="error-message"
+        *ngIf="numberErrors?.['pattern']">
+          Please enter in correct format
+      </small>
+      </div>
+
+    </div>
+
+  </div>
+
+  <mat-form-field class="input-container" appearance="fill">
+    <mat-label>Citizenship</mat-label>
+    <input type="text"
+           matInput
+           formControlName="citizenship"
+           [matAutocomplete]="autoCountry"
+    >
+    <mat-icon matSuffix>arrow_drop_down</mat-icon>
+    <mat-autocomplete #autoCountry="matAutocomplete">
+      <mat-option
+        *ngFor="let countryName of countriesName | countryCodeFilter: citizenship!.value"
+        [value]="countryName.name"
+      >
+        {{countryName.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 
   <button mat-button type="submit"
     class="primary-btn"

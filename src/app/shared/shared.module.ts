@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [],
@@ -25,6 +26,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
   ],
   exports: [
     FormsModule,
@@ -36,6 +38,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
   ],
 })
 export class SharedModule {}

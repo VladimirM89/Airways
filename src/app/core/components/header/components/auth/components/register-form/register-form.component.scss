@@ -42,4 +42,55 @@
   .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-line-ripple::after {
     border-bottom: none;
   }
+
+  .gender-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 0.5px solid var(--auxiliary-color);
+    border-radius: 0.5rem;
+  }
+
+  .gender-btn {
+    flex-grow: 1;
+    font-size: 1.4rem;
+    font-weight: 500;
+
+    &__left {
+      border-radius: 0.5rem 0 0 0.5rem;
+    }
+
+    &__right {
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+  }
+
+  .selected-gender {
+    display: flex;
+    gap: 1.1rem;
+    outline: 0.5px solid var(--auxiliary-color);
+    color: var(--primary-color);
+    background-color: var(--contrast-bg-color);
+  }
+
+  .select-icon {
+    width: 1.2rem;
+    height: 0.9rem;
+    display: inline-flex;
+    background-image: url(../../../../../../../../assets/select_icon.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .number-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  .number-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 }

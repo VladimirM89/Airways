@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -8,9 +7,14 @@ import {
   Validators,
 } from '@angular/forms';
 import PasswordValidators from 'src/app/shared/validators/password.validators';
-import { NAME_REGEXP } from 'src/app/shared/constants/string-constants';
+import {
+  NAME_REGEXP,
+  PHONE_REGEXP,
+} from 'src/app/shared/constants/string-constants';
 import DateValidators from 'src/app/shared/validators/date.validators';
+import CountryCodeValidators from 'src/app/shared/validators/countryCode.validators';
 import { AuthService } from '../../services/auth.service';
+import { CountryCodes } from './constants/country-codes';
 
 @Component({
   selector: 'app-register-form',
@@ -21,6 +25,12 @@ export class RegisterFormComponent implements OnInit {
   public loginForm!: FormGroup;
 
   public hide = true;
+
+  public isMale = true;
+
+  public countries = CountryCodes;
+
+  public countriesName = CountryCodes;
 
   public constructor(private authService: AuthService) {}
 
@@ -48,6 +58,15 @@ export class RegisterFormComponent implements OnInit {
         Validators.required,
         DateValidators.isFutureDate,
       ]),
+      countryCode: new FormControl<string>('', [
+        Validators.required,
+        CountryCodeValidators.isIncorrectValue,
+      ]),
+      number: new FormControl<string>('', [
+        Validators.required,
+        Validators.pattern(PHONE_REGEXP),
+      ]),
+      citizenship: new FormControl<string>(''),
     });
   }
 
@@ -89,6 +108,30 @@ export class RegisterFormComponent implements OnInit {
 
   public get dateErrors(): ValidationErrors | null | undefined {
     return this.loginForm.get('date')?.errors;
+  }
+
+  public get countryCode(): AbstractControl<string> | null {
+    return this.loginForm.get('countryCode');
+  }
+
+  public get countryCodeErrors(): ValidationErrors | null | undefined {
+    return this.loginForm.get('countryCode')?.errors;
+  }
+
+  public get number(): AbstractControl<string> | null {
+    return this.loginForm.get('number');
+  }
+
+  public get numberErrors(): ValidationErrors | null | undefined {
+    return this.loginForm.get('number')?.errors;
+  }
+
+  public get citizenship(): AbstractControl<string> | null {
+    return this.loginForm.get('citizenship');
+  }
+
+  public toggleGender(): void {
+    this.isMale = !this.isMale;
   }
 
   public onSubmit(): void {
