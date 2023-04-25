@@ -9,6 +9,11 @@ const routes: Routes = [
     component: BookingComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'flights',
+        pathMatch: 'prefix',
+      },
+      {
         path: 'passengers',
         loadChildren: () =>
           import(
