@@ -67,6 +67,7 @@ export class RegisterFormComponent implements OnInit {
         Validators.pattern(PHONE_REGEXP),
       ]),
       citizenship: new FormControl<string>(''),
+      isAgree: new FormControl<boolean>(false, [Validators.requiredTrue]),
     });
   }
 

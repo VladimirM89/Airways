@@ -232,6 +232,15 @@
     </mat-autocomplete>
   </mat-form-field>
 
+  <div class="policy-container">
+    <mat-checkbox formControlName="isAgree"></mat-checkbox>
+    <p class="policy-text">
+      I agree to Airway's
+      <span class="highlight">Privacy Policy</span> and
+      <span class="highlight">Terms of Use</span>
+    </p>
+  </div>
+
   <button mat-button type="submit"
     class="primary-btn"
     [disabled]="loginForm.invalid"

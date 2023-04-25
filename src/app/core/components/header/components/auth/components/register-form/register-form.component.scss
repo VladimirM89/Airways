@@ -43,54 +43,78 @@
     border-bottom: none;
   }
 
-  .gender-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border: 0.5px solid var(--auxiliary-color);
-    border-radius: 0.5rem;
+  .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
+    border-color: var(--primary-color) !important;
+    background-color: var(--primary-color) !important;
   }
 
-  .gender-btn {
-    flex-grow: 1;
-    font-size: 1.4rem;
-    font-weight: 500;
+  .mat-mdc-checkbox.mat-accent .mdc-checkbox--selected~.mdc-checkbox__ripple {
+    background: var(--primary-color);
+  }
+}
 
-    &__left {
-      border-radius: 0.5rem 0 0 0.5rem;
-    }
+.gender-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 0.5px solid var(--auxiliary-color);
+  border-radius: 0.5rem;
+}
 
-    &__right {
-      border-radius: 0 0.5rem 0.5rem 0;
-    }
+.gender-btn {
+  flex-grow: 1;
+  font-size: 1.4rem;
+  font-weight: 500;
+
+  &__left {
+    border-radius: 0.5rem 0 0 0.5rem;
   }
 
-  .selected-gender {
-    display: flex;
-    gap: 1.1rem;
-    outline: 0.5px solid var(--auxiliary-color);
-    color: var(--primary-color);
-    background-color: var(--contrast-bg-color);
+  &__right {
+    border-radius: 0 0.5rem 0.5rem 0;
   }
+}
 
-  .select-icon {
-    width: 1.2rem;
-    height: 0.9rem;
-    display: inline-flex;
-    background-image: url(../../../../../../../../assets/select_icon.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
+.selected-gender {
+  display: flex;
+  gap: 1.1rem;
+  outline: 0.5px solid var(--auxiliary-color);
+  color: var(--primary-color);
+  background-color: var(--contrast-bg-color);
+}
 
-  .number-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.8rem;
-  }
+.select-icon {
+  width: 1.2rem;
+  height: 0.9rem;
+  display: inline-flex;
+  background-image: url(../../../../../../../../assets/select_icon.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 
-  .number-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
+.number-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.number-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.policy-container {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.policy-text {
+  margin: 0 !important;
+}
+
+.highlight {
+  color: var(--primary-color);
 }
