@@ -19,12 +19,22 @@
   border: 1px solid var(--auxiliary-color);
 }
 
-::ng-deep {
+.invalid {
+  border: 1px solid var(--error-color);
+}
+
+:host ::ng-deep {
   .mat-mdc-form-field-subscript-wrapper {
     display: none;
   }
 
   .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     background-color: var(--contrast-bg-color);
+  }
+
+  .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::after,
+  .mdc-text-field--filled .mdc-line-ripple::after,
+  .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+    display: none;
   }
 }

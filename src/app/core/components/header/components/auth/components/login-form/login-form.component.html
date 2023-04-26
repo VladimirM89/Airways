@@ -1,5 +1,5 @@
 <form class="form-container" [formGroup]="loginForm" (submit)="onSubmit()">
-  <mat-form-field class="input-container">
+  <mat-form-field class="input-container" [ngClass]="{'invalid': email!.invalid && email!.touched}">
     <mat-label>Email</mat-label>
     <input matInput
       formControlName="email"
@@ -17,7 +17,7 @@
         The login email is invalid
       </small>
   </div>
-  <mat-form-field class="input-container">
+  <mat-form-field class="input-container" [ngClass]="{'invalid': pass!.invalid && pass!.touched}">
     <mat-label>Password</mat-label>
     <input matInput
     autocomplete="on"
