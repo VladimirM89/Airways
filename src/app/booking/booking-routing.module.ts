@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BookingComponent } from './booking.component';
+import { Paths } from '../types/enums';
 
 const routes: Routes = [
   {
@@ -10,25 +11,25 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'flights',
-        pathMatch: 'prefix',
+        redirectTo: Paths.BOOKING_FLIGHTS,
+        pathMatch: 'full',
       },
       {
-        path: 'passengers',
+        path: Paths.BOOKING_PASSENGERS,
         loadChildren: () =>
           import(
             './pages/booking-process-page/booking-process-page.module'
           ).then(m => m.BookingProcessPageModule),
       },
       {
-        path: 'payment',
+        path: Paths.BOOKING_PAYMENT,
         loadChildren: () =>
           import('./pages/summary-page/summary-page.module').then(
             m => m.SummaryPageModule
           ),
       },
       {
-        path: 'flights',
+        path: Paths.BOOKING_FLIGHTS,
         loadChildren: () =>
           import(
             './pages/flight-selection-page/flight-selection-page.module'

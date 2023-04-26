@@ -1,5 +1,9 @@
 export enum Paths {
-  BOOKING_FLIGHTS = '/booking/flights',
-  BOOKING_PASSENGERS = '/booking/passengers',
-  BOOKING_PAYMENT = '/booking/payment',
+  BASE = '/',
+  BOOKING = 'booking',
+  BOOKING_FLIGHTS = 'flights',
+  BOOKING_PASSENGERS = 'passengers',
+  BOOKING_PAYMENT = 'payment',
+  ACCOUNT = 'account',
+  CART = 'cart',
 }

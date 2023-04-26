@@ -1,17 +1,17 @@
-/* eslint-disable array-callback-return */
 /* eslint-disable no-param-reassign */
-import { Component, OnInit } from '@angular/core';
-import { ChildActivationEnd, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+/* eslint-disable array-callback-return */
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Breadcrumbs } from 'src/app/core/components/header/components/breadcrumps/constants/breadcrumbs-constant';
+import { RouterService } from 'src/app/shared/services/router.service';
 
 @Component({
   selector: 'app-breadcrumps',
   templateUrl: './breadcrumps.component.html',
   styleUrls: ['./breadcrumps.component.scss'],
 })
-export class BreadcrumpsComponent implements OnInit {
-  public constructor(private router: Router) {}
+export class BreadcrumpsComponent implements OnInit, OnDestroy {
+  public constructor(private routerService: RouterService) {}
 
   public breadcrumbs = Breadcrumbs;
 
@@ -19,20 +19,14 @@ export class BreadcrumpsComponent implements OnInit {
 
   public isBookingPage = false;
 
+  private subBreadcrumbs!: Subscription;
+
   public ngOnInit(): void {
-    this.router.events
-      .pipe(
-        filter(
-          (event): event is NavigationEnd =>
-            event instanceof NavigationEnd ||
-            event instanceof ChildActivationEnd
-        )
-      )
-      .subscribe(event => {
-        const url = event.urlAfterRedirects;
-        this.setActiveIndex(url);
-        this.setBreadcrumbs();
-      });
+    this.routerService.checkUrl().subscribe(event => {
+      const url = event.urlAfterRedirects;
+      this.setActiveIndex(url);
+      this.setBreadcrumbs();
+    });
   }
 
   private setActiveIndex(url: string): void {
@@ -59,5 +53,9 @@ export class BreadcrumpsComponent implements OnInit {
         item.isActive = false;
       }
     });
+  }
+
+  public ngOnDestroy(): void {
+    this.subBreadcrumbs.unsubscribe();
   }
 }

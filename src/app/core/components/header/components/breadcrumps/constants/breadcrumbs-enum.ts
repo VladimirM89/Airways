@@ -3,3 +3,9 @@ export enum BreadcrumbsLabel {
   PASSENGERS = 'Passengers',
   PAYMENT = 'Review & Payment',
 }
+
+export enum BreadcrumbsPaths {
+  BOOKING_FLIGHTS = '/booking/flights',
+  BOOKING_PASSENGERS = '/booking/passengers',
+  BOOKING_PAYMENT = '/booking/payment',
+}

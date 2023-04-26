@@ -1,10 +1,10 @@
-<header class="wrapper wrapper-header">
-  <app-logo></app-logo>
-  <app-breadcrumps></app-breadcrumps>
-  <app-profile></app-profile>
-  <app-auth></app-auth>
-</header>
-
-
+<div class="header" [ngClass]="{'initial': !isMainPage}">
+  <header class="wrapper wrapper-header">
+    <app-logo></app-logo>
+    <app-breadcrumps></app-breadcrumps>
+    <app-profile></app-profile>
+    <app-auth></app-auth>
+  </header>
+</div>
 
 
