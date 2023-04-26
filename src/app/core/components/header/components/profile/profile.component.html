@@ -1,5 +1,5 @@
 <form [formGroup]="formDate" class="form-container">
-  <button class="select-btn">
+  <button class="select-btn select-btn__dark">
     <mat-select [formControl]="dateControl" name="date">
       <mat-option *ngFor="let dateFormat of dateFormats" [value]="dateFormat.value">
         {{dateFormat.viewValue}}
@@ -7,7 +7,7 @@
     </mat-select>
   </button>
 
-  <button class="select-btn select-btn__small">
+  <button class="select-btn select-btn__small select-btn__dark">
     <mat-select [formControl]="currencyControl" name="currency">
       <mat-option *ngFor="let currencyFormat of currencyFormats" [value]="currencyFormat.value"
       class="option">

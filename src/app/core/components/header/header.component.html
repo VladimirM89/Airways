@@ -2,8 +2,8 @@
   <header class="wrapper wrapper-header">
     <app-logo></app-logo>
     <app-breadcrumps></app-breadcrumps>
-    <app-profile></app-profile>
-    <app-auth></app-auth>
+    <app-profile [ngClass]="{'contrast': !isMainPage}"></app-profile>
+    <app-auth [ngClass]="{'contrast': !isMainPage}"></app-auth>
   </header>
 </div>
 

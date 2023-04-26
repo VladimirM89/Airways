@@ -33,5 +33,16 @@
   .mat-mdc-select-arrow {
     color: var(--contrast-color);
   }
+
+  .contrast {
+    .select-btn__dark{
+      border-color: var(--auxiliary-color);
+    }
+
+    .mat-mdc-select-value,
+    .mat-mdc-select-arrow {
+      color: var(--main-color);
+    }
+  }
 }
 
