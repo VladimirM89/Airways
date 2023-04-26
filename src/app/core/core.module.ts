@@ -12,6 +12,7 @@ import { LoginFormComponent } from './components/header/components/auth/componen
 import { RegisterFormComponent } from './components/header/components/auth/components/register-form/register-form.component';
 import { SocialMediaFormComponent } from './components/header/components/auth/components/social-media-form/social-media-form.component';
 import { CountryCodeFilterPipe } from './components/header/components/auth/pipes/country-code-filter.pipe';
+import { CartComponent } from './components/header/components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CountryCodeFilterPipe } from './components/header/components/auth/pipes
     RegisterFormComponent,
     SocialMediaFormComponent,
     CountryCodeFilterPipe,
+    CartComponent,
   ],
   exports: [
     HeaderComponent,
