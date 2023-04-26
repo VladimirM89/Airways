@@ -1,13 +1,22 @@
 :host {
   max-width: 50rem;
+  min-width: 35rem;
   display: block;
   flex-grow: 1;
+
+  @media screen and (max-width: 400px) {
+    min-width: 25rem;
+  }
 }
 
 .breadcrumbs-list {
   display: flex;
   justify-content: space-between;
   color: var(--auxiliary-color);
+
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+  }
 }
 
 .breadcrumb {
@@ -52,4 +61,6 @@
   line-height: 2.4rem;
   text-align: end;
 }
+
+
 

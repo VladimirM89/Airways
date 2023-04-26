@@ -10,6 +10,9 @@ import { Paths } from 'src/app/types/enums';
 export class CartComponent {
   public constructor(private router: Router) {}
 
+  // TODO: get count of flights in cart from cart-service
+  public count = 1;
+
   public navToCart(): void {
     this.router.navigate([Paths.CART]);
   }

@@ -10,9 +10,12 @@
 .wrapper-header {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 1.6rem;
   flex-grow: 1;
 }
+
 .initial {
   background-color: var(--accent-bg-color);
 }
