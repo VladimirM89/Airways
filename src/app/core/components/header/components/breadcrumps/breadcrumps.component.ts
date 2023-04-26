@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-param-reassign */
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { ChildActivationEnd, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Breadcrumbs } from 'src/app/core/components/header/components/breadcrumps/constants/breadcrumbs-constant';
 
@@ -21,9 +21,15 @@ export class BreadcrumpsComponent implements OnInit {
 
   public ngOnInit(): void {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(
+        filter(
+          (event): event is NavigationEnd =>
+            event instanceof NavigationEnd ||
+            event instanceof ChildActivationEnd
+        )
+      )
       .subscribe(event => {
-        const { url } = event as RouterEvent;
+        const url = event.urlAfterRedirects;
         this.setActiveIndex(url);
         this.setBreadcrumbs();
       });
