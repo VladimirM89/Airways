@@ -206,8 +206,16 @@
         </small>
         <small class="error-message"
         *ngIf="numberErrors?.['pattern']">
-          Please enter in correct format
-      </small>
+          Please enter only numbers
+          </small>
+        <small class="error-message"
+          *ngIf="numberErrors?.['minlength']?.['requiredLength']">
+            The number is too short
+        </small>
+        <small class="error-message"
+          *ngIf="numberErrors?.['maxlength']?.['requiredLength']">
+            The number is too long
+        </small>
       </div>
 
     </div>

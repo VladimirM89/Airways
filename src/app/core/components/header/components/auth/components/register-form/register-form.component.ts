@@ -64,6 +64,8 @@ export class RegisterFormComponent implements OnInit {
       ]),
       number: new FormControl<string>('', [
         Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(10),
         Validators.pattern(PHONE_REGEXP),
       ]),
       citizenship: new FormControl<string>(''),

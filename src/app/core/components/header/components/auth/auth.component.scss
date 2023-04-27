@@ -48,6 +48,11 @@
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
+
+  &:hover {
+    background-image: url(../../../../../../assets/close-icon_hover.svg);
+    scale: (1.2);
+  }
 }
 
 .active {
@@ -71,7 +76,7 @@
 }
 
 .overlay {
-  position: absolute;
+  position: fixed;
   z-index: 5;
   top: 0;
   left: 0;

@@ -12,7 +12,10 @@ export class CountryCodeFilterPipe implements PipeTransform {
     if (!searchText) return items;
     searchText = searchText.toLowerCase();
     return items.filter(code => {
-      return code.name.toLowerCase().includes(searchText);
+      return (
+        code.name.toLowerCase().includes(searchText) ||
+        code.dial_code.includes(searchText)
+      );
     });
   }
 }
