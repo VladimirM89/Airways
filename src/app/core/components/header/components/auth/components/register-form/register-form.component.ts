@@ -24,8 +24,6 @@ import { CountryCodes } from './constants/country-codes';
 export class RegisterFormComponent implements OnInit {
   public loginForm!: FormGroup;
 
-  public hide = true;
-
   public isMale = true;
 
   public countries = CountryCodes;

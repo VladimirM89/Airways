@@ -13,9 +13,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
+import { PassengersInfoFormComponent } from './components/passengers-info-form/passengers-info-form.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [PassengersInfoFormComponent],
   imports: [
     BrowserModule,
     CommonModule,
@@ -45,6 +46,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatAutocompleteModule,
     MatCheckboxModule,
     MatMenuModule,
+    PassengersInfoFormComponent,
   ],
 })
 export class SharedModule {}
