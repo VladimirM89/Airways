@@ -16,7 +16,11 @@ export class BookingProcessPageComponent implements OnInit {
 
   public ngOnInit(): void {
     this.form = new FormGroup({
-      test: this.passengersInfoServiceService.passengerInfoForm(),
+      innerForm: this.passengersInfoServiceService.passengerInfoForm(),
     });
+  }
+
+  public get innerForm(): FormGroup {
+    return this.form.get('innerForm') as FormGroup;
   }
 }
