@@ -12,6 +12,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [],
@@ -29,6 +30,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatNativeDateModule,
     MatAutocompleteModule,
     MatCheckboxModule,
+    MatMenuModule,
   ],
   exports: [
     FormsModule,
@@ -42,6 +44,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatNativeDateModule,
     MatAutocompleteModule,
     MatCheckboxModule,
+    MatMenuModule,
   ],
 })
 export class SharedModule {}
