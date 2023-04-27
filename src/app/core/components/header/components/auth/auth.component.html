@@ -1,8 +1,8 @@
 <div [ngClass]="{'overlay': authService.isPopupActive}" (click)="togglePopup()"></div>
 
-<button class="select-btn select-btn__medium select-btn__dark" (click)="togglePopup()">
+<button class="select-btn select-btn__medium select-btn__dark" (click)="isUserLogin ? navToUserPage(): togglePopup()">
   <span class="logo"></span>
-  <span class="user-state-title" *ngIf="isUserLogin; else userLogout">Sign out</span>
+  <span class="user-state-title" *ngIf="isUserLogin; else userLogout">{{userName}}</span>
   <ng-template #userLogout>
     <span class="user-state-title">Sign in</span>
   </ng-template>

@@ -87,6 +87,9 @@
 
 .popup-container {
   max-width: 50rem;
+  max-height: calc(90vh - 10rem);
+  min-height: auto;
+  overflow: auto;
   padding: 3.2rem 2.4rem;
   display: flex;
   flex-direction: column;

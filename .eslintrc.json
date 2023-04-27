@@ -41,7 +41,8 @@
         "@typescript-eslint/explicit-function-return-type": ["warn"],
         "@angular-eslint/no-output-on-prefix": ["off"],
         "import/prefer-default-export": ["off"],
-        "no-console": ["warn"]
+        "no-console": ["warn"],
+        "@typescript-eslint/no-unused-expressions": ["off"]
       }
     },
     {
