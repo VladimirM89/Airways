@@ -6,13 +6,10 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import PasswordValidators from 'src/app/shared/validators/password.validators';
-import {
-  NAME_REGEXP,
-  PHONE_REGEXP,
-} from 'src/app/shared/constants/string-constants';
-import DateValidators from 'src/app/shared/validators/date.validators';
+import { PassengersInfoService } from 'src/app/shared/services/passengers-info.service';
+import { PHONE_REGEXP } from 'src/app/shared/constants/string-constants';
 import CountryCodeValidators from 'src/app/shared/validators/countryCode.validators';
+import PasswordValidators from 'src/app/shared/validators/password.validators';
 import { AuthService } from '../../services/auth.service';
 import { CountryCodes } from './constants/country-codes';
 
@@ -30,7 +27,12 @@ export class RegisterFormComponent implements OnInit {
 
   public countriesName = CountryCodes;
 
-  public constructor(private authService: AuthService) {}
+  public passengersInfoForm!: FormGroup;
+
+  public constructor(
+    private authService: AuthService,
+    public passengersInfoService: PassengersInfoService
+  ) {}
 
   public ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -42,20 +44,7 @@ export class RegisterFormComponent implements OnInit {
         Validators.required,
         PasswordValidators.checkStrongPassword,
       ]),
-      firstName: new FormControl<string>('', [
-        Validators.required,
-        Validators.pattern(NAME_REGEXP),
-        Validators.minLength(3),
-      ]),
-      lastName: new FormControl<string>('', [
-        Validators.required,
-        Validators.pattern(NAME_REGEXP),
-        Validators.minLength(3),
-      ]),
-      date: new FormControl<Date | null>(new Date(), [
-        Validators.required,
-        DateValidators.isFutureDate,
-      ]),
+      passengersInfoForm: this.passengersInfoService.passengersFormGroup,
       countryCode: new FormControl<string>('', [
         Validators.required,
         CountryCodeValidators.isIncorrectValue,
@@ -69,6 +58,10 @@ export class RegisterFormComponent implements OnInit {
       citizenship: new FormControl<string>(''),
       isAgree: new FormControl<boolean>(false, [Validators.requiredTrue]),
     });
+  }
+
+  public get passengersInfo(): FormGroup {
+    return this.loginForm.get('passengersInfoForm') as FormGroup;
   }
 
   public get email(): AbstractControl<string> | null {
@@ -87,29 +80,29 @@ export class RegisterFormComponent implements OnInit {
     return this.loginForm.get('pass')?.errors;
   }
 
-  public get firstName(): AbstractControl<string> | null {
-    return this.loginForm.get('firstName');
-  }
+  // public get firstName(): AbstractControl<string> | null {
+  //   return this.loginForm.get('firstName');
+  // }
 
-  public get firstNameErrors(): ValidationErrors | undefined | null {
-    return this.loginForm.get('firstName')?.errors;
-  }
+  // public get firstNameErrors(): ValidationErrors | undefined | null {
+  //   return this.loginForm.get('firstName')?.errors;
+  // }
 
-  public get lastName(): AbstractControl<string> | null {
-    return this.loginForm.get('lastName');
-  }
+  // public get lastName(): AbstractControl<string> | null {
+  //   return this.loginForm.get('lastName');
+  // }
 
-  public get lastNameErrors(): ValidationErrors | undefined | null {
-    return this.loginForm.get('lastName')?.errors;
-  }
+  // public get lastNameErrors(): ValidationErrors | undefined | null {
+  //   return this.loginForm.get('lastName')?.errors;
+  // }
 
-  public get date(): AbstractControl<string> | null {
-    return this.loginForm.get('date');
-  }
+  // public get date(): AbstractControl<string> | null {
+  //   return this.loginForm.get('date');
+  // }
 
-  public get dateErrors(): ValidationErrors | null | undefined {
-    return this.loginForm.get('date')?.errors;
-  }
+  // public get dateErrors(): ValidationErrors | null | undefined {
+  //   return this.loginForm.get('date')?.errors;
+  // }
 
   public get countryCode(): AbstractControl<string> | null {
     return this.loginForm.get('countryCode');
@@ -131,9 +124,9 @@ export class RegisterFormComponent implements OnInit {
     return this.loginForm.get('citizenship');
   }
 
-  public toggleGender(): void {
-    this.isMale = !this.isMale;
-  }
+  // public toggleGender(): void {
+  //   this.isMale = !this.isMale;
+  // }
 
   public onSubmit(): void {
     this.authService.togglePopup();

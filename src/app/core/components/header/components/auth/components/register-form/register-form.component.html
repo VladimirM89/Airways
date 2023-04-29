@@ -61,7 +61,9 @@
     </div>
   </div>
 
-  <mat-form-field class="input-container"
+  <app-passengers-info-form [passengerFormGroup]="passengersInfo"></app-passengers-info-form>
+
+  <!-- <mat-form-field class="input-container"
     [ngClass]="{'invalid': firstName!.invalid && firstName!.touched}"
   >
     <mat-label>First name</mat-label>
@@ -178,7 +180,7 @@
       <span [ngClass]="{'select-icon': !isMale}"></span>
       Female
     </button>
-  </div>
+  </div> -->
 
   <div class="number-container">
 
@@ -214,7 +216,7 @@
     </div>
 
     <div class="number-content">
-      <mat-form-field class="input-container" [ngClass]="{'invalid': lastName!.invalid && lastName!.touched}">
+      <mat-form-field class="input-container" [ngClass]="{'invalid': number!.invalid && number!.touched}">
         <mat-label>Mobile phone number</mat-label>
         <input matInput
           formControlName="number"
@@ -270,7 +272,7 @@
       <span class="highlight">Terms of Use</span>
     </p>
   </div>
-
+  Login Form invalid - {{loginForm.invalid}} <br> Passengers Form invalid - {{passengersInfo.invalid}}
   <button mat-button type="submit"
     class="primary-btn"
     [disabled]="loginForm.invalid"

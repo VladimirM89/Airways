@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PassengersInfoServiceService } from 'src/app/shared/services/passengers-info-service.service';
+import { PassengersInfoService } from 'src/app/shared/services/passengers-info.service';
 
 @Component({
   selector: 'app-booking-process-page',
@@ -8,19 +8,15 @@ import { PassengersInfoServiceService } from 'src/app/shared/services/passengers
   styleUrls: ['./booking-process-page.component.scss'],
 })
 export class BookingProcessPageComponent implements OnInit {
-  public form!: FormGroup;
+  public passengersInfoForm!: FormGroup;
 
-  public constructor(
-    private passengersInfoServiceService: PassengersInfoServiceService
-  ) {}
+  public constructor(private passengersInfoService: PassengersInfoService) {}
 
   public ngOnInit(): void {
-    this.form = new FormGroup({
-      innerForm: this.passengersInfoServiceService.passengerInfoForm(),
-    });
+    this.passengersInfoForm = this.passengersInfoService.passengersFormGroup;
   }
 
-  public get innerForm(): FormGroup {
-    return this.form.get('innerForm') as FormGroup;
+  public get passengersInfoFormGroup(): FormGroup {
+    return this.passengersInfoForm;
   }
 }

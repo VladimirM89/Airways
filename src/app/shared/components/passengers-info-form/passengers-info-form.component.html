@@ -1,14 +1,14 @@
-<div [formGroup]="passengerFormGroup">
+<form [formGroup]="passengerFormGroup" class="container">
 
     <mat-form-field class="input-container"
-      [ngClass]="{'invalid': passengersInfoServiceService.firstName!.invalid && passengersInfoServiceService.firstName!.touched}"
+      [ngClass]="{'invalid': firstName!.invalid && firstName!.touched}"
      >
      <mat-label>First name</mat-label>
      <input matInput
        formControlName="firstName"
        type="text">
      <mat-icon matSuffix [matMenuTriggerFor]="firstNameMenu"
-       *ngIf="!(passengersInfoServiceService.firstName!.invalid && passengersInfoServiceService.firstName!.touched); else errorFirstNameIcon"
+       *ngIf="!(firstName!.invalid && firstName!.touched); else errorFirstNameIcon"
        >error_outline
      </mat-icon>
      <ng-template #errorFirstNameIcon>
@@ -21,30 +21,30 @@
      </mat-menu>
      </mat-form-field>
      <div
-     *ngIf="passengersInfoServiceService.firstName!.invalid && passengersInfoServiceService.firstName!.touched"
+     *ngIf="firstName!.invalid && firstName!.touched"
      class="validation">
      <small class="error-message"
-       *ngIf="passengersInfoServiceService.firstNameErrors?.['required']">
+       *ngIf="firstNameErrors?.['required']">
          Please enter first name.
      </small>
      <small class="error-message"
-     *ngIf="passengersInfoServiceService.firstNameErrors?.['pattern']">
+     *ngIf="firstNameErrors?.['pattern']">
        Invalid character.
      </small>
      <small class="error-message"
-     *ngIf="passengersInfoServiceService.firstNameErrors?.['minlength']?.['requiredLength']">
+     *ngIf="firstNameErrors?.['minlength']?.['requiredLength']">
        The first name is too short (minimum 3 letters)
      </small>
      </div>
      <mat-form-field class="input-container"
-     [ngClass]="{'invalid': passengersInfoServiceService.lastName!.invalid && passengersInfoServiceService.lastName!.touched}"
+     [ngClass]="{'invalid': lastName!.invalid && lastName!.touched}"
      >
      <mat-label>Last name</mat-label>
      <input matInput
        formControlName="lastName"
        type="text">
        <mat-icon matSuffix [matMenuTriggerFor]="lastNameMenu"
-       *ngIf="!(passengersInfoServiceService.lastName!.invalid && passengersInfoServiceService.lastName!.touched); else errorLastNameIcon"
+       *ngIf="!(lastName!.invalid && lastName!.touched); else errorLastNameIcon"
        >error_outline
      </mat-icon>
      <ng-template #errorLastNameIcon >
@@ -57,18 +57,18 @@
      </mat-menu>
      </mat-form-field>
      <div
-     *ngIf="passengersInfoServiceService.lastName!.invalid && passengersInfoServiceService.lastName!.touched"
+     *ngIf="passengersInfoService.lastName!.invalid && passengersInfoService.lastName!.touched"
      class="validation">
      <small class="error-message"
-       *ngIf="passengersInfoServiceService.lastNameErrors?.['required']">
+       *ngIf="passengersInfoService.lastNameErrors?.['required']">
          Please enter last name.
      </small>
      <small class="error-message"
-     *ngIf="passengersInfoServiceService.lastNameErrors?.['pattern']">
+     *ngIf="passengersInfoService.lastNameErrors?.['pattern']">
        Invalid character.
      </small>
      <small class="error-message"
-     *ngIf="passengersInfoServiceService.lastNameErrors?.['minlength']?.['requiredLength']">
+     *ngIf="passengersInfoService.lastNameErrors?.['minlength']?.['requiredLength']">
        The last name is too short.
      </small>
      </div>
@@ -78,13 +78,13 @@
      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
      <mat-datepicker #picker></mat-datepicker>
      </mat-form-field>
-     <div *ngIf="passengersInfoServiceService.date!.invalid && passengersInfoServiceService.date!.touched" class="validation">
+     <div *ngIf="date!.invalid && date!.touched" class="validation">
      <small class="error-message"
-       *ngIf="passengersInfoServiceService.dateErrors?.['required']">
+       *ngIf="dateErrors?.['required']">
          Please enter a correct creation date
      </small>
      <small class="error-message"
-       *ngIf="passengersInfoServiceService.dateErrors?.['isFutureDate'] && !passengersInfoServiceService.dateErrors?.['required']">
+       *ngIf="dateErrors?.['isFutureDate'] && !dateErrors?.['required']">
          The date is invalid. You choose future date.
      </small>
      </div>
@@ -92,21 +92,21 @@
      <button
        class="gender-btn gender-btn__left"
        type="button"
-       (click)="passengersInfoServiceService.toggleGender()"
-       [ngClass]="{'selected-gender': passengersInfoServiceService.isMale}"
+       (click)="passengersInfoService.toggleGender()"
+       [ngClass]="{'selected-gender': passengersInfoService.isMale}"
      >
-       <span [ngClass]="{'select-icon': passengersInfoServiceService.isMale}"></span>
+       <span [ngClass]="{'select-icon': passengersInfoService.isMale}"></span>
        Male
      </button>
      <button
        class="gender-btn gender-btn__right"
        type="button"
-       (click)="passengersInfoServiceService.toggleGender()"
-       [ngClass]="{'selected-gender': !passengersInfoServiceService.isMale}"
+       (click)="passengersInfoService.toggleGender()"
+       [ngClass]="{'selected-gender': !passengersInfoService.isMale}"
      >
-       <span [ngClass]="{'select-icon': !passengersInfoServiceService.isMale}"></span>
+       <span [ngClass]="{'select-icon': !passengersInfoService.isMale}"></span>
        Female
      </button>
      </div>
 
-</div>
+</form>

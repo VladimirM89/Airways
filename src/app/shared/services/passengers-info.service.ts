@@ -13,12 +13,14 @@ import DateValidators from '../validators/date.validators';
 @Injectable({
   providedIn: 'root',
 })
-export class PassengersInfoServiceService {
+export class PassengersInfoService {
   public isMale = true;
 
   public toggleGender(): void {
     this.isMale = !this.isMale;
   }
+
+  public passengersFormGroup = this.passengerInfoForm();
 
   public passengerInfoForm(): FormGroup {
     const passengersFormGroup = new FormGroup({
@@ -47,26 +49,30 @@ export class PassengersInfoServiceService {
   }
 
   public get firstName(): AbstractControl<string> | null {
-    return this.passengerInfoForm().get('firstName');
+    return this.passengersFormGroup.get('firstName');
   }
 
   public get firstNameErrors(): ValidationErrors | undefined | null {
-    return this.passengerInfoForm().get('firstName')?.errors;
+    return this.passengersFormGroup.get('firstName')?.errors;
   }
 
   public get lastName(): AbstractControl<string> | null {
-    return this.passengerInfoForm().get('lastName');
+    return this.passengersFormGroup.get('lastName');
   }
 
   public get lastNameErrors(): ValidationErrors | undefined | null {
-    return this.passengerInfoForm().get('lastName')?.errors;
+    return this.passengersFormGroup.get('lastName')?.errors;
   }
 
   public get date(): AbstractControl<string> | null {
-    return this.passengerInfoForm().get('date');
+    return this.passengersFormGroup.get('date');
   }
 
   public get dateErrors(): ValidationErrors | null | undefined {
-    return this.passengerInfoForm().get('date')?.errors;
+    return this.passengersFormGroup.get('date')?.errors;
+  }
+
+  public get formValid(): boolean {
+    return this.passengersFormGroup.invalid;
   }
 }
