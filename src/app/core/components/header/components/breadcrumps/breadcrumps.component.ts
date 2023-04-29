@@ -3,7 +3,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Breadcrumbs } from 'src/app/core/components/header/components/breadcrumps/constants/breadcrumbs-constant';
-import { RouterService } from 'src/app/shared/services/router.service';
+import { RouterService } from 'src/app/core/services/router.service';
 
 @Component({
   selector: 'app-breadcrumps',
