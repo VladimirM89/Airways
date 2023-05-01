@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
 import {
@@ -42,11 +43,14 @@ export class UserGuard implements CanActivate, CanLoad {
   }
 
   private userLogin(): boolean | UrlTree {
-    const isUserLogin = false;
+    const isUserLogin = true;
     // TODO: get if destination is selected from service
-    const isDestinationSelected = true;
-    return isUserLogin || isDestinationSelected
-      ? this.router.createUrlTree([Paths.BOOKING])
-      : this.router.createUrlTree([Paths.BASE]);
+    const isDestinationSelected = false;
+    return (
+      isUserLogin ||
+      (isDestinationSelected
+        ? this.router.createUrlTree([Paths.BOOKING])
+        : this.router.createUrlTree([Paths.BASE]))
+    );
   }
 }

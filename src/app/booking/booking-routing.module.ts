@@ -37,6 +37,7 @@ const routes: Routes = [
           import(
             './pages/flight-selection-page/flight-selection-page.module'
           ).then(m => m.FlightSelectionPageModule),
+        canActivate: [UserGuard],
       },
     ],
   },

@@ -14,7 +14,7 @@ export class CartComponent {
   public count = 1;
 
   // TODO: get if user login from state
-  public isUserLogin = true;
+  public isUserLogin = false;
 
   public navToCart(): void {
     this.router.navigate([Paths.CART]);
