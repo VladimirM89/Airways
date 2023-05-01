@@ -12,9 +12,16 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { PassengersInfoFormComponent } from './components/passengers-info-form/passengers-info-form.component';
+import { BookingTableComponent } from './components/booking-table/booking-table.component';
+import { BookingItemComponent } from './components/booking-table/booking-item/booking-item.component';
+import { PassengersInfoService } from './services/passengers-info.service';
 
 @NgModule({
-  declarations: [PassengersInfoFormComponent],
+  declarations: [
+    PassengersInfoFormComponent,
+    BookingTableComponent,
+    BookingItemComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -43,6 +50,8 @@ import { PassengersInfoFormComponent } from './components/passengers-info-form/p
     MatCheckboxModule,
     MatMenuModule,
     PassengersInfoFormComponent,
+    BookingTableComponent,
   ],
+  providers: [PassengersInfoService],
 })
 export class SharedModule {}

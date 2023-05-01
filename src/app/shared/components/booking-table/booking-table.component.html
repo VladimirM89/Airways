@@ -1,0 +1,22 @@
+<div class="title-container">
+  <div class="title-content">
+    <span class="passengers-logo"></span>
+    <span class="passengers-title">Passengers</span>
+  </div>
+  <p class="passengers-description">
+    Enter the passenger's names as they appear on document (passport or ID).
+  </p>
+</div>
+
+<div class="booking-container">
+  <ul>
+    <li *ngFor="let item of items">
+      <app-booking-item></app-booking-item>
+    </li>
+  </ul>
+</div>
+
+<div class="btns-container">
+  <button class="ghost-btn">Back</button>
+  <button class="primary-btn">Continue</button>
+</div>

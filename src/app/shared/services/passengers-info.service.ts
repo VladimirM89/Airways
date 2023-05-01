@@ -10,9 +10,7 @@ import {
 import { NAME_REGEXP, PHONE_REGEXP } from '../constants/string-constants';
 import DateValidators from '../validators/date.validators';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class PassengersInfoService {
   public isMale = true;
 
