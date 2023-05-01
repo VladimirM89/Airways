@@ -7,7 +7,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { NAME_REGEXP, PHONE_REGEXP } from '../constants/string-constants';
+import { NAME_REGEXP } from '../constants/string-constants';
 import DateValidators from '../validators/date.validators';
 
 @Injectable()
@@ -35,12 +35,6 @@ export class PassengersInfoService {
       date: new FormControl<Date | null>(new Date(), [
         Validators.required,
         DateValidators.isFutureDate,
-      ]),
-      number: new FormControl<string>('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(10),
-        Validators.pattern(PHONE_REGEXP),
       ]),
     });
     return passengersFormGroup;

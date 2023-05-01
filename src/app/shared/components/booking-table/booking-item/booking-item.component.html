@@ -1,2 +1,14 @@
-<p>booking-item works!</p>
-<app-passengers-info-form [passengerFormGroup]="passengersInfoFormGroup"></app-passengers-info-form>
+<p class="passenger-title">
+  <span class="count">1.</span>
+  <span class="title">Adult</span>
+</p>
+
+
+<form class="container" [formGroup]="formGroup" ngNativeValidate>
+  <app-passengers-info-form [passengerFormGroup]="passengerInfoFormGroup"></app-passengers-info-form>
+  <mat-slide-toggle formControlName="assist">
+    <span class="assist-icon"></span>
+    <span class="assist-text">Need special assistance?</span>
+  </mat-slide-toggle>
+</form>
+

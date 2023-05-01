@@ -11,16 +11,19 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PassengersInfoFormComponent } from './components/passengers-info-form/passengers-info-form.component';
 import { BookingTableComponent } from './components/booking-table/booking-table.component';
 import { BookingItemComponent } from './components/booking-table/booking-item/booking-item.component';
 import { PassengersInfoService } from './services/passengers-info.service';
+import { BookingContactComponent } from './components/booking-table/booking-contact/booking-contact.component';
 
 @NgModule({
   declarations: [
     PassengersInfoFormComponent,
     BookingTableComponent,
     BookingItemComponent,
+    BookingContactComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +38,7 @@ import { PassengersInfoService } from './services/passengers-info.service';
     MatAutocompleteModule,
     MatCheckboxModule,
     MatMenuModule,
+    MatSlideToggleModule,
   ],
   exports: [
     CommonModule,
@@ -51,7 +55,9 @@ import { PassengersInfoService } from './services/passengers-info.service';
     MatMenuModule,
     PassengersInfoFormComponent,
     BookingTableComponent,
+    BookingContactComponent,
+    MatSlideToggleModule,
   ],
-  providers: [PassengersInfoService],
+  providers: [PassengersInfoService, BookingContactComponent],
 })
 export class SharedModule {}

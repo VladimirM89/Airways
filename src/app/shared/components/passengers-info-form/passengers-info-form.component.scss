@@ -9,6 +9,12 @@
 }
 
 .input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-content {
   width: 100%;
   border-radius: 0.5rem;
   border: 1px solid var(--auxiliary-color);
@@ -65,6 +71,7 @@
 
 .gender-container {
   width: 100%;
+  max-height: 5.6rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   border: 0.5px solid var(--auxiliary-color);
@@ -111,4 +118,10 @@
     grid-template-columns: 1fr;
   }
 }
+
+.row {
+  flex-direction: row;
+}
+
+
 
