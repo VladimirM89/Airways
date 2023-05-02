@@ -53,14 +53,6 @@
     border-bottom: none;
   }
 
-  .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background {
-    border-color: var(--primary-color) !important;
-    background-color: var(--primary-color) !important;
-  }
-
-  .mat-mdc-checkbox.mat-accent .mdc-checkbox--selected~.mdc-checkbox__ripple {
-    background: var(--primary-color);
-  }
 
   .mat-mdc-menu-content {
     max-width: 16rem;

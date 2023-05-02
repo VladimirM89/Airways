@@ -1,0 +1,35 @@
+.contact-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.contact-title {
+  margin: 0;
+  display: flex;
+  gap: 1.6rem;
+}
+
+.contact-icon {
+  width: 1.6rem;
+  height: 2rem;
+  display: inline-flex;
+  background-image: url(../../../../../assets/contact_icon.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.contact-title {
+  margin: 0;
+  display: flex;
+  gap: 0.5rem;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.contact-description {
+  margin: 0;
+  font-size: 1.2rem;
+}
