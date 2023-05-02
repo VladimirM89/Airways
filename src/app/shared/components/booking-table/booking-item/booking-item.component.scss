@@ -1,52 +1,8 @@
-:host {
-  max-width: 100%;
-  padding: 3.2rem 4.4rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2.4rem;
-  flex-grow: 1;
-  background: var(--accent-bg-color);
-  box-shadow: 0px 1px 4px var(--box-shadow);
-  border-radius: 0.8rem;
-}
-
 .passenger-title {
   display: flex;
   gap: 0.5rem;
   font-size: 2.4rem;
   font-weight: 700;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 2.7rem;
-
-  ::ng-deep {
-    .mdc-form-field {
-      gap: 1.7rem;
-    }
-
-    .mdc-form-field>label {
-      padding: 0;
-      display: flex;
-      gap: 0.8rem;
-    }
-  }
-}
-
-.assist-icon {
-  width: 2rem;
-  height: 2rem;
-  display: inline-flex;
-  background-image: url(../../../../../assets/assistance.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.assist-text {
-  font-size: 1.2rem;
 }
 
 

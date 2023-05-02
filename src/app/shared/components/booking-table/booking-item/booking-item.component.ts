@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { PassengersInfoService } from 'src/app/shared/services/passengers-info.service';
 
 @Component({
@@ -16,13 +16,10 @@ export class BookingItemComponent implements OnInit {
   public constructor(private passengersInfoService: PassengersInfoService) {}
 
   public ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      inputForm: this.passengersInfoService.passengersFormGroup,
-      assist: new FormControl<boolean>(false),
-    });
+    this.formGroup = this.passengersInfoService.passengersFormGroup;
   }
 
   public get passengerInfoFormGroup(): FormGroup {
-    return this.formGroup.get('inputForm') as FormGroup;
+    return this.formGroup as FormGroup;
   }
 }

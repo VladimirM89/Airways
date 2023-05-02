@@ -1,7 +1,13 @@
 <div class="booking-container">
   <ul class="passengers-list">
     <li *ngFor="let item of items">
-      <app-booking-item></app-booking-item>
+      <div class="container">
+        <app-booking-item></app-booking-item>
+        <mat-slide-toggle color="primary" [ngClass]="{'invisible': item === 'infants'}">
+          <span class="assist-icon"></span>
+          <span class="assist-text">Need special assistance?</span>
+        </mat-slide-toggle>
+      </div>
     </li>
   </ul>
 </div>

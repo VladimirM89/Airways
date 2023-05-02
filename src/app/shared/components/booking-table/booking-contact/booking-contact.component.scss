@@ -1,3 +1,9 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .contact-content {
   display: flex;
   flex-direction: column;
@@ -32,4 +38,16 @@
 .contact-description {
   margin: 0;
   font-size: 1.2rem;
+}
+
+.contact-container {
+  max-width: 100%;
+  padding: 3.2rem 4.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  flex-grow: 1;
+  background: var(--accent-bg-color);
+  box-shadow: 0px 1px 4px var(--box-shadow);
+  border-radius: 0.8rem;
 }
