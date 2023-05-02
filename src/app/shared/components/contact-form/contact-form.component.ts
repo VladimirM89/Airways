@@ -14,14 +14,6 @@ export class ContactFormComponent {
 
   public countriesName = CountryCodes;
 
-  public get email(): AbstractControl<string> | null {
-    return this.contactFormGroup.get('email');
-  }
-
-  public get emailErrors(): ValidationErrors | undefined | null {
-    return this.contactFormGroup.get('email')?.errors;
-  }
-
   public get countryCode(): AbstractControl<string> | null {
     return this.contactFormGroup.get('countryCode');
   }

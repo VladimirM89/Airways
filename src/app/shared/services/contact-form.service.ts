@@ -16,10 +16,6 @@ export class ContactFormService {
 
   public createContactForm(): FormGroup {
     return new FormGroup({
-      email: new FormControl<string>('', [
-        Validators.email,
-        Validators.required,
-      ]),
       countryCode: new FormControl<string>('', [
         Validators.required,
         CountryCodeValidators.isIncorrectValue,
@@ -31,14 +27,6 @@ export class ContactFormService {
         Validators.pattern(PHONE_REGEXP),
       ]),
     });
-  }
-
-  public get email(): AbstractControl<string> | null {
-    return this.contactFormGroup.get('email');
-  }
-
-  public get emailErrors(): ValidationErrors | undefined | null {
-    return this.contactFormGroup.get('email')?.errors;
   }
 
   public get countryCode(): AbstractControl<string> | null {

@@ -9,8 +9,6 @@ import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-f
   providers: [PersonalInfoFormService],
 })
 export class BookingItemComponent implements OnInit {
-  // public passengersInfoInputForm!: FormGroup;
-
   public formGroup!: FormGroup;
 
   public constructor(

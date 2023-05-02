@@ -18,9 +18,9 @@ export class PersonalInfoFormService {
     this.isMale = !this.isMale;
   }
 
-  public personalFormGroup = this.personalInfoForm();
+  public personalFormGroup = this.createPersonalInfoForm();
 
-  private personalInfoForm(): FormGroup {
+  private createPersonalInfoForm(): FormGroup {
     return new FormGroup({
       firstName: new FormControl<string>('', [
         Validators.required,

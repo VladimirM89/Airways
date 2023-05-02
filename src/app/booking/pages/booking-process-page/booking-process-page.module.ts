@@ -4,7 +4,7 @@ import { BookingProcessPageRoutingModule } from './booking-process-page-routing.
 import { BookingProcessPageComponent } from './booking-process-page.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { BookingItemComponent } from '../../components/booking-table/booking-item/booking-item.component';
-import { BookingContactComponent } from '../../components/booking-table/booking-contact/booking-contact.component';
+import { BookingContactComponent } from '../../components/booking-contact/booking-contact.component';
 import { BookingTableComponent } from '../../components/booking-table/booking-table.component';
 
 @NgModule({

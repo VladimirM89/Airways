@@ -102,8 +102,6 @@ export class RegisterFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.passengersInfo.reset();
-    this.registerForm.reset();
     this.authService.togglePopup();
   }
 }
