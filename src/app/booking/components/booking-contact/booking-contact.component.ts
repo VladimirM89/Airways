@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { ContactFormService } from 'src/app/shared/services/contact-form.service';
 
 @Component({
@@ -11,13 +17,29 @@ import { ContactFormService } from 'src/app/shared/services/contact-form.service
 export class BookingContactComponent implements OnInit {
   public contactInputFormGroup!: FormGroup;
 
+  public contactForm!: FormGroup;
+
   public constructor(private contactFormService: ContactFormService) {}
 
   public ngOnInit(): void {
-    this.contactInputFormGroup = this.contactFormService.contactFormGroup;
+    this.contactForm = new FormGroup({
+      email: new FormControl<string>('', [
+        Validators.email,
+        Validators.required,
+      ]),
+      contactInput: this.contactFormService.contactFormGroup,
+    });
   }
 
   public get contactFormGroup(): FormGroup {
-    return this.contactInputFormGroup;
+    return this.contactForm.get('contactInput') as FormGroup;
+  }
+
+  public get email(): AbstractControl<string> | null {
+    return this.contactForm.get('email');
+  }
+
+  public get emailErrors(): ValidationErrors | undefined | null {
+    return this.contactForm.get('email')?.errors;
   }
 }

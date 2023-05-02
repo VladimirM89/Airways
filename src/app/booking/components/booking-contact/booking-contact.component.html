@@ -9,6 +9,28 @@
   </p>
 </div>
 
-<div class="contact-container">
+<form [formGroup]="contactForm" class="contact-container">
   <app-contact-form [contactFormGroup]="contactFormGroup"></app-contact-form>
-</div>
+
+  <div class="email-content">
+    <mat-form-field class="input-container" [ngClass]="{'invalid': email!.invalid && email!.touched}">
+      <mat-label>Email</mat-label>
+      <input matInput
+        formControlName="email"
+        type="text">
+    </mat-form-field>
+    <div
+      *ngIf="email!.invalid && email!.touched"
+      class="validation">
+        <small class="error-message"
+          *ngIf="email!.errors?.['required']">
+            Please enter a login email
+        </small>
+        <small class="error-message"
+        *ngIf="emailErrors?.['email']">
+          The login email is invalid
+        </small>
+    </div>
+  </div>
+
+</form>
