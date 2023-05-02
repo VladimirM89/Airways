@@ -7,9 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-form.service';
-import { PHONE_REGEXP } from 'src/app/shared/constants/string-constants';
-import CountryCodeValidators from 'src/app/shared/validators/countryCode.validators';
 import PasswordValidators from 'src/app/shared/validators/password.validators';
+import { ContactFormService } from 'src/app/shared/services/contact-form.service';
 import { AuthService } from '../../services/auth.service';
 import { CountryCodes } from './constants/country-codes';
 
@@ -17,7 +16,7 @@ import { CountryCodes } from './constants/country-codes';
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
-  providers: [PersonalInfoFormService],
+  providers: [PersonalInfoFormService, ContactFormService],
 })
 export class RegisterFormComponent implements OnInit {
   public registerForm!: FormGroup;
@@ -32,7 +31,8 @@ export class RegisterFormComponent implements OnInit {
 
   public constructor(
     private authService: AuthService,
-    public personalInfoFormService: PersonalInfoFormService
+    private personalInfoFormService: PersonalInfoFormService,
+    private contactFormService: ContactFormService
   ) {}
 
   public ngOnInit(): void {
@@ -46,16 +46,7 @@ export class RegisterFormComponent implements OnInit {
         PasswordValidators.checkStrongPassword,
       ]),
       passengersInfoForm: this.personalInfoFormService.personalFormGroup,
-      countryCode: new FormControl<string>('', [
-        Validators.required,
-        CountryCodeValidators.isIncorrectValue,
-      ]),
-      number: new FormControl<string>('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(10),
-        Validators.pattern(PHONE_REGEXP),
-      ]),
+      contactForm: this.contactFormService.contactFormGroup,
       citizenship: new FormControl<string>(''),
       isAgree: new FormControl<boolean>(false, [Validators.requiredTrue]),
     });
@@ -63,6 +54,10 @@ export class RegisterFormComponent implements OnInit {
 
   public get passengersInfo(): FormGroup {
     return this.registerForm.get('passengersInfoForm') as FormGroup;
+  }
+
+  public get contactForm(): FormGroup {
+    return this.registerForm.get('contactForm') as FormGroup;
   }
 
   public get email(): AbstractControl<string> | null {
@@ -79,22 +74,6 @@ export class RegisterFormComponent implements OnInit {
 
   public get passErrors(): ValidationErrors | undefined | null {
     return this.registerForm.get('pass')?.errors;
-  }
-
-  public get countryCode(): AbstractControl<string> | null {
-    return this.registerForm.get('countryCode');
-  }
-
-  public get countryCodeErrors(): ValidationErrors | null | undefined {
-    return this.registerForm.get('countryCode')?.errors;
-  }
-
-  public get number(): AbstractControl<string> | null {
-    return this.registerForm.get('number');
-  }
-
-  public get numberErrors(): ValidationErrors | null | undefined {
-    return this.registerForm.get('number')?.errors;
   }
 
   public get citizenship(): AbstractControl<string> | null {
