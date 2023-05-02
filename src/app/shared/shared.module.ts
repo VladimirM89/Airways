@@ -12,18 +12,15 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { PassengersInfoFormComponent } from './components/passengers-info-form/passengers-info-form.component';
-import { BookingTableComponent } from './components/booking-table/booking-table.component';
-import { BookingItemComponent } from './components/booking-table/booking-item/booking-item.component';
-import { PassengersInfoService } from './services/passengers-info.service';
-import { BookingContactComponent } from './components/booking-table/booking-contact/booking-contact.component';
+import { PersonalInfoFormComponent } from './components/passengers-info-form/personal-info-form.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { CountryCodeFilterPipe } from '../core/components/header/components/auth/pipes/country-code-filter.pipe';
 
 @NgModule({
   declarations: [
-    PassengersInfoFormComponent,
-    BookingTableComponent,
-    BookingItemComponent,
-    BookingContactComponent,
+    PersonalInfoFormComponent,
+    ContactFormComponent,
+    CountryCodeFilterPipe,
   ],
   imports: [
     CommonModule,
@@ -53,11 +50,11 @@ import { BookingContactComponent } from './components/booking-table/booking-cont
     MatAutocompleteModule,
     MatCheckboxModule,
     MatMenuModule,
-    PassengersInfoFormComponent,
-    BookingTableComponent,
-    BookingContactComponent,
+    PersonalInfoFormComponent,
     MatSlideToggleModule,
+    CountryCodeFilterPipe,
+    ContactFormComponent,
   ],
-  providers: [PassengersInfoService, BookingContactComponent],
+  providers: [],
 })
 export class SharedModule {}

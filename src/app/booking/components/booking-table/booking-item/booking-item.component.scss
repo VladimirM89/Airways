@@ -5,4 +5,13 @@
   font-weight: 700;
 }
 
+.personal-form {
+  ::ng-deep {
+    form.container {
+    flex-direction: row;
+  }}
+}
+
+
+
 

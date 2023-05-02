@@ -1,22 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { PassengersInfoService } from 'src/app/shared/services/passengers-info.service';
+import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-form.service';
 
 @Component({
   selector: 'app-booking-item',
   templateUrl: './booking-item.component.html',
   styleUrls: ['./booking-item.component.scss'],
-  providers: [PassengersInfoService],
+  providers: [PersonalInfoFormService],
 })
 export class BookingItemComponent implements OnInit {
-  public passengersInfoInputForm!: FormGroup;
+  // public passengersInfoInputForm!: FormGroup;
 
   public formGroup!: FormGroup;
 
-  public constructor(private passengersInfoService: PassengersInfoService) {}
+  public constructor(
+    private personalInfoFormService: PersonalInfoFormService
+  ) {}
 
   public ngOnInit(): void {
-    this.formGroup = this.passengersInfoService.passengersFormGroup;
+    this.formGroup = this.personalInfoFormService.personalFormGroup;
   }
 
   public get passengerInfoFormGroup(): FormGroup {

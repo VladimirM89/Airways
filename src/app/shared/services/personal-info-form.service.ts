@@ -11,17 +11,17 @@ import { NAME_REGEXP } from '../constants/string-constants';
 import DateValidators from '../validators/date.validators';
 
 @Injectable()
-export class PassengersInfoService {
+export class PersonalInfoFormService {
   public isMale = true;
 
   public toggleGender(): void {
     this.isMale = !this.isMale;
   }
 
-  public passengersFormGroup = this.passengerInfoForm();
+  public personalFormGroup = this.personalInfoForm();
 
-  public passengerInfoForm(): FormGroup {
-    const passengersFormGroup = new FormGroup({
+  private personalInfoForm(): FormGroup {
+    return new FormGroup({
       firstName: new FormControl<string>('', [
         Validators.required,
         Validators.pattern(NAME_REGEXP),
@@ -37,34 +37,33 @@ export class PassengersInfoService {
         DateValidators.isFutureDate,
       ]),
     });
-    return passengersFormGroup;
   }
 
   public get firstName(): AbstractControl<string> | null {
-    return this.passengersFormGroup.get('firstName');
+    return this.personalFormGroup.get('firstName');
   }
 
   public get firstNameErrors(): ValidationErrors | undefined | null {
-    return this.passengersFormGroup.get('firstName')?.errors;
+    return this.personalFormGroup.get('firstName')?.errors;
   }
 
   public get lastName(): AbstractControl<string> | null {
-    return this.passengersFormGroup.get('lastName');
+    return this.personalFormGroup.get('lastName');
   }
 
   public get lastNameErrors(): ValidationErrors | undefined | null {
-    return this.passengersFormGroup.get('lastName')?.errors;
+    return this.personalFormGroup.get('lastName')?.errors;
   }
 
   public get date(): AbstractControl<string> | null {
-    return this.passengersFormGroup.get('date');
+    return this.personalFormGroup.get('date');
   }
 
   public get dateErrors(): ValidationErrors | null | undefined {
-    return this.passengersFormGroup.get('date')?.errors;
+    return this.personalFormGroup.get('date')?.errors;
   }
 
   public get formValid(): boolean {
-    return this.passengersFormGroup.invalid;
+    return this.personalFormGroup.invalid;
   }
 }

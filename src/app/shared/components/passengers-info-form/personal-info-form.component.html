@@ -1,4 +1,4 @@
-<form [formGroup]="passengerFormGroup" class="container" [ngClass]="{'row': isBookingPage}">
+<form [formGroup]="personalFormGroup" class="container">
 
   <div class="input-container">
     <mat-form-field class="input-content"
@@ -105,19 +105,19 @@
     <button
       class="gender-btn gender-btn__left"
       type="button"
-      (click)="passengersInfoService.toggleGender()"
-      [ngClass]="{'selected-gender': passengersInfoService.isMale}"
+      (click)="toggleGender()"
+      [ngClass]="{'selected-gender': isMale}"
     >
-      <span [ngClass]="{'select-icon': passengersInfoService.isMale}"></span>
+      <span [ngClass]="{'select-icon': isMale}"></span>
       Male
     </button>
     <button
       class="gender-btn gender-btn__right"
       type="button"
-      (click)="passengersInfoService.toggleGender()"
-      [ngClass]="{'selected-gender': !passengersInfoService.isMale}"
+      (click)="toggleGender()"
+      [ngClass]="{'selected-gender': !isMale}"
     >
-      <span [ngClass]="{'select-icon': !passengersInfoService.isMale}"></span>
+      <span [ngClass]="{'select-icon': !isMale}"></span>
       Female
     </button>
   </div>
