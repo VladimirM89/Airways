@@ -21,6 +21,18 @@
   display: flex;
   flex-direction: column;
   gap: 2.7rem;
+
+  ::ng-deep {
+    .mdc-form-field {
+      gap: 1.7rem;
+    }
+
+    .mdc-form-field>label {
+      padding: 0;
+      display: flex;
+      gap: 0.8rem;
+    }
+  }
 }
 
 .assist-icon {
@@ -36,3 +48,5 @@
 .assist-text {
   font-size: 1.2rem;
 }
+
+

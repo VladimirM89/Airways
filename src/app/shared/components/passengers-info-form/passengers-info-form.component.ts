@@ -24,7 +24,7 @@ export class PassengersInfoFormComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.sub = this.routerService.checkUrl().subscribe(event => {
-      const url = event.urlAfterRedirects;
+      const { url } = event;
       this.isBookingPage = url === BreadcrumbsPaths.BOOKING_PASSENGERS;
     });
   }
