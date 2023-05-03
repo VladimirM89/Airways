@@ -1,0 +1,66 @@
+:host {
+  max-width: 50rem;
+  min-width: 35rem;
+  display: block;
+  flex-grow: 1;
+
+  @media screen and (max-width: 400px) {
+    min-width: 25rem;
+  }
+}
+
+.breadcrumbs-list {
+  display: flex;
+  justify-content: space-between;
+  color: var(--auxiliary-color);
+
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+  }
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  flex-grow: 0;
+}
+
+.icon {
+  display: inline-flex;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.6rem;
+  background-image: url(../../../../../../assets/step-bg.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.icon-step {
+  display: inline-flex;
+  align-items: center;
+  color: var(--contrast-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.6rem;
+}
+
+.active {
+  background-image: url(../../../../../../assets/step-active.svg);
+}
+
+.done {
+  background-image: url(../../../../../../assets/step-done.svg);
+}
+
+.breadcrumps-plug {
+  font-size: 1.6rem;
+  color: var(--contrast-color);
+  line-height: 2.4rem;
+  text-align: end;
+}
+
+
+
