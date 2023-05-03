@@ -26,6 +26,14 @@
       gap: 0.8rem;
     }
   }
+
+  @media screen and (max-width: 650px) {
+    padding: 1.5rem 2.2rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    padding: 1.5rem;
+  }
 }
 
 .assist-icon {
