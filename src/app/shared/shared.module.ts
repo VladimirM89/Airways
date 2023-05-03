@@ -14,7 +14,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PersonalInfoFormComponent } from './components/passengers-info-form/personal-info-form.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
-import { CountryCodeFilterPipe } from '../core/components/header/components/auth/pipes/country-code-filter.pipe';
+import { CountryCodeFilterPipe } from './pipes/country-code-filter.pipe';
 
 @NgModule({
   declarations: [

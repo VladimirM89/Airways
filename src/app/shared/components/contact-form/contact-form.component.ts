@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
-import { CountryCodes } from 'src/app/core/components/header/components/auth/components/register-form/constants/country-codes';
+import { CountryCodes } from 'src/app/core/components/auth/components/register-form/constants/country-codes';
 
 @Component({
   selector: 'app-contact-form',

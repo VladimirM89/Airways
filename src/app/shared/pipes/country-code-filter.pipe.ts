@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-param-reassign */
 import { Pipe, PipeTransform } from '@angular/core';
-import { CountryCode } from '../components/register-form/constants/types';
+import { CountryCode } from 'src/app/core/components/auth/components/register-form/constants/types';
 
 @Pipe({
   name: 'countryCodeFilter',

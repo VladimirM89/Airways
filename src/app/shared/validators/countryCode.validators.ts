@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { CountryCodes } from 'src/app/core/components/header/components/auth/components/register-form/constants/country-codes';
+import { CountryCodes } from 'src/app/core/components/auth/components/register-form/constants/country-codes';
 
 export default class CountryCodeValidators {
   public static isIncorrectValue(
