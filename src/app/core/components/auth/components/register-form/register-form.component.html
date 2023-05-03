@@ -55,7 +55,7 @@
     >
       <small class="error-message">Your password isn't strong enough. Should contain:</small>
       <ul class="errors-list">
-        <li *ngFor="let error of passErrors?.['checkStrongPassword']">
+        <li *ngFor="let error of passErrors?.['checkStrongPassword']; trackBy: trackByFnErr">
           <small>{{error}}</small>
         </li>
       </ul>
@@ -76,7 +76,7 @@
     <mat-icon matSuffix>arrow_drop_down</mat-icon>
     <mat-autocomplete #autoCountry="matAutocomplete">
       <mat-option
-        *ngFor="let countryName of countriesName | countryCodeFilter: citizenship!.value"
+        *ngFor="let countryName of countriesName | countryCodeFilter: citizenship!.value trackBy: trackByFnCountries"
         [value]="countryName.name"
       >
         {{countryName.name}}

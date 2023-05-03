@@ -12,7 +12,7 @@
         >
         <mat-autocomplete #autoCode="matAutocomplete">
           <mat-option
-            *ngFor="let country of countries | countryCodeFilter: countryCode!.value"
+            *ngFor="let country of countries | countryCodeFilter: countryCode!.value; trackBy: trackByFn"
             [value]="country.name + ' ' + '(' + country.dial_code + ')'"
           >
             {{country.name}} ({{country.dial_code}})

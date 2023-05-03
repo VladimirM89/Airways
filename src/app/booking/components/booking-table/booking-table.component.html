@@ -1,6 +1,6 @@
 <div class="booking-container">
   <ul class="passengers-list">
-    <li *ngFor="let item of items">
+    <li *ngFor="let item of items; trackBy: trackByFn">
       <div class="container">
         <app-booking-item></app-booking-item>
         <mat-slide-toggle color="primary" [ngClass]="{'invisible': item === 'infants'}">

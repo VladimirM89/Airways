@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,4 +10,8 @@ import { Component } from '@angular/core';
 export class BookingTableComponent {
   // TODO: items - get number of passengers from passengersInfo
   public items = ['adult', 'child', 'infants'];
+
+  public trackByFn(index: number): number {
+    return index;
+  }
 }

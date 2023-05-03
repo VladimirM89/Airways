@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -11,6 +12,7 @@ import PasswordValidators from 'src/app/shared/validators/password.validators';
 import { ContactFormService } from 'src/app/shared/services/contact-form.service';
 import { AuthService } from '../../services/auth.service';
 import { CountryCodes } from './constants/country-codes';
+import { CountryCode } from './constants/types';
 
 @Component({
   selector: 'app-register-form',
@@ -78,6 +80,14 @@ export class RegisterFormComponent implements OnInit {
 
   public get citizenship(): AbstractControl<string> | null {
     return this.registerForm.get('citizenship');
+  }
+
+  public trackByFnCountries(index: number, item: CountryCode): number {
+    return item.id;
+  }
+
+  public trackByFnErr(index: number): number {
+    return index;
   }
 
   public onSubmit(): void {
