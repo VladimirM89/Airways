@@ -1,6 +1,6 @@
 <div *ngIf="isBookingPage; else mainPage">
   <ul class="breadcrumbs-list">
-    <li class="breadcrumb" clas="" *ngFor="let breadcrumb of breadcrumbs, let i = index">
+    <li class="breadcrumb" clas="" *ngFor="let breadcrumb of breadcrumbs, let i = index; trackBy: trackByFn">
       <span
         class="icon"
         [ngClass]="{'active': breadcrumb.isActive, 'done': breadcrumb.isDone}">

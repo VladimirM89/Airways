@@ -1,9 +1,11 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable no-param-reassign */
 /* eslint-disable array-callback-return */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Breadcrumbs } from 'src/app/core/components/header/components/breadcrumps/constants/breadcrumbs-constant';
 import { RouterService } from 'src/app/core/services/router.service';
+import { BreadcrumbInterface } from 'src/app/types/interfaces';
 
 @Component({
   selector: 'app-breadcrumps',
@@ -53,6 +55,10 @@ export class BreadcrumpsComponent implements OnInit, OnDestroy {
         item.isActive = false;
       }
     });
+  }
+
+  public trackByFn(index: number, item: BreadcrumbInterface): number {
+    return item.id;
   }
 
   public ngOnDestroy(): void {

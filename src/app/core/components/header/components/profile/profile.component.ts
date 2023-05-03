@@ -1,6 +1,8 @@
+/* eslint-disable class-methods-use-this */
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { currencyFormats, dateFormats } from './constants/constants';
+import { ProfileFormat } from './constants/types';
 
 @Component({
   selector: 'app-profile',
@@ -23,4 +25,8 @@ export class ProfileComponent {
   public formCurrency = new FormGroup({
     currency: this.currencyControl,
   });
+
+  public trackByFn(index: number, item: ProfileFormat): number {
+    return item.id;
+  }
 }
