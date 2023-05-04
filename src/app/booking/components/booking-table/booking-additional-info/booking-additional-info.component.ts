@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import {
   INITIAL_BAGGAGE,
   MAX_BAGGAGE,
@@ -10,19 +10,36 @@ import {
   templateUrl: './booking-additional-info.component.html',
   styleUrls: ['./booking-additional-info.component.scss'],
 })
-export class BookingAdditionalInfoComponent {
-  public baggage = new FormControl<number>(INITIAL_BAGGAGE);
+export class BookingAdditionalInfoComponent implements OnInit {
+  // public baggage = new FormControl<number>(INITIAL_BAGGAGE);
+
+  public additionalInfoForm!: FormGroup;
+
+  public ngOnInit(): void {
+    this.additionalInfoForm = new FormGroup({
+      assistance: new FormControl<boolean>(false),
+      baggage: new FormControl<number>(INITIAL_BAGGAGE),
+    });
+  }
+
+  public get assistance(): AbstractControl | null {
+    return this.additionalInfoForm.get('assistance');
+  }
+
+  public get baggage(): AbstractControl | null {
+    return this.additionalInfoForm.get('baggage');
+  }
 
   public get baggageValue(): number {
-    return this.baggage.value || 0;
+    return this.baggage?.value || 0;
   }
 
   public decrement(): void {
-    this.baggage.setValue(this.baggageValue - 1);
+    this.baggage?.setValue(this.baggageValue - 1);
   }
 
   public increment(): void {
-    this.baggage.setValue(this.baggageValue + 1);
+    this.baggage?.setValue(this.baggageValue + 1);
   }
 
   public shouldDisableDecrement(): boolean {
