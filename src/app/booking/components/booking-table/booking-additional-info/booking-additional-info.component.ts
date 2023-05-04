@@ -11,8 +11,6 @@ import {
   styleUrls: ['./booking-additional-info.component.scss'],
 })
 export class BookingAdditionalInfoComponent implements OnInit {
-  // public baggage = new FormControl<number>(INITIAL_BAGGAGE);
-
   public additionalInfoForm!: FormGroup;
 
   public ngOnInit(): void {
