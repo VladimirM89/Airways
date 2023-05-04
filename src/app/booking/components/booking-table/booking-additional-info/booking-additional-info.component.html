@@ -7,7 +7,7 @@
 <div class="baggage-content">
   <p class="container">
     <span class="icon baggage-icon"></span>
-    <span class="description">Choose additional baggage</span>
+    <span class="description">Additional baggage</span>
   </p>
 
   <mat-form-field class="baggage-input">
@@ -16,19 +16,19 @@
       mat-icon-button
       matPrefix
       aria-label="Remove"
-      (click)="decrementValue()"
-      [disabled]="shouldDisableDecrement(value)"
+      (click)="decrement()"
+      [disabled]="shouldDisableDecrement()"
     >
       <mat-icon>remove</mat-icon>
     </button>
-    <input matInput type="number" [(ngModel)]="value" />
+    <input matInput type="number" [formControl]="baggage" />
     <button
       mat-button
       mat-icon-button
       matSuffix
       aria-label="Add"
-      (click)="incrementValue()"
-      [disabled]="shouldDisableIncrement(value)"
+      (click)="increment()"
+      [disabled]="shouldDisableIncrement()"
     >
       <mat-icon>add</mat-icon>
     </button>

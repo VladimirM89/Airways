@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-booking-additional-info',
@@ -9,23 +10,31 @@ import { Component } from '@angular/core';
 export class BookingAdditionalInfoComponent {
   public value = 0;
 
-  public initialBaggage = 0;
+  public baggage = new FormControl<number>(5);
 
-  public decrementValue(): void {
-    const inputValue = this.value - 1;
-    this.value = inputValue;
+  public get baggageValue(): number {
+    return this.baggage.value || 0;
   }
 
-  public incrementValue(): void {
-    const inputValue = this.value + 1;
-    this.value = inputValue;
+  public decrement(): void {
+    // const inputValue = this.value - 1;
+    // this.value = inputValue;
+    console.log('decrement');
+    this.baggage.setValue(this.baggageValue - 1);
   }
 
-  public shouldDisableDecrement(inputValue: number): boolean {
-    return inputValue <= this.initialBaggage;
+  public increment(): void {
+    // const inputValue = this.value + 1;
+    // this.value = inputValue;
+    console.log('increment');
+    this.baggage.setValue(this.baggageValue + 1);
   }
 
-  public shouldDisableIncrement(inputValue: number): boolean {
-    return inputValue >= 10;
+  public shouldDisableDecrement(): boolean {
+    return this.baggageValue <= 0;
+  }
+
+  public shouldDisableIncrement(): boolean {
+    return this.baggageValue >= 10;
   }
 }
