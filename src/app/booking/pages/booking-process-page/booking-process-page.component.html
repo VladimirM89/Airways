@@ -14,6 +14,6 @@
 <app-booking-contact></app-booking-contact>
 
 <div class="btns-container">
-  <button class="ghost-btn">Back</button>
-  <button class="primary-btn">Continue</button>
+  <button class="ghost-btn" (click)="navToFlights()">Back</button>
+  <button class="primary-btn" [disabled]="true">Continue</button>
 </div>

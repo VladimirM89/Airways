@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-form.service';
@@ -10,6 +11,8 @@ import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-f
 })
 export class BookingItemComponent implements OnInit {
   public formGroup!: FormGroup;
+
+  public countBaggage = 0;
 
   public constructor(
     private personalInfoFormService: PersonalInfoFormService
