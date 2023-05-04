@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ContactFormService } from 'src/app/shared/services/contact-form.service';
+import { ValidationFormsService } from 'src/app/shared/services/validation-forms.service';
 
 @Component({
   selector: 'app-booking-contact',
@@ -19,7 +20,10 @@ export class BookingContactComponent implements OnInit {
 
   public contactForm!: FormGroup;
 
-  public constructor(private contactFormService: ContactFormService) {}
+  public constructor(
+    private contactFormService: ContactFormService,
+    private validationFormsService: ValidationFormsService
+  ) {}
 
   public ngOnInit(): void {
     this.contactForm = new FormGroup({
@@ -29,6 +33,7 @@ export class BookingContactComponent implements OnInit {
       ]),
       contactInput: this.contactFormService.contactFormGroup,
     });
+    this.validationFormsService.addForm(this.contactForm);
   }
 
   public get contactFormGroup(): FormGroup {
