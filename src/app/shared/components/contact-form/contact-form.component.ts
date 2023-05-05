@@ -34,6 +34,6 @@ export class ContactFormComponent {
   }
 
   public trackByFn(index: number, item: CountryCode): number {
-    return index;
+    return item.id;
   }
 }

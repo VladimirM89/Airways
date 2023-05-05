@@ -10,7 +10,7 @@ export class BookingTableComponent {
   // TODO: items - get number of passengers from passengersInfo
   public items = ['adult', 'child', 'infants'];
 
-  public trackByFn(index: number): number {
-    return index;
+  public trackByFn(index: number, item: string): string {
+    return item;
   }
 }

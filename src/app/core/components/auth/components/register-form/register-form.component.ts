@@ -86,8 +86,8 @@ export class RegisterFormComponent implements OnInit {
     return item.id;
   }
 
-  public trackByFnErr(index: number): number {
-    return index;
+  public trackByFnErr(index: number, item: string): string {
+    return item;
   }
 
   public onSubmit(): void {
