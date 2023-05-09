@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable class-methods-use-this */
@@ -17,6 +18,9 @@ import { DatePipe } from '@angular/common';
 import { DIAL_CODE_REGEXP } from 'src/app/shared/constants/string-constants';
 import { DateFormat, Gender } from 'src/app/types/enums';
 import { Subscription, catchError, throwError } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { addUser } from 'src/app/redux/actions/user.action';
+import { User } from 'src/app/shared/models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { CountryCodes } from './constants/country-codes';
 import { CountryCode } from './constants/types';
@@ -30,20 +34,21 @@ import { CountryCode } from './constants/types';
 export class RegisterFormComponent implements OnInit, OnDestroy {
   public registerForm!: FormGroup;
 
-  private registerSub!: Subscription;
+  public passengersInfoForm!: FormGroup;
 
   public countries = CountryCodes;
 
   public countriesName = CountryCodes;
 
-  public passengersInfoForm!: FormGroup;
+  private registerSub!: Subscription;
 
   public constructor(
     private authService: AuthService,
     private personalInfoFormService: PersonalInfoFormService,
     private contactFormService: ContactFormService,
     private apiService: ApiService,
-    private datepipe: DatePipe
+    private datepipe: DatePipe,
+    private store: Store
   ) {}
 
   public ngOnInit(): void {
@@ -100,23 +105,13 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    this.registerSub = this.apiService
-      .registerUser({
-        email: this.email?.value!,
-        password: this.pass?.value!,
-        firstName: this.personalInfoFormService.firstName?.value!,
-        lastName: this.personalInfoFormService.lastName?.value!,
-        dateOfBirth:
-          this.datepipe.transform(
-            this.personalInfoFormService.date?.value,
-            DateFormat.DDMMYYYY
-          ) || '',
-        sex: this.personalInfoFormService.isMale ? Gender.MALE : Gender.FEMALE,
-        pnone: `${this.dialCode()}${String(
-          this.contactFormService.number?.value
-        )}`,
-        citizenship: this.citizenship?.value!,
+    this.store.dispatch(
+      addUser({
+        user: this.userInfo(),
       })
+    );
+    this.registerSub = this.apiService
+      .registerUser(this.userInfo())
       .pipe(
         catchError(error => {
           console.log(error, 'User not registered');
@@ -134,6 +129,25 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
       return code[1].replace(' ', '');
     }
     return '+';
+  }
+
+  private userInfo(): User {
+    return {
+      email: this.email?.value!,
+      password: this.pass?.value!,
+      firstName: this.personalInfoFormService.firstName?.value!,
+      lastName: this.personalInfoFormService.lastName?.value!,
+      dateOfBirth:
+        this.datepipe.transform(
+          this.personalInfoFormService.date?.value,
+          DateFormat.DDMMYYYY
+        ) || '',
+      sex: this.personalInfoFormService.isMale ? Gender.MALE : Gender.FEMALE,
+      pnone: `${this.dialCode()}${String(
+        this.contactFormService.number?.value
+      )}`,
+      citizenship: this.citizenship?.value!,
+    };
   }
 
   public ngOnDestroy(): void {
