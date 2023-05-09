@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable class-methods-use-this */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -10,6 +12,11 @@ import {
 import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-form.service';
 import PasswordValidators from 'src/app/shared/validators/password.validators';
 import { ContactFormService } from 'src/app/shared/services/contact-form.service';
+import { ApiService } from 'src/app/core/services/api.service';
+import { DatePipe } from '@angular/common';
+import { DIAL_CODE_REGEXP } from 'src/app/shared/constants/string-constants';
+import { DateFormat, Gender } from 'src/app/types/enums';
+import { Subscription, catchError, throwError } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { CountryCodes } from './constants/country-codes';
 import { CountryCode } from './constants/types';
@@ -18,12 +25,12 @@ import { CountryCode } from './constants/types';
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
-  providers: [PersonalInfoFormService, ContactFormService],
+  providers: [PersonalInfoFormService, ContactFormService, DatePipe],
 })
-export class RegisterFormComponent implements OnInit {
+export class RegisterFormComponent implements OnInit, OnDestroy {
   public registerForm!: FormGroup;
 
-  public isMale = true;
+  private registerSub!: Subscription;
 
   public countries = CountryCodes;
 
@@ -34,7 +41,9 @@ export class RegisterFormComponent implements OnInit {
   public constructor(
     private authService: AuthService,
     private personalInfoFormService: PersonalInfoFormService,
-    private contactFormService: ContactFormService
+    private contactFormService: ContactFormService,
+    private apiService: ApiService,
+    private datepipe: DatePipe
   ) {}
 
   public ngOnInit(): void {
@@ -91,6 +100,43 @@ export class RegisterFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    this.registerSub = this.apiService
+      .registerUser({
+        email: this.email?.value!,
+        password: this.pass?.value!,
+        firstName: this.personalInfoFormService.firstName?.value!,
+        lastName: this.personalInfoFormService.lastName?.value!,
+        dateOfBirth:
+          this.datepipe.transform(
+            this.personalInfoFormService.date?.value,
+            DateFormat.DDMMYYYY
+          ) || '',
+        sex: this.personalInfoFormService.isMale ? Gender.MALE : Gender.FEMALE,
+        pnone: `${this.dialCode()}${String(
+          this.contactFormService.number?.value
+        )}`,
+        citizenship: this.citizenship?.value!,
+      })
+      .pipe(
+        catchError(error => {
+          console.log(error, 'User not registered');
+          return throwError(error);
+        })
+      )
+      .subscribe(response => console.log(response, 'user is registered'));
     this.authService.togglePopup();
+  }
+
+  private dialCode(): string {
+    const value = this.contactFormService.countryCode?.value;
+    const code = value?.match(DIAL_CODE_REGEXP);
+    if (code) {
+      return code[1].replace(' ', '');
+    }
+    return '+';
+  }
+
+  public ngOnDestroy(): void {
+    this.registerSub.unsubscribe();
   }
 }
