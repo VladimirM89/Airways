@@ -1,0 +1,12 @@
+<div class="booking-container">
+  <ul class="passengers-list">
+    <li *ngFor="let item of items; trackBy: trackByFn">
+      <div class="container">
+        <app-booking-item></app-booking-item>
+        <app-booking-additional-info [ngClass]="{'invisible': item === 'infants'}"></app-booking-additional-info>
+      </div>
+    </li>
+  </ul>
+</div>
+
+

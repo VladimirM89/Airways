@@ -1,4 +1,4 @@
-<form class="form-container" [formGroup]="loginForm" (submit)="onSubmit()">
+<form class="form-container" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
   <mat-form-field class="input-container" [ngClass]="{'invalid': email!.invalid && email!.touched}">
     <mat-label>Email</mat-label>
@@ -24,6 +24,7 @@
     <mat-label>Password</mat-label>
       <input matInput
       autocomplete="on"
+      type="password"
       formControlName="pass">
 
       <mat-icon matSuffix class="info-modal-icon" [matMenuTriggerFor]="passMenu"
@@ -54,195 +55,16 @@
     >
       <small class="error-message">Your password isn't strong enough. Should contain:</small>
       <ul class="errors-list">
-        <li *ngFor="let error of passErrors?.['checkStrongPassword']">
+        <li *ngFor="let error of passErrors?.['checkStrongPassword']; trackBy: trackByFnErr">
           <small>{{error}}</small>
         </li>
       </ul>
     </div>
   </div>
 
-  <mat-form-field class="input-container"
-    [ngClass]="{'invalid': firstName!.invalid && firstName!.touched}"
-  >
-    <mat-label>First name</mat-label>
-    <input matInput
-      formControlName="firstName"
-      type="text">
-    <mat-icon matSuffix [matMenuTriggerFor]="firstNameMenu"
-      *ngIf="!(firstName!.invalid && firstName!.touched); else errorFirstNameIcon"
-      >error_outline
-    </mat-icon>
-    <ng-template #errorFirstNameIcon>
-      <mat-icon matSuffix class="invalid-icon" [matMenuTriggerFor]="firstNameMenu">error</mat-icon>
-    </ng-template>
+  <app-passengers-info-form [personalFormGroup]="passengersInfo"></app-passengers-info-form>
 
-  <mat-menu #firstNameMenu="matMenu">
-    <span class="menu-content">
-      Add the passenger's first name as it is written on their documents (passport or ID). Do not use any accents or special characters. Do not use a nickname.
-    </span>
-  </mat-menu>
-
-  </mat-form-field>
-
-  <div
-  *ngIf="firstName!.invalid && firstName!.touched"
-  class="validation">
-    <small class="error-message"
-      *ngIf="firstNameErrors?.['required']">
-        Please enter first name.
-    </small>
-    <small class="error-message"
-    *ngIf="firstNameErrors?.['pattern']">
-      Invalid character.
-    </small>
-    <small class="error-message"
-    *ngIf="firstNameErrors?.['minlength']?.['requiredLength']">
-      The first name is too short (minimum 3 letters)
-    </small>
-  </div>
-
-  <mat-form-field class="input-container"
-    [ngClass]="{'invalid': lastName!.invalid && lastName!.touched}"
-  >
-    <mat-label>Last name</mat-label>
-    <input matInput
-      formControlName="lastName"
-      type="text">
-      <mat-icon matSuffix [matMenuTriggerFor]="lastNameMenu"
-      *ngIf="!(lastName!.invalid && lastName!.touched); else errorLastNameIcon"
-      >error_outline
-    </mat-icon>
-    <ng-template #errorLastNameIcon >
-      <mat-icon matSuffix class="invalid-icon" [matMenuTriggerFor]="lastNameMenu">error</mat-icon>
-    </ng-template>
-
-    <mat-menu #lastNameMenu="matMenu">
-      <span class="menu-content">
-        Add the passenger's last name as it is written on their documents (passport or ID). Do not use any accents or special characters. Do not use a nickname.
-      </span>
-    </mat-menu>
-
-  </mat-form-field>
-
-  <div
-  *ngIf="lastName!.invalid && lastName!.touched"
-  class="validation">
-    <small class="error-message"
-      *ngIf="lastNameErrors?.['required']">
-        Please enter last name.
-    </small>
-    <small class="error-message"
-    *ngIf="lastNameErrors?.['pattern']">
-      Invalid character.
-    </small>
-    <small class="error-message"
-    *ngIf="lastNameErrors?.['minlength']?.['requiredLength']">
-      The last name is too short.
-    </small>
-  </div>
-
-  <mat-form-field appearance="fill" class="input-container">
-    <mat-label>Date of birth</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="date">
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-
-  <div *ngIf="date!.invalid && date!.touched" class="validation">
-    <small class="error-message"
-      *ngIf="dateErrors?.['required']">
-        Please enter a correct creation date
-    </small>
-    <small class="error-message"
-      *ngIf="dateErrors?.['isFutureDate'] && !dateErrors?.['required']">
-        The date is invalid. You choose future date.
-    </small>
-  </div>
-
-  <div class="gender-container">
-    <button
-      class="gender-btn gender-btn__left"
-      type="button"
-      (click)="toggleGender()"
-      [ngClass]="{'selected-gender': isMale}"
-    >
-      <span [ngClass]="{'select-icon': isMale}"></span>
-      Male
-    </button>
-    <button
-      class="gender-btn gender-btn__right"
-      type="button"
-      (click)="toggleGender()"
-      [ngClass]="{'selected-gender': !isMale}"
-    >
-      <span [ngClass]="{'select-icon': !isMale}"></span>
-      Female
-    </button>
-  </div>
-
-  <div class="number-container">
-
-    <div class="number-content">
-      <mat-form-field class="input-container" appearance="fill">
-        <mat-label>Country code</mat-label>
-        <input type="text"
-               matInput
-               formControlName="countryCode"
-               [matAutocomplete]="autoCode"
-        >
-        <mat-autocomplete #autoCode="matAutocomplete">
-          <mat-option
-            *ngFor="let country of countries | countryCodeFilter: countryCode!.value"
-            [value]="country.name + ' ' + '(' + country.dial_code + ')'"
-          >
-            {{country.name}} ({{country.dial_code}})
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-
-      <div *ngIf="countryCode!.invalid && countryCode!.touched" class="validation">
-        <small class="error-message"
-          *ngIf="countryCodeErrors?.['required']">
-            Please select country
-        </small>
-        <small class="error-message"
-        *ngIf="countryCodeErrors?.['isIncorrectValue'] && !countryCodeErrors?.['required']">
-          Please enter in correct format
-      </small>
-      </div>
-
-    </div>
-
-    <div class="number-content">
-      <mat-form-field class="input-container" [ngClass]="{'invalid': lastName!.invalid && lastName!.touched}">
-        <mat-label>Mobile phone number</mat-label>
-        <input matInput
-          formControlName="number"
-          type="tel">
-      </mat-form-field>
-
-      <div *ngIf="number!.invalid && number!.touched" class="validation">
-        <small class="error-message"
-          *ngIf="numberErrors?.['required']">
-            Please enter phone number
-        </small>
-        <small class="error-message"
-        *ngIf="numberErrors?.['pattern']">
-          Please enter only numbers
-          </small>
-        <small class="error-message"
-          *ngIf="numberErrors?.['minlength']?.['requiredLength']">
-            The number is too short
-        </small>
-        <small class="error-message"
-          *ngIf="numberErrors?.['maxlength']?.['requiredLength']">
-            The number is too long
-        </small>
-      </div>
-
-    </div>
-
-  </div>
+  <app-contact-form [contactFormGroup]="contactForm"></app-contact-form>
 
   <mat-form-field class="input-container" appearance="fill">
     <mat-label>Citizenship</mat-label>
@@ -254,7 +76,7 @@
     <mat-icon matSuffix>arrow_drop_down</mat-icon>
     <mat-autocomplete #autoCountry="matAutocomplete">
       <mat-option
-        *ngFor="let countryName of countriesName | countryCodeFilter: citizenship!.value"
+        *ngFor="let countryName of countriesName | countryCodeFilter: citizenship!.value trackBy: trackByFnCountries"
         [value]="countryName.name"
       >
         {{countryName.name}}
@@ -263,7 +85,7 @@
   </mat-form-field>
 
   <div class="policy-container">
-    <mat-checkbox formControlName="isAgree"></mat-checkbox>
+    <mat-checkbox formControlName="isAgree" color="primary"></mat-checkbox>
     <p class="policy-text">
       I agree to Airway's
       <span class="highlight">Privacy Policy</span> and
@@ -273,7 +95,7 @@
 
   <button mat-button type="submit"
     class="primary-btn"
-    [disabled]="loginForm.invalid"
+    [disabled]="registerForm.invalid"
   >Login</button>
 </form>
 

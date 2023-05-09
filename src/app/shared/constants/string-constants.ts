@@ -10,3 +10,5 @@ export const MIX_CASES_TEXT =
 export const MIX_LETTERS_NUMBERS_TEXT = 'a mixture of letters and numbers';
 export const SPECIAL_SYMBOLS_TEXT =
   'inclusion of at least one special character, e.g., ! @ # ? ]';
+export const INITIAL_BAGGAGE = 0;
+export const MAX_BAGGAGE = 10;

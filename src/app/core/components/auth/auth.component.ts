@@ -10,7 +10,7 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
-  // TODO: get user via user Service from backend
+  // TODO: get user from state
   public isUserLogin = false;
 
   public isLoginInSelect = true;
@@ -27,7 +27,7 @@ export class AuthComponent {
 
   // TODO: get user name via user Service from backend
   public get userName(): string {
-    return 'Vladimir';
+    return 'Name';
   }
 
   public navToUserPage(): void {

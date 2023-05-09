@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookingRoutingModule } from './booking-routing.module';
 import { BookingComponent } from './booking.component';
 import { BookingSettingsPanelComponent } from './components/booking-settings-panel/booking-settings-panel.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [BookingComponent, BookingSettingsPanelComponent],
@@ -13,6 +14,8 @@ import { BookingSettingsPanelComponent } from './components/booking-settings-pan
     BookingRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
+  exports: [],
 })
 export class BookingModule {}

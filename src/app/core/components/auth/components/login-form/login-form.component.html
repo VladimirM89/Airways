@@ -9,7 +9,7 @@
     *ngIf="email!.invalid && email!.touched"
     class="validation">
       <small class="error-message"
-        *ngIf="loginForm.get('email')!.errors?.['required']">
+        *ngIf="email!.errors?.['required']">
           Please enter a login email
       </small>
       <small class="error-message"

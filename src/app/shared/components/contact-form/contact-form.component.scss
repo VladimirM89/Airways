@@ -1,16 +1,5 @@
-:host {
-  width: 100%;
+.container {
   display: flex;
-  justify-content: center;
-}
-
-.form-container {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1.6rem;
 }
 
 .input-container {
@@ -36,7 +25,7 @@
   cursor: pointer;
 }
 
-.form-container {
+.container {
   ::ng-deep {
     .mat-mdc-form-field-subscript-wrapper {
       display: none;
@@ -61,7 +50,6 @@
   }
 }
 
-
 .gender-container {
   width: 100%;
   display: grid;
@@ -70,41 +58,11 @@
   border-radius: 0.5rem;
 }
 
-.gender-btn {
-  flex-grow: 1;
-  font-size: 1.4rem;
-  font-weight: 500;
-
-  &__left {
-    border-radius: 0.5rem 0 0 0.5rem;
-  }
-
-  &__right {
-    border-radius: 0 0.5rem 0.5rem 0;
-  }
-}
-
-.selected-gender {
-  display: flex;
-  gap: 1.1rem;
-  outline: 0.5px solid var(--auxiliary-color);
-  color: var(--primary-color);
-  background-color: var(--contrast-bg-color);
-}
-
-.select-icon {
-  width: 1.2rem;
-  height: 0.9rem;
-  display: inline-flex;
-  background-image: url(../../../../../../assets/select_icon.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
 .number-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.8rem;
+  gap: 1.5rem;
+  width: 100%;
 
   @media screen and (max-width: 650px) {
     grid-template-columns: 1fr;
@@ -115,19 +73,4 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-}
-
-.policy-container {
-  display: flex;
-  align-items: center;
-  font-size: 1.4rem;
-  font-weight: 500;
-}
-
-.policy-text {
-  margin: 0 !important;
-}
-
-.highlight {
-  color: var(--primary-color);
 }

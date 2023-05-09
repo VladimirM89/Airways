@@ -8,7 +8,6 @@ import { LogoComponent } from './components/header/components/logo/logo.componen
 import { BreadcrumpsComponent } from './components/header/components/breadcrumps/breadcrumps.component';
 import { ProfileComponent } from './components/header/components/profile/profile.component';
 
-import { CountryCodeFilterPipe } from '../shared/pipes/country-code-filter.pipe';
 import { CartComponent } from './components/header/components/cart/cart.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { LoginFormComponent } from './components/auth/components/login-form/login-form.component';
@@ -26,7 +25,6 @@ import { SocialMediaFormComponent } from './components/auth/components/social-me
     LoginFormComponent,
     RegisterFormComponent,
     SocialMediaFormComponent,
-    CountryCodeFilterPipe,
     CartComponent,
   ],
   exports: [

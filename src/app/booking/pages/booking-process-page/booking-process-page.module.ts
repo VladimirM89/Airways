@@ -1,12 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { BookingProcessPageRoutingModule } from './booking-process-page-routing.module';
 import { BookingProcessPageComponent } from './booking-process-page.component';
+import { SharedModule } from '../../../shared/shared.module';
+import { BookingItemComponent } from '../../components/booking-table/booking-item/booking-item.component';
+import { BookingContactComponent } from '../../components/booking-contact/booking-contact.component';
+import { BookingTableComponent } from '../../components/booking-table/booking-table.component';
+import { BookingAdditionalInfoComponent } from '../../components/booking-table/booking-additional-info/booking-additional-info.component';
 
 @NgModule({
-  declarations: [BookingProcessPageComponent],
+  declarations: [
+    BookingProcessPageComponent,
+    BookingTableComponent,
+    BookingItemComponent,
+    BookingContactComponent,
+    BookingAdditionalInfoComponent,
+  ],
   exports: [BookingProcessPageComponent],
-  imports: [CommonModule, BookingProcessPageRoutingModule],
+  imports: [CommonModule, BookingProcessPageRoutingModule, SharedModule],
 })
 export class BookingProcessPageModule {}

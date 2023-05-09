@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Paths } from './types/enums';
+import { UserGuard } from './core/guards/user.guard';
 
 const routes: Routes = [
   {
@@ -18,11 +19,13 @@ const routes: Routes = [
       import('./shopping-cart/shopping-cart.module').then(
         m => m.ShoppingCartModule
       ),
+    canActivate: [UserGuard],
   },
   {
     path: Paths.ACCOUNT,
     loadChildren: () =>
       import('./account/account.module').then(m => m.AccountModule),
+    canActivate: [UserGuard],
   },
 ];
 

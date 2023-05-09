@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -6,25 +7,21 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-form.service';
 import PasswordValidators from 'src/app/shared/validators/password.validators';
-import {
-  NAME_REGEXP,
-  PHONE_REGEXP,
-} from 'src/app/shared/constants/string-constants';
-import DateValidators from 'src/app/shared/validators/date.validators';
-import CountryCodeValidators from 'src/app/shared/validators/countryCode.validators';
+import { ContactFormService } from 'src/app/shared/services/contact-form.service';
 import { AuthService } from '../../services/auth.service';
 import { CountryCodes } from './constants/country-codes';
+import { CountryCode } from './constants/types';
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
+  providers: [PersonalInfoFormService, ContactFormService],
 })
 export class RegisterFormComponent implements OnInit {
-  public loginForm!: FormGroup;
-
-  public hide = true;
+  public registerForm!: FormGroup;
 
   public isMale = true;
 
@@ -32,10 +29,16 @@ export class RegisterFormComponent implements OnInit {
 
   public countriesName = CountryCodes;
 
-  public constructor(private authService: AuthService) {}
+  public passengersInfoForm!: FormGroup;
+
+  public constructor(
+    private authService: AuthService,
+    private personalInfoFormService: PersonalInfoFormService,
+    private contactFormService: ContactFormService
+  ) {}
 
   public ngOnInit(): void {
-    this.loginForm = new FormGroup({
+    this.registerForm = new FormGroup({
       email: new FormControl<string>('', [
         Validators.email,
         Validators.required,
@@ -44,97 +47,47 @@ export class RegisterFormComponent implements OnInit {
         Validators.required,
         PasswordValidators.checkStrongPassword,
       ]),
-      firstName: new FormControl<string>('', [
-        Validators.required,
-        Validators.pattern(NAME_REGEXP),
-        Validators.minLength(3),
-      ]),
-      lastName: new FormControl<string>('', [
-        Validators.required,
-        Validators.pattern(NAME_REGEXP),
-        Validators.minLength(3),
-      ]),
-      date: new FormControl<Date | null>(new Date(), [
-        Validators.required,
-        DateValidators.isFutureDate,
-      ]),
-      countryCode: new FormControl<string>('', [
-        Validators.required,
-        CountryCodeValidators.isIncorrectValue,
-      ]),
-      number: new FormControl<string>('', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(10),
-        Validators.pattern(PHONE_REGEXP),
-      ]),
+      passengersInfoForm: this.personalInfoFormService.personalFormGroup,
+      contactForm: this.contactFormService.contactFormGroup,
       citizenship: new FormControl<string>(''),
       isAgree: new FormControl<boolean>(false, [Validators.requiredTrue]),
     });
   }
 
+  public get passengersInfo(): FormGroup {
+    return this.registerForm.get('passengersInfoForm') as FormGroup;
+  }
+
+  public get contactForm(): FormGroup {
+    return this.registerForm.get('contactForm') as FormGroup;
+  }
+
   public get email(): AbstractControl<string> | null {
-    return this.loginForm.get('email');
+    return this.registerForm.get('email');
   }
 
   public get emailErrors(): ValidationErrors | undefined | null {
-    return this.loginForm.get('email')?.errors;
+    return this.registerForm.get('email')?.errors;
   }
 
   public get pass(): AbstractControl<string> | null {
-    return this.loginForm.get('pass');
+    return this.registerForm.get('pass');
   }
 
   public get passErrors(): ValidationErrors | undefined | null {
-    return this.loginForm.get('pass')?.errors;
-  }
-
-  public get firstName(): AbstractControl<string> | null {
-    return this.loginForm.get('firstName');
-  }
-
-  public get firstNameErrors(): ValidationErrors | undefined | null {
-    return this.loginForm.get('firstName')?.errors;
-  }
-
-  public get lastName(): AbstractControl<string> | null {
-    return this.loginForm.get('lastName');
-  }
-
-  public get lastNameErrors(): ValidationErrors | undefined | null {
-    return this.loginForm.get('lastName')?.errors;
-  }
-
-  public get date(): AbstractControl<string> | null {
-    return this.loginForm.get('date');
-  }
-
-  public get dateErrors(): ValidationErrors | null | undefined {
-    return this.loginForm.get('date')?.errors;
-  }
-
-  public get countryCode(): AbstractControl<string> | null {
-    return this.loginForm.get('countryCode');
-  }
-
-  public get countryCodeErrors(): ValidationErrors | null | undefined {
-    return this.loginForm.get('countryCode')?.errors;
-  }
-
-  public get number(): AbstractControl<string> | null {
-    return this.loginForm.get('number');
-  }
-
-  public get numberErrors(): ValidationErrors | null | undefined {
-    return this.loginForm.get('number')?.errors;
+    return this.registerForm.get('pass')?.errors;
   }
 
   public get citizenship(): AbstractControl<string> | null {
-    return this.loginForm.get('citizenship');
+    return this.registerForm.get('citizenship');
   }
 
-  public toggleGender(): void {
-    this.isMale = !this.isMale;
+  public trackByFnCountries(index: number, item: CountryCode): number {
+    return item.id;
+  }
+
+  public trackByFnErr(index: number, item: string): string {
+    return item;
   }
 
   public onSubmit(): void {

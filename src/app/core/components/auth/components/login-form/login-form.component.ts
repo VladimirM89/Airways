@@ -48,6 +48,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    this.loginForm.reset();
     this.authService.togglePopup();
   }
 }
