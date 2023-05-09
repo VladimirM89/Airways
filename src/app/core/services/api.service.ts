@@ -35,8 +35,10 @@ export class ApiService {
   }
 
   public registerUser(user: User): Observable<any> {
-    return this.http
-      .post(`${BASE_URL}/users`, user)
-      .pipe(tap(response => console.log(response)));
+    return this.http.post(`${BASE_URL}/users`, user);
+  }
+
+  public getAllUsers(): Observable<any> {
+    return this.http.get(`${BASE_URL}/users`);
   }
 }
