@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SharedModule } from '../shared/shared.module';
@@ -27,12 +28,13 @@ import { SocialMediaFormComponent } from './components/auth/components/social-me
     SocialMediaFormComponent,
     CartComponent,
   ],
+  imports: [BrowserModule, CommonModule, SharedModule, HttpClientModule],
   exports: [
     HeaderComponent,
     FooterComponent,
     LogoComponent,
     BreadcrumpsComponent,
+    HttpClientModule,
   ],
-  imports: [BrowserModule, CommonModule, SharedModule],
 })
 export class CoreModule {}
