@@ -20,11 +20,37 @@ export class BookingSettingsPanelComponent implements OnInit {
 
   public ngOnInit(): void {
     this.form = new FormGroup({
-      departure: new FormControl<string>(''),
-      destination: new FormControl<string>(''),
-      departureDate: new FormControl<string>(''),
-      destinationDate: new FormControl<string>(''),
-      passengers: new FormControl<string>(''),
+      departure: new FormControl<string>(this.bookingInfo?.departureCity || ''),
+      destination: new FormControl<string>(
+        this.bookingInfo?.destinationCity || ''
+      ),
+      departureDate: new FormControl<string>(
+        this.bookingInfo?.departureDate || ''
+      ),
+      destinationDate: new FormControl<string>(
+        this.bookingInfo?.returnDate || ''
+      ),
+      passengers: new FormControl<number>(this.bookingService.passengersNumber),
     });
+  }
+
+  public get destinationCity(): string {
+    return this.form.get('destination')?.value;
+  }
+
+  public get departureCity(): string {
+    return this.form.get('departure')?.value;
+  }
+
+  public get destinationDate(): Date {
+    return new Date(this.form.get('destinationDate')?.value);
+  }
+
+  public get departureDate(): Date {
+    return new Date(this.form.get('departureDate')?.value);
+  }
+
+  public get passengersNumber(): number {
+    return this.form.get('passengers')?.value;
   }
 }
