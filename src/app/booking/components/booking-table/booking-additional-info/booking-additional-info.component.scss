@@ -1,0 +1,88 @@
+.add-info-container {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.baggage-content {
+  display: flex;
+  gap: 1.7rem;
+  align-items: center;
+}
+
+.container {
+  margin: 0;
+  display: flex;
+  gap: 0.8rem;
+
+  ::ng-deep {
+    .mdc-form-field {
+      gap: 1.7rem;
+    }
+
+    .mdc-form-field>label {
+      padding: 0;
+      display: flex;
+      gap: 0.8rem;
+    }
+  }
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.assist-icon {
+  background-image: url(../../../../../assets/assistance.svg);
+}
+
+.baggage-icon {
+  background-image: url(../../../../../assets/buggage_icon.svg);
+}
+
+.description {
+  font-size: 1.2rem;
+  color: var(--auxiliary-color);
+}
+
+.baggage-input {
+  width: 10rem;
+  text-align: center;
+
+  button {
+    padding: 0.3rem;
+  }
+}
+
+:host {
+  ::ng-deep {
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      background-color: transparent;
+    }
+
+    .mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input, .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
+      height: 2rem;
+      width: 2rem;
+      text-align: center;
+    }
+
+    .mat-mdc-form-field-flex {
+      height: 3rem;
+    }
+
+    .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
+      padding: 0.4rem 0 0;
+    }
+  }
+}

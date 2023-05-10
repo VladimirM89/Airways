@@ -1,0 +1,46 @@
+<form class="form-container" [formGroup]="loginForm" (submit)="onSubmit()">
+  <mat-form-field class="input-container" [ngClass]="{'invalid': email!.invalid && email!.touched}">
+    <mat-label>Email</mat-label>
+    <input matInput
+      formControlName="email"
+      type="text">
+  </mat-form-field>
+  <div
+    *ngIf="email!.invalid && email!.touched"
+    class="validation">
+      <small class="error-message"
+        *ngIf="email!.errors?.['required']">
+          Please enter a login email
+      </small>
+      <small class="error-message"
+      *ngIf="emailErrors?.['email']">
+        The login email is invalid
+      </small>
+  </div>
+  <mat-form-field class="input-container" [ngClass]="{'invalid': pass!.invalid && pass!.touched}">
+    <mat-label>Password</mat-label>
+    <input matInput
+    autocomplete="on"
+    formControlName="pass"
+    [type]="hide ? 'password' : 'text'">
+    <button mat-icon-button matSuffix
+      type="button"
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+    >
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+  <div
+    *ngIf="pass!.invalid && pass!.touched"
+    class="validation">
+      <small class="error-message"
+        *ngIf="passErrors?.['required']">
+          Please enter a password
+      </small>
+  </div>
+  <button mat-button type="submit"
+    class="primary-btn"
+    [disabled]="loginForm.invalid"
+  >Login</button>
+</form>

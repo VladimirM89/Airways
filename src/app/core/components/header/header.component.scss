@@ -1,0 +1,24 @@
+:host {
+  width: 100%;
+  position: sticky;
+  z-index: 1;
+  top: 0;
+}
+
+.header {
+  display: flex;
+  background-color: var(--auxiliary-color-opacity02);
+}
+
+.wrapper-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  flex-grow: 1;
+}
+
+.initial {
+  background-color: var(--accent-bg-color);
+}
