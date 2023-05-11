@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.info-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4rem;
+  padding: 1rem;
+  box-shadow: var(--bottom-shadow);
+}
+
+.cities,
+.dates-n-passengers {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.dates-n-passengers {
+  color: var(--auxiliary-color);
+  & .dotted {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    &::after {
+      content: '';
+      display: inline-block;
+      width: .5rem;
+      height: .5rem;
+      border-radius: 100%;
+      background-color:var(--secondary-color);
+    }
+  }
+}
+
+.toggle-btn {
+  padding: 0;
+}

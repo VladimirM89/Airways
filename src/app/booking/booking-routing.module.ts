@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BookingComponent } from './booking.component';
 import { Paths } from '../types/enums';
 import { UserGuard } from '../core/guards/user.guard';
+import { FlightsInfoGuard } from '../core/guards/flights-info.guard';
 
 const routes: Routes = [
   {
@@ -36,7 +37,7 @@ const routes: Routes = [
           import(
             './pages/flight-selection-page/flight-selection-page.module'
           ).then(m => m.FlightSelectionPageModule),
-        canDeactivate: [UserGuard],
+        canActivate: [FlightsInfoGuard],
       },
     ],
   },
