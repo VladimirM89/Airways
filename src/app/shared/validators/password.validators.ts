@@ -15,21 +15,24 @@ export default class PasswordValidators {
   ): { [key: string]: string[] } | null {
     const errors = [];
 
-    if (!(control.value.length >= 8)) {
-      errors.push(MINIMUM_LENGHT_TEXT);
+    if (control.value) {
+      if (!(control.value.length >= 8)) {
+        errors.push(MINIMUM_LENGHT_TEXT);
+      }
+
+      if (!control.value.match(CASE_CHECK_REGEXP)) {
+        errors.push(MIX_CASES_TEXT);
+      }
+
+      if (!control.value.match(LETTERS_NUMBERS_CHECK_REGEXP)) {
+        errors.push(MIX_LETTERS_NUMBERS_TEXT);
+      }
+
+      if (!control.value.match(SPECIAL_SYMBOLS_CHECK_REGEXP)) {
+        errors.push(SPECIAL_SYMBOLS_TEXT);
+      }
     }
 
-    if (!control.value.match(CASE_CHECK_REGEXP)) {
-      errors.push(MIX_CASES_TEXT);
-    }
-
-    if (!control.value.match(LETTERS_NUMBERS_CHECK_REGEXP)) {
-      errors.push(MIX_LETTERS_NUMBERS_TEXT);
-    }
-
-    if (!control.value.match(SPECIAL_SYMBOLS_CHECK_REGEXP)) {
-      errors.push(SPECIAL_SYMBOLS_TEXT);
-    }
     return errors.length ? { checkStrongPassword: errors } : null;
   }
 }

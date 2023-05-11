@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -105,22 +106,22 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    this.store.dispatch(
-      addUser({
-        user: this.userInfo(),
-      })
-    );
-
     this.registerSub = this.apiService
       .registerUser(this.userInfo())
       .pipe(
-        catchError(error => {
-          console.log(error, 'User not registered');
-          return throwError(error);
+        catchError(() => {
+          alert('This user is already registered');
+          return throwError('This user is already registered');
         })
       )
-      .subscribe(response => console.log(response, 'user is registered'));
-
+      .subscribe(() => {
+        this.store.dispatch(
+          addUser({
+            user: this.userInfo(),
+          })
+        );
+      });
+    this.clearForm();
     this.authService.togglePopup();
   }
 
@@ -150,6 +151,12 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
       )}`,
       citizenship: this.citizenship?.value!,
     };
+  }
+
+  private clearForm(): void {
+    this.passengersInfo.reset();
+    this.contactForm.reset();
+    this.registerForm.reset();
   }
 
   public ngOnDestroy(): void {
