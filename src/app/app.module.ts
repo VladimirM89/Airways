@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 

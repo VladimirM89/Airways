@@ -110,6 +110,7 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
         user: this.userInfo(),
       })
     );
+
     this.registerSub = this.apiService
       .registerUser(this.userInfo())
       .pipe(
@@ -119,6 +120,7 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe(response => console.log(response, 'user is registered'));
+
     this.authService.togglePopup();
   }
 

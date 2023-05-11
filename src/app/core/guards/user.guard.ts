@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary */
+/* eslint-disable no-return-assign */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
 import {
@@ -11,14 +11,18 @@ import {
   UrlSegment,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, tap } from 'rxjs';
+import { selectUserData } from 'src/app/redux/selectors/user.selectors';
 import { Paths } from 'src/app/types/enums';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserGuard implements CanActivate, CanLoad {
-  public constructor(private router: Router) {}
+  private isUserLogin = false;
+
+  public constructor(private router: Router, private store: Store) {}
 
   public canActivate(
     route: ActivatedRouteSnapshot,
@@ -42,15 +46,18 @@ export class UserGuard implements CanActivate, CanLoad {
     return this.userLogin();
   }
 
-  private userLogin(): boolean | UrlTree {
-    const isUserLogin = true;
+  private getUserFromStore(): void {
+    this.store
+      .select(selectUserData)
+      .pipe(tap(item => (this.isUserLogin = item === null)))
+      .subscribe()
+      .unsubscribe();
+  }
+
+  private userLogin(): boolean {
+    this.getUserFromStore();
+
     // TODO: get if destination is selected from service
-    const isDestinationSelected = false;
-    return (
-      isUserLogin ||
-      (isDestinationSelected
-        ? this.router.createUrlTree([Paths.BOOKING])
-        : this.router.createUrlTree([Paths.BASE]))
-    );
+    return this.isUserLogin;
   }
 }

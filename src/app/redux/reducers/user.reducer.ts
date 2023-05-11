@@ -1,17 +1,14 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { createReducer, on } from '@ngrx/store';
-import { User } from 'src/app/shared/models/user.model';
-import { BookingInfo } from 'src/app/shared/models/booking';
+import { UserStateInterface } from 'src/app/shared/models/user.model';
+import { Nullable } from 'src/app/shared/models/types';
 import { addUser } from '../actions/user.action';
 
 export interface UserState {
-  personalData: User[];
-  bookings: BookingInfo[];
+  userData: Nullable<UserStateInterface>;
 }
 
 const initialState: UserState = {
-  personalData: [],
-  bookings: [],
+  userData: null,
 };
 
 export const UserReducer = createReducer(
@@ -19,8 +16,7 @@ export const UserReducer = createReducer(
   on(
     addUser,
     (state, { user }): UserState => ({
-      ...state,
-      personalData: [...state.personalData, user],
+      userData: user,
     })
   )
 );

@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BookingComponent } from './booking.component';
@@ -37,7 +36,7 @@ const routes: Routes = [
           import(
             './pages/flight-selection-page/flight-selection-page.module'
           ).then(m => m.FlightSelectionPageModule),
-        canActivate: [UserGuard],
+        canDeactivate: [UserGuard],
       },
     ],
   },
