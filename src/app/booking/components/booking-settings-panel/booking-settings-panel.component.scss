@@ -41,5 +41,18 @@
 }
 
 @media screen and (max-width: 600px) {
-  
+  .info-panel {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .dates-n-passengers {
+    order: 1;
+    width: 100%;
+  }
+
+  .ghost-btn {
+    margin-left: auto;
+    padding: 0 1rem;
+  }
 }

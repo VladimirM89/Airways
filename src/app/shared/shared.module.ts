@@ -15,12 +15,14 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { PersonalInfoFormComponent } from './components/passengers-info-form/personal-info-form.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { CountryCodeFilterPipe } from './pipes/country-code-filter.pipe';
+import { AirportFilterPipe } from './pipes/airport-filter.pipe';
 
 @NgModule({
   declarations: [
     PersonalInfoFormComponent,
     ContactFormComponent,
     CountryCodeFilterPipe,
+    AirportFilterPipe,
   ],
   imports: [
     CommonModule,
@@ -54,6 +56,7 @@ import { CountryCodeFilterPipe } from './pipes/country-code-filter.pipe';
     MatSlideToggleModule,
     CountryCodeFilterPipe,
     ContactFormComponent,
+    AirportFilterPipe,
   ],
   providers: [],
 })

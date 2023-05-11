@@ -1,20 +1,52 @@
 <div class="info-panel">
   <div class="cities">
-    <span>{{departureCity}}</span>
-    <button class="toggle-btn"><img src="../../.././../assets/toggle-trip-way-btn.svg" alt="Change direction"></button>
-    <span>{{destinationCity}}</span>
+    <span>{{ bookingInfo?.departureAirport | airportToCity }}</span>
+    <button class="toggle-btn"><img src="/assets/toggle-trip-way-btn.svg" alt="Change direction"></button>
+    <span>{{ bookingInfo?.destinationAirport | airportToCity }}</span>
   </div>
   <div class="dates-n-passengers">
     <span class="dotted">{{ bookingInfo?.roundTrip ? 'Two-way' : 'One-way' }}</span>
-    <span class="dotted">{{ departureDate | date: 'dd MMM' }} - {{ destinationDate | date: 'dd MMM' }}</span>
+    <span class="dotted">{{ bookingInfo?.departureDate | date: 'dd MMM' }} - {{ bookingInfo?.returnDate | date: 'dd MMM' }}</span>
     <div>
-      <span> {{ passengersNumber }} </span>
-      <img src="../../.././../assets/passenger-icon.svg" alt="passengers">
+      <span> {{ getPassengersNumber() }} </span>
+      <img src="/assets/passenger-icon.svg" alt="passengers">
     </div>
   </div>
   <button class="ghost-btn">Edit</button>
 </div>
 
-<form [formGroup]="form">
+<form [formGroup]="form" class="settings-form">
+  <mat-form-field class="input-container" appearance="fill">
+    <mat-label>From</mat-label>
+    <input type="text"
+         matInput
+         formControlName="departure"
+         [matAutocomplete]="autoAirportDeparture"
+    >
+    <mat-autocomplete #autoAirportDeparture="matAutocomplete">
+      <mat-option
+        *ngFor="let airport of airports | airportFilterPipe: departureCity; trackBy: trackByFn"
+        [value]="airport.city + ' ' + '(' + airport.airportCode + ')'"
+      >
+        {{airport.city}} ({{airport.airportCode}})
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 
+  <mat-form-field class="input-container" appearance="fill">
+    <mat-label>Destination</mat-label>
+    <input type="text"
+         matInput
+         formControlName="destination"
+         [matAutocomplete]="autoAirportDestination"
+    >
+    <mat-autocomplete #autoAirportDestination="matAutocomplete">
+      <mat-option
+        *ngFor="let airport of airports | airportFilterPipe: destinationCity; trackBy: trackByFn"
+        [value]="airport.city + ' ' + '(' + airport.airportCode + ')'"
+      >
+        {{airport.city}} ({{airport.airportCode}})
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 </form>
