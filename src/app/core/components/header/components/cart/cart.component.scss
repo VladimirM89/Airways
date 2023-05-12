@@ -6,7 +6,7 @@
   width: 2.4rem;
   height: 2.4rem;
   display: inline-flex;
-  background-image: url(../../../../../../assets/shopping_basket_light.svg);
+  background-image: url('/assets/shopping_basket_light.svg');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -16,7 +16,7 @@
 ::ng-deep {
   .contrast {
     .cart-icon_dark {
-      background-image: url(../../../../../../assets/shopping_basket_dark.svg);
+      background-image: url('/assets/shopping_basket_dark.svg');
     }
   }
 }

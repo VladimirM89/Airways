@@ -49,7 +49,7 @@ export class UserGuard implements CanActivate, CanLoad {
   private getUserFromStore(): void {
     this.store
       .select(selectUserData)
-      .pipe(tap(item => (this.isUserLogin = item !== null)))
+      .pipe(tap(item => (this.isUserLogin = item === null)))
       .subscribe()
       .unsubscribe();
   }
