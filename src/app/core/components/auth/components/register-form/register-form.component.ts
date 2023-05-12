@@ -114,10 +114,10 @@ export class RegisterFormComponent implements OnInit, OnDestroy {
           return throwError('This user is already registered');
         })
       )
-      .subscribe(() => {
+      .subscribe(response => {
         this.store.dispatch(
           addUser({
-            user: this.userInfo(),
+            user: response,
           })
         );
       });
