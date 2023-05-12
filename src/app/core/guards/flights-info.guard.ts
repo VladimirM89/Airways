@@ -11,11 +11,14 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { BookingService } from '../services/booking.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FlightsInfoGuard implements CanActivate, CanLoad {
+  public constructor(private bookingService: BookingService) {}
+
   public canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -39,9 +42,6 @@ export class FlightsInfoGuard implements CanActivate, CanLoad {
   }
 
   private flightsInfoSelected(): boolean {
-    // TODO: isFlightsInfoSelected - get bookingInformation from booking.service if !==null => true
-    const isFlightsInfoSelected = true;
-
-    return isFlightsInfoSelected;
+    return !!this.bookingService.bookingInfo;
   }
 }
