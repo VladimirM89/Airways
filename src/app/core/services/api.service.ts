@@ -36,11 +36,11 @@ export class ApiService {
     });
   }
 
-  public registerUser(user: User): Observable<any> {
-    return this.http.post(`${BASE_URL}/users`, user);
+  public registerUser(user: User): Observable<User> {
+    return this.http.post<User>(`${BASE_URL}/users`, user);
   }
 
-  public getAllUsers(): Observable<any> {
-    return this.http.get(`${BASE_URL}/users`);
+  public getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${BASE_URL}/users`);
   }
 }

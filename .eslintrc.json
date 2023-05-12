@@ -37,11 +37,21 @@
             "style": "kebab-case"
           }
         ],
-        "@typescript-eslint/explicit-member-accessibility": ["warn"],
-        "@typescript-eslint/explicit-function-return-type": ["warn"],
-        "@angular-eslint/no-output-on-prefix": ["off"],
-        "import/prefer-default-export": ["off"],
-        "no-console": ["warn"]
+        "@typescript-eslint/explicit-member-accessibility": [
+          "warn"
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+          "warn"
+        ],
+        "@angular-eslint/no-output-on-prefix": [
+          "off"
+        ],
+        "import/prefer-default-export": [
+          "off"
+        ],
+        "no-console": [
+          "warn"
+        ]
       }
     },
     {
@@ -54,6 +64,14 @@
       "rules": {
         "@angular-eslint/template/accessibility-alt-text": "error"
       }
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@ngrx/recommended"
+      ]
     }
   ]
 }
