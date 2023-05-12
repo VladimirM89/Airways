@@ -34,16 +34,18 @@ export class BookingSettingsPanelComponent implements OnInit {
           this.bookingInfo?.destinationAirport as AirportCodes
         )
       ),
-      departureDate: new FormControl<string>(
-        this.bookingInfo?.departureDate || ''
-      ),
-      destinationDate: new FormControl<string>(
-        this.bookingInfo?.returnDate || ''
-      ),
-      // passengers: new FormControl<number>(this.bookingService.passengersNumber),
+      range: new FormGroup({
+        departureDate: new FormControl<Date | null>(
+          new Date(this.bookingInfo?.departureDate || '')
+        ),
+        destinationDate: new FormControl<Date | null>(
+          new Date(this.bookingInfo?.returnDate || '')
+        ),
+      }),
     });
   }
 
+  // TO DO: instead of this getfullAirportName function use directive which will add an airport name after city
   private getfullAirportName(airport: AirportCodes): string {
     const airportFound = this.airports.find(
       item => item.airportCode === airport
@@ -63,17 +65,17 @@ export class BookingSettingsPanelComponent implements OnInit {
     return this.form.get('departure')?.value;
   }
 
-  public get destinationDate(): Date {
-    return new Date(this.form.get('destinationDate')?.value);
+  public get destinationDate(): FormControl<Date | null> {
+    return this.range.get('destinationDate') as FormControl<Date | null>;
   }
 
-  public get departureDate(): Date {
-    return new Date(this.form.get('departureDate')?.value);
+  public get departureDate(): FormControl<Date | null> {
+    return this.range.get('departureDate') as FormControl<Date | null>;
   }
 
-  // public get passengers() {
-  //   return this.form.get('passengers')?.value;
-  // }
+  public get range(): FormGroup {
+    return this.form.get('range') as FormGroup;
+  }
 
   public getPassengersNumber(): number {
     return this.bookingService.passengersNumber;
