@@ -11,11 +11,11 @@ export class BookingService {
     roundTrip: true,
     departureCity: 'Moscow',
     destinationCity: 'Baku',
-    departureDate: '18.04.2023',
-    returnDate: '20.04.2023',
+    departureDate: '2023-05-15',
+    returnDate: '2023-05-20',
     passengers: {
       adults: 2,
-      child: 0,
+      child: 1,
       infants: 0,
     },
   };
@@ -48,5 +48,16 @@ export class BookingService {
     this.selectedFlights = this.selectedFlights.filter(
       item => item.id !== flight.id
     );
+  }
+
+  public get passengersNumber(): number {
+    if (this.bookingInformation) {
+      return (
+        this.bookingInformation.passengers.adults +
+        this.bookingInformation.passengers.child +
+        this.bookingInformation.passengers.infants
+      );
+    }
+    return 0;
   }
 }

@@ -8,9 +8,4 @@ import { ApiService } from 'src/app/core/services/api.service';
 })
 export class FlightSelectionPageComponent {
   public constructor(private apiService: ApiService) {}
-
-  public testAPI(): void {
-    this.apiService.getAllFlights().subscribe();
-    this.apiService.getFlights().subscribe();
-  }
 }

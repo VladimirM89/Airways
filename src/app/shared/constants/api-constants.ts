@@ -1,2 +1,1 @@
 export const BASE_URL = 'http://45.147.179.67:7000';
-export const LOCALHOST = 'http://localhost:7001';

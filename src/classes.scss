@@ -41,12 +41,12 @@
 
 .ghost-btn {
   @include btn-hover-effect();
-  background-color: transparent;
+  background-color: var(--bg-neutral);
   border: none;
   color: var(--primary-color);
   font-weight: 500;
   display: flex;
-  gap: 2rem
+  padding: .5rem 1.5rem;
 }
 
 .highlight-btn {
