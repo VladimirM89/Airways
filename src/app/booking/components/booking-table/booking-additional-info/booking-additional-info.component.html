@@ -1,38 +1,45 @@
 <form [formGroup]="additionalInfoForm" class="add-info-container">
-  <mat-slide-toggle class="container" color="primary" formControlName="assistance">
+  <mat-slide-toggle class="container-title" color="primary" formControlName="assistance">
     <span class="icon assist-icon"></span>
     <span class="description">Need special assistance?</span>
   </mat-slide-toggle>
 
-  <div class="baggage-content">
-    <p class="container">
-      <span class="icon baggage-icon"></span>
-      <span class="description">Additional baggage</span>
-    </p>
+  <div class="container">
+    <div class="baggage-content">
+      <p class="container-title">
+        <span class="icon baggage-icon"></span>
+        <span class="description">Additional baggage</span>
+      </p>
 
-    <mat-form-field class="baggage-input">
-      <button
-        mat-button
-        mat-icon-button
-        matPrefix
-        aria-label="Remove"
-        (click)="decrement()"
-        [disabled]="shouldDisableDecrement()"
-      >
-        <mat-icon>remove</mat-icon>
-      </button>
-      <input matInput type="number" formControlName="baggage" />
-      <button
-        mat-button
-        mat-icon-button
-        matSuffix
-        aria-label="Add"
-        (click)="increment()"
-        [disabled]="shouldDisableIncrement()"
-      >
-        <mat-icon>add</mat-icon>
-      </button>
-    </mat-form-field>
+      <mat-form-field class="baggage-input">
+        <button
+          mat-button
+          mat-icon-button
+          matPrefix
+          aria-label="Remove"
+          (click)="decrement()"
+          [disabled]="shouldDisableDecrement()"
+        >
+          <mat-icon>remove</mat-icon>
+        </button>
+        <input matInput type="number" formControlName="baggage" />
+        <button
+          mat-button
+          mat-icon-button
+          matSuffix
+          aria-label="Add"
+          (click)="increment() "
+          [disabled]="shouldDisableIncrement()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <p class="error-baggage" [ngClass]="{'invisible': !isBaggageError}">
+      You can't add more than 2 luggage items per person
+    </p>
   </div>
+
 </form>
 

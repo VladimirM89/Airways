@@ -46,8 +46,10 @@ export class UserGuard implements CanActivate, CanLoad {
   private userLogin(): Observable<boolean> {
     return this.store.select(selectUserData).pipe(
       map(item => {
-        return item !== null;
+        return item === null;
       })
     );
   }
 }
+
+

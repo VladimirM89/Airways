@@ -11,5 +11,5 @@ export const MIX_LETTERS_NUMBERS_TEXT = 'a mixture of letters and numbers';
 export const SPECIAL_SYMBOLS_TEXT =
   'inclusion of at least one special character, e.g., ! @ # ? ]';
 export const INITIAL_BAGGAGE = 0;
-export const MAX_BAGGAGE = 10;
+export const MAX_BAGGAGE = 2;
 export const DIAL_CODE_REGEXP = /\((.*?)\)/;

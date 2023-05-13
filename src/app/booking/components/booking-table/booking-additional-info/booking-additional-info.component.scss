@@ -2,16 +2,24 @@
   display: flex;
   gap: 1.5rem;
   justify-content: space-between;
+  align-items: flex-start;
   flex-wrap: wrap;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .baggage-content {
   display: flex;
   gap: 1.7rem;
   align-items: center;
+  justify-content: flex-end;
 }
 
-.container {
+.container-title {
   margin: 0;
   display: flex;
   gap: 0.8rem;
@@ -85,4 +93,15 @@
       padding: 0.4rem 0 0;
     }
   }
+}
+
+.error-baggage {
+  max-width: 25rem;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  color: var(--error-color);
+}
+
+.invisible {
+  display: none;
 }

@@ -13,6 +13,8 @@ import {
 export class BookingAdditionalInfoComponent implements OnInit {
   public additionalInfoForm!: FormGroup;
 
+  public isBaggageError = false;
+
   public ngOnInit(): void {
     this.additionalInfoForm = new FormGroup({
       assistance: new FormControl<boolean>(false),
@@ -32,6 +34,10 @@ export class BookingAdditionalInfoComponent implements OnInit {
     return this.baggage?.value || 0;
   }
 
+  public set baggageCount(value: number) {
+    this.baggage?.setValue(value);
+  }
+
   public decrement(): void {
     this.baggage?.setValue(this.baggageValue - 1);
   }
@@ -41,10 +47,17 @@ export class BookingAdditionalInfoComponent implements OnInit {
   }
 
   public shouldDisableDecrement(): boolean {
+    if (this.baggageValue < MAX_BAGGAGE) {
+      this.isBaggageError = false;
+    }
     return this.baggageValue <= INITIAL_BAGGAGE;
   }
 
   public shouldDisableIncrement(): boolean {
-    return this.baggageValue >= MAX_BAGGAGE;
+    if (this.baggageValue >= MAX_BAGGAGE + 1) {
+      this.baggageCount = MAX_BAGGAGE;
+      this.isBaggageError = true;
+    }
+    return this.baggageValue >= MAX_BAGGAGE + 1;
   }
 }
