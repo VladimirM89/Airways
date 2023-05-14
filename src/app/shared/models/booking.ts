@@ -8,7 +8,7 @@ export interface BookingInfo {
 }
 
 export interface PassengersNumber {
-  adults: number;
+  adult: number;
   child: number;
   infants: number;
 }

@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-form.service';
 import { ValidationFormsService } from 'src/app/shared/services/validation-forms.service';
@@ -11,6 +11,10 @@ import { ValidationFormsService } from 'src/app/shared/services/validation-forms
   providers: [PersonalInfoFormService],
 })
 export class PassengerItemComponent implements OnInit {
+  @Input() public passenger!: string;
+
+  @Input() public index!: number;
+
   public formGroup!: FormGroup;
 
   public constructor(

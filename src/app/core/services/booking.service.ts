@@ -14,7 +14,7 @@ export class BookingService {
     departureDate: '2023-05-15',
     returnDate: '2023-05-20',
     passengers: {
-      adults: 2,
+      adult: 2,
       child: 1,
       infants: 0,
     },
@@ -53,7 +53,7 @@ export class BookingService {
   public get passengersNumber(): number {
     if (this.bookingInformation) {
       return (
-        this.bookingInformation.passengers.adults +
+        this.bookingInformation.passengers.adult +
         this.bookingInformation.passengers.child +
         this.bookingInformation.passengers.infants
       );

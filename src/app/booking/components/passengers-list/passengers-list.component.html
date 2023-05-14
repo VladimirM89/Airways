@@ -1,8 +1,8 @@
 <div class="passengers-container">
   <ul class="passengers-list">
-    <li *ngFor="let item of items; trackBy: trackByFn">
+    <li *ngFor="let item of items; let i = index; trackBy: trackByFn">
       <div class="container">
-        <app-passenger-item></app-passenger-item>
+        <app-passenger-item [index]="i + 1" [passenger]="item"></app-passenger-item>
         <app-passenger-additional-info [ngClass]="{'invisible': item === 'infants'}"></app-passenger-additional-info>
       </div>
     </li>
