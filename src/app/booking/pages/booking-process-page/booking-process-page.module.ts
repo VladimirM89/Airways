@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 import { BookingProcessPageRoutingModule } from './booking-process-page-routing.module';
 import { BookingProcessPageComponent } from './booking-process-page.component';
 import { SharedModule } from '../../../shared/shared.module';
-import { BookingItemComponent } from '../../components/booking-table/booking-item/booking-item.component';
 import { BookingContactComponent } from '../../components/booking-contact/booking-contact.component';
-import { BookingTableComponent } from '../../components/booking-table/booking-table.component';
-import { BookingAdditionalInfoComponent } from '../../components/booking-table/booking-additional-info/booking-additional-info.component';
+import { PassengerAdditionalInfoComponent } from '../../components/passengers-list/passenger-additional-info/passenger-additional-info.component';
+import { PassengerItemComponent } from '../../components/passengers-list/passenger-item/passenger-item.component';
+import { PassengersListComponent } from '../../components/passengers-list/passengers-list.component';
 
 @NgModule({
   declarations: [
     BookingProcessPageComponent,
-    BookingTableComponent,
-    BookingItemComponent,
+    PassengersListComponent,
+    PassengerItemComponent,
     BookingContactComponent,
-    BookingAdditionalInfoComponent,
+    PassengerAdditionalInfoComponent,
   ],
   exports: [BookingProcessPageComponent],
   imports: [CommonModule, BookingProcessPageRoutingModule, SharedModule],

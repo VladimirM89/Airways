@@ -51,5 +51,3 @@ export class UserGuard implements CanActivate, CanLoad {
     );
   }
 }
-
-

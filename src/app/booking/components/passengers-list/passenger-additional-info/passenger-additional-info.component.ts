@@ -6,11 +6,11 @@ import {
 } from 'src/app/shared/constants/string-constants';
 
 @Component({
-  selector: 'app-booking-additional-info',
-  templateUrl: './booking-additional-info.component.html',
-  styleUrls: ['./booking-additional-info.component.scss'],
+  selector: 'app-passenger-additional-info',
+  templateUrl: './passenger-additional-info.component.html',
+  styleUrls: ['./passenger-additional-info.component.scss'],
 })
-export class BookingAdditionalInfoComponent implements OnInit {
+export class PassengerAdditionalInfoComponent implements OnInit {
   public additionalInfoForm!: FormGroup;
 
   public isBaggageError = false;

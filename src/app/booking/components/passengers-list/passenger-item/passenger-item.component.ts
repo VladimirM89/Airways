@@ -5,12 +5,12 @@ import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-f
 import { ValidationFormsService } from 'src/app/shared/services/validation-forms.service';
 
 @Component({
-  selector: 'app-booking-item',
-  templateUrl: './booking-item.component.html',
-  styleUrls: ['./booking-item.component.scss'],
+  selector: 'app-passenger-item',
+  templateUrl: './passenger-item.component.html',
+  styleUrls: ['./passenger-item.component.scss'],
   providers: [PersonalInfoFormService],
 })
-export class BookingItemComponent implements OnInit {
+export class PassengerItemComponent implements OnInit {
   public formGroup!: FormGroup;
 
   public constructor(

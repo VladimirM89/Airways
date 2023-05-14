@@ -2,11 +2,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-booking-table',
-  templateUrl: './booking-table.component.html',
-  styleUrls: ['./booking-table.component.scss'],
+  selector: 'app-passengers-list',
+  templateUrl: './passengers-list.component.html',
+  styleUrls: ['./passengers-list.component.scss'],
 })
-export class BookingTableComponent {
+export class PassengersListComponent {
   // TODO: items - get number of passengers from passengersInfo
   public items = ['adult', 'child', 'infants'];
 
