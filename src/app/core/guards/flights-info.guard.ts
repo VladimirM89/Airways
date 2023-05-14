@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @ngrx/avoid-mapping-selectors */
-
+/* eslint-disable class-methods-use-this */
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -11,15 +10,14 @@ import {
   UrlSegment,
   UrlTree,
 } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable, map, take } from 'rxjs';
-import { selectUserData } from 'src/app/redux/selectors/user.selectors';
+import { Observable } from 'rxjs';
+import { BookingService } from '../services/booking.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserGuard implements CanActivate, CanLoad {
-  public constructor(private store: Store) {}
+export class FlightsInfoGuard implements CanActivate, CanLoad {
+  public constructor(private bookingService: BookingService) {}
 
   public canActivate(
     route: ActivatedRouteSnapshot,
@@ -29,7 +27,7 @@ export class UserGuard implements CanActivate, CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.userLogin();
+    return this.flightsInfoSelected();
   }
 
   public canLoad(
@@ -40,14 +38,10 @@ export class UserGuard implements CanActivate, CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.userLogin();
+    return this.flightsInfoSelected();
   }
 
-  private userLogin(): Observable<boolean> {
-    return this.store.select(selectUserData).pipe(
-      map(item => {
-        return item !== null;
-      })
-    );
+  private flightsInfoSelected(): boolean {
+    return !!this.bookingService.bookingInfo;
   }
 }

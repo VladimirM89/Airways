@@ -1,6 +1,6 @@
 <div class="cart-icon-container" (click)="navToCart()">
   <span class="cart-icon cart-icon_dark"></span>
-  <span class="icon" *ngIf="count > 0 && isUserLogin">
+  <span class="icon" *ngIf="count > 0 && (isUserLogin$ | async)">
     <span class="icon-count">{{count}}</span>
 </span>
 </div>

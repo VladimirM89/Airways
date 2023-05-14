@@ -1,5 +1,9 @@
+/* eslint-disable no-alert */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable class-methods-use-this */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -10,6 +14,14 @@ import {
 import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-form.service';
 import PasswordValidators from 'src/app/shared/validators/password.validators';
 import { ContactFormService } from 'src/app/shared/services/contact-form.service';
+import { ApiService } from 'src/app/core/services/api.service';
+import { DatePipe } from '@angular/common';
+import { DIAL_CODE_REGEXP } from 'src/app/shared/constants/string-constants';
+import { DateFormat, Gender } from 'src/app/types/enums';
+import { Subscription, catchError, throwError } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { addUser } from 'src/app/redux/actions/user.action';
+import { User } from 'src/app/shared/models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { CountryCodes } from './constants/country-codes';
 import { CountryCode } from './constants/types';
@@ -18,23 +30,26 @@ import { CountryCode } from './constants/types';
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
-  providers: [PersonalInfoFormService, ContactFormService],
+  providers: [PersonalInfoFormService, ContactFormService, DatePipe],
 })
-export class RegisterFormComponent implements OnInit {
+export class RegisterFormComponent implements OnInit, OnDestroy {
   public registerForm!: FormGroup;
 
-  public isMale = true;
+  public passengersInfoForm!: FormGroup;
 
   public countries = CountryCodes;
 
   public countriesName = CountryCodes;
 
-  public passengersInfoForm!: FormGroup;
+  private registerSub!: Subscription;
 
   public constructor(
     private authService: AuthService,
     private personalInfoFormService: PersonalInfoFormService,
-    private contactFormService: ContactFormService
+    private contactFormService: ContactFormService,
+    private apiService: ApiService,
+    private datepipe: DatePipe,
+    private store: Store
   ) {}
 
   public ngOnInit(): void {
@@ -91,6 +106,60 @@ export class RegisterFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    this.registerSub = this.apiService
+      .registerUser(this.userInfo())
+      .pipe(
+        catchError(() => {
+          alert('This user is already registered');
+          return throwError('This user is already registered');
+        })
+      )
+      .subscribe(response => {
+        this.store.dispatch(
+          addUser({
+            user: response,
+          })
+        );
+      });
+    this.clearForm();
     this.authService.togglePopup();
+  }
+
+  private dialCode(): string {
+    const value = this.contactFormService.countryCode?.value;
+    const code = value?.match(DIAL_CODE_REGEXP);
+    if (code) {
+      return code[1].replace(' ', '');
+    }
+    return '+';
+  }
+
+  private userInfo(): User {
+    return {
+      email: this.email?.value!,
+      password: this.pass?.value!,
+      firstName: this.personalInfoFormService.firstName?.value!,
+      lastName: this.personalInfoFormService.lastName?.value!,
+      dateOfBirth:
+        this.datepipe.transform(
+          this.personalInfoFormService.date?.value,
+          DateFormat.DDMMYYYY
+        ) || '',
+      sex: this.personalInfoFormService.isMale ? Gender.MALE : Gender.FEMALE,
+      pnone: `${this.dialCode()}${String(
+        this.contactFormService.number?.value
+      )}`,
+      citizenship: this.citizenship?.value!,
+    };
+  }
+
+  private clearForm(): void {
+    this.passengersInfo.reset();
+    this.contactForm.reset();
+    this.registerForm.reset();
+  }
+
+  public ngOnDestroy(): void {
+    this.registerSub.unsubscribe();
   }
 }

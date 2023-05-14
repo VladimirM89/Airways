@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { selectUserData } from 'src/app/redux/selectors/user.selectors';
+import { Nullable } from 'src/app/shared/models/types';
+import { UserStateInterface } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -8,13 +13,14 @@ import { Paths } from 'src/app/types/enums';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent {
-  public constructor(private router: Router) {}
+  public constructor(private router: Router, private store: Store) {}
 
   // TODO: get count of flights in cart from cart-service
   public count = 1;
 
-  // TODO: get if user login from state
-  public isUserLogin = false;
+  public get isUserLogin$(): Observable<Nullable<UserStateInterface>> {
+    return this.store.select(selectUserData);
+  }
 
   public navToCart(): void {
     this.router.navigate([Paths.CART]);
