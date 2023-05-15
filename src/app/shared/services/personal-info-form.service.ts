@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable class-methods-use-this */
 import { Injectable } from '@angular/core';
 import {
@@ -7,6 +8,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Gender } from 'src/app/types/enums';
 import { NAME_REGEXP } from '../constants/string-constants';
 import DateValidators from '../validators/date.validators';
 
@@ -16,6 +18,9 @@ export class PersonalInfoFormService {
 
   public toggleGender(): void {
     this.isMale = !this.isMale;
+    let gender = '';
+    this.isMale ? (gender = Gender.MALE) : (gender = Gender.FEMALE);
+    this.sex?.setValue(gender);
   }
 
   public personalFormGroup = this.createPersonalInfoForm();
@@ -32,10 +37,11 @@ export class PersonalInfoFormService {
         Validators.pattern(NAME_REGEXP),
         Validators.minLength(3),
       ]),
-      date: new FormControl<Date | null>(new Date(), [
+      dateOfBirth: new FormControl<Date | null>(new Date(), [
         Validators.required,
         DateValidators.isFutureDate,
       ]),
+      sex: new FormControl<string>(Gender.MALE),
     });
   }
 
@@ -55,15 +61,15 @@ export class PersonalInfoFormService {
     return this.personalFormGroup.get('lastName')?.errors;
   }
 
-  public get date(): AbstractControl<string> | null {
-    return this.personalFormGroup.get('date');
+  public get dateOfBirth(): AbstractControl<string> | null {
+    return this.personalFormGroup.get('dateOfBirth');
   }
 
-  public get dateErrors(): ValidationErrors | null | undefined {
-    return this.personalFormGroup.get('date')?.errors;
+  public get dateOfBirthErrors(): ValidationErrors | null | undefined {
+    return this.personalFormGroup.get('dateOfBirth')?.errors;
   }
 
-  public get formValid(): boolean {
-    return this.personalFormGroup.invalid;
+  public get sex(): AbstractControl<string> | null {
+    return this.personalFormGroup.get('sex');
   }
 }

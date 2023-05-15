@@ -125,7 +125,7 @@ export class RegisterFormComponent implements OnInit {
       lastName: this.personalInfoFormService.lastName?.value!,
       dateOfBirth:
         this.datepipe.transform(
-          this.personalInfoFormService.date?.value,
+          this.personalInfoFormService.dateOfBirth?.value,
           DateFormat.DDMMYYYY
         ) || '',
       sex: this.personalInfoFormService.isMale ? Gender.MALE : Gender.FEMALE,

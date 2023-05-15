@@ -4,7 +4,6 @@ import { BookingProcessPageRoutingModule } from './booking-process-page-routing.
 import { BookingProcessPageComponent } from './booking-process-page.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { BookingContactComponent } from '../../components/booking-contact/booking-contact.component';
-import { PassengerAdditionalInfoComponent } from '../../components/passengers-list/passenger-additional-info/passenger-additional-info.component';
 import { PassengerItemComponent } from '../../components/passengers-list/passenger-item/passenger-item.component';
 import { PassengersListComponent } from '../../components/passengers-list/passengers-list.component';
 
@@ -14,7 +13,6 @@ import { PassengersListComponent } from '../../components/passengers-list/passen
     PassengersListComponent,
     PassengerItemComponent,
     BookingContactComponent,
-    PassengerAdditionalInfoComponent,
   ],
   exports: [BookingProcessPageComponent],
   imports: [CommonModule, BookingProcessPageRoutingModule, SharedModule],

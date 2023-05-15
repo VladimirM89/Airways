@@ -10,7 +10,7 @@ export interface BookingInfo {
 export interface PassengersNumber {
   adult: number;
   child: number;
-  infants: number;
+  infant: number;
 }
 
 export interface PassangersInfo {
@@ -31,5 +31,5 @@ export interface Passenger {
   sex: string;
   dateOfBirth: string;
   specialAssistance: boolean;
-  luggage: boolean;
+  luggage: string;
 }

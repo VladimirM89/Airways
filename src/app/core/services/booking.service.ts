@@ -16,11 +16,19 @@ export class BookingService {
     passengers: {
       adult: 2,
       child: 1,
-      infants: 0,
+      infant: 1,
     },
   };
 
-  private passangersInfomation: Nullable<PassangersInfo> = null;
+  private passangersInfomation: Nullable<PassangersInfo> = {
+    adults: [],
+    child: [],
+    infants: [],
+    contacts: {
+      email: '',
+      mobile: '',
+    },
+  };
 
   private selectedFlights: Array<FlightItem> = [];
 
@@ -55,7 +63,7 @@ export class BookingService {
       return (
         this.bookingInformation.passengers.adult +
         this.bookingInformation.passengers.child +
-        this.bookingInformation.passengers.infants
+        this.bookingInformation.passengers.infant
       );
     }
     return 0;

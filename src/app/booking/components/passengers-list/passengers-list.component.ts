@@ -19,14 +19,14 @@ export class PassengersListComponent {
 
   public constructor(private bookingService: BookingService) {
     this.passengers = this.bookingService.bookingInfo!.passengers;
-    this.allPassengers();
+    this.passengersArray();
   }
 
   public trackByFn(index: number, item: string): string {
     return item;
   }
 
-  public allPassengers(): void {
+  public passengersArray(): void {
     for (const item in this.passengers) {
       for (
         let i = 1;

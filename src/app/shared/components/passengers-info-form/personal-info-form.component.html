@@ -85,17 +85,17 @@
   <div class="input-container">
     <mat-form-field appearance="fill" class="input-content">
       <mat-label>Date of birth</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="date">
+      <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
    </mat-form-field>
-   <div *ngIf="date!.invalid && date!.touched" class="validation">
+   <div *ngIf="dateOfBirth!.invalid && dateOfBirth!.touched" class="validation">
     <small class="error-message"
-      *ngIf="dateErrors?.['required']">
+      *ngIf="dateOfBirthErrors?.['required']">
         Please enter a correct creation date
     </small>
     <small class="error-message"
-      *ngIf="dateErrors?.['isFutureDate'] && !dateErrors?.['required']">
+      *ngIf="dateOfBirthErrors?.['isFutureDate'] && !dateOfBirthErrors?.['required']">
         The date is invalid. You choose future date.
     </small>
    </div>
