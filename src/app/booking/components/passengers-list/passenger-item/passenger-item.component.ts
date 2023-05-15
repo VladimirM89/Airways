@@ -6,7 +6,7 @@ import {
   MAX_BAGGAGE,
 } from 'src/app/shared/constants/string-constants';
 import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-form.service';
-import { ValidationFormsService } from 'src/app/shared/services/validation-forms.service';
+import { PassengersFormsService } from 'src/app/shared/services/passengers-forms.service';
 
 @Component({
   selector: 'app-passenger-item',
@@ -27,7 +27,7 @@ export class PassengerItemComponent implements OnInit {
 
   public constructor(
     private personalInfoFormService: PersonalInfoFormService,
-    private validationFormsService: ValidationFormsService
+    private passengersFormsService: PassengersFormsService
   ) {}
 
   public ngOnInit(): void {
@@ -37,8 +37,8 @@ export class PassengerItemComponent implements OnInit {
       luggage: new FormControl<number>(INITIAL_BAGGAGE),
     });
 
-    this.validationFormsService.addForm(this.passengerFormGroup);
-    this.validationFormsService.passengerInfo(
+    this.passengersFormsService.addForm(this.passengerFormGroup);
+    this.passengersFormsService.passengersInfo(
       this.passengerFormGroup,
       this.passenger
     );

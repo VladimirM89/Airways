@@ -13,11 +13,11 @@ import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-f
 import PasswordValidators from 'src/app/shared/validators/password.validators';
 import { ContactFormService } from 'src/app/shared/services/contact-form.service';
 import { DatePipe } from '@angular/common';
-import { DIAL_CODE_REGEXP } from 'src/app/shared/constants/string-constants';
 import { DateFormat, Gender } from 'src/app/types/enums';
 import { Store } from '@ngrx/store';
 import { registerUser } from 'src/app/redux/actions/user.action';
 import { User } from 'src/app/shared/models/user.model';
+import { dialCode } from 'src/app/shared/utils';
 import { AuthService } from '../../services/auth.service';
 import { CountryCodes } from './constants/country-codes';
 import { CountryCode } from './constants/types';
@@ -108,15 +108,6 @@ export class RegisterFormComponent implements OnInit {
     this.authService.togglePopup();
   }
 
-  private dialCode(): string {
-    const value = this.contactFormService.countryCode?.value;
-    const code = value?.match(DIAL_CODE_REGEXP);
-    if (code) {
-      return code[1].replace(' ', '');
-    }
-    return '+';
-  }
-
   private userInfo(): User {
     return {
       email: this.email?.value!,
@@ -129,7 +120,7 @@ export class RegisterFormComponent implements OnInit {
           DateFormat.DDMMYYYY
         ) || '',
       sex: this.personalInfoFormService.isMale ? Gender.MALE : Gender.FEMALE,
-      pnone: `${this.dialCode()}${String(
+      pnone: `${dialCode(this.contactFormService.countryCode?.value!)}${String(
         this.contactFormService.number?.value
       )}`,
       citizenship: this.citizenship?.value!,

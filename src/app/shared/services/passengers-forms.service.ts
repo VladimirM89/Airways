@@ -12,7 +12,7 @@ export interface Pass {
 @Injectable({
   providedIn: 'root',
 })
-export class ValidationFormsService {
+export class PassengersFormsService {
   public formsArray: FormGroup[] = [];
 
   public formsObject: Pass | null = {
@@ -26,34 +26,27 @@ export class ValidationFormsService {
     this.formsArray.push(form);
   }
 
-  public passengerInfo(form: FormGroup, passengerType?: string): void {
+  public passengersInfo(form: FormGroup, passengerType?: string): void {
     if (passengerType === 'adult') {
       this.formsObject?.adults.push(form);
-      // console.log('adults', this.formsObject?.adults);
-      // if (form instanceof Object) {
-      //   this.formsObject?.adults.push(Object.values(form as object));
-      // }
       return;
     }
     if (passengerType === 'child') {
       this.formsObject?.child.push(form);
-      // console.log('child', this.formsObject?.child);
       return;
     }
     if (passengerType === 'infant') {
       this.formsObject?.infants.push(form);
-      // console.log('infants', this.formsObject?.infants);
       return;
     }
     this.formsObject?.contacts.push(form);
-    // console.log('contacts', this.formsObject?.contacts);
   }
 
   public flattenObject(obj: { [key: string]: string | Date }): {
     [key: string]: string | Date;
   } {
-    // console.log('flat object: ', obj);
     const flattened: { [key: string]: string | Date } = {};
+
     Object.keys(obj).forEach(key => {
       let value = obj[key];
       if (value instanceof Date) {

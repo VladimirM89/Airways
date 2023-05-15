@@ -3,7 +3,6 @@
     <li *ngFor="let item of items; let i = index; trackBy: trackByFn">
       <div class="container">
         <app-passenger-item [index]="i + 1" [passenger]="item"></app-passenger-item>
-        <!-- <app-passenger-additional-info [index]="i + 1" [passenger]="item" [ngClass]="{'invisible': item === 'infant'}"></app-passenger-additional-info> -->
       </div>
     </li>
   </ul>
