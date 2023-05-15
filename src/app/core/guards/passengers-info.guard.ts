@@ -1,6 +1,5 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @ngrx/avoid-mapping-selectors */
-
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -11,15 +10,14 @@ import {
   UrlSegment,
   UrlTree,
 } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable, map, take } from 'rxjs';
-import { selectUserData } from 'src/app/redux/selectors/user.selectors';
+import { Observable } from 'rxjs';
+import { BookingService } from '../services/booking.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserGuard implements CanActivate, CanLoad {
-  public constructor(private store: Store) {}
+export class PassengersInfoGuard implements CanActivate, CanLoad {
+  public constructor(private bookingService: BookingService) {}
 
   public canActivate(
     route: ActivatedRouteSnapshot,
@@ -29,7 +27,7 @@ export class UserGuard implements CanActivate, CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.userLogin();
+    return this.isPassengersInfoFilled();
   }
 
   public canLoad(
@@ -40,14 +38,10 @@ export class UserGuard implements CanActivate, CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.userLogin();
+    return this.isPassengersInfoFilled();
   }
 
-  private userLogin(): Observable<boolean> {
-    return this.store.select(selectUserData).pipe(
-      map(item => {
-        return item === null;
-      })
-    );
+  private isPassengersInfoFilled(): boolean {
+    return !!this.bookingService.passengersInfo;
   }
 }
