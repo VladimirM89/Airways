@@ -34,6 +34,7 @@ export class BookingContactComponent implements OnInit {
       contactInput: this.contactFormService.contactFormGroup,
     });
     this.validationFormsService.addForm(this.contactForm);
+    this.validationFormsService.passengerInfo(this.contactForm);
   }
 
   public get contactFormGroup(): FormGroup {
