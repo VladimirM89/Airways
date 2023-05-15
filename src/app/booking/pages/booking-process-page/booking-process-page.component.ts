@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookingService } from 'src/app/core/services/booking.service';
-import { Passenger } from 'src/app/shared/models/booking';
+import { PassangersInfo, Passenger } from 'src/app/shared/models/booking';
+import { Nullable } from 'src/app/shared/models/types';
 import { PassengersFormsService } from 'src/app/shared/services/passengers-forms.service';
 import { dialCode } from 'src/app/shared/utils';
 import { Paths } from 'src/app/types/enums';
@@ -15,6 +16,16 @@ import { Paths } from 'src/app/types/enums';
   styleUrls: ['./booking-process-page.component.scss'],
 })
 export class BookingProcessPageComponent {
+  private passangersInfomation: Nullable<PassangersInfo> = {
+    adults: [],
+    child: [],
+    infants: [],
+    contacts: {
+      email: '',
+      mobile: '',
+    },
+  };
+
   public constructor(
     private router: Router,
     private passengersFormsService: PassengersFormsService,
@@ -32,25 +43,25 @@ export class BookingProcessPageComponent {
   }
 
   public passengersInfo(): void {
-    if (
-      this.passengersFormsService.formsObject &&
-      this.bookingService.passengersInfo?.adults
-    ) {
+    if (this.passengersFormsService.formsObject && this.passangersInfomation) {
       this.addPassengerToService(
         this.passengersFormsService.formsObject?.adults,
-        this.bookingService.passengersInfo?.adults
+        this.passangersInfomation?.adults
       );
       this.addPassengerToService(
         this.passengersFormsService.formsObject?.child,
-        this.bookingService.passengersInfo?.child
+        this.passangersInfomation?.child
       );
       this.addPassengerToService(
         this.passengersFormsService.formsObject?.infants,
-        this.bookingService.passengersInfo?.infants
+        this.passangersInfomation?.infants
       );
     }
 
     this.addContactsToService();
+
+    this.bookingService.passengersInfo = this.passangersInfomation;
+
     this.navToPayment();
   }
 
@@ -69,12 +80,10 @@ export class BookingProcessPageComponent {
     this.passengersFormsService.formsObject?.contacts.map(item => {
       const flatObj = this.passengersFormsService.flattenObject(item.value);
 
-      if (this.bookingService.passengersInfo?.contacts) {
-        this.bookingService.passengersInfo.contacts.email = flatObj[
-          'email'
-        ] as string;
+      if (this.passangersInfomation?.contacts) {
+        this.passangersInfomation.contacts.email = flatObj['email'] as string;
 
-        this.bookingService.passengersInfo.contacts.mobile =
+        this.passangersInfomation.contacts.mobile =
           dialCode(flatObj['countryCode'] as string) +
           (flatObj['number'] as string);
       }

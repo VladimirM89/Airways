@@ -20,15 +20,7 @@ export class BookingService {
     },
   };
 
-  private passangersInfomation: Nullable<PassangersInfo> = {
-    adults: [],
-    child: [],
-    infants: [],
-    contacts: {
-      email: '',
-      mobile: '',
-    },
-  };
+  private passangersInfomation: Nullable<PassangersInfo> = null;
 
   private selectedFlights: Array<FlightItem> = [];
 
