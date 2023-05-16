@@ -55,7 +55,8 @@ export class RegisterFormComponent implements OnInit {
         Validators.required,
         PasswordValidators.checkStrongPassword,
       ]),
-      passengersInfoForm: this.personalInfoFormService.personalFormGroup,
+      passengersInfoForm:
+        this.personalInfoFormService.createPersonalInfoForm(null),
       contactForm: this.contactFormService.contactFormGroup,
       citizenship: new FormControl<string>(''),
       isAgree: new FormControl<boolean>(false, [Validators.requiredTrue]),

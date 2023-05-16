@@ -7,3 +7,13 @@ export function dialCode(value: string): string {
   }
   return '';
 }
+
+export function dateToString(date: Date | null): string {
+  if (date) {
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${year}/${`0${month}`.slice(-2)}/${day}`;
+  }
+  return '';
+}

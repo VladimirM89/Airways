@@ -1,6 +1,6 @@
 <p class="passenger-title">
-  <span class="count">{{index}}. </span>
-  <span class="title">{{passenger}}</span>
+  <span class="count">{{index + 1}}. </span>
+  <span class="title">{{passengerCategory}}</span>
 </p>
 
 <form [formGroup]="passengerFormGroup" class="form-container">
@@ -10,7 +10,7 @@
     class="passenger-form">
   </app-passengers-info-form>
 
-  <div class="add-info-container" [ngClass]="{'invisible': passenger === 'infant'}">
+  <div class="add-info-container" [ngClass]="{'invisible': passengerCategory === 'infant'}">
     <mat-slide-toggle class="container-title" color="primary" formControlName="specialAssistance">
       <span class="icon assist-icon"></span>
       <span class="description">Need special assistance?</span>

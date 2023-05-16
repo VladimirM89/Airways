@@ -7,6 +7,8 @@ import {
 } from 'src/app/shared/constants/string-constants';
 import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-form.service';
 import { PassengersFormsService } from 'src/app/shared/services/passengers-forms.service';
+import { Passenger } from 'src/app/shared/models/booking';
+import { Nullable } from 'src/app/shared/models/types';
 
 @Component({
   selector: 'app-passenger-item',
@@ -15,9 +17,11 @@ import { PassengersFormsService } from 'src/app/shared/services/passengers-forms
   providers: [PersonalInfoFormService],
 })
 export class PassengerItemComponent implements OnInit {
-  @Input() public passenger!: string;
+  @Input() public passengerCategory!: string;
 
   @Input() public index!: number;
+
+  @Input() public passengerData!: Nullable<Passenger>;
 
   public personalFormGroup!: FormGroup;
 
@@ -32,7 +36,9 @@ export class PassengerItemComponent implements OnInit {
 
   public ngOnInit(): void {
     this.passengerFormGroup = new FormGroup({
-      personalFormGroup: this.personalInfoFormService.personalFormGroup,
+      personalFormGroup: this.personalInfoFormService.createPersonalInfoForm(
+        this.passengerData
+      ),
       specialAssistance: new FormControl<boolean>(false),
       luggage: new FormControl<number>(INITIAL_BAGGAGE),
     });
@@ -40,7 +46,7 @@ export class PassengerItemComponent implements OnInit {
     this.passengersFormsService.addForm(this.passengerFormGroup);
     this.passengersFormsService.passengersInfo(
       this.passengerFormGroup,
-      this.passenger
+      this.passengerCategory
     );
   }
 

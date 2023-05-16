@@ -11,10 +11,14 @@ import {
 import { Gender } from 'src/app/types/enums';
 import { NAME_REGEXP } from '../constants/string-constants';
 import DateValidators from '../validators/date.validators';
+import { Passenger } from '../models/booking';
+import { Nullable } from '../models/types';
 
 @Injectable()
 export class PersonalInfoFormService {
   public isMale = true;
+
+  public form: FormGroup | null = null;
 
   public toggleGender(): void {
     this.isMale = !this.isMale;
@@ -23,53 +27,55 @@ export class PersonalInfoFormService {
     this.sex?.setValue(gender);
   }
 
-  public personalFormGroup = this.createPersonalInfoForm();
+  // public personalFormGroup = this.createPersonalInfoForm();
 
-  private createPersonalInfoForm(): FormGroup {
-    return new FormGroup({
-      firstName: new FormControl<string>('', [
+  public createPersonalInfoForm(item: Nullable<Passenger>): FormGroup {
+    this.form = new FormGroup({
+      firstName: new FormControl<string>(item?.firstName || '', [
         Validators.required,
         Validators.pattern(NAME_REGEXP),
         Validators.minLength(3),
       ]),
-      lastName: new FormControl<string>('', [
+      lastName: new FormControl<string>(item?.lastName || '', [
         Validators.required,
         Validators.pattern(NAME_REGEXP),
         Validators.minLength(3),
       ]),
-      dateOfBirth: new FormControl<Date | null>(new Date(), [
-        Validators.required,
-        DateValidators.isFutureDate,
-      ]),
-      sex: new FormControl<string>(Gender.MALE),
+      dateOfBirth: new FormControl<Date | null>(
+        item?.dateOfBirth ? new Date(item.dateOfBirth) : null,
+        [Validators.required, DateValidators.isFutureDate]
+      ),
+      sex: new FormControl<string>(item?.sex || Gender.MALE),
     });
+
+    return this.form;
   }
 
   public get firstName(): AbstractControl<string> | null {
-    return this.personalFormGroup.get('firstName');
+    return this.form?.get('firstName') || null;
   }
 
   public get firstNameErrors(): ValidationErrors | undefined | null {
-    return this.personalFormGroup.get('firstName')?.errors;
+    return this.form?.get('firstName')?.errors;
   }
 
   public get lastName(): AbstractControl<string> | null {
-    return this.personalFormGroup.get('lastName');
+    return this.form?.get('lastName') || null;
   }
 
   public get lastNameErrors(): ValidationErrors | undefined | null {
-    return this.personalFormGroup.get('lastName')?.errors;
+    return this.form?.get('lastName')?.errors;
   }
 
   public get dateOfBirth(): AbstractControl<string> | null {
-    return this.personalFormGroup.get('dateOfBirth');
+    return this.form?.get('dateOfBirth') || null;
   }
 
   public get dateOfBirthErrors(): ValidationErrors | null | undefined {
-    return this.personalFormGroup.get('dateOfBirth')?.errors;
+    return this.form?.get('dateOfBirth')?.errors;
   }
 
   public get sex(): AbstractControl<string> | null {
-    return this.personalFormGroup.get('sex');
+    return this.form?.get('sex') || null;
   }
 }

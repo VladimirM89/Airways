@@ -1,4 +1,15 @@
 <mat-card class="top-border">
+  <div class="flight-container">
+
+    <p class="flight-info">
+      <span class="flight-number">FR 125</span>
+      <span>{{departureCity}} &mdash; {{destinationCity}}</span>
+    </p>
+    <p class="time-info">
+      <span>{{departureDate | date: 'EEEE, d MMMM, y'}}</span>
+      <span>8.40 &mdash; 12.40</span>
+    </p>
+  </div>
   <ul class="passengers-list">
     <li class="passenger" *ngFor="let passenger of passengers">
       <p class="name">{{passenger.firstName}} {{passenger.lastName}}</p>

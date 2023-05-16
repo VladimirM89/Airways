@@ -2,9 +2,13 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable class-methods-use-this */
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BookingService } from 'src/app/core/services/booking.service';
-import { PassengersNumber } from 'src/app/shared/models/booking';
+import {
+  PassangersInfo,
+  Passenger,
+  PassengersNumber,
+} from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 
 @Component({
@@ -12,15 +16,21 @@ import { Nullable } from 'src/app/shared/models/types';
   templateUrl: './passengers-list.component.html',
   styleUrls: ['./passengers-list.component.scss'],
 })
-export class PassengersListComponent {
+export class PassengersListComponent implements OnInit {
   public items: Array<string> = [];
 
-  public passengers: Nullable<PassengersNumber> = null;
+  public passengersDataArray: Array<Nullable<Passenger>> = [];
 
-  public constructor(private bookingService: BookingService) {
-    this.passengers = this.bookingService.bookingInfo!.passengers;
+  public passengers: Nullable<PassengersNumber> =
+    this.bookingService.bookingInfo!.passengers;
+
+  public ngOnInit(): void {
     this.passengersArray();
+    console.log(this.items);
+    console.log(this.passengersDataArray);
   }
+
+  public constructor(private bookingService: BookingService) {}
 
   public trackByFn(index: number, item: string): string {
     return item;
@@ -29,10 +39,18 @@ export class PassengersListComponent {
   public passengersArray(): void {
     for (const item in this.passengers) {
       for (
-        let i = 1;
-        i <= this.passengers[item as keyof typeof this.passengers];
+        let i = 0;
+        i < this.passengers[item as keyof typeof this.passengers];
         i += 1
       ) {
+        if (this.bookingService.passengersInfo) {
+          const passengerData = this.bookingService.passengersInfo[
+            item as keyof PassangersInfo
+          ] as Array<Passenger>;
+          // console.log(this.bookingService.passengersInfo);
+          this.passengersDataArray.push(passengerData[i] || null);
+        }
+
         this.items.push(item);
       }
     }

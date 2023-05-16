@@ -17,9 +17,9 @@ import { Paths } from 'src/app/types/enums';
 })
 export class BookingProcessPageComponent {
   private passangersInfomation: Nullable<PassangersInfo> = {
-    adults: [],
+    adult: [],
     child: [],
-    infants: [],
+    infant: [],
     contacts: {
       email: '',
       mobile: '',
@@ -46,7 +46,7 @@ export class BookingProcessPageComponent {
     if (this.passengersFormsService.formsObject && this.passangersInfomation) {
       this.addPassengerToService(
         this.passengersFormsService.formsObject?.adults,
-        this.passangersInfomation?.adults
+        this.passangersInfomation?.adult
       );
       this.addPassengerToService(
         this.passengersFormsService.formsObject?.child,
@@ -54,7 +54,7 @@ export class BookingProcessPageComponent {
       );
       this.addPassengerToService(
         this.passengersFormsService.formsObject?.infants,
-        this.passangersInfomation?.infants
+        this.passangersInfomation?.infant
       );
     }
 

@@ -14,9 +14,9 @@ export interface PassengersNumber {
 }
 
 export interface PassangersInfo {
-  adults: Array<Passenger>;
+  adult: Array<Passenger>;
   child: Array<Passenger>;
-  infants: Array<Passenger>;
+  infant: Array<Passenger>;
   contacts: ContactInfo;
 }
 
