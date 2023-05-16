@@ -32,7 +32,7 @@
     >
     <mat-autocomplete #autoAirportDeparture="matAutocomplete">
       <mat-option
-        *ngFor="let airport of airports | airportFilterPipe: departureCity; trackBy: trackByFn"
+        *ngFor="let airport of airports | airportFilterPipe: departure; trackBy: trackByFn"
         [value]="airport.city + ' ' + '(' + airport.airportCode + ')'"
       >
         {{airport.city}} ({{airport.airportCode}})
@@ -49,7 +49,7 @@
     >
     <mat-autocomplete #autoAirportDestination="matAutocomplete">
       <mat-option
-        *ngFor="let airport of airports | airportFilterPipe: destinationCity; trackBy: trackByFn"
+        *ngFor="let airport of airports | airportFilterPipe: destination; trackBy: trackByFn"
         [value]="airport.city + ' ' + '(' + airport.airportCode + ')'"
       >
         {{airport.city}} ({{airport.airportCode}})

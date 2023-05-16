@@ -43,11 +43,11 @@ export class BookingSettingsPanelComponent implements OnInit {
     });
   }
 
-  public get destinationCity(): string {
+  public get destination(): string {
     return this.form.get('destination')?.value;
   }
 
-  public get departureCity(): string {
+  public get departure(): string {
     return this.form.get('departure')?.value;
   }
 
@@ -76,10 +76,10 @@ export class BookingSettingsPanelComponent implements OnInit {
     this.editMode = false;
     const newSearchInfo: BookingInfo = {
       roundTrip: this.bookingInfo?.roundTrip || false,
-      departureAirport: '',
-      destinationAirport: '',
-      departureDate: '',
-      returnDate: '',
+      departureAirport: this.departure,
+      destinationAirport: this.destination,
+      departureDate: this.dateToString(this.departureDate.value),
+      returnDate: this.dateToString(this.destinationDate.value),
       passengers: {
         adults: 0,
         child: 0,
@@ -91,5 +91,16 @@ export class BookingSettingsPanelComponent implements OnInit {
 
   public setToEditMode(): void {
     this.editMode = true;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private dateToString(date: Date | null): string {
+    if (date) {
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const year = date.getFullYear();
+      return `${year}/${month}/${day}`;
+    }
+    return '';
   }
 }
