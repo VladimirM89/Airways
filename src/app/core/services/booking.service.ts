@@ -9,11 +9,11 @@ import { Nullable } from 'src/app/shared/models/types';
 export class BookingService {
   // private bookingInformation: Nullable<BookingInfo> = null;
   private bookingInformation: Nullable<BookingInfo> = {
-    roundTrip: true,
+    roundTrip: false,
     departureAirport: 'ABZ',
     destinationAirport: 'GYD',
     departureDate: '2023-05-15',
-    returnDate: '2023-05-20',
+    returnDate: '',
     passengers: {
       adults: 2,
       child: 1,

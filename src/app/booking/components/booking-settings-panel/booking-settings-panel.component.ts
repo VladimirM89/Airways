@@ -79,13 +79,16 @@ export class BookingSettingsPanelComponent implements OnInit {
       departureAirport: this.departure,
       destinationAirport: this.destination,
       departureDate: this.dateToString(this.departureDate.value),
-      returnDate: this.dateToString(this.destinationDate.value),
+      returnDate: this.bookingInfo?.roundTrip
+        ? this.dateToString(this.destinationDate.value)
+        : '',
       passengers: {
         adults: 0,
         child: 0,
         infants: 0,
       },
     };
+    console.log(newSearchInfo);
     this.bookingService.bookingInfo = newSearchInfo;
   }
 
@@ -99,7 +102,7 @@ export class BookingSettingsPanelComponent implements OnInit {
       const month = date.getMonth() + 1;
       const day = date.getDate();
       const year = date.getFullYear();
-      return `${year}/${month}/${day}`;
+      return `${year}/${`0${month}`.slice(-2)}/${day}`;
     }
     return '';
   }
