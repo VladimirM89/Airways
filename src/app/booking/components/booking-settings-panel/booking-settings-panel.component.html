@@ -82,4 +82,39 @@
       <mat-datepicker #oneWayPicker></mat-datepicker>
     </mat-form-field>
   </ng-template>
+
+  <div class="passengers" [formGroup]="passengers">
+    <p class="select">{{adultsNumber}} Adluts, {{childrenNumber}} Children, {{infantsNumber}} Infants </p>
+    <div class="options">
+      <p>
+        Adults: 
+        <mat-form-field>
+          <button
+            mat-button
+            mat-icon-button
+            matPrefix
+            aria-label="Remove"
+            (click)="decrement(passengers.controls['adults'])"
+            [disabled]="isDecrementDisabled(passengers.controls['adults'])" 
+          >
+            <mat-icon>remove</mat-icon>
+          </button>
+          <input matInput type="number" formControlName="adults" readonly/>
+          <button
+            mat-button
+            mat-icon-button
+            matSuffix
+            aria-label="Add"
+            (click)="increment(passengers.controls['adults'])"
+            [disabled]="isIncrementDisabled(passengers.controls['adults'])"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-form-field>
+      </p>
+    </div>
+    
+  </div>
+ 
+
 </form>
