@@ -1,1 +1,17 @@
-<p>summary-page works!</p>
+<div class="title-content">
+  <span class="summary-logo"></span>
+  <span class="summary-title title">Summary</span>
+</div>
+
+<div class="summary-container">
+  <app-summary-flight></app-summary-flight>
+  <app-summary-flight *ngIf="isRoundTrip"></app-summary-flight>
+  <app-summary-passengers></app-summary-passengers>
+</div>
+
+
+<div class="btns-container">
+  <button class="ghost-btn">Back</button>
+  <button class="ghost-btn ghost-btn__bordered">Add to order card</button>
+  <button class="primary-btn">Buy now</button>
+</div>

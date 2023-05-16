@@ -11,6 +11,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCardModule } from '@angular/material/card';
 import { PersonalInfoFormComponent } from './components/passengers-info-form/personal-info-form.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { CountryCodeFilterPipe } from './pipes/country-code-filter.pipe';
@@ -49,6 +50,7 @@ import { CountryCodeFilterPipe } from './pipes/country-code-filter.pipe';
     MatAutocompleteModule,
     MatCheckboxModule,
     MatMenuModule,
+    MatCardModule,
     PersonalInfoFormComponent,
     MatSlideToggleModule,
     CountryCodeFilterPipe,

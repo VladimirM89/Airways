@@ -1,0 +1,12 @@
+<mat-card class="top-border">
+  <ul class="passengers-list">
+    <li class="passenger" *ngFor="let passenger of passengers">
+      <p class="name">{{passenger.firstName}} {{passenger.lastName}}</p>
+      <div class="passenger-info">
+        <p class="baggage" *ngIf="passenger.luggage">{{passenger.luggage}} checked bag{{luggageCount(passenger.luggage) > 1 ?'s' : ''}} (total 23 kg) included</p>
+        <p class="add-baggage">1 cabin bag + personal item (max. 8 kg) included</p>
+        <p class="seat">Seat 19E</p>
+      </div>
+    </li>
+  </ul>
+</mat-card>
