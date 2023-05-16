@@ -1,11 +1,12 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/ban-types */
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-export interface Pass {
-  adults: Array<FormGroup>;
+interface TempPassengers {
+  adult: Array<FormGroup>;
   child: Array<FormGroup>;
-  infants: Array<FormGroup>;
+  infant: Array<FormGroup>;
   contacts: Array<FormGroup>;
 }
 
@@ -13,33 +14,43 @@ export interface Pass {
   providedIn: 'root',
 })
 export class PassengersFormsService {
-  public formsArray: FormGroup[] = [];
+  public formsArray: FormGroup[] | null = null;
 
-  public formsObject: Pass | null = {
-    adults: [],
-    child: [],
-    infants: [],
-    contacts: [],
-  };
+  public passengerInfo: TempPassengers | null = null;
+
+  public createInitialPassengersInfo(): void {
+    this.passengerInfo = {
+      adult: [],
+      child: [],
+      infant: [],
+      contacts: [],
+    };
+  }
+
+  public createInitialPassengersArray(): void {
+    this.formsArray = [];
+  }
 
   public addForm(form: FormGroup): void {
-    this.formsArray.push(form);
+    if (this.formsArray) {
+      this.formsArray.push(form);
+    }
   }
 
   public passengersInfo(form: FormGroup, passengerType?: string): void {
     if (passengerType === 'adult') {
-      this.formsObject?.adults.push(form);
+      this.passengerInfo?.adult.push(form);
       return;
     }
     if (passengerType === 'child') {
-      this.formsObject?.child.push(form);
+      this.passengerInfo?.child.push(form);
       return;
     }
     if (passengerType === 'infant') {
-      this.formsObject?.infants.push(form);
+      this.passengerInfo?.infant.push(form);
       return;
     }
-    this.formsObject?.contacts.push(form);
+    this.passengerInfo?.contacts.push(form);
   }
 
   public flattenObject(obj: { [key: string]: string | Date }): {

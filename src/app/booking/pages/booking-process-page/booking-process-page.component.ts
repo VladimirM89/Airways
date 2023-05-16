@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable class-methods-use-this */
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookingService } from 'src/app/core/services/booking.service';
@@ -15,7 +15,7 @@ import { Paths } from 'src/app/types/enums';
   templateUrl: './booking-process-page.component.html',
   styleUrls: ['./booking-process-page.component.scss'],
 })
-export class BookingProcessPageComponent {
+export class BookingProcessPageComponent implements OnInit {
   private passangersInfomation: Nullable<PassangersInfo> = {
     adult: [],
     child: [],
@@ -25,6 +25,11 @@ export class BookingProcessPageComponent {
       mobile: '',
     },
   };
+
+  public ngOnInit(): void {
+    this.passengersFormsService.createInitialPassengersInfo();
+    this.passengersFormsService.createInitialPassengersArray();
+  }
 
   public constructor(
     private router: Router,
@@ -36,24 +41,30 @@ export class BookingProcessPageComponent {
     this.router.navigate([Paths.BOOKING]);
   }
 
-  public get isAllFormsValid(): boolean {
-    return this.passengersFormsService.formsArray.some(
-      item => item.invalid === true
-    );
+  public get isAllFormsValid(): boolean | null {
+    if (this.passengersFormsService.formsArray) {
+      return this.passengersFormsService.formsArray.some(
+        item => item.invalid === true
+      );
+    }
+    return null;
   }
 
-  public passengersInfo(): void {
-    if (this.passengersFormsService.formsObject && this.passangersInfomation) {
+  public setPassengersInfo(): void {
+    if (
+      this.passengersFormsService.passengerInfo &&
+      this.passangersInfomation
+    ) {
       this.addPassengerToService(
-        this.passengersFormsService.formsObject?.adults,
+        this.passengersFormsService.passengerInfo?.adult,
         this.passangersInfomation?.adult
       );
       this.addPassengerToService(
-        this.passengersFormsService.formsObject?.child,
+        this.passengersFormsService.passengerInfo?.child,
         this.passangersInfomation?.child
       );
       this.addPassengerToService(
-        this.passengersFormsService.formsObject?.infants,
+        this.passengersFormsService.passengerInfo?.infant,
         this.passangersInfomation?.infant
       );
     }
@@ -77,7 +88,7 @@ export class BookingProcessPageComponent {
   }
 
   private addContactsToService(): void {
-    this.passengersFormsService.formsObject?.contacts.map(item => {
+    this.passengersFormsService.passengerInfo?.contacts.map(item => {
       const flatObj = this.passengersFormsService.flattenObject(item.value);
 
       if (this.passangersInfomation?.contacts) {

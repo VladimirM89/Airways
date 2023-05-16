@@ -26,8 +26,6 @@ export class PassengersListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.passengersArray();
-    console.log(this.items);
-    console.log(this.passengersDataArray);
   }
 
   public constructor(private bookingService: BookingService) {}
@@ -47,7 +45,6 @@ export class PassengersListComponent implements OnInit {
           const passengerData = this.bookingService.passengersInfo[
             item as keyof PassangersInfo
           ] as Array<Passenger>;
-          // console.log(this.bookingService.passengersInfo);
           this.passengersDataArray.push(passengerData[i] || null);
         }
 

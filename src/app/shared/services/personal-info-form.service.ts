@@ -27,8 +27,6 @@ export class PersonalInfoFormService {
     this.sex?.setValue(gender);
   }
 
-  // public personalFormGroup = this.createPersonalInfoForm();
-
   public createPersonalInfoForm(item: Nullable<Passenger>): FormGroup {
     this.form = new FormGroup({
       firstName: new FormControl<string>(item?.firstName || '', [

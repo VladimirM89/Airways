@@ -11,7 +11,7 @@
     </p>
   </div>
   <ul class="passengers-list">
-    <li class="passenger" *ngFor="let passenger of passengers">
+    <li class="passenger" *ngFor="let passenger of passengers; trackBy: trackByFn">
       <p class="name">{{passenger.firstName}} {{passenger.lastName}}</p>
       <div class="passenger-info">
         <p class="baggage" *ngIf="passenger.luggage">{{passenger.luggage}} checked bag{{luggageCount(passenger.luggage) > 1 ?'s' : ''}} (total 23 kg) included</p>
