@@ -3,13 +3,20 @@
   margin-bottom: 2rem;
 }
 
-.info-panel {
+.search-panel {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: baseline;
   gap: 4rem;
   padding: 1rem;
   box-shadow: var(--bottom-shadow);
+}
+
+.search-panel_info {
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+  padding: 1rem;
 }
 
 .cities,
@@ -40,19 +47,26 @@
   padding: 0;
 }
 
+.settings-form {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  background-color: var(--accent-bg-color);
+  padding: 2rem 1rem 0;
+}
+
 @media screen and (max-width: 600px) {
-  .info-panel {
+  .search-panel {
+    align-items: flex-start;
+  }
+  .search-panel_info {
     gap: 1rem;
     flex-wrap: wrap;
   }
 
   .dates-n-passengers {
     order: 1;
-    width: 100%;
-  }
-
-  .ghost-btn {
-    margin-left: auto;
-    padding: 0 1rem;
+    flex-shrink: 0;
+    min-width: 100%;
   }
 }

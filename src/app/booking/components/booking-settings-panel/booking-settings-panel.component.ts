@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { Airports } from 'src/app/shared/constants/airports';
-import { Airport, AirportCodes } from 'src/app/shared/models/airport';
+import { Airport } from 'src/app/shared/models/airport';
 import { BookingInfo } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 
@@ -16,45 +16,31 @@ export class BookingSettingsPanelComponent implements OnInit {
 
   public form!: FormGroup;
 
+  public editMode = false;
+
+  public airports: Airport[] = Airports;
+
   public get bookingInfo(): Nullable<BookingInfo> {
     return this.bookingService.bookingInfo;
   }
 
-  public airports: Airport[] = Airports;
-
   public ngOnInit(): void {
     this.form = new FormGroup({
       departure: new FormControl<string>(
-        this.getfullAirportName(
-          this.bookingInfo?.departureAirport as AirportCodes
-        )
+        this.bookingInfo?.departureAirport || ''
       ),
       destination: new FormControl<string>(
-        this.getfullAirportName(
-          this.bookingInfo?.destinationAirport as AirportCodes
-        )
+        this.bookingInfo?.destinationAirport || ''
       ),
       range: new FormGroup({
         departureDate: new FormControl<Date | null>(
-          new Date(this.bookingInfo?.departureDate || '')
+          this.bookingInfo ? new Date(this.bookingInfo.departureDate) : null
         ),
         destinationDate: new FormControl<Date | null>(
-          new Date(this.bookingInfo?.returnDate || '')
+          this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null
         ),
       }),
     });
-  }
-
-  // TO DO: instead of this getfullAirportName function use directive which will add an airport name after city
-  private getfullAirportName(airport: AirportCodes): string {
-    const airportFound = this.airports.find(
-      item => item.airportCode === airport
-    );
-
-    if (airportFound) {
-      return `${airportFound.city} (${airport})`;
-    }
-    return '';
   }
 
   public get destinationCity(): string {
@@ -84,5 +70,26 @@ export class BookingSettingsPanelComponent implements OnInit {
   // eslint-disable-next-line class-methods-use-this
   public trackByFn(index: number, item: Airport): number {
     return item.id;
+  }
+
+  public setNewSearch(): void {
+    this.editMode = false;
+    const newSearchInfo: BookingInfo = {
+      roundTrip: this.bookingInfo?.roundTrip || false,
+      departureAirport: '',
+      destinationAirport: '',
+      departureDate: '',
+      returnDate: '',
+      passengers: {
+        adults: 0,
+        child: 0,
+        infants: 0,
+      },
+    };
+    this.bookingService.bookingInfo = newSearchInfo;
+  }
+
+  public setToEditMode(): void {
+    this.editMode = true;
   }
 }
