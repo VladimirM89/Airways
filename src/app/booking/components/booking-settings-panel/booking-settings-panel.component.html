@@ -94,19 +94,19 @@
             mat-icon-button
             matPrefix
             aria-label="Remove"
-            (click)="decrement(passengers.controls['adults'])"
-            [disabled]="isDecrementDisabled(passengers.controls['adults'])" 
+            (click)="decrement(passengers.controls['adult'])"
+            [disabled]="isDecrementDisabled(passengers.controls['adult'])" 
           >
             <mat-icon>remove</mat-icon>
           </button>
-          <input matInput type="number" formControlName="adults" readonly/>
+          <input matInput type="number" formControlName="adult" readonly/>
           <button
             mat-button
             mat-icon-button
             matSuffix
             aria-label="Add"
-            (click)="increment(passengers.controls['adults'])"
-            [disabled]="isIncrementDisabled(passengers.controls['adults'])"
+            (click)="increment(passengers.controls['adult'])"
+            [disabled]="isIncrementDisabled(passengers.controls['adult'])"
           >
             <mat-icon>add</mat-icon>
           </button>
