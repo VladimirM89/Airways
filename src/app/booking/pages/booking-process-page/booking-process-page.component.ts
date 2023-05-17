@@ -73,8 +73,6 @@ export class BookingProcessPageComponent implements OnInit {
 
     this.bookingService.passengersInfo = this.passangersInfomation;
 
-    console.log(this.bookingService.passengersInfo);
-
     this.navToPayment();
   }
 

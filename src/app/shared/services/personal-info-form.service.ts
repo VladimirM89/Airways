@@ -32,13 +32,11 @@ export class PersonalInfoFormService {
   }
 
   public createPersonalInfoForm(item: Nullable<Passenger>): FormGroup {
-    console.log(item);
     if (item) {
       this.isMale = item.sex === Gender.MALE;
     } else {
       this.isMale = true;
     }
-    console.log(this.isMale);
     this.form = new FormGroup({
       firstName: new FormControl<string>(item?.firstName || '', [
         Validators.required,
