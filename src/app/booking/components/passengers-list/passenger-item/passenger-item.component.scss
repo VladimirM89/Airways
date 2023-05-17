@@ -1,17 +1,71 @@
+:host,
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.passenger-title {
+  margin: 0;
+  display: flex;
+  gap: 0.5rem;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.passenger-form {
+  ::ng-deep {
+    form.container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+
+      @media screen and (max-width: 1100px) {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      @media screen and (max-width: 650px) {
+        grid-template-columns: 1fr;
+      }
+  }}
+}
+
+.title {
+  text-transform: capitalize;
+}
+
+.invisible {
+  display: none;
+}
+
+
+
+
+
+
+
 .add-info-container {
   display: flex;
   gap: 1.5rem;
   justify-content: space-between;
+  align-items: flex-start;
   flex-wrap: wrap;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .baggage-content {
   display: flex;
   gap: 1.7rem;
   align-items: center;
+  justify-content: flex-end;
 }
 
-.container {
+.container-title {
   margin: 0;
   display: flex;
   gap: 0.8rem;
@@ -40,11 +94,11 @@
 }
 
 .assist-icon {
-  background-image: url(../../../../../assets/assistance.svg);
+  background-image: url('/assets/assistance.svg');
 }
 
 .baggage-icon {
-  background-image: url(../../../../../assets/buggage_icon.svg);
+  background-image: url('/assets/buggage_icon.svg');
 }
 
 .description {
@@ -61,7 +115,7 @@
   }
 }
 
-:host {
+.add-info-container {
   ::ng-deep {
     .mat-mdc-form-field-subscript-wrapper {
       display: none;
@@ -86,3 +140,19 @@
     }
   }
 }
+
+.error-baggage {
+  max-width: 25rem;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  color: var(--error-color);
+}
+
+.invisible {
+  display: none;
+}
+
+
+
+
+

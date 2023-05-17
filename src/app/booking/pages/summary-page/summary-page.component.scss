@@ -1,0 +1,39 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.title-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.summary-logo {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: inline-flex;
+  background-image: url('/assets/summary_icon.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.summary-title {
+  font-size: 2.7rem;
+  font-weight: 700;
+}
+
+.summary-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40rem, 1fr));
+  grid-column-gap: 2.4rem;
+  grid-row-gap: 3rem;
+}
+
+.btns-container {
+  display: flex;
+  gap: 4rem;
+  justify-content: flex-end;
+}

@@ -31,5 +31,5 @@ export interface Passenger {
   sex: string;
   dateOfBirth: string;
   specialAssistance: boolean;
-  luggage: boolean;
+  luggage: string;
 }

@@ -2,18 +2,18 @@
   <div class="title-container">
     <div class="title-content">
       <span class="passengers-logo"></span>
-      <span class="passengers-title">Passengers</span>
+      <span class="passengers-title title">Passengers</span>
     </div>
     <p class="passengers-description">
       Enter the passenger's names as they appear on document (passport or ID).
     </p>
   </div>
-  <app-booking-table></app-booking-table>
+  <app-passengers-list></app-passengers-list>
 </div>
 
 <app-booking-contact></app-booking-contact>
 
 <div class="btns-container">
   <button class="ghost-btn" (click)="navToFlights()">Back</button>
-  <button class="primary-btn" [disabled]="isAllFormsValid">Continue</button>
+  <button class="primary-btn" [disabled]="isAllFormsValid" (click)="setPassengersInfo()">Continue</button>
 </div>
