@@ -1,7 +1,7 @@
 export interface BookingInfo {
   roundTrip: boolean;
-  departureCity: string;
-  destinationCity: string;
+  departureAirport: string;
+  destinationAirport: string;
   departureDate: string;
   returnDate: string;
   passengers: PassengersNumber;

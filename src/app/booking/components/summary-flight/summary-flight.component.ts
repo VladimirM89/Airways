@@ -37,14 +37,14 @@ export class SummaryFlightComponent {
 
   public get departureCity(): string | null {
     if (this.bookingService.bookingInfo) {
-      return this.bookingService.bookingInfo?.departureCity;
+      return this.bookingService.bookingInfo?.departureAirport;
     }
     return null;
   }
 
   public get destinationCity(): string | null {
     if (this.bookingService.bookingInfo) {
-      return this.bookingService.bookingInfo?.destinationCity;
+      return this.bookingService.bookingInfo?.destinationAirport;
     }
     return null;
   }
