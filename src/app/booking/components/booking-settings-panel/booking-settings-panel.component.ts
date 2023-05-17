@@ -5,6 +5,7 @@ import { Airports } from 'src/app/shared/constants/airports';
 import { Airport } from 'src/app/shared/models/airport';
 import { BookingInfo } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
+import { dateToString } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-booking-settings-panel',
@@ -41,9 +42,9 @@ export class BookingSettingsPanelComponent implements OnInit {
         ),
       }),
       passengers: new FormGroup({
-        adult: new FormControl<number>(0),
-        children: new FormControl<number>(0),
-        infant: new FormControl<number>(0),
+        adult: new FormControl<number>(this.bookingService.bookingInfo?.passengers.adult || 0),
+        children: new FormControl<number>(this.bookingService.bookingInfo?.passengers.child || 0),
+        infant: new FormControl<number>(this.bookingService.bookingInfo?.passengers.infant || 0),
       }),
     });
   }
@@ -98,9 +99,9 @@ export class BookingSettingsPanelComponent implements OnInit {
       roundTrip: this.bookingInfo?.roundTrip || false,
       departureAirport: this.departure,
       destinationAirport: this.destination,
-      departureDate: this.dateToString(this.departureDate.value),
+      departureDate: dateToString(this.departureDate.value),
       returnDate: this.bookingInfo?.roundTrip
-        ? this.dateToString(this.destinationDate.value)
+        ? dateToString(this.destinationDate.value)
         : '',
       passengers: {
         adult: this.adultsNumber,
@@ -114,17 +115,6 @@ export class BookingSettingsPanelComponent implements OnInit {
 
   public setToEditMode(): void {
     this.editMode = true;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private dateToString(date: Date | null): string {
-    if (date) {
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      const year = date.getFullYear();
-      return `${year}/${`0${month}`.slice(-2)}/${day}`;
-    }
-    return '';
   }
 
   public decrement(control: AbstractControl): void {

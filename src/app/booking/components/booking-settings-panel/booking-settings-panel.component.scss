@@ -49,10 +49,12 @@
 
 .settings-form {
   display: flex;
+  flex-direction: row;
   gap: 1rem;
   margin-top: 1rem;
   background-color: var(--accent-bg-color);
-  padding: 2rem 1rem 0;
+  padding: 2rem 1rem;
+  align-items: stretch;
 }
 
 @media screen and (max-width: 600px) {
@@ -69,4 +71,87 @@
     flex-shrink: 0;
     min-width: 100%;
   }
+}
+
+.selected-option {
+  background-color: var(--input-bg-color);
+  padding: .5rem 1rem;
+  border-radius: .4rem .4rem 0 0;
+  height: 100%;
+}
+
+.select {
+  display: -webkit-box;
+   -webkit-line-clamp: 1;
+           line-clamp: 1; 
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   margin: 0;
+}
+
+.passengers-select,
+.select,
+.number-input {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+.passengers-select {
+  position: relative;
+}
+
+.options {
+  position: absolute;
+  background-color: var(--accent-bg-color);
+  padding: 1rem;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.number-input {
+  width: min-content;
+  background-color: transparent;
+  text-align: center;
+  max-width: min-content;
+  cursor: auto;
+}
+
+.option {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  align-items: center
+}
+
+.passenger-category {
+  display: flex;
+  flex-direction: column;
+
+  & .description {
+    color: var(--auxiliary-color);
+  }
+}
+
+.counter {
+  display: flex;
+  flex-direction: row;
+  gap: .4rem;
+}
+
+.counter-btn{
+  padding: 0;
+}
+
+.passengers-select__label {
+  color: var(--auxiliary-color);
+  font-size: 1.3rem;
+}
+
+::ng-deep .mat-form-field-underline,
+::ng-deep matformfieldlineripple,
+::ng-deep .mdc-line-ripple,
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
 }

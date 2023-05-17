@@ -83,38 +83,36 @@
     </mat-form-field>
   </ng-template>
 
-  <div class="passengers" [formGroup]="passengers">
-    <p class="select">{{adultsNumber}} Adluts, {{childrenNumber}} Children, {{infantsNumber}} Infants </p>
-    <div class="options">
-      <p>
-        Adults: 
-        <mat-form-field>
-          <button
-            mat-button
-            mat-icon-button
-            matPrefix
-            aria-label="Remove"
-            (click)="decrement(passengers.controls['adult'])"
-            [disabled]="isDecrementDisabled(passengers.controls['adult'])" 
-          >
-            <mat-icon>remove</mat-icon>
-          </button>
-          <input matInput type="number" formControlName="adult" readonly/>
-          <button
-            mat-button
-            mat-icon-button
-            matSuffix
-            aria-label="Add"
-            (click)="increment(passengers.controls['adult'])"
-            [disabled]="isIncrementDisabled(passengers.controls['adult'])"
-          >
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-form-field>
-      </p>
+  <div class="passengers-select" [formGroup]="passengers">
+    <div class="selected-option">
+      <span class="passengers-select__label">Passengers</span>
+      <p class="select">{{adultsNumber}} Adults, {{childrenNumber}} Children, {{infantsNumber}} Infants </p>
     </div>
-    
-  </div>
- 
+    <ul class="options">
+        <li class="option">
+          <div class="passenger-category">
+            <span>Adults:</span>
+            <span class="description">14+ years</span>
+          </div>
+          <div class="counter">
+            <button
+              class="counter-btn"
+              (click)="decrement(passengers.controls['adult'])"
+              [disabled]="isDecrementDisabled(passengers.controls['adult'])" 
+            >
+              <mat-icon>remove</mat-icon>
+            </button>
+            <input class="number-input" type="number" formControlName="adult" min="0" max="9" readonly/>
+            <button
+              class="counter-btn"
+              (click)="increment(passengers.controls['adult'])"
+              [disabled]="isIncrementDisabled(passengers.controls['adult'])"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>  
+        </li>
+      </ul>
+    </div>
 
 </form>
