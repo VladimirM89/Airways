@@ -57,7 +57,7 @@ export class RegisterFormComponent implements OnInit {
       ]),
       passengersInfoForm:
         this.personalInfoFormService.createPersonalInfoForm(null),
-      contactForm: this.contactFormService.contactFormGroup,
+      contactForm: this.contactFormService.createContactForm(null),
       citizenship: new FormControl<string>(''),
       isAgree: new FormControl<boolean>(false, [Validators.requiredTrue]),
     });

@@ -42,8 +42,11 @@ export class PersonalInfoFormComponent {
     return this.personalFormGroup.get('sex');
   }
 
-  public get isMale(): boolean {
-    return this.personalInfoFormService.isMale;
+  public get isMale(): boolean | null {
+    if (this.personalInfoFormService.isMale) {
+      return this.personalInfoFormService?.isMale;
+    }
+    return null;
   }
 
   public toggleGender(): void {

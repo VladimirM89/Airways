@@ -9,6 +9,7 @@ import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-f
 import { PassengersFormsService } from 'src/app/shared/services/passengers-forms.service';
 import { Passenger } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
+import { BookingService } from 'src/app/core/services/booking.service';
 
 @Component({
   selector: 'app-passenger-item',
@@ -39,8 +40,12 @@ export class PassengerItemComponent implements OnInit {
       personalFormGroup: this.personalInfoFormService.createPersonalInfoForm(
         this.passengerData
       ),
-      specialAssistance: new FormControl<boolean>(false),
-      luggage: new FormControl<number>(INITIAL_BAGGAGE),
+      specialAssistance: new FormControl<boolean>(
+        this.passengerData?.specialAssistance || false
+      ),
+      luggage: new FormControl<number>(
+        Number(this.passengerData?.luggage) || INITIAL_BAGGAGE
+      ),
     });
 
     this.passengersFormsService.addForm(this.passengerFormGroup);

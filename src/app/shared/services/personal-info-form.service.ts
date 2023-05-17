@@ -16,18 +16,29 @@ import { Nullable } from '../models/types';
 
 @Injectable()
 export class PersonalInfoFormService {
-  public isMale = true;
+  public isMale: boolean | null = null;
 
   public form: FormGroup | null = null;
 
   public toggleGender(): void {
     this.isMale = !this.isMale;
+    this.setGender();
+  }
+
+  public setGender(): void {
     let gender = '';
     this.isMale ? (gender = Gender.MALE) : (gender = Gender.FEMALE);
     this.sex?.setValue(gender);
   }
 
   public createPersonalInfoForm(item: Nullable<Passenger>): FormGroup {
+    console.log(item);
+    if (item) {
+      this.isMale = item.sex === Gender.MALE;
+    } else {
+      this.isMale = true;
+    }
+    console.log(this.isMale);
     this.form = new FormGroup({
       firstName: new FormControl<string>(item?.firstName || '', [
         Validators.required,
@@ -43,7 +54,7 @@ export class PersonalInfoFormService {
         item?.dateOfBirth ? new Date(item.dateOfBirth) : null,
         [Validators.required, DateValidators.isFutureDate]
       ),
-      sex: new FormControl<string>(item?.sex || Gender.MALE),
+      sex: new FormControl<string>(this.isMale ? Gender.MALE : Gender.FEMALE),
     });
 
     return this.form;

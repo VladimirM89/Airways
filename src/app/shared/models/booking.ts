@@ -25,6 +25,11 @@ export interface ContactInfo {
   mobile: string;
 }
 
+export interface PhoneInfo {
+  countryCode: string;
+  number: string;
+}
+
 export interface Passenger {
   firstName: string;
   lastName: string;

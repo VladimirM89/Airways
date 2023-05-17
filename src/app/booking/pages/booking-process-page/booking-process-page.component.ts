@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookingService } from 'src/app/core/services/booking.service';
-import { PassangersInfo, Passenger } from 'src/app/shared/models/booking';
+import { PassangersInfo, Passenger, PhoneInfo } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 import { PassengersFormsService } from 'src/app/shared/services/passengers-forms.service';
 import { dialCode } from 'src/app/shared/utils';
@@ -73,6 +73,8 @@ export class BookingProcessPageComponent implements OnInit {
 
     this.bookingService.passengersInfo = this.passangersInfomation;
 
+    console.log(this.bookingService.passengersInfo);
+
     this.navToPayment();
   }
 
@@ -103,5 +105,15 @@ export class BookingProcessPageComponent implements OnInit {
 
   public navToPayment(): void {
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PAYMENT]);
+  }
+
+  public get contact(): PhoneInfo | null {
+    if (this.bookingService.passengersInfo) {
+      return {
+        countryCode: this.bookingService.passengersInfo?.contacts.mobile,
+        number: this.bookingService.passengersInfo?.contacts.mobile,
+      };
+    }
+    return null;
   }
 }
