@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { dateToString } from '../utils';
 
 interface TempPassengers {
   adult: Array<FormGroup>;
@@ -70,6 +71,9 @@ export class PassengersFormsService {
       ) {
         Object.assign(flattened, this.flattenObject(value));
       } else {
+        if (key === 'dateOfBirth') {
+          value = dateToString(obj[key] as Date);
+        }
         flattened[key as keyof typeof flattened] = value;
       }
     });

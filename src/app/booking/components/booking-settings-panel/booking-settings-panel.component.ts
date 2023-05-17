@@ -42,9 +42,15 @@ export class BookingSettingsPanelComponent implements OnInit {
         ),
       }),
       passengers: new FormGroup({
-        adult: new FormControl<number>(this.bookingService.bookingInfo?.passengers.adult || 0),
-        children: new FormControl<number>(this.bookingService.bookingInfo?.passengers.child || 0),
-        infant: new FormControl<number>(this.bookingService.bookingInfo?.passengers.infant || 0),
+        adult: new FormControl<number>(
+          this.bookingService.bookingInfo?.passengers.adult || 0
+        ),
+        children: new FormControl<number>(
+          this.bookingService.bookingInfo?.passengers.child || 0
+        ),
+        infant: new FormControl<number>(
+          this.bookingService.bookingInfo?.passengers.infant || 0
+        ),
       }),
     });
   }
