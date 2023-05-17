@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { BookingRoutingModule } from './booking-routing.module';
@@ -10,7 +9,6 @@ import { SharedModule } from '../shared/shared.module';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { SearchItemComponent } from './components/search-results/search-item/search-item.component';
 import { DateSliderComponent } from './components/search-results/date-slider/date-slider.component';
-import { AirportToCityPipe } from './pipes/airport-to-city.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +17,6 @@ import { AirportToCityPipe } from './pipes/airport-to-city.pipe';
     SearchResultsComponent,
     SearchItemComponent,
     DateSliderComponent,
-    AirportToCityPipe,
   ],
   imports: [
     CommonModule,

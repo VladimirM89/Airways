@@ -16,6 +16,7 @@ import { PersonalInfoFormComponent } from './components/passengers-info-form/per
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { CountryCodeFilterPipe } from './pipes/country-code-filter.pipe';
 import { AirportFilterPipe } from './pipes/airport-filter.pipe';
+import { AirportToCityPipe } from './pipes/airport-to-city.pipe';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AirportFilterPipe } from './pipes/airport-filter.pipe';
     ContactFormComponent,
     CountryCodeFilterPipe,
     AirportFilterPipe,
+    AirportToCityPipe,
   ],
   imports: [
     CommonModule,
@@ -58,6 +60,7 @@ import { AirportFilterPipe } from './pipes/airport-filter.pipe';
     CountryCodeFilterPipe,
     ContactFormComponent,
     AirportFilterPipe,
+    AirportToCityPipe,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
 })
