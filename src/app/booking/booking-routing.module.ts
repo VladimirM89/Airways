@@ -30,7 +30,7 @@ const routes: Routes = [
           import('./pages/summary-page/summary-page.module').then(
             m => m.SummaryPageModule
           ),
-        canActivate: [UserGuard, PassengersInfoGuard],
+        // canActivate: [UserGuard, PassengersInfoGuard],
       },
       {
         path: Paths.BOOKING_FLIGHTS,

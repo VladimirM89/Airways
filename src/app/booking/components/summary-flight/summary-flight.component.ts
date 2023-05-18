@@ -1,8 +1,9 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { Passenger } from 'src/app/shared/models/booking';
+import { FlightItem } from 'src/app/shared/models/flight-item';
 
 @Component({
   selector: 'app-summary-flight',
@@ -10,6 +11,8 @@ import { Passenger } from 'src/app/shared/models/booking';
   styleUrls: ['./summary-flight.component.scss'],
 })
 export class SummaryFlightComponent {
+  @Input() public flight!: FlightItem;
+
   public constructor(private bookingService: BookingService) {
     this.passengers;
   }
@@ -28,41 +31,28 @@ export class SummaryFlightComponent {
     return Number(value);
   }
 
-  public get isRoundTrip(): boolean | null {
-    if (this.bookingService.bookingInfo?.roundTrip) {
-      return this.bookingService.bookingInfo?.roundTrip;
-    }
-    return null;
+  public get departureCity(): string {
+    return this.flight.departureCity;
   }
 
-  public get departureCity(): string | null {
-    if (this.bookingService.bookingInfo) {
-      return this.bookingService.bookingInfo?.departureAirport;
-    }
-    return null;
+  public get destinationCity(): string {
+    return this.flight.destinationCity;
   }
 
-  public get destinationCity(): string | null {
-    if (this.bookingService.bookingInfo) {
-      return this.bookingService.bookingInfo?.destinationAirport;
-    }
-    return null;
+  public get departureDate(): string {
+    return this.flight.departureDate;
   }
 
-  public get departureDate(): Date | null {
-    if (this.bookingService.bookingInfo) {
-      const date = new Date(this.bookingService.bookingInfo?.departureDate);
-      return date;
-    }
-    return null;
+  public get flightNumber(): string {
+    return this.flight.flightNumber;
   }
 
-  public get returnDate(): Date | null {
-    if (this.bookingService.bookingInfo) {
-      const date = new Date(this.bookingService.bookingInfo?.returnDate);
-      return date;
-    }
-    return null;
+  public get departureTime(): string {
+    return this.flight.departureDateTime;
+  }
+
+  public get destinationTime(): string {
+    return this.flight.destinationDateTime;
   }
 
   public trackByFn(index: number, item: Passenger): string {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookingService } from 'src/app/core/services/booking.service';
+import { FlightItem } from 'src/app/shared/models/flight-item';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -14,14 +15,17 @@ export class SummaryPageComponent {
     private router: Router
   ) {}
 
-  public get isRoundTrip(): boolean | null {
-    if (this.bookingService.bookingInfo?.roundTrip) {
-      return this.bookingService.bookingInfo?.roundTrip;
-    }
-    return null;
-  }
-
   public navToPassengers(): void {
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
+  }
+
+  public get sortedFlights(): FlightItem[] {
+    const array = this.bookingService.flights.slice();
+    array.sort(
+      (a, b) =>
+        new Date(a.departureDate).getTime() -
+        new Date(b.departureDate).getTime()
+    );
+    return array;
   }
 }

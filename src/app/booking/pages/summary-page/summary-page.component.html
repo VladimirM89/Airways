@@ -4,9 +4,9 @@
 </div>
 
 <div class="summary-container">
-  <app-summary-flight></app-summary-flight>
-  <app-summary-flight *ngIf="isRoundTrip"></app-summary-flight>
-  <app-summary-passengers></app-summary-passengers>
+
+  <app-summary-flight *ngFor="let flight of sortedFlights" [flight]="flight"></app-summary-flight>
+  <app-summary-passengers [flights]="sortedFlights"></app-summary-passengers>
 </div>
 
 
