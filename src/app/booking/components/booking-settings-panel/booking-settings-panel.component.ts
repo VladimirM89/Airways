@@ -115,7 +115,7 @@ export class BookingSettingsPanelComponent implements OnInit {
         infant: this.infantsNumber,
       },
     };
-    console.log(newSearchInfo);
+
     this.bookingService.bookingInfo = newSearchInfo;
   }
 

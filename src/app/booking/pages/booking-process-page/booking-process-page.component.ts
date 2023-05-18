@@ -4,10 +4,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookingService } from 'src/app/core/services/booking.service';
-import { PassangersInfo, Passenger, PhoneInfo } from 'src/app/shared/models/booking';
+import {
+  PassangersInfo,
+  Passenger,
+  MobileInfo,
+} from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 import { PassengersFormsService } from 'src/app/shared/services/passengers-forms.service';
-import { dialCode } from 'src/app/shared/utils';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -22,7 +25,10 @@ export class BookingProcessPageComponent implements OnInit {
     infant: [],
     contacts: {
       email: '',
-      mobile: '',
+      mobile: {
+        countryCode: '',
+        number: '',
+      },
     },
   };
 
@@ -94,9 +100,13 @@ export class BookingProcessPageComponent implements OnInit {
       if (this.passangersInfomation?.contacts) {
         this.passangersInfomation.contacts.email = flatObj['email'] as string;
 
-        this.passangersInfomation.contacts.mobile =
-          dialCode(flatObj['countryCode'] as string) +
-          (flatObj['number'] as string);
+        this.passangersInfomation.contacts.mobile.countryCode = flatObj[
+          'countryCode'
+        ] as string;
+
+        this.passangersInfomation.contacts.mobile.number = flatObj[
+          'number'
+        ] as string;
       }
     });
   }
@@ -105,11 +115,12 @@ export class BookingProcessPageComponent implements OnInit {
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PAYMENT]);
   }
 
-  public get contact(): PhoneInfo | null {
+  public get contact(): MobileInfo | null {
     if (this.bookingService.passengersInfo) {
       return {
-        countryCode: this.bookingService.passengersInfo?.contacts.mobile,
-        number: this.bookingService.passengersInfo?.contacts.mobile,
+        countryCode:
+          this.bookingService.passengersInfo?.contacts.mobile.countryCode,
+        number: this.bookingService.passengersInfo?.contacts.mobile.number,
       };
     }
     return null;

@@ -10,16 +10,14 @@ import {
 import { PHONE_REGEXP } from '../constants/string-constants';
 import CountryCodeValidators from '../validators/countryCode.validators';
 import { Nullable } from '../models/types';
-import { PhoneInfo } from '../models/booking';
+import { MobileInfo } from '../models/booking';
 
 @Injectable()
 export class ContactFormService {
-  // public contactFormGroup = this.createContactForm();
-
   public form: FormGroup | null = null;
 
-  public createContactForm(contact: Nullable<PhoneInfo>): FormGroup {
-    return new FormGroup({
+  public createContactForm(contact: Nullable<MobileInfo>): FormGroup {
+    this.form = new FormGroup({
       countryCode: new FormControl<string>(contact?.countryCode || '', [
         Validators.required,
         CountryCodeValidators.isIncorrectValue,
@@ -31,6 +29,8 @@ export class ContactFormService {
         Validators.pattern(PHONE_REGEXP),
       ]),
     });
+
+    return this.form;
   }
 
   public get countryCode(): AbstractControl<string> | null {

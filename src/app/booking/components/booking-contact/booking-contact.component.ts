@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { BookingService } from 'src/app/core/services/booking.service';
-import { PhoneInfo } from 'src/app/shared/models/booking';
+import { MobileInfo } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 import { ContactFormService } from 'src/app/shared/services/contact-form.service';
 import { PassengersFormsService } from 'src/app/shared/services/passengers-forms.service';
@@ -23,7 +23,7 @@ export class BookingContactComponent implements OnInit {
 
   public contactForm!: FormGroup;
 
-  @Input() public contactData!: Nullable<PhoneInfo>;
+  @Input() public contactData!: Nullable<MobileInfo>;
 
   public constructor(
     private contactFormService: ContactFormService,

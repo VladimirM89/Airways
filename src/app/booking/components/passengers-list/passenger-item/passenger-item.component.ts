@@ -9,7 +9,6 @@ import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-f
 import { PassengersFormsService } from 'src/app/shared/services/passengers-forms.service';
 import { Passenger } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
-import { BookingService } from 'src/app/core/services/booking.service';
 
 @Component({
   selector: 'app-passenger-item',
