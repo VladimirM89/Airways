@@ -7,6 +7,7 @@ import {
 } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 import { Subscription } from 'rxjs';
+import { PassengersFormsService } from 'src/app/shared/services/passengers-forms.service';
 
 @Component({
   selector: 'app-passengers-list',
@@ -20,7 +21,10 @@ export class PassengersListComponent implements OnInit, OnDestroy {
 
   private sub!: Subscription;
 
-  public constructor(private bookingService: BookingService) {}
+  public constructor(
+    private bookingService: BookingService,
+    private passengersFormsService: PassengersFormsService
+  ) {}
 
   public ngOnInit(): void {
     this.sub = this.bookingService.getBookingInfo().subscribe(bookingInfo => {
@@ -29,6 +33,8 @@ export class PassengersListComponent implements OnInit, OnDestroy {
         this.items = [];
         this.passengersDataArray = [];
         this.createPassengersArray(passengers);
+        this.passengersFormsService.createInitialPassengersInfo();
+        this.passengersFormsService.createInitialPassengersArray();
       }
     });
   }

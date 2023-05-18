@@ -8,16 +8,20 @@ import { Passenger } from 'src/app/shared/models/booking';
   styleUrls: ['./summary-flight.component.scss'],
 })
 export class SummaryFlightComponent {
-  public constructor(private bookingService: BookingService) {}
+  public constructor(private bookingService: BookingService) {
+    // // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    // this.passengers;
+  }
 
   public bookingInfo$ = this.bookingService.getBookingInfo();
 
   public get passengers(): Passenger[] {
-    const allPassengers = [];
+    const allPassengers: Array<Passenger[]> = [];
     if (this.bookingService.passengersInfo) {
       allPassengers.push(this.bookingService.passengersInfo?.adult);
       allPassengers.push(this.bookingService.passengersInfo?.child);
       allPassengers.push(this.bookingService.passengersInfo?.infant);
+      console.log(this.bookingService.passengersInfo);
     }
     return allPassengers.flat();
   }

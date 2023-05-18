@@ -7,7 +7,9 @@ import { BookingInfo } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 import { dateToString } from 'src/app/shared/utils';
 import { Subscription } from 'rxjs';
+import { FullUrls } from 'src/app/shared/constants/full-urls';
 import { PassengerCounter } from '../../models/passenger-counter';
+import { RouterService } from '../../../core/services/router.service';
 
 @Component({
   selector: 'app-booking-settings-panel',
@@ -15,7 +17,10 @@ import { PassengerCounter } from '../../models/passenger-counter';
   styleUrls: ['./booking-settings-panel.component.scss'],
 })
 export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
-  public constructor(private bookingService: BookingService) {}
+  public constructor(
+    private bookingService: BookingService,
+    private urlService: RouterService
+  ) {}
 
   public form!: FormGroup;
 
@@ -181,5 +186,9 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  public get isEditAvailable(): boolean {
+    return window.location.pathname === FullUrls.FLIGHTS;
   }
 }

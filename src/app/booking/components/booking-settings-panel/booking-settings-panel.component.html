@@ -19,10 +19,12 @@
   </div>
   <ng-template #noInfo>Please edit search parameters</ng-template>
 
-  <button class="ghost-btn" *ngIf="editMode; else edit" (click)="setNewSearch()">Confirm</button>
-  <ng-template #edit>
-    <button class="ghost-btn" (click)="setToEditMode()">Edit</button>
-  </ng-template>
+  <ng-container *ngIf="isEditAvailable">
+    <button class="ghost-btn" *ngIf="editMode; else edit" (click)="setNewSearch()">Confirm</button>
+    <ng-template #edit>
+      <button class="ghost-btn" (click)="setToEditMode()">Edit</button>
+    </ng-template>
+  </ng-container>
 </div>
 
 <form [formGroup]="form" class="settings-form" *ngIf="editMode">

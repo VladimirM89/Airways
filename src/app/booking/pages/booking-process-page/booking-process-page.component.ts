@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable class-methods-use-this */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookingService } from 'src/app/core/services/booking.service';
@@ -15,7 +15,7 @@ import { Paths } from 'src/app/types/enums';
   templateUrl: './booking-process-page.component.html',
   styleUrls: ['./booking-process-page.component.scss'],
 })
-export class BookingProcessPageComponent implements OnInit {
+export class BookingProcessPageComponent {
   private passangersInfomation: Nullable<PassangersInfo> = {
     adult: [],
     child: [],
@@ -25,11 +25,6 @@ export class BookingProcessPageComponent implements OnInit {
       mobile: '',
     },
   };
-
-  public ngOnInit(): void {
-    this.passengersFormsService.createInitialPassengersInfo();
-    this.passengersFormsService.createInitialPassengersArray();
-  }
 
   public constructor(
     private router: Router,
@@ -41,13 +36,13 @@ export class BookingProcessPageComponent implements OnInit {
     this.router.navigate([Paths.BOOKING]);
   }
 
-  public get isAllFormsValid(): boolean | null {
+  public get isAllFormsInvalid(): boolean {
     if (this.passengersFormsService.formsArray) {
       return this.passengersFormsService.formsArray.some(
         item => item.invalid === true
       );
     }
-    return false;
+    return true;
   }
 
   public setPassengersInfo(): void {

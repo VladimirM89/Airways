@@ -1,5 +1,4 @@
-<ng-template *ngIf="bookingInfo$ | async as bookingInfo">
-  <mat-card class="top-border">
+<mat-card class="top-border" *ngIf="bookingInfo$ | async as bookingInfo">
     <div class="flight-container">
 
       <p class="flight-info">
@@ -22,4 +21,3 @@
       </li>
     </ul>
   </mat-card>
-</ng-template>
