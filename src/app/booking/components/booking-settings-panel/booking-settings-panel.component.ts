@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { Airports } from 'src/app/shared/constants/airports';
@@ -6,6 +6,7 @@ import { Airport } from 'src/app/shared/models/airport';
 import { BookingInfo } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 import { dateToString } from 'src/app/shared/utils';
+import { Subscription } from 'rxjs';
 import { PassengerCounter } from '../../models/passenger-counter';
 
 @Component({
@@ -13,7 +14,7 @@ import { PassengerCounter } from '../../models/passenger-counter';
   templateUrl: './booking-settings-panel.component.html',
   styleUrls: ['./booking-settings-panel.component.scss'],
 })
-export class BookingSettingsPanelComponent implements OnInit {
+export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
   public constructor(private bookingService: BookingService) {}
 
   public form!: FormGroup;
@@ -26,11 +27,15 @@ export class BookingSettingsPanelComponent implements OnInit {
 
   public isSelectOpened = false;
 
-  public get bookingInfo(): Nullable<BookingInfo> {
-    return this.bookingService.bookingInfo;
-  }
+  private sub!: Subscription;
+
+  public bookingInfo: Nullable<BookingInfo> = null;
 
   public ngOnInit(): void {
+    this.sub = this.bookingService.getBookingInfo().subscribe(info => {
+      this.bookingInfo = info;
+    });
+
     this.form = new FormGroup({
       departure: new FormControl<string>(
         this.bookingInfo?.departureAirport || ''
@@ -47,14 +52,12 @@ export class BookingSettingsPanelComponent implements OnInit {
         ),
       }),
       passengers: new FormGroup({
-        adult: new FormControl<number>(
-          this.bookingService.bookingInfo?.passengers.adult || 0
-        ),
+        adult: new FormControl<number>(this.bookingInfo?.passengers.adult || 0),
         children: new FormControl<number>(
-          this.bookingService.bookingInfo?.passengers.child || 0
+          this.bookingInfo?.passengers.child || 0
         ),
         infant: new FormControl<number>(
-          this.bookingService.bookingInfo?.passengers.infant || 0
+          this.bookingInfo?.passengers.infant || 0
         ),
       }),
     });
@@ -118,7 +121,14 @@ export class BookingSettingsPanelComponent implements OnInit {
   }
 
   public getPassengersNumber(): number {
-    return this.bookingService.passengersNumber;
+    if (this.bookingInfo) {
+      return (
+        this.bookingInfo.passengers.adult +
+        this.bookingInfo.passengers.child +
+        this.bookingInfo.passengers.infant
+      );
+    }
+    return 0;
   }
 
   public trackByFn(index: number, item: Airport): number {
@@ -127,21 +137,22 @@ export class BookingSettingsPanelComponent implements OnInit {
 
   public setNewSearch(): void {
     this.editMode = false;
+    const isRoungTrip =
+      this.bookingService.getCurrentBookingInfo()?.roundTrip || false;
+
     const newSearchInfo: BookingInfo = {
-      roundTrip: this.bookingInfo?.roundTrip || false,
+      roundTrip: isRoungTrip,
       departureAirport: this.departure,
       destinationAirport: this.destination,
       departureDate: dateToString(this.departureDate.value),
-      returnDate: this.bookingInfo?.roundTrip
-        ? dateToString(this.destinationDate.value)
-        : '',
+      returnDate: isRoungTrip ? dateToString(this.destinationDate.value) : '',
       passengers: {
         adult: this.adultsNumber,
         child: this.childrenNumber,
         infant: this.infantsNumber,
       },
     };
-    this.bookingService.bookingInfo = newSearchInfo;
+    this.bookingService.setBookingInfo(newSearchInfo);
   }
 
   public setToEditMode(): void {
@@ -166,5 +177,9 @@ export class BookingSettingsPanelComponent implements OnInit {
 
   public toggleSelect(): void {
     this.isSelectOpened = !this.isSelectOpened;
+  }
+
+  public ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

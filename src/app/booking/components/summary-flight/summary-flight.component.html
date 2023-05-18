@@ -1,23 +1,25 @@
-<mat-card class="top-border">
-  <div class="flight-container">
+<ng-template *ngIf="bookingInfo$ | async as bookingInfo">
+  <mat-card class="top-border">
+    <div class="flight-container">
 
-    <p class="flight-info">
-      <span class="flight-number">FR 125</span>
-      <span>{{departureCity}} &mdash; {{destinationCity}}</span>
-    </p>
-    <p class="time-info">
-      <span>{{departureDate | date: 'EEEE, d MMMM, y'}}</span>
-      <span>8.40 &mdash; 12.40</span>
-    </p>
-  </div>
-  <ul class="passengers-list">
-    <li class="passenger" *ngFor="let passenger of passengers; trackBy: trackByFn">
-      <p class="name">{{passenger.firstName}} {{passenger.lastName}}</p>
-      <div class="passenger-info">
-        <p class="baggage" *ngIf="passenger.luggage">{{passenger.luggage}} checked bag{{luggageCount(passenger.luggage) > 1 ?'s' : ''}} (total 23 kg) included</p>
-        <p class="add-baggage">1 cabin bag + personal item (max. 8 kg) included</p>
-        <p class="seat">Seat 19E</p>
-      </div>
-    </li>
-  </ul>
-</mat-card>
+      <p class="flight-info">
+        <span class="flight-number">FR 125</span>
+        <span>{{bookingInfo.departureAirport | airportToCity }} &mdash; {{bookingInfo.destinationAirport | airportToCity}}</span>
+      </p>
+      <p class="time-info">
+        <span>{{bookingInfo.departureDate | date: 'EEEE, d MMMM, y'}}</span>
+        <span>8.40 &mdash; 12.40</span>
+      </p>
+    </div>
+    <ul class="passengers-list">
+      <li class="passenger" *ngFor="let passenger of passengers; trackBy: trackByFn">
+        <p class="name">{{passenger.firstName}} {{passenger.lastName}}</p>
+        <div class="passenger-info">
+          <p class="baggage" *ngIf="passenger.luggage">{{passenger.luggage}} checked bag{{luggageCount(passenger.luggage) > 1 ?'s' : ''}} (total 23 kg) included</p>
+          <p class="add-baggage">1 cabin bag + personal item (max. 8 kg) included</p>
+          <p class="seat">Seat 19E</p>
+        </div>
+      </li>
+    </ul>
+  </mat-card>
+</ng-template>

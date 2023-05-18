@@ -1,5 +1,3 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component } from '@angular/core';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { Passenger } from 'src/app/shared/models/booking';
@@ -10,9 +8,9 @@ import { Passenger } from 'src/app/shared/models/booking';
   styleUrls: ['./summary-flight.component.scss'],
 })
 export class SummaryFlightComponent {
-  public constructor(private bookingService: BookingService) {
-    this.passengers;
-  }
+  public constructor(private bookingService: BookingService) {}
+
+  public bookingInfo$ = this.bookingService.getBookingInfo();
 
   public get passengers(): Passenger[] {
     const allPassengers = [];
@@ -26,43 +24,6 @@ export class SummaryFlightComponent {
 
   public luggageCount(value: string): number {
     return Number(value);
-  }
-
-  public get isRoundTrip(): boolean | null {
-    if (this.bookingService.bookingInfo?.roundTrip) {
-      return this.bookingService.bookingInfo?.roundTrip;
-    }
-    return null;
-  }
-
-  public get departureCity(): string | null {
-    if (this.bookingService.bookingInfo) {
-      return this.bookingService.bookingInfo?.departureAirport;
-    }
-    return null;
-  }
-
-  public get destinationCity(): string | null {
-    if (this.bookingService.bookingInfo) {
-      return this.bookingService.bookingInfo?.destinationAirport;
-    }
-    return null;
-  }
-
-  public get departureDate(): Date | null {
-    if (this.bookingService.bookingInfo) {
-      const date = new Date(this.bookingService.bookingInfo?.departureDate);
-      return date;
-    }
-    return null;
-  }
-
-  public get returnDate(): Date | null {
-    if (this.bookingService.bookingInfo) {
-      const date = new Date(this.bookingService.bookingInfo?.returnDate);
-      return date;
-    }
-    return null;
   }
 
   public trackByFn(index: number, item: Passenger): string {

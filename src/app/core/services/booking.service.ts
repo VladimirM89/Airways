@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BookingInfo, PassangersInfo } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 import { Nullable } from 'src/app/shared/models/types';
@@ -7,30 +8,36 @@ import { Nullable } from 'src/app/shared/models/types';
   providedIn: 'root',
 })
 export class BookingService {
-  // private bookingInformation: Nullable<BookingInfo> = null;
-  private bookingInformation: Nullable<BookingInfo> = {
-    roundTrip: true,
-    departureAirport: 'ABZ',
-    destinationAirport: 'GYD',
-    departureDate: '2023-05-15',
-    returnDate: '2023-05-20',
-    passengers: {
-      adult: 2,
-      child: 1,
-      infant: 0,
-    },
-  };
+  private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>(
+    null
+  );
+  // private bookingInformation: Nullable<BookingInfo> = {
+  //   roundTrip: true,
+  //   departureAirport: 'ABZ',
+  //   destinationAirport: 'GYD',
+  //   departureDate: '2023-05-15',
+  //   returnDate: '2023-05-20',
+  //   passengers: {
+  //     adult: 2,
+  //     child: 1,
+  //     infant: 0,
+  //   },
+  // };
 
   private passangersInfomation: Nullable<PassangersInfo> = null;
 
   private selectedFlights: Array<FlightItem> = [];
 
-  public get bookingInfo(): Nullable<BookingInfo> {
-    return this.bookingInformation;
+  public getBookingInfo(): Observable<Nullable<BookingInfo>> {
+    return this.bookingInformation$.asObservable();
   }
 
-  public set bookingInfo(info: Nullable<BookingInfo>) {
-    this.bookingInformation = info;
+  public setBookingInfo(info: Nullable<BookingInfo>): void {
+    this.bookingInformation$.next(info);
+  }
+
+  public getCurrentBookingInfo(): Nullable<BookingInfo> {
+    return this.bookingInformation$.getValue();
   }
 
   public get passengersInfo(): Nullable<PassangersInfo> {
@@ -49,16 +56,5 @@ export class BookingService {
     this.selectedFlights = this.selectedFlights.filter(
       item => item.id !== flight.id
     );
-  }
-
-  public get passengersNumber(): number {
-    if (this.bookingInformation) {
-      return (
-        this.bookingInformation.passengers.adult +
-        this.bookingInformation.passengers.child +
-        this.bookingInformation.passengers.infant
-      );
-    }
-    return 0;
   }
 }

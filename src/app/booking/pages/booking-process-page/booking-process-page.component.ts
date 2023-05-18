@@ -47,7 +47,7 @@ export class BookingProcessPageComponent implements OnInit {
         item => item.invalid === true
       );
     }
-    return null;
+    return false;
   }
 
   public setPassengersInfo(): void {

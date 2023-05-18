@@ -5,7 +5,7 @@
 
 <div class="summary-container">
   <app-summary-flight></app-summary-flight>
-  <app-summary-flight *ngIf="isRoundTrip"></app-summary-flight>
+  <app-summary-flight *ngIf="(bookingInfo$ | async)?.roundTrip"></app-summary-flight>
   <app-summary-passengers></app-summary-passengers>
 </div>
 

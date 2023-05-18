@@ -9,10 +9,5 @@ import { BookingService } from 'src/app/core/services/booking.service';
 export class SummaryPageComponent {
   public constructor(private bookingService: BookingService) {}
 
-  public get isRoundTrip(): boolean | null {
-    if (this.bookingService.bookingInfo?.roundTrip) {
-      return this.bookingService.bookingInfo?.roundTrip;
-    }
-    return null;
-  }
+  public bookingInfo$ = this.bookingService.getBookingInfo();
 }
