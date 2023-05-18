@@ -6,6 +6,7 @@ import { Airport } from 'src/app/shared/models/airport';
 import { BookingInfo } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 import { dateToString } from 'src/app/shared/utils';
+import { PassengerCounter } from '../../models/passenger-counter';
 
 @Component({
   selector: 'app-booking-settings-panel',
@@ -20,6 +21,10 @@ export class BookingSettingsPanelComponent implements OnInit {
   public editMode = false;
 
   public airports: Airport[] = Airports;
+
+  public passengersArr: Array<PassengerCounter> = [];
+
+  public isSelectOpened = false;
 
   public get bookingInfo(): Nullable<BookingInfo> {
     return this.bookingService.bookingInfo;
@@ -42,11 +47,38 @@ export class BookingSettingsPanelComponent implements OnInit {
         ),
       }),
       passengers: new FormGroup({
-        adult: new FormControl<number>(this.bookingService.bookingInfo?.passengers.adult || 0),
-        children: new FormControl<number>(this.bookingService.bookingInfo?.passengers.child || 0),
-        infant: new FormControl<number>(this.bookingService.bookingInfo?.passengers.infant || 0),
+        adult: new FormControl<number>(
+          this.bookingService.bookingInfo?.passengers.adult || 0
+        ),
+        children: new FormControl<number>(
+          this.bookingService.bookingInfo?.passengers.child || 0
+        ),
+        infant: new FormControl<number>(
+          this.bookingService.bookingInfo?.passengers.infant || 0
+        ),
       }),
     });
+
+    this.passengersArr.push(
+      {
+        category: 'Adults',
+        description: '14+ years',
+        controlName: 'adult',
+        control: this.passengers.controls['adult'],
+      },
+      {
+        category: 'Children',
+        description: '2-14 years',
+        controlName: 'children',
+        control: this.passengers.controls['children'],
+      },
+      {
+        category: 'Infants',
+        description: '0-1 year',
+        controlName: 'infant',
+        control: this.passengers.controls['infant'],
+      }
+    );
   }
 
   public get destination(): string {
@@ -109,7 +141,6 @@ export class BookingSettingsPanelComponent implements OnInit {
         infant: this.infantsNumber,
       },
     };
-    console.log(newSearchInfo);
     this.bookingService.bookingInfo = newSearchInfo;
   }
 
@@ -131,5 +162,9 @@ export class BookingSettingsPanelComponent implements OnInit {
 
   public isIncrementDisabled(control: AbstractControl): boolean {
     return control.value >= 9;
+  }
+
+  public toggleSelect(): void {
+    this.isSelectOpened = !this.isSelectOpened;
   }
 }
