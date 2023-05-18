@@ -1,5 +1,3 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component, Input } from '@angular/core';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { Passenger } from 'src/app/shared/models/booking';
@@ -14,15 +12,19 @@ export class SummaryFlightComponent {
   @Input() public flight!: FlightItem;
 
   public constructor(private bookingService: BookingService) {
-    this.passengers;
+    // // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    // this.passengers;
   }
 
+  public bookingInfo$ = this.bookingService.getBookingInfo();
+
   public get passengers(): Passenger[] {
-    const allPassengers = [];
+    const allPassengers: Array<Passenger[]> = [];
     if (this.bookingService.passengersInfo) {
       allPassengers.push(this.bookingService.passengersInfo?.adult);
       allPassengers.push(this.bookingService.passengersInfo?.child);
       allPassengers.push(this.bookingService.passengersInfo?.infant);
+      console.log(this.bookingService.passengersInfo);
     }
     return allPassengers.flat();
   }

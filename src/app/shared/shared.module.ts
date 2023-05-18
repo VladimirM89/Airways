@@ -17,6 +17,7 @@ import { ContactFormComponent } from './components/contact-form/contact-form.com
 import { CountryCodeFilterPipe } from './pipes/country-code-filter.pipe';
 import { AirportFilterPipe } from './pipes/airport-filter.pipe';
 import { AirportToCityPipe } from './pipes/airport-to-city.pipe';
+import { PassengersCounterFormComponent } from './components/passengers-counter-form/passengers-counter-form.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AirportToCityPipe } from './pipes/airport-to-city.pipe';
     CountryCodeFilterPipe,
     AirportFilterPipe,
     AirportToCityPipe,
+    PassengersCounterFormComponent,
   ],
   imports: [
     CommonModule,

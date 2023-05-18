@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { BookingService } from 'src/app/core/services/booking.service';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 
 @Component({

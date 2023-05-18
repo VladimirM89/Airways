@@ -28,4 +28,6 @@ export class SummaryPageComponent {
     );
     return array;
   }
+
+  public bookingInfo$ = this.bookingService.getBookingInfo();
 }

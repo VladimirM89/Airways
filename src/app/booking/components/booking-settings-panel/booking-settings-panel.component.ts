@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { Airports } from 'src/app/shared/constants/airports';
@@ -6,14 +6,21 @@ import { Airport } from 'src/app/shared/models/airport';
 import { BookingInfo } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 import { dateToString } from 'src/app/shared/utils';
+import { Subscription } from 'rxjs';
+import { FullUrls } from 'src/app/shared/constants/full-urls';
+import { PassengerCounter } from '../../models/passenger-counter';
+import { RouterService } from '../../../core/services/router.service';
 
 @Component({
   selector: 'app-booking-settings-panel',
   templateUrl: './booking-settings-panel.component.html',
   styleUrls: ['./booking-settings-panel.component.scss'],
 })
-export class BookingSettingsPanelComponent implements OnInit {
-  public constructor(private bookingService: BookingService) {}
+export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
+  public constructor(
+    private bookingService: BookingService,
+    private urlService: RouterService
+  ) {}
 
   public form!: FormGroup;
 
@@ -21,11 +28,19 @@ export class BookingSettingsPanelComponent implements OnInit {
 
   public airports: Airport[] = Airports;
 
-  public get bookingInfo(): Nullable<BookingInfo> {
-    return this.bookingService.bookingInfo;
-  }
+  public passengersArr: Array<PassengerCounter> = [];
+
+  public isSelectOpened = false;
+
+  private sub!: Subscription;
+
+  public bookingInfo: Nullable<BookingInfo> = null;
 
   public ngOnInit(): void {
+    this.sub = this.bookingService.getBookingInfo().subscribe(info => {
+      this.bookingInfo = info;
+    });
+
     this.form = new FormGroup({
       departure: new FormControl<string>(
         this.bookingInfo?.departureAirport || ''
@@ -42,17 +57,36 @@ export class BookingSettingsPanelComponent implements OnInit {
         ),
       }),
       passengers: new FormGroup({
-        adult: new FormControl<number>(
-          this.bookingService.bookingInfo?.passengers.adult || 0
-        ),
+        adult: new FormControl<number>(this.bookingInfo?.passengers.adult || 0),
         children: new FormControl<number>(
-          this.bookingService.bookingInfo?.passengers.child || 0
+          this.bookingInfo?.passengers.child || 0
         ),
         infant: new FormControl<number>(
-          this.bookingService.bookingInfo?.passengers.infant || 0
+          this.bookingInfo?.passengers.infant || 0
         ),
       }),
     });
+
+    this.passengersArr.push(
+      {
+        category: 'Adults',
+        description: '14+ years',
+        controlName: 'adult',
+        control: this.passengers.controls['adult'],
+      },
+      {
+        category: 'Children',
+        description: '2-14 years',
+        controlName: 'children',
+        control: this.passengers.controls['children'],
+      },
+      {
+        category: 'Infants',
+        description: '0-1 year',
+        controlName: 'infant',
+        control: this.passengers.controls['infant'],
+      }
+    );
   }
 
   public get destination(): string {
@@ -92,7 +126,14 @@ export class BookingSettingsPanelComponent implements OnInit {
   }
 
   public getPassengersNumber(): number {
-    return this.bookingService.passengersNumber;
+    if (this.bookingInfo) {
+      return (
+        this.bookingInfo.passengers.adult +
+        this.bookingInfo.passengers.child +
+        this.bookingInfo.passengers.infant
+      );
+    }
+    return 0;
   }
 
   public trackByFn(index: number, item: Airport): number {
@@ -101,22 +142,22 @@ export class BookingSettingsPanelComponent implements OnInit {
 
   public setNewSearch(): void {
     this.editMode = false;
+    const isRoungTrip =
+      this.bookingService.getCurrentBookingInfo()?.roundTrip || false;
+
     const newSearchInfo: BookingInfo = {
-      roundTrip: this.bookingInfo?.roundTrip || false,
+      roundTrip: isRoungTrip,
       departureAirport: this.departure,
       destinationAirport: this.destination,
       departureDate: dateToString(this.departureDate.value),
-      returnDate: this.bookingInfo?.roundTrip
-        ? dateToString(this.destinationDate.value)
-        : '',
+      returnDate: isRoungTrip ? dateToString(this.destinationDate.value) : '',
       passengers: {
         adult: this.adultsNumber,
         child: this.childrenNumber,
         infant: this.infantsNumber,
       },
     };
-
-    this.bookingService.bookingInfo = newSearchInfo;
+    this.bookingService.setBookingInfo(newSearchInfo);
   }
 
   public setToEditMode(): void {
@@ -137,5 +178,17 @@ export class BookingSettingsPanelComponent implements OnInit {
 
   public isIncrementDisabled(control: AbstractControl): boolean {
     return control.value >= 9;
+  }
+
+  public toggleSelect(): void {
+    this.isSelectOpened = !this.isSelectOpened;
+  }
+
+  public ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
+  public get isEditAvailable(): boolean {
+    return window.location.pathname === FullUrls.FLIGHTS;
   }
 }
