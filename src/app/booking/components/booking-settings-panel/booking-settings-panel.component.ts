@@ -59,6 +59,14 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
     });
   }
 
+  public toggleFlightDirections(): void {
+    const currentDeparture = this.departure.value;
+    const currentDestinaton = this.destination.value;
+    this.destination.setValue(currentDeparture);
+    this.departure.setValue(currentDestinaton);
+    this.setNewSearch();
+  }
+
   public getPassengersNumber(): number {
     if (this.bookingInfo) {
       return (
@@ -81,10 +89,10 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
 
     const newSearchInfo: BookingInfo = {
       roundTrip: isRoungTrip,
-      departureAirport: this.departure,
-      destinationAirport: this.destination,
-      departureDate: dateToString(this.departureDate),
-      returnDate: isRoungTrip ? dateToString(this.destinationDate) : '',
+      departureAirport: this.departure.value,
+      destinationAirport: this.destination.value,
+      departureDate: dateToString(this.departureDate.value),
+      returnDate: isRoungTrip ? dateToString(this.destinationDate.value) : '',
       passengers: {
         adult: this.adultsNumber,
         child: this.childrenNumber,
@@ -106,20 +114,20 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
     return window.location.pathname === FullUrls.FLIGHTS;
   }
 
-  public get destination(): string {
-    return this.form.get('destination')?.value;
+  public get destination(): FormControl<string> {
+    return this.form.get('destination') as FormControl;
   }
 
-  public get departure(): string {
-    return this.form.get('departure')?.value;
+  public get departure(): FormControl<string> {
+    return this.form.get('departure') as FormControl;
   }
 
-  public get destinationDate(): Nullable<Date> {
-    return this.range.get('destinationDate')?.value;
+  public get destinationDate(): FormControl<Nullable<Date>> {
+    return this.range.get('destinationDate') as FormControl;
   }
 
-  public get departureDate(): Nullable<Date> {
-    return this.range.get('departureDate')?.value;
+  public get departureDate(): FormControl<Nullable<Date>> {
+    return this.range.get('departureDate') as FormControl;
   }
 
   public get range(): FormGroup {
