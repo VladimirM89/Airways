@@ -20,7 +20,7 @@
   <ng-template #noInfo>Please edit search parameters</ng-template>
 
   <ng-container *ngIf="isEditAvailable">
-    <button class="ghost-btn" *ngIf="editMode; else edit" (click)="setNewSearch()">Confirm</button>
+    <button class="ghost-btn" *ngIf="editMode; else edit" (click)="setNewSearch()" [disabled]="form.invalid">Confirm</button>
     <ng-template #edit>
       <button class="ghost-btn" (click)="setToEditMode()">Edit</button>
     </ng-template>
@@ -43,6 +43,8 @@
         {{airport.city}} ({{airport.airportCode}})
       </mat-option>
     </mat-autocomplete>
+    <mat-error *ngIf="departure.hasError('required')">this field can not be empty</mat-error>
+    <mat-error *ngIf="departure.hasError('isDirectionValid')">{{departure.errors?.['isDirectionValid']}}</mat-error>
   </mat-form-field>
 
   <mat-form-field class="input-container" appearance="fill">
@@ -60,6 +62,8 @@
         {{airport.city}} ({{airport.airportCode}})
       </mat-option>
     </mat-autocomplete>
+    <mat-error *ngIf="destination.hasError('required')">this field can not be empty</mat-error>
+    <mat-error *ngIf="destination.hasError('isDirectionValid')">{{destination.errors?.['isDirectionValid']}}</mat-error>
   </mat-form-field>
 
   <app-date-picker-range [datesForm]="range" *ngIf="bookingInfo?.roundTrip; else oneWayDatePicker"></app-date-picker-range>
@@ -67,5 +71,9 @@
     <app-date-picker-single [datesForm]="range"></app-date-picker-single>
   </ng-template>
 
-  <app-passengers-counter-form [passengersForm]="passengers"></app-passengers-counter-form>  
+  <app-passengers-counter-form [passengersForm]="passengers"></app-passengers-counter-form>
 </form>
+  
+<div class="validation" *ngIf="form.invalid">
+  <p class="error-message">{{form.errors?.['isDuplicate']}}</p>
+</div>

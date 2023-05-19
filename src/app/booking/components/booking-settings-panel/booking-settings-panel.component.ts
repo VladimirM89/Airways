@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { Airports } from 'src/app/shared/constants/airports';
 import { Airport } from 'src/app/shared/models/airport';
@@ -8,6 +8,10 @@ import { Nullable } from 'src/app/shared/models/types';
 import { dateToString } from 'src/app/shared/utils';
 import { Subscription } from 'rxjs';
 import { FullUrls } from 'src/app/shared/constants/full-urls';
+import {
+  checkIfFlightDirectionsDuplicate,
+  checkIfFlightDirectionValid,
+} from 'src/app/shared/validators/flightDirections.validators';
 
 @Component({
   selector: 'app-booking-settings-panel',
@@ -32,31 +36,40 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
       this.bookingInfo = info;
     });
 
-    this.form = new FormGroup({
-      departure: new FormControl<string>(
-        this.bookingInfo?.departureAirport || ''
-      ),
-      destination: new FormControl<string>(
-        this.bookingInfo?.destinationAirport || ''
-      ),
-      range: new FormGroup({
-        departureDate: new FormControl<Date | null>(
-          this.bookingInfo ? new Date(this.bookingInfo.departureDate) : null
+    this.form = new FormGroup(
+      {
+        departure: new FormControl<string>(
+          this.bookingInfo?.departureAirport || '',
+          [Validators.required, checkIfFlightDirectionValid()]
         ),
-        destinationDate: new FormControl<Date | null>(
-          this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null
+        destination: new FormControl<string>(
+          this.bookingInfo?.destinationAirport || '',
+          [Validators.required, checkIfFlightDirectionValid()]
         ),
-      }),
-      passengers: new FormGroup({
-        adult: new FormControl<number>(this.bookingInfo?.passengers.adult || 0),
-        children: new FormControl<number>(
-          this.bookingInfo?.passengers.child || 0
-        ),
-        infant: new FormControl<number>(
-          this.bookingInfo?.passengers.infant || 0
-        ),
-      }),
-    });
+        range: new FormGroup({
+          departureDate: new FormControl<Date | null>(
+            this.bookingInfo ? new Date(this.bookingInfo.departureDate) : null,
+            [Validators.required]
+          ),
+          destinationDate: new FormControl<Date | null>(
+            this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null,
+            [Validators.required]
+          ),
+        }),
+        passengers: new FormGroup({
+          adult: new FormControl<number>(
+            this.bookingInfo?.passengers.adult || 0
+          ),
+          children: new FormControl<number>(
+            this.bookingInfo?.passengers.child || 0
+          ),
+          infant: new FormControl<number>(
+            this.bookingInfo?.passengers.infant || 0
+          ),
+        }),
+      },
+      [checkIfFlightDirectionsDuplicate()]
+    );
   }
 
   public toggleFlightDirections(): void {
@@ -83,23 +96,25 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
   }
 
   public setNewSearch(): void {
-    this.editMode = false;
-    const isRoungTrip =
-      this.bookingService.getCurrentBookingInfo()?.roundTrip || false;
+    if (this.form.valid) {
+      this.editMode = false;
+      const isRoungTrip =
+        this.bookingService.getCurrentBookingInfo()?.roundTrip || false;
 
-    const newSearchInfo: BookingInfo = {
-      roundTrip: isRoungTrip,
-      departureAirport: this.departure.value,
-      destinationAirport: this.destination.value,
-      departureDate: dateToString(this.departureDate.value),
-      returnDate: isRoungTrip ? dateToString(this.destinationDate.value) : '',
-      passengers: {
-        adult: this.adultsNumber,
-        child: this.childrenNumber,
-        infant: this.infantsNumber,
-      },
-    };
-    this.bookingService.setBookingInfo(newSearchInfo);
+      const newSearchInfo: BookingInfo = {
+        roundTrip: isRoungTrip,
+        departureAirport: this.departure.value,
+        destinationAirport: this.destination.value,
+        departureDate: dateToString(this.departureDate.value),
+        returnDate: isRoungTrip ? dateToString(this.destinationDate.value) : '',
+        passengers: {
+          adult: this.adultsNumber,
+          child: this.childrenNumber,
+          infant: this.infantsNumber,
+        },
+      };
+      this.bookingService.setBookingInfo(newSearchInfo);
+    }
   }
 
   public setToEditMode(): void {

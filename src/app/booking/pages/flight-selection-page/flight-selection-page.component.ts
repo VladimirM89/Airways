@@ -14,4 +14,8 @@ export class FlightSelectionPageComponent {
   public navigateToPassengers(): void {
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
   }
+
+  public navigateToMain(): void {
+    this.router.navigate([Paths.BASE]);
+  }
 }
