@@ -189,6 +189,7 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
   }
 
   public get isEditAvailable(): boolean {
+    return true;
     return window.location.pathname === FullUrls.FLIGHTS;
   }
 }

@@ -24,7 +24,6 @@ export class SummaryFlightComponent {
       allPassengers.push(this.bookingService.passengersInfo?.adult);
       allPassengers.push(this.bookingService.passengersInfo?.child);
       allPassengers.push(this.bookingService.passengersInfo?.infant);
-      console.log(this.bookingService.passengersInfo);
     }
     return allPassengers.flat();
   }

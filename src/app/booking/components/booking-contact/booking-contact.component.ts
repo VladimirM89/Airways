@@ -32,6 +32,7 @@ export class BookingContactComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.passengersFormsService.createInitialContactInfo();
     this.contactForm = new FormGroup({
       email: new FormControl<string>(
         this.bookingService.passengersInfo?.contacts.email || '',
@@ -39,8 +40,9 @@ export class BookingContactComponent implements OnInit {
       ),
       contactInput: this.contactFormService.createContactForm(this.contactData),
     });
-    this.passengersFormsService.addForm(this.contactForm);
-    this.passengersFormsService.passengersInfo(this.contactForm);
+    this.passengersFormsService.contactForm = this.contactForm;
+
+    this.passengersFormsService.updatePassengersFormArray(this.contactForm);
   }
 
   public get contactFormGroup(): FormGroup {
