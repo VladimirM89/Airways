@@ -1,9 +1,9 @@
 <div class="passengers-select" [formGroup]="passengersForm">
   <div class="selected-option">
     <span [ngClass]="{'passengers-select__label': true, 'label_active': isSelectOpened}">Passengers</span>
-    <div class="select">
+    <div class="select" (click)="toggleSelect($event)">
       <p class="select-text">{{adultsNumber}} Adults, {{childrenNumber}} Children, {{infantsNumber}} Infants </p>
-      <button [ngClass]="{ 'arrow-btn': true, 'arrow-btn_active': isSelectOpened }" (click)="toggleSelect()">
+      <button [ngClass]="{ 'arrow-btn': true, 'arrow-btn_active': isSelectOpened }">
         <mat-icon aria-hidden="false" aria-label="open options" fontIcon="arrow_drop_down"></mat-icon>
       </button>
     </div>

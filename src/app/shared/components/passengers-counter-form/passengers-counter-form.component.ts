@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { PassengerCounter } from 'src/app/booking/models/passenger-counter';
 import { AbstractControl } from '@angular/forms';
 import { PassengersFormGroup } from '../../models/passengers-counter-form';
@@ -14,6 +20,8 @@ export class PassengersCounterFormComponent implements OnInit {
   public passengersArr: Array<PassengerCounter> = [];
 
   public isSelectOpened = false;
+
+  public constructor(private elementRef: ElementRef) {}
 
   public ngOnInit(): void {
     this.passengersArr.push(
@@ -66,7 +74,18 @@ export class PassengersCounterFormComponent implements OnInit {
     return control.value >= 9;
   }
 
-  public toggleSelect(): void {
+  public toggleSelect(event: Event): void {
+    event.stopPropagation();
     this.isSelectOpened = !this.isSelectOpened;
+  }
+
+  public closeSelect(): void {
+    this.isSelectOpened = false;
+  }
+
+  @HostListener('document:click', ['$event', '$event.target'])
+  public onClick(event: MouseEvent): void {
+    if (!this.elementRef.nativeElement.contains(event.target))
+      this.closeSelect();
   }
 }
