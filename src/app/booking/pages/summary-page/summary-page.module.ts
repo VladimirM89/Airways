@@ -5,13 +5,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SummaryPageRoutingModule } from './summary-page-routing.module';
 import { SummaryPageComponent } from './summary-page.component';
 import { SummaryFlightComponent } from '../../components/summary-flight/summary-flight.component';
-import { SummaryPassengersComponent } from '../../components/summary-passengers/summary-passengers.component';
+import { CostPassengersComponent } from '../../components/summary-passengers/cost-passengers.component';
 
 @NgModule({
   declarations: [
     SummaryPageComponent,
     SummaryFlightComponent,
-    SummaryPassengersComponent,
+    CostPassengersComponent,
   ],
   imports: [CommonModule, SummaryPageRoutingModule, SharedModule],
 })
