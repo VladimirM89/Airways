@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { Airports } from 'src/app/shared/constants/airports';
 import { Airport } from 'src/app/shared/models/airport';
@@ -8,8 +8,6 @@ import { Nullable } from 'src/app/shared/models/types';
 import { dateToString } from 'src/app/shared/utils';
 import { Subscription } from 'rxjs';
 import { FullUrls } from 'src/app/shared/constants/full-urls';
-import { PassengerCounter } from '../../models/passenger-counter';
-import { RouterService } from '../../../core/services/router.service';
 
 @Component({
   selector: 'app-booking-settings-panel',
@@ -17,20 +15,13 @@ import { RouterService } from '../../../core/services/router.service';
   styleUrls: ['./booking-settings-panel.component.scss'],
 })
 export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
-  public constructor(
-    private bookingService: BookingService,
-    private urlService: RouterService
-  ) {}
+  public constructor(private bookingService: BookingService) {}
 
   public form!: FormGroup;
 
   public editMode = false;
 
   public airports: Airport[] = Airports;
-
-  public passengersArr: Array<PassengerCounter> = [];
-
-  public isSelectOpened = false;
 
   private sub!: Subscription;
 
@@ -66,27 +57,6 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
         ),
       }),
     });
-
-    this.passengersArr.push(
-      {
-        category: 'Adults',
-        description: '14+ years',
-        controlName: 'adult',
-        control: this.passengers.controls['adult'],
-      },
-      {
-        category: 'Children',
-        description: '2-14 years',
-        controlName: 'children',
-        control: this.passengers.controls['children'],
-      },
-      {
-        category: 'Infants',
-        description: '0-1 year',
-        controlName: 'infant',
-        control: this.passengers.controls['infant'],
-      }
-    );
   }
 
   public get destination(): string {
@@ -162,26 +132,6 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
 
   public setToEditMode(): void {
     this.editMode = true;
-  }
-
-  public decrement(control: AbstractControl): void {
-    control.setValue(control.value - 1);
-  }
-
-  public increment(control: AbstractControl): void {
-    control.setValue(control.value + 1);
-  }
-
-  public isDecrementDisabled(control: AbstractControl): boolean {
-    return control.value <= 0;
-  }
-
-  public isIncrementDisabled(control: AbstractControl): boolean {
-    return control.value >= 9;
-  }
-
-  public toggleSelect(): void {
-    this.isSelectOpened = !this.isSelectOpened;
   }
 
   public ngOnDestroy(): void {

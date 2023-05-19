@@ -63,6 +63,7 @@ import { PassengersCounterFormComponent } from './components/passengers-counter-
     ContactFormComponent,
     AirportFilterPipe,
     AirportToCityPipe,
+    PassengersCounterFormComponent,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
 })
