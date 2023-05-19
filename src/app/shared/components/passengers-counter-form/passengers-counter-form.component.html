@@ -1,6 +1,6 @@
 <div class="passengers-select" [formGroup]="passengersForm">
   <div class="selected-option">
-    <span [ngClass]="{'passengers-select__label': true, 'label_active': isSelectOpened}">Passengers</span>
+    <span [ngClass]="{'passengers-select__label': true, 'label_active': isSelectOpened, 'error': passengersForm.hasError('isPassengersValid')}">Passengers*</span>
     <div class="select" (click)="toggleSelect($event)">
       <p class="select-text">{{adultsNumber}} Adults, {{childrenNumber}} Children, {{infantsNumber}} Infants </p>
       <button [ngClass]="{ 'arrow-btn': true, 'arrow-btn_active': isSelectOpened }">

@@ -12,6 +12,7 @@ import {
   checkIfFlightDirectionsDuplicate,
   checkIfFlightDirectionValid,
 } from 'src/app/shared/validators/flightDirections.validators';
+import { checkIfPassengersValid } from 'src/app/shared/validators/passengersCounterForm.validators';
 
 @Component({
   selector: 'app-booking-settings-panel',
@@ -56,17 +57,20 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
             [Validators.required]
           ),
         }),
-        passengers: new FormGroup({
-          adult: new FormControl<number>(
-            this.bookingInfo?.passengers.adult || 0
-          ),
-          children: new FormControl<number>(
-            this.bookingInfo?.passengers.child || 0
-          ),
-          infant: new FormControl<number>(
-            this.bookingInfo?.passengers.infant || 0
-          ),
-        }),
+        passengers: new FormGroup(
+          {
+            adult: new FormControl<number>(
+              this.bookingInfo?.passengers.adult || 0
+            ),
+            children: new FormControl<number>(
+              this.bookingInfo?.passengers.child || 0
+            ),
+            infant: new FormControl<number>(
+              this.bookingInfo?.passengers.infant || 0
+            ),
+          },
+          [checkIfPassengersValid()]
+        ),
       },
       [checkIfFlightDirectionsDuplicate()]
     );

@@ -54,7 +54,7 @@
   gap: 1rem;
   margin-top: 1rem;
   background-color: var(--accent-bg-color);
-  padding: 2rem 2rem 1rem 2rem;;
+  padding: 2rem 2rem 0rem 2rem;;
   align-items: stretch;
 }
 
@@ -85,8 +85,14 @@
 }
 
 .validation {
-  position: relative;
   background-color: var(--accent-bg-color);
-  top: -2rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  padding-bottom: .5rem;
+}
+
+.error-message {
   margin: 0;
 }
