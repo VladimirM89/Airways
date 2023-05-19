@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { PassengerCounter } from 'src/app/booking/models/passenger-counter';
 import { AbstractControl } from '@angular/forms';
-import { PassengersFormGroup } from '../../models/passengers-counter-form';
+import { PassengersFormGroup } from '../../models/forms-models';
 
 @Component({
   selector: 'app-passengers-counter-form',

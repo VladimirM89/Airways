@@ -1,0 +1,6 @@
+<mat-form-field appearance="fill" [formGroup]="datesForm">
+  <mat-label>Date</mat-label>
+  <input matInput [matDatepicker]="oneWayPicker" [formControl]="datesForm.controls.departureDate">
+  <mat-datepicker-toggle matIconSuffix [for]="oneWayPicker"></mat-datepicker-toggle>
+  <mat-datepicker #oneWayPicker></mat-datepicker>
+</mat-form-field>

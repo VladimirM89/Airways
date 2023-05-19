@@ -59,42 +59,6 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
     });
   }
 
-  public get destination(): string {
-    return this.form.get('destination')?.value;
-  }
-
-  public get departure(): string {
-    return this.form.get('departure')?.value;
-  }
-
-  public get destinationDate(): FormControl<Date | null> {
-    return this.range.get('destinationDate') as FormControl<Date | null>;
-  }
-
-  public get departureDate(): FormControl<Date | null> {
-    return this.range.get('departureDate') as FormControl<Date | null>;
-  }
-
-  public get range(): FormGroup {
-    return this.form.get('range') as FormGroup;
-  }
-
-  public get passengers(): FormGroup {
-    return this.form.get('passengers') as FormGroup;
-  }
-
-  public get adultsNumber(): number {
-    return this.passengers.controls['adult'].value;
-  }
-
-  public get childrenNumber(): number {
-    return this.passengers.controls['children'].value;
-  }
-
-  public get infantsNumber(): number {
-    return this.passengers.controls['infant'].value;
-  }
-
   public getPassengersNumber(): number {
     if (this.bookingInfo) {
       return (
@@ -119,8 +83,8 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
       roundTrip: isRoungTrip,
       departureAirport: this.departure,
       destinationAirport: this.destination,
-      departureDate: dateToString(this.departureDate.value),
-      returnDate: isRoungTrip ? dateToString(this.destinationDate.value) : '',
+      departureDate: dateToString(this.departureDate),
+      returnDate: isRoungTrip ? dateToString(this.destinationDate) : '',
       passengers: {
         adult: this.adultsNumber,
         child: this.childrenNumber,
@@ -140,5 +104,41 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
 
   public get isEditAvailable(): boolean {
     return window.location.pathname === FullUrls.FLIGHTS;
+  }
+
+  public get destination(): string {
+    return this.form.get('destination')?.value;
+  }
+
+  public get departure(): string {
+    return this.form.get('departure')?.value;
+  }
+
+  public get destinationDate(): Nullable<Date> {
+    return this.range.get('destinationDate')?.value;
+  }
+
+  public get departureDate(): Nullable<Date> {
+    return this.range.get('departureDate')?.value;
+  }
+
+  public get range(): FormGroup {
+    return this.form.get('range') as FormGroup;
+  }
+
+  public get passengers(): FormGroup {
+    return this.form.get('passengers') as FormGroup;
+  }
+
+  public get adultsNumber(): number {
+    return this.passengers.controls['adult'].value;
+  }
+
+  public get childrenNumber(): number {
+    return this.passengers.controls['children'].value;
+  }
+
+  public get infantsNumber(): number {
+    return this.passengers.controls['infant'].value;
   }
 }
