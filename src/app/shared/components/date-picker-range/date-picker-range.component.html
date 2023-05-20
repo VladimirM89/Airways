@@ -6,4 +6,6 @@
   </mat-date-range-input>
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker #picker color="primary"></mat-date-range-picker>
+  <mat-error *ngIf="datesForm.controls.destinationDate.hasError('isDateInPast')">Dates should be in future</mat-error>
+  <mat-error *ngIf="datesForm.hasError('isRangeValid')">{{datesForm.errors?.['isRangeValid']}}</mat-error>
 </mat-form-field>

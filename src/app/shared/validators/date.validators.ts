@@ -31,17 +31,16 @@ export function isDateInPast(): ValidatorFn {
   };
 }
 
-export function isFlightsDateRangeValid(): ValidatorFn {
+export function isFlightsDateRangeValid(isRoundTrip: boolean): ValidatorFn {
   return (rangeFormGroup: AbstractControl): ValidationErrors | null => {
     const departureDate = rangeFormGroup.get('departureDate')?.value;
     const destinationDate = rangeFormGroup.get('destinationDate')?.value;
-    const currentDate = new Date().getTime();
 
     if (!departureDate && !destinationDate) {
       return null;
     }
 
-    if (!destinationDate) {
+    if (!destinationDate && isRoundTrip) {
       return { isRangeValid: 'please select destination date' };
     }
 
@@ -49,12 +48,6 @@ export function isFlightsDateRangeValid(): ValidatorFn {
       return { isRangeValid: 'destination date can not be before departure' };
     }
 
-    if (
-      currentDate - departureDate.getTime() > 0 ||
-      currentDate - destinationDate.getTime() > 0
-    ) {
-      return { isRangeValid: 'please select dates in future' };
-    }
     return null;
   };
 }

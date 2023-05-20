@@ -13,6 +13,10 @@ import {
   checkIfFlightDirectionValid,
 } from 'src/app/shared/validators/flightDirections.validators';
 import { checkIfPassengersValid } from 'src/app/shared/validators/passengersCounterForm.validators';
+import {
+  isDateInPast,
+  isFlightsDateRangeValid,
+} from 'src/app/shared/validators/date.validators';
 
 @Component({
   selector: 'app-booking-settings-panel',
@@ -47,16 +51,21 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
           this.bookingInfo?.destinationAirport || '',
           [Validators.required, checkIfFlightDirectionValid()]
         ),
-        range: new FormGroup({
-          departureDate: new FormControl<Date | null>(
-            this.bookingInfo ? new Date(this.bookingInfo.departureDate) : null,
-            [Validators.required]
-          ),
-          destinationDate: new FormControl<Date | null>(
-            this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null,
-            [Validators.required]
-          ),
-        }),
+        range: new FormGroup(
+          {
+            departureDate: new FormControl<Date | null>(
+              this.bookingInfo
+                ? new Date(this.bookingInfo.departureDate)
+                : null,
+              [Validators.required, isDateInPast()]
+            ),
+            destinationDate: new FormControl<Date | null>(
+              this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null,
+              [Validators.required, isDateInPast()]
+            ),
+          },
+          [isFlightsDateRangeValid(this.bookingInfo?.roundTrip || false)]
+        ),
         passengers: new FormGroup(
           {
             adult: new FormControl<number>(

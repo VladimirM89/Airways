@@ -3,4 +3,5 @@
   <input matInput [matDatepicker]="oneWayPicker" [formControl]="datesForm.controls.departureDate">
   <mat-datepicker-toggle matIconSuffix [for]="oneWayPicker"></mat-datepicker-toggle>
   <mat-datepicker #oneWayPicker></mat-datepicker>
+  <mat-error *ngIf="datesForm.controls.departureDate.hasError('isDateInPast')">date should be in future</mat-error>
 </mat-form-field>

@@ -12,8 +12,8 @@ export class BookingService {
     roundTrip: true,
     departureAirport: 'ABZ',
     destinationAirport: 'GYD',
-    departureDate: '2023-05-15',
-    returnDate: '2023-05-20',
+    departureDate: '2023-05-25',
+    returnDate: '2023-05-27',
     passengers: {
       adult: 2,
       child: 1,
