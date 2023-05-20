@@ -47,6 +47,10 @@
   font-weight: 500;
   display: flex;
   padding: .5rem 1.5rem;
+
+  &__bordered {
+    border: 1px solid var(--primary-color);
+  }
 }
 
 .highlight-btn {

@@ -30,16 +30,23 @@ export class PersonalInfoFormComponent {
     return this.personalFormGroup.get('lastName')?.errors;
   }
 
-  public get date(): AbstractControl<string> | null {
-    return this.personalFormGroup.get('date');
+  public get dateOfBirth(): AbstractControl<string> | null {
+    return this.personalFormGroup.get('dateOfBirth');
   }
 
-  public get dateErrors(): ValidationErrors | null | undefined {
-    return this.personalFormGroup.get('date')?.errors;
+  public get dateOfBirthErrors(): ValidationErrors | null | undefined {
+    return this.personalFormGroup.get('dateOfBirth')?.errors;
   }
 
-  public get isMale(): boolean {
-    return this.personalInfoFormService.isMale;
+  public get sex(): AbstractControl<boolean> | null {
+    return this.personalFormGroup.get('sex');
+  }
+
+  public get isMale(): boolean | null {
+    if (this.personalInfoFormService.isMale) {
+      return this.personalInfoFormService?.isMale;
+    }
+    return null;
   }
 
   public toggleGender(): void {

@@ -7,16 +7,17 @@ import { Nullable } from 'src/app/shared/models/types';
   providedIn: 'root',
 })
 export class BookingService {
+  // private bookingInformation: Nullable<BookingInfo> = null;
   private bookingInformation: Nullable<BookingInfo> = {
     roundTrip: true,
-    departureCity: 'Moscow',
-    destinationCity: 'Baku',
+    departureAirport: 'ABZ',
+    destinationAirport: 'GYD',
     departureDate: '2023-05-15',
     returnDate: '2023-05-20',
     passengers: {
-      adults: 2,
+      adult: 2,
       child: 1,
-      infants: 0,
+      infant: 0,
     },
   };
 
@@ -53,9 +54,9 @@ export class BookingService {
   public get passengersNumber(): number {
     if (this.bookingInformation) {
       return (
-        this.bookingInformation.passengers.adults +
+        this.bookingInformation.passengers.adult +
         this.bookingInformation.passengers.child +
-        this.bookingInformation.passengers.infants
+        this.bookingInformation.passengers.infant
       );
     }
     return 0;

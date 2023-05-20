@@ -1,20 +1,118 @@
-<div class="info-panel">
-  <div class="cities">
-    <span>{{departureCity}}</span>
-    <button class="toggle-btn"><img src="../../.././../assets/toggle-trip-way-btn.svg" alt="Change direction"></button>
-    <span>{{destinationCity}}</span>
-  </div>
-  <div class="dates-n-passengers">
-    <span class="dotted">{{ bookingInfo?.roundTrip ? 'Two-way' : 'One-way' }}</span>
-    <span class="dotted">{{ departureDate | date: 'dd MMM' }} - {{ destinationDate | date: 'dd MMM' }}</span>
-    <div>
-      <span> {{ passengersNumber }} </span>
-      <img src="../../.././../assets/passenger-icon.svg" alt="passengers">
+<div class="search-panel">
+  <div class="search-panel_info" *ngIf="bookingInfo; else noInfo">
+    <div class="cities">
+      <span>{{ bookingInfo.departureAirport | airportToCity }}</span>
+      <button class="toggle-btn"><img src="/assets/toggle-trip-way-btn.svg" alt="Change direction"></button>
+      <span>{{ bookingInfo.destinationAirport | airportToCity }}</span>
+    </div>
+    <div class="dates-n-passengers">
+      <span class="dotted">{{ bookingInfo.roundTrip ? 'Two-way' : 'One-way' }}</span>
+      <span class="dotted" *ngIf="bookingInfo.roundTrip; else oneWayDepartureDate">{{ bookingInfo.departureDate | date: 'dd MMM' }} - {{ bookingInfo.returnDate | date: 'dd MMM' }}</span>
+      <ng-template #oneWayDepartureDate>
+        <span class="dotted">{{ bookingInfo.departureDate | date: 'dd MMM' }}</span>
+      </ng-template>
+      <div>
+        <span> {{ getPassengersNumber() }} </span>
+        <img src="/assets/passenger-icon.svg" alt="passengers">
+      </div>
     </div>
   </div>
-  <button class="ghost-btn">Edit</button>
+  <ng-template #noInfo>Please edit search parameters</ng-template>
+
+  <button class="ghost-btn" *ngIf="editMode; else edit" (click)="setNewSearch()">Confirm</button>
+  <ng-template #edit>
+    <button class="ghost-btn" (click)="setToEditMode()">Edit</button>
+  </ng-template>
 </div>
 
-<form [formGroup]="form">
+<form [formGroup]="form" class="settings-form" *ngIf="editMode">
+  <mat-form-field class="input-container" appearance="fill">
+    <mat-label>From</mat-label>
+    <input type="text"
+         matInput
+         formControlName="departure"
+         [matAutocomplete]="autoAirportDeparture"
+    >
+    <mat-autocomplete #autoAirportDeparture="matAutocomplete">
+      <mat-option
+        *ngFor="let airport of airports | airportFilterPipe: departure; trackBy: trackByFn"
+        [value]="airport.airportCode"
+      >
+        {{airport.city}} ({{airport.airportCode}})
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field class="input-container" appearance="fill">
+    <mat-label>Destination</mat-label>
+    <input type="text"
+         matInput
+         formControlName="destination"
+         [matAutocomplete]="autoAirportDestination"
+    >
+    <mat-autocomplete #autoAirportDestination="matAutocomplete">
+      <mat-option
+        *ngFor="let airport of airports | airportFilterPipe: destination; trackBy: trackByFn"
+        [value]="airport.airportCode"
+      >
+        {{airport.city}} ({{airport.airportCode}})
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" *ngIf="bookingInfo?.roundTrip; else oneWayDatePicker">
+    <mat-label>Dates</mat-label>
+    <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+      <input matStartDate formControlName="departureDate" placeholder="Start date">
+      <input matEndDate formControlName="destinationDate" placeholder="End date">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker color="primary"></mat-date-range-picker>
+  
+    <mat-error *ngIf="range.controls['departureDate'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+    <mat-error *ngIf="range.controls['destinationDate'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+  </mat-form-field>
+
+  <ng-template #oneWayDatePicker [formGroup]="range">
+    <mat-form-field appearance="fill">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="oneWayPicker" formControlName="departureDate">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="oneWayPicker"></mat-datepicker-toggle>
+      <mat-datepicker #oneWayPicker></mat-datepicker>
+    </mat-form-field>
+  </ng-template>
+
+  <div class="passengers-select" [formGroup]="passengers">
+    <div class="selected-option">
+      <span class="passengers-select__label">Passengers</span>
+      <p class="select">{{adultsNumber}} Adults, {{childrenNumber}} Children, {{infantsNumber}} Infants </p>
+    </div>
+    <ul class="options">
+        <li class="option">
+          <div class="passenger-category">
+            <span>Adults:</span>
+            <span class="description">14+ years</span>
+          </div>
+          <div class="counter">
+            <button
+              class="counter-btn"
+              (click)="decrement(passengers.controls['adult'])"
+              [disabled]="isDecrementDisabled(passengers.controls['adult'])" 
+            >
+              <mat-icon>remove</mat-icon>
+            </button>
+            <input class="number-input" type="number" formControlName="adult" min="0" max="9" readonly/>
+            <button
+              class="counter-btn"
+              (click)="increment(passengers.controls['adult'])"
+              [disabled]="isIncrementDisabled(passengers.controls['adult'])"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>  
+        </li>
+      </ul>
+    </div>
 
 </form>

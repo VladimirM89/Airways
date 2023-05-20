@@ -37,21 +37,12 @@
             "style": "kebab-case"
           }
         ],
-        "@typescript-eslint/explicit-member-accessibility": [
-          "warn"
-        ],
-        "@typescript-eslint/explicit-function-return-type": [
-          "warn"
-        ],
-        "@angular-eslint/no-output-on-prefix": [
-          "off"
-        ],
-        "import/prefer-default-export": [
-          "off"
-        ],
-        "no-console": [
-          "warn"
-        ]
+        "@typescript-eslint/explicit-member-accessibility": ["warn"],
+        "@typescript-eslint/explicit-function-return-type": ["warn"],
+        "@angular-eslint/no-output-on-prefix": ["off"],
+        "import/prefer-default-export": ["off"],
+        "no-console": ["warn"],
+        "class-methods-use-this": ["off"]
       }
     },
     {

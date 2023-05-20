@@ -1,28 +1,33 @@
 export interface BookingInfo {
   roundTrip: boolean;
-  departureCity: string;
-  destinationCity: string;
+  departureAirport: string;
+  destinationAirport: string;
   departureDate: string;
   returnDate: string;
   passengers: PassengersNumber;
 }
 
 export interface PassengersNumber {
-  adults: number;
+  adult: number;
   child: number;
-  infants: number;
+  infant: number;
 }
 
 export interface PassangersInfo {
-  adults: Array<Passenger>;
+  adult: Array<Passenger>;
   child: Array<Passenger>;
-  infants: Array<Passenger>;
+  infant: Array<Passenger>;
   contacts: ContactInfo;
 }
 
 export interface ContactInfo {
   email: string;
-  mobile: string;
+  mobile: MobileInfo;
+}
+
+export interface MobileInfo {
+  countryCode: string;
+  number: string;
 }
 
 export interface Passenger {
@@ -31,5 +36,5 @@ export interface Passenger {
   sex: string;
   dateOfBirth: string;
   specialAssistance: boolean;
-  luggage: boolean;
+  luggage: string;
 }

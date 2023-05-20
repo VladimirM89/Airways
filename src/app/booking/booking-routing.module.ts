@@ -4,6 +4,7 @@ import { BookingComponent } from './booking.component';
 import { Paths } from '../types/enums';
 import { UserGuard } from '../core/guards/user.guard';
 import { FlightsInfoGuard } from '../core/guards/flights-info.guard';
+import { PassengersInfoGuard } from '../core/guards/passengers-info.guard';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
           import('./pages/summary-page/summary-page.module').then(
             m => m.SummaryPageModule
           ),
-        canActivate: [UserGuard],
+        canActivate: [UserGuard, PassengersInfoGuard],
       },
       {
         path: Paths.BOOKING_FLIGHTS,
