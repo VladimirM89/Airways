@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -6,6 +6,9 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { BookingService } from 'src/app/core/services/booking.service';
+import { MobileInfo } from 'src/app/shared/models/booking';
+import { Nullable } from 'src/app/shared/models/types';
 import { ContactFormService } from 'src/app/shared/services/contact-form.service';
 import { PassengersFormsService } from 'src/app/shared/services/passengers-forms.service';
 
@@ -20,18 +23,21 @@ export class BookingContactComponent implements OnInit {
 
   public contactForm!: FormGroup;
 
+  @Input() public contactData!: Nullable<MobileInfo>;
+
   public constructor(
     private contactFormService: ContactFormService,
-    private passengersFormsService: PassengersFormsService
+    private passengersFormsService: PassengersFormsService,
+    private bookingService: BookingService
   ) {}
 
   public ngOnInit(): void {
     this.contactForm = new FormGroup({
-      email: new FormControl<string>('', [
-        Validators.email,
-        Validators.required,
-      ]),
-      contactInput: this.contactFormService.contactFormGroup,
+      email: new FormControl<string>(
+        this.bookingService.passengersInfo?.contacts.email || '',
+        [Validators.email, Validators.required]
+      ),
+      contactInput: this.contactFormService.createContactForm(this.contactData),
     });
     this.passengersFormsService.addForm(this.contactForm);
     this.passengersFormsService.passengersInfo(this.contactForm);

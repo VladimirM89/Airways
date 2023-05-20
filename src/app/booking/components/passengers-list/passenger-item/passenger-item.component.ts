@@ -39,8 +39,12 @@ export class PassengerItemComponent implements OnInit {
       personalFormGroup: this.personalInfoFormService.createPersonalInfoForm(
         this.passengerData
       ),
-      specialAssistance: new FormControl<boolean>(false),
-      luggage: new FormControl<number>(INITIAL_BAGGAGE),
+      specialAssistance: new FormControl<boolean>(
+        this.passengerData?.specialAssistance || false
+      ),
+      luggage: new FormControl<number>(
+        Number(this.passengerData?.luggage) || INITIAL_BAGGAGE
+      ),
     });
 
     this.passengersFormsService.addForm(this.passengerFormGroup);

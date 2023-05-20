@@ -22,7 +22,12 @@ export interface PassangersInfo {
 
 export interface ContactInfo {
   email: string;
-  mobile: string;
+  mobile: MobileInfo;
+}
+
+export interface MobileInfo {
+  countryCode: string;
+  number: string;
 }
 
 export interface Passenger {
