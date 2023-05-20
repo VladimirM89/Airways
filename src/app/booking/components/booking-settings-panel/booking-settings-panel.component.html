@@ -75,6 +75,6 @@
 </form>
   
 <div class="validation" *ngIf="form.invalid">
-  <p class="error-message">{{form.errors?.['isDuplicate']}}</p>
-  <p class="error-message">{{passengers.errors?.['isPassengersValid']}}</p>
+  <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isDuplicate']}}</p>
+  <p class="error-message" *ngIf="passengers.invalid">{{passengers.errors?.['isPassengersValid']}}</p>
 </div>

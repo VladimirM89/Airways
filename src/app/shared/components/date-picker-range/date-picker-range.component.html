@@ -6,7 +6,4 @@
   </mat-date-range-input>
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker #picker color="primary"></mat-date-range-picker>
-
-  <mat-error *ngIf="datesForm.controls.departureDate.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-  <mat-error *ngIf="datesForm.controls.destinationDate.hasError('matEndDateInvalid')">Invalid end date</mat-error>
 </mat-form-field>
