@@ -17,6 +17,7 @@ import {
   isDateInPast,
   isFlightsDateRangeValid,
 } from 'src/app/shared/validators/date.validators';
+import { RouterService } from 'src/app/core/services/router.service';
 
 @Component({
   selector: 'app-booking-settings-panel',
@@ -24,7 +25,10 @@ import {
   styleUrls: ['./booking-settings-panel.component.scss'],
 })
 export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
-  public constructor(private bookingService: BookingService) {}
+  public constructor(
+    private bookingService: BookingService,
+    private routerService: RouterService
+  ) {}
 
   public form!: FormGroup;
 
@@ -40,6 +44,14 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
     this.sub = this.bookingService.getBookingInfo().subscribe(info => {
       this.bookingInfo = info;
     });
+
+    this.sub.add(
+      this.routerService.checkUrl().subscribe(event => {
+        if (event.url !== FullUrls.FLIGHTS) {
+          this.editMode = false;
+        }
+      })
+    );
 
     this.form = new FormGroup(
       {
