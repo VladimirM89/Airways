@@ -1,7 +1,15 @@
-import { Component } from '@angular/core';
+/* eslint-disable @ngrx/no-store-subscription */
+/* eslint-disable no-return-assign */
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { BookingService } from 'src/app/core/services/booking.service';
+import { addUserToState } from 'src/app/redux/actions/user.action';
+import { selectUserData } from 'src/app/redux/selectors/user.selectors';
 import { FlightItem } from 'src/app/shared/models/flight-item';
+import { Nullable } from 'src/app/shared/models/types';
+import { User } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -9,11 +17,24 @@ import { Paths } from 'src/app/types/enums';
   templateUrl: './summary-page.component.html',
   styleUrls: ['./summary-page.component.scss'],
 })
-export class SummaryPageComponent {
+export class SummaryPageComponent implements OnInit {
+  public bookingInfo$ = this.bookingService.getBookingInfo();
+
+  private userSub!: Subscription;
+
+  private user: Nullable<User> = null;
+
   public constructor(
     private bookingService: BookingService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
+
+  public ngOnInit(): void {
+    this.userSub = this.store
+      .select(selectUserData)
+      .subscribe(user => (this.user = user));
+  }
 
   public navToPassengers(): void {
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
@@ -29,5 +50,16 @@ export class SummaryPageComponent {
     return array;
   }
 
-  public bookingInfo$ = this.bookingService.getBookingInfo();
+  // TODO: update to use effect (first updateUser Api, second add to state)
+  public addBookingsToUser(): void {
+    if (this.user) {
+      this.user.bookings = this.bookingService.flights;
+
+      this.store.dispatch(
+        addUserToState({
+          user: this.user,
+        })
+      );
+    }
+  }
 }
