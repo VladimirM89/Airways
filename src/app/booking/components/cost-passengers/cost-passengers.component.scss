@@ -1,22 +1,38 @@
+:host {
+  grid-column: 2/3;
+}
+
 p {
   margin: 0;
 }
 
 .container {
-  padding: 2.4rem 4rem;
+  padding: 2.4rem 7.2rem 2rem 4rem;
 }
 
 .summary-cost-container {
+  padding-bottom: 1.6rem;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
+  border-bottom: 1px solid var(--neutral-color);
 }
 
 .cost-passenger {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  gap: 5rem;
+  gap: 0.5rem;
   font-size: 1.6rem;
+}
+
+.line-conrainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.description-title {
+  font-weight: 700;
 }
 
 .description-container {
@@ -25,17 +41,20 @@ p {
   gap: 0.5rem;
 }
 
-.description-title {
-  font-weight: 700;
-}
-
-.details {
+.description {
   padding-left: 4rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.cost-container {
-  text-align: end;
+.total-container {
+  padding-top: 2rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.highlight {
+  color: var(--primary-color);
 }

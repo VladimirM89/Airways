@@ -1,22 +1,38 @@
-<mat-card class="container">
+<mat-card class="container" *ngIf="bookingInfo$ | async as bookingInfo">
   <ul class="summary-cost-container">
-    <li class="cost-passenger">
+    <ng-container *ngFor="let passenger of bookingInfo.passengers | keyvalue" >
+      <li class="cost-passenger" *ngIf="passenger.value">
 
-      <div class="description-container">
-        <p class="description-title">1 x Adult Fare</p>
-        <div class="details">
-          <p>Fare</p>
-          <p>Tax & Service Charge</p>
+        <p class="line-conrainer description-title">
+          <span>
+            {{ passenger.value }} x {{ passenger.key | titlecase}} Fare
+          </span>
+          <span>
+            {{passenger.value * (fare + tax) | currency: 'EUR'}}
+          </span>
+        </p>
+        <div class="description">
+          <p class="line-conrainer">
+            <span>Fare</span>
+            <span>{{passenger.value * fare | currency: 'EUR'}}</span>
+          </p>
+
+          <p class="line-conrainer">
+            <span>Tax & Service Charge</span>
+            <span>{{passenger.value * tax | currency: 'EUR'}}</span>
+          </p>
         </div>
-      </div>
 
-      <div class="cost-container">
-        <p class="description-title">€257.31</p>
-        <p>€166.00</p>
-        <p>€91.31</p>
-      </div>
+      </li>
 
-    </li>
+    </ng-container>
+
   </ul>
+
+
+  <p class="line-conrainer total-container">
+    <span>total:</span>
+    <span class="highlight">{{summary | currency: 'EUR'}}</span>
+  </p>
 
 </mat-card>
