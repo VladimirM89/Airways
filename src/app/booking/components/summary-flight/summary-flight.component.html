@@ -2,10 +2,10 @@
   <div class="flight-container">
     <p class="flight-info">
       <span class="flight-number">{{flightNumber}}</span>
-      <span>{{bookingInfo.departureAirport | airportToCity }} &mdash; {{bookingInfo.destinationAirport | airportToCity}}</span>
+      <span>{{departureAirport | airportToCity }} &mdash; {{destinationAirport | airportToCity}}</span>
     </p>
     <p class="time-info">
-      <span>{{bookingInfo.departureDate | date: 'EEEE, d MMMM, y'}}</span>
+      <span>{{departureDate | date: 'EEEE, d MMMM, y'}}</span>
       <span>{{departureTime | date: 'H:mm'}} &mdash; {{destinationTime | date: 'H:mm'}}</span>
     </p>
   </div>

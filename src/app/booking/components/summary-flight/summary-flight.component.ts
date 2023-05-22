@@ -11,10 +11,7 @@ import { FlightItem } from 'src/app/shared/models/flight-item';
 export class SummaryFlightComponent {
   @Input() public flight!: FlightItem;
 
-  public constructor(private bookingService: BookingService) {
-    // // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    // this.passengers;
-  }
+  public constructor(private bookingService: BookingService) {}
 
   public bookingInfo$ = this.bookingService.getBookingInfo();
 
@@ -32,12 +29,12 @@ export class SummaryFlightComponent {
     return Number(value);
   }
 
-  public get departureCity(): string {
-    return this.flight.departureCity;
+  public get departureAirport(): string {
+    return this.flight.departureAirport;
   }
 
-  public get destinationCity(): string {
-    return this.flight.destinationCity;
+  public get destinationAirport(): string {
+    return this.flight.destinationAirport;
   }
 
   public get departureDate(): string {
