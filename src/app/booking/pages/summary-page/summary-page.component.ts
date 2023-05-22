@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @ngrx/no-store-subscription */
 /* eslint-disable no-return-assign */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -18,7 +18,7 @@ import { Paths } from 'src/app/types/enums';
   templateUrl: './summary-page.component.html',
   styleUrls: ['./summary-page.component.scss'],
 })
-export class SummaryPageComponent implements OnInit {
+export class SummaryPageComponent implements OnInit, OnDestroy {
   public bookingInfo$ = this.bookingService.getBookingInfo();
 
   private userSub!: Subscription;
@@ -71,5 +71,9 @@ export class SummaryPageComponent implements OnInit {
 
   private navToCart(): void {
     this.router.navigate([Paths.CART]);
+  }
+
+  public ngOnDestroy(): void {
+    this.userSub.unsubscribe();
   }
 }
