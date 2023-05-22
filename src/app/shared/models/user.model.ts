@@ -1,3 +1,4 @@
+import { BookingInfo, PassangersInfo } from './booking';
 import { FlightItem } from './flight-item';
 
 export interface User {
@@ -10,7 +11,7 @@ export interface User {
   sex: string;
   pnone: string;
   citizenship?: string | null;
-  bookings?: Array<FlightItem> | null;
+  bookings?: Array<UserBooking> | null;
 }
 
 export interface UserStateInterface {
@@ -23,5 +24,12 @@ export interface UserStateInterface {
   sex: string;
   pnone: string;
   citizenship?: string | null;
-  bookings?: Array<FlightItem> | null;
+  bookings?: Array<UserBooking> | null;
+}
+export interface UserBooking {
+  id?: number;
+  payed: boolean;
+  bookingInfo: BookingInfo;
+  flight: Array<FlightItem>;
+  passengers: PassangersInfo;
 }

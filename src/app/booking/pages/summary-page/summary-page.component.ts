@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @ngrx/no-store-subscription */
 /* eslint-disable no-return-assign */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { addUserToState } from 'src/app/redux/actions/user.action';
 import { selectUserData } from 'src/app/redux/selectors/user.selectors';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 import { Nullable } from 'src/app/shared/models/types';
-import { User } from 'src/app/shared/models/user.model';
+import { User, UserBooking } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -18,7 +18,7 @@ import { Paths } from 'src/app/types/enums';
   templateUrl: './summary-page.component.html',
   styleUrls: ['./summary-page.component.scss'],
 })
-export class SummaryPageComponent implements OnInit {
+export class SummaryPageComponent implements OnInit, OnDestroy {
   public bookingInfo$ = this.bookingService.getBookingInfo();
 
   private userSub!: Subscription;
@@ -52,9 +52,15 @@ export class SummaryPageComponent implements OnInit {
   }
 
   // TODO: update to use effect (first updateUser Api, second add to state)
-  public addBookingsToUser(): void {
+  public addBookings(): void {
+    const booking = this.userBooking();
+    console.log('booking: ', booking);
+    if (!booking) return;
+
+    this.bookingService.userBookings.push(booking);
+
     if (this.user) {
-      this.user.bookings = this.bookingService.flights;
+      this.user.bookings?.push(booking);
 
       this.store.dispatch(
         addUserToState({
@@ -65,11 +71,30 @@ export class SummaryPageComponent implements OnInit {
     this.navToCart();
   }
 
+  private userBooking(): Nullable<UserBooking> {
+    const correntBookingInfo = this.bookingService.getCurrentBookingInfo();
+
+    if (correntBookingInfo && this.bookingService.passengersInfo) {
+      return {
+        payed: false,
+        bookingInfo: correntBookingInfo,
+        flight: this.bookingService.flights,
+        passengers: this.bookingService.passengersInfo,
+      };
+    }
+
+    return null;
+  }
+
   public trackByFn(index: number, item: FlightItem): number {
     return item.id;
   }
 
   private navToCart(): void {
     this.router.navigate([Paths.CART]);
+  }
+
+  public ngOnDestroy(): void {
+    this.userSub.unsubscribe();
   }
 }

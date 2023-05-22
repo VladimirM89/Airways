@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BookingService } from 'src/app/core/services/booking.service';
-import { FlightItem } from '../../models/flight-item';
+import { UserBooking } from '../../models/user.model';
 
 @Component({
   selector: 'app-booking-table',
@@ -8,24 +8,10 @@ import { FlightItem } from '../../models/flight-item';
   styleUrls: ['./booking-table.component.scss'],
 })
 export class BookingTableComponent {
-  public constructor(private bookingService: BookingService) {
-    this.getBookingsArray();
-  }
+  public constructor(private bookingService: BookingService) {}
 
-  private getBookingsArray() {
-    const booking = {
-      bookingInfo: this.bookingService.getCurrentBookingInfo(),
-      flight: this.bookingService.flights,
-      passengers: this.bookingService.passengersInfo,
-    };
-    console.log(booking);
-  }
-
-  public get bookings(): FlightItem[] {
-    return this.bookingService.flights;
-  }
-
-  public trackByFn(index: number, item: FlightItem): number {
-    return item.id;
+  public get userBookings(): UserBooking[] {
+    console.log('booking table: ', this.bookingService.userBookings);
+    return this.bookingService.userBookings;
   }
 }

@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BookingService } from 'src/app/core/services/booking.service';
-import { FlightItem } from 'src/app/shared/models/flight-item';
+import { UserBooking } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-booking-item',
@@ -8,39 +7,21 @@ import { FlightItem } from 'src/app/shared/models/flight-item';
   styleUrls: ['./booking-item.component.scss'],
 })
 export class BookingItemComponent {
-  @Input() public booking!: FlightItem;
+  @Input() public booking!: UserBooking;
 
-  public constructor(private bookingService: BookingService) {}
-
-  public get departureCity(): string {
-    return this.booking.departureCity;
+  public get departureAirport(): string {
+    return this.booking.bookingInfo.departureAirport;
   }
 
-  public get destinationCity(): string {
-    return this.booking.destinationCity;
-  }
-
-  public get departureDate(): string {
-    return this.booking.departureDate;
+  public get destinationAirport(): string {
+    return this.booking.bookingInfo.destinationAirport;
   }
 
   public get flightNumber(): string {
-    return this.booking.flightNumber;
-  }
-
-  public get departureTime(): string {
-    return this.booking.departureDateTime;
-  }
-
-  public get destinationTime(): string {
-    return this.booking.destinationDateTime;
+    return this.booking.flight[0].flightNumber;
   }
 
   public get roundTrip(): boolean {
-    const currentInfo = this.bookingService.getCurrentBookingInfo();
-    if (currentInfo) {
-      return currentInfo.roundTrip;
-    }
-    return false;
+    return this.booking.bookingInfo.roundTrip;
   }
 }

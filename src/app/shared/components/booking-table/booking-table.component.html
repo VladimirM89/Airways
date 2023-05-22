@@ -1,3 +1,3 @@
 <p>booking-table header</p>
 
-<app-booking-item></app-booking-item>
+<app-booking-item *ngFor="let booking of userBookings" [booking]="booking"></app-booking-item>

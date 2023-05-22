@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {
-  BookingInfo,
-  PassangersInfo,
-  UserBooking,
-} from 'src/app/shared/models/booking';
+import { BookingInfo, PassangersInfo } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 import { Nullable } from 'src/app/shared/models/types';
+import { UserBooking } from 'src/app/shared/models/user.model';
 
 @Injectable({
   providedIn: 'root',
