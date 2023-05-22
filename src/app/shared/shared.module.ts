@@ -17,6 +17,9 @@ import { ContactFormComponent } from './components/contact-form/contact-form.com
 import { CountryCodeFilterPipe } from './pipes/country-code-filter.pipe';
 import { AirportFilterPipe } from './pipes/airport-filter.pipe';
 import { AirportToCityPipe } from './pipes/airport-to-city.pipe';
+import { PassengersCounterFormComponent } from './components/passengers-counter-form/passengers-counter-form.component';
+import { DatePickerSingleComponent } from './components/date-picker-single/date-picker-single.component';
+import { DatePickerRangeComponent } from './components/date-picker-range/date-picker-range.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import { AirportToCityPipe } from './pipes/airport-to-city.pipe';
     CountryCodeFilterPipe,
     AirportFilterPipe,
     AirportToCityPipe,
+    PassengersCounterFormComponent,
+    DatePickerSingleComponent,
+    DatePickerRangeComponent,
   ],
   imports: [
     CommonModule,
@@ -61,6 +67,9 @@ import { AirportToCityPipe } from './pipes/airport-to-city.pipe';
     ContactFormComponent,
     AirportFilterPipe,
     AirportToCityPipe,
+    PassengersCounterFormComponent,
+    DatePickerSingleComponent,
+    DatePickerRangeComponent,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
 })

@@ -2,7 +2,7 @@
   <div class="search-panel_info" *ngIf="bookingInfo; else noInfo">
     <div class="cities">
       <span>{{ bookingInfo.departureAirport | airportToCity }}</span>
-      <button class="toggle-btn"><img src="/assets/toggle-trip-way-btn.svg" alt="Change direction"></button>
+      <button class="toggle-btn" (click)="toggleFlightDirections()" [disabled]="!isEditAvailable"><img src="/assets/toggle-trip-way-btn.svg" alt="Change directions"></button>
       <span>{{ bookingInfo.destinationAirport | airportToCity }}</span>
     </div>
     <div class="dates-n-passengers">
@@ -19,10 +19,12 @@
   </div>
   <ng-template #noInfo>Please edit search parameters</ng-template>
 
-  <button class="ghost-btn" *ngIf="editMode; else edit" (click)="setNewSearch()">Confirm</button>
-  <ng-template #edit>
-    <button class="ghost-btn" (click)="setToEditMode()">Edit</button>
-  </ng-template>
+  <ng-container *ngIf="isEditAvailable">
+    <button class="ghost-btn" *ngIf="editMode; else edit" (click)="setNewSearch()" [disabled]="form.invalid">Confirm</button>
+    <ng-template #edit>
+      <button class="ghost-btn" (click)="setToEditMode()">Edit</button>
+    </ng-template>
+  </ng-container>
 </div>
 
 <form [formGroup]="form" class="settings-form" *ngIf="editMode">
@@ -35,12 +37,14 @@
     >
     <mat-autocomplete #autoAirportDeparture="matAutocomplete">
       <mat-option
-        *ngFor="let airport of airports | airportFilterPipe: departure; trackBy: trackByFn"
+        *ngFor="let airport of airports | airportFilterPipe: departure.value; trackBy: trackByFn"
         [value]="airport.airportCode"
       >
         {{airport.city}} ({{airport.airportCode}})
       </mat-option>
     </mat-autocomplete>
+    <mat-error *ngIf="departure.hasError('required')">this field can not be empty</mat-error>
+    <mat-error *ngIf="departure.hasError('isDirectionValid')">{{departure.errors?.['isDirectionValid']}}</mat-error>
   </mat-form-field>
 
   <mat-form-field class="input-container" appearance="fill">
@@ -52,67 +56,25 @@
     >
     <mat-autocomplete #autoAirportDestination="matAutocomplete">
       <mat-option
-        *ngFor="let airport of airports | airportFilterPipe: destination; trackBy: trackByFn"
+        *ngFor="let airport of airports | airportFilterPipe: destination.value; trackBy: trackByFn"
         [value]="airport.airportCode"
       >
         {{airport.city}} ({{airport.airportCode}})
       </mat-option>
     </mat-autocomplete>
+    <mat-error *ngIf="destination.hasError('required')">this field can not be empty</mat-error>
+    <mat-error *ngIf="destination.hasError('isDirectionValid')">{{destination.errors?.['isDirectionValid']}}</mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" *ngIf="bookingInfo?.roundTrip; else oneWayDatePicker">
-    <mat-label>Dates</mat-label>
-    <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-      <input matStartDate formControlName="departureDate" placeholder="Start date">
-      <input matEndDate formControlName="destinationDate" placeholder="End date">
-    </mat-date-range-input>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker color="primary"></mat-date-range-picker>
-  
-    <mat-error *ngIf="range.controls['departureDate'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
-    <mat-error *ngIf="range.controls['destinationDate'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
-  </mat-form-field>
-
-  <ng-template #oneWayDatePicker [formGroup]="range">
-    <mat-form-field appearance="fill">
-      <mat-label>Date</mat-label>
-      <input matInput [matDatepicker]="oneWayPicker" formControlName="departureDate">
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="oneWayPicker"></mat-datepicker-toggle>
-      <mat-datepicker #oneWayPicker></mat-datepicker>
-    </mat-form-field>
+  <app-date-picker-range [datesForm]="range" *ngIf="bookingInfo?.roundTrip; else oneWayDatePicker"></app-date-picker-range>
+  <ng-template #oneWayDatePicker>
+    <app-date-picker-single [datesForm]="range"></app-date-picker-single>
   </ng-template>
 
-  <div class="passengers-select" [formGroup]="passengers">
-    <div class="selected-option">
-      <span class="passengers-select__label">Passengers</span>
-      <p class="select">{{adultsNumber}} Adults, {{childrenNumber}} Children, {{infantsNumber}} Infants </p>
-    </div>
-    <ul class="options">
-        <li class="option">
-          <div class="passenger-category">
-            <span>Adults:</span>
-            <span class="description">14+ years</span>
-          </div>
-          <div class="counter">
-            <button
-              class="counter-btn"
-              (click)="decrement(passengers.controls['adult'])"
-              [disabled]="isDecrementDisabled(passengers.controls['adult'])" 
-            >
-              <mat-icon>remove</mat-icon>
-            </button>
-            <input class="number-input" type="number" formControlName="adult" min="0" max="9" readonly/>
-            <button
-              class="counter-btn"
-              (click)="increment(passengers.controls['adult'])"
-              [disabled]="isIncrementDisabled(passengers.controls['adult'])"
-            >
-              <mat-icon>add</mat-icon>
-            </button>
-          </div>  
-        </li>
-      </ul>
-    </div>
-
+  <app-passengers-counter-form [passengersForm]="passengers"></app-passengers-counter-form>
 </form>
+  
+<div class="validation" *ngIf="form.invalid">
+  <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isDuplicate']}}</p>
+  <p class="error-message" *ngIf="passengers.invalid">{{passengers.errors?.['isPassengersValid']}}</p>
+</div>

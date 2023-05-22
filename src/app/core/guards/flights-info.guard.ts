@@ -42,6 +42,6 @@ export class FlightsInfoGuard implements CanActivate, CanLoad {
   }
 
   private flightsInfoSelected(): boolean {
-    return !!this.bookingService.bookingInfo;
+    return !!this.bookingService.getBookingInfo();
   }
 }

@@ -14,12 +14,7 @@ export class SummaryPageComponent {
     private router: Router
   ) {}
 
-  public get isRoundTrip(): boolean | null {
-    if (this.bookingService.bookingInfo?.roundTrip) {
-      return this.bookingService.bookingInfo?.roundTrip;
-    }
-    return null;
-  }
+  public bookingInfo$ = this.bookingService.getBookingInfo();
 
   public navToPassengers(): void {
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
