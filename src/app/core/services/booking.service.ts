@@ -10,7 +10,7 @@ import { UserBooking } from 'src/app/shared/models/user.model';
 })
 export class BookingService {
   private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>({
-    roundTrip: false,
+    roundTrip: true,
     departureAirport: 'ABZ',
     destinationAirport: 'GYD',
     departureDate: '2023-05-25',
@@ -28,10 +28,10 @@ export class BookingService {
     {
       id: 5,
       flightNumber: 'SU-5288',
-      departureAirport: 'MSK',
-      departureCity: 'Minsk',
-      destinationAirport: 'KLD',
-      destinationCity: 'Kaliningrad',
+      departureAirport: 'ABZ',
+      departureCity: 'Aberdeen',
+      destinationAirport: 'GYD',
+      destinationCity: 'Baku',
       departureDate: '2023-06-19',
       departureDateTime: '2023-06-19T09:00:00.000Z',
       destinationDateTime: '2023-06-19T11:00:00.000Z',
@@ -45,10 +45,10 @@ export class BookingService {
     {
       id: 1,
       flightNumber: 'SU-5289',
-      departureAirport: 'KLD',
-      departureCity: 'Kaliningrad',
-      destinationAirport: 'MSK',
-      destinationCity: 'Minsk',
+      departureAirport: 'GYD',
+      departureCity: 'Baku',
+      destinationAirport: 'ABZ',
+      destinationCity: 'Aberdeen',
       departureDate: '2023-06-25',
       departureDateTime: '2023-06-25T15:00:00.000Z',
       destinationDateTime: '2023-06-25T17:00:00.000Z',
@@ -61,7 +61,14 @@ export class BookingService {
     },
   ];
 
-  private userBookingsInfo: Array<UserBooking> = [];
+  private userBookingsInfo: Array<UserBooking> = [
+    {
+      payed: false,
+      bookingInfo: this.getCurrentBookingInfo()!,
+      flight: this.flights,
+      passengers: this.passengersInfo!,
+    },
+  ];
 
   public getBookingInfo(): Observable<Nullable<BookingInfo>> {
     return this.bookingInformation$.asObservable();

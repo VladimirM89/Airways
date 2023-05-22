@@ -59,6 +59,8 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
 
     this.bookingService.userBookings.push(booking);
 
+    console.log('add new booking: ', this.bookingService.userBookings);
+
     if (this.user) {
       this.user.bookings?.push(booking);
 
