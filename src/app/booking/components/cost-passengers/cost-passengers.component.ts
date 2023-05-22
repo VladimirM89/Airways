@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable no-return-assign */
+import { KeyValue } from '@angular/common';
 import { Component } from '@angular/core';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { PaymentService } from 'src/app/core/services/payment.service';
+import { PassengersNumber } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 
 @Component({
@@ -32,5 +35,12 @@ export class CostPassengersComponent {
 
   public get summary(): number {
     return this.paymentService.summary;
+  }
+
+  public trackByFn(
+    index: number,
+    passenger: KeyValue<keyof PassengersNumber, number>
+  ): string {
+    return passenger.key;
   }
 }

@@ -4,7 +4,7 @@
 </div>
 
 <div class="summary-container">
-  <app-summary-flight  *ngFor="let flight of sortedFlights" [flight]="flight"></app-summary-flight>
+  <app-summary-flight  *ngFor="let flight of sortedFlights; trackBy: trackByFn" [flight]="flight"></app-summary-flight>
   <app-cost-passengers></app-cost-passengers>
 </div>
 

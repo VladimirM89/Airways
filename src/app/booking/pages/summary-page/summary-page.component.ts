@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @ngrx/no-store-subscription */
 /* eslint-disable no-return-assign */
 import { Component, OnInit } from '@angular/core';
@@ -61,5 +62,9 @@ export class SummaryPageComponent implements OnInit {
         })
       );
     }
+  }
+
+  public trackByFn(index: number, item: FlightItem): number {
+    return item.id;
   }
 }
