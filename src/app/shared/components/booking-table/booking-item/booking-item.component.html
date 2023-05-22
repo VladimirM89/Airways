@@ -1,0 +1,11 @@
+<div class="container">
+  <p>flightNumber</p>
+  <div>
+    <p>
+      {{booking.departureAirport | airportToCity }} &mdash; {{booking.destinationAirport | airportToCity}}
+    </p>
+    <p *ngIf="roundTrip">
+      {{booking.destinationAirport | airportToCity }} &mdash; {{booking.departureAirport | airportToCity}}
+    </p>
+  </div>
+</div>

@@ -1,3 +1,5 @@
+import { FlightItem } from './flight-item';
+
 export interface BookingInfo {
   roundTrip: boolean;
   departureAirport: string;
@@ -37,4 +39,12 @@ export interface Passenger {
   dateOfBirth: string;
   specialAssistance: boolean;
   luggage: string;
+}
+
+export interface UserBooking {
+  id?: number;
+  payed: boolean;
+  bookingInfo: BookingInfo;
+  flight: Array<FlightItem>;
+  passengers: PassangersInfo;
 }
