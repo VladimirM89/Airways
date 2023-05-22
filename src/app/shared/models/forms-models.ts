@@ -5,3 +5,8 @@ export type PassengersFormGroup = FormGroup<{
   children: FormControl<number>;
   infant: FormControl<number>;
 }>;
+
+export type DateRangeFormGroup = FormGroup<{
+  departureDate: FormControl<Date | null>;
+  destinationDate: FormControl<Date | null>;
+}>;

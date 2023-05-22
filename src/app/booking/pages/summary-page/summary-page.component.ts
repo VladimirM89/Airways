@@ -62,9 +62,14 @@ export class SummaryPageComponent implements OnInit {
         })
       );
     }
+    this.navToCart();
   }
 
   public trackByFn(index: number, item: FlightItem): number {
     return item.id;
+  }
+
+  private navToCart(): void {
+    this.router.navigate([Paths.CART]);
   }
 }

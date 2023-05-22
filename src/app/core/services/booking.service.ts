@@ -8,9 +8,18 @@ import { Nullable } from 'src/app/shared/models/types';
   providedIn: 'root',
 })
 export class BookingService {
-  private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>(
-    null
-  );
+  private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>({
+    roundTrip: true,
+    departureAirport: 'ABZ',
+    destinationAirport: 'GYD',
+    departureDate: '2023-05-25',
+    returnDate: '2023-05-27',
+    passengers: {
+      adult: 2,
+      child: 1,
+      infant: 0,
+    },
+  });
 
   private passangersInfomation: Nullable<PassangersInfo> = null;
 

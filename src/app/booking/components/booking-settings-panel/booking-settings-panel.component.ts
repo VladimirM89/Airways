@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { Airports } from 'src/app/shared/constants/airports';
 import { Airport } from 'src/app/shared/models/airport';
@@ -8,8 +8,16 @@ import { Nullable } from 'src/app/shared/models/types';
 import { dateToString } from 'src/app/shared/utils';
 import { Subscription } from 'rxjs';
 import { FullUrls } from 'src/app/shared/constants/full-urls';
-import { PassengerCounter } from '../../models/passenger-counter';
-import { RouterService } from '../../../core/services/router.service';
+import {
+  checkIfFlightDirectionsDuplicate,
+  checkIfFlightDirectionValid,
+} from 'src/app/shared/validators/flightDirections.validators';
+import { checkIfPassengersValid } from 'src/app/shared/validators/passengersCounterForm.validators';
+import {
+  isDateInPast,
+  isFlightsDateRangeValid,
+} from 'src/app/shared/validators/date.validators';
+import { RouterService } from 'src/app/core/services/router.service';
 
 @Component({
   selector: 'app-booking-settings-panel',
@@ -19,7 +27,7 @@ import { RouterService } from '../../../core/services/router.service';
 export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
   public constructor(
     private bookingService: BookingService,
-    private urlService: RouterService
+    private routerService: RouterService
   ) {}
 
   public form!: FormGroup;
@@ -27,10 +35,6 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
   public editMode = false;
 
   public airports: Airport[] = Airports;
-
-  public passengersArr: Array<PassengerCounter> = [];
-
-  public isSelectOpened = false;
 
   private sub!: Subscription;
 
@@ -41,68 +45,129 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
       this.bookingInfo = info;
     });
 
-    this.form = new FormGroup({
-      departure: new FormControl<string>(
-        this.bookingInfo?.departureAirport || ''
-      ),
-      destination: new FormControl<string>(
-        this.bookingInfo?.destinationAirport || ''
-      ),
-      range: new FormGroup({
-        departureDate: new FormControl<Date | null>(
-          this.bookingInfo ? new Date(this.bookingInfo.departureDate) : null
-        ),
-        destinationDate: new FormControl<Date | null>(
-          this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null
-        ),
-      }),
-      passengers: new FormGroup({
-        adult: new FormControl<number>(this.bookingInfo?.passengers.adult || 0),
-        children: new FormControl<number>(
-          this.bookingInfo?.passengers.child || 0
-        ),
-        infant: new FormControl<number>(
-          this.bookingInfo?.passengers.infant || 0
-        ),
-      }),
-    });
+    this.sub.add(
+      this.routerService.checkUrl().subscribe(event => {
+        if (event.url !== FullUrls.FLIGHTS) {
+          this.editMode = false;
+        }
+      })
+    );
 
-    this.passengersArr.push(
+    this.form = new FormGroup(
       {
-        category: 'Adults',
-        description: '14+ years',
-        controlName: 'adult',
-        control: this.passengers.controls['adult'],
+        departure: new FormControl<string>(
+          this.bookingInfo?.departureAirport || '',
+          [Validators.required, checkIfFlightDirectionValid()]
+        ),
+        destination: new FormControl<string>(
+          this.bookingInfo?.destinationAirport || '',
+          [Validators.required, checkIfFlightDirectionValid()]
+        ),
+        range: new FormGroup(
+          {
+            departureDate: new FormControl<Date | null>(
+              this.bookingInfo
+                ? new Date(this.bookingInfo.departureDate)
+                : null,
+              [Validators.required, isDateInPast()]
+            ),
+            destinationDate: new FormControl<Date | null>(
+              this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null,
+              [Validators.required, isDateInPast()]
+            ),
+          },
+          [isFlightsDateRangeValid(this.bookingInfo?.roundTrip || false)]
+        ),
+        passengers: new FormGroup(
+          {
+            adult: new FormControl<number>(
+              this.bookingInfo?.passengers.adult || 0
+            ),
+            children: new FormControl<number>(
+              this.bookingInfo?.passengers.child || 0
+            ),
+            infant: new FormControl<number>(
+              this.bookingInfo?.passengers.infant || 0
+            ),
+          },
+          [checkIfPassengersValid()]
+        ),
       },
-      {
-        category: 'Children',
-        description: '2-14 years',
-        controlName: 'children',
-        control: this.passengers.controls['children'],
-      },
-      {
-        category: 'Infants',
-        description: '0-1 year',
-        controlName: 'infant',
-        control: this.passengers.controls['infant'],
-      }
+      [checkIfFlightDirectionsDuplicate()]
     );
   }
 
-  public get destination(): string {
-    return this.form.get('destination')?.value;
+  public toggleFlightDirections(): void {
+    const currentDeparture = this.departure.value;
+    const currentDestinaton = this.destination.value;
+    this.destination.setValue(currentDeparture);
+    this.departure.setValue(currentDestinaton);
+    this.setNewSearch();
   }
 
-  public get departure(): string {
-    return this.form.get('departure')?.value;
+  public getPassengersNumber(): number {
+    if (this.bookingInfo) {
+      return (
+        this.bookingInfo.passengers.adult +
+        this.bookingInfo.passengers.child +
+        this.bookingInfo.passengers.infant
+      );
+    }
+    return 0;
   }
 
-  public get destinationDate(): FormControl<Date | null> {
-    return this.range.get('destinationDate') as FormControl<Date | null>;
+  public trackByFn(index: number, item: Airport): number {
+    return item.id;
   }
 
-  public get departureDate(): FormControl<Date | null> {
-    return this.range.get('departureDate') as FormControl<Date | null>;
+  public setNewSearch(): void {
+    if (this.form.valid) {
+      this.editMode = false;
+      const isRoungTrip =
+        this.bookingService.getCurrentBookingInfo()?.roundTrip || false;
+
+      const newSearchInfo: BookingInfo = {
+        roundTrip: isRoungTrip,
+        departureAirport: this.departure.value,
+        destinationAirport: this.destination.value,
+        departureDate: dateToString(this.departureDate.value),
+        returnDate: isRoungTrip ? dateToString(this.destinationDate.value) : '',
+        passengers: {
+          adult: this.adultsNumber,
+          child: this.childrenNumber,
+          infant: this.infantsNumber,
+        },
+      };
+      this.bookingService.setBookingInfo(newSearchInfo);
+    }
+  }
+
+  public setToEditMode(): void {
+    this.editMode = true;
+  }
+
+  public ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
+  public get isEditAvailable(): boolean {
+    return window.location.pathname === FullUrls.FLIGHTS;
+  }
+
+  public get destination(): FormControl<string> {
+    return this.form.get('destination') as FormControl;
+  }
+
+  public get departure(): FormControl<string> {
+    return this.form.get('departure') as FormControl;
+  }
+
+  public get destinationDate(): FormControl<Nullable<Date>> {
+    return this.range.get('destinationDate') as FormControl;
+  }
+
+  public get departureDate(): FormControl<Nullable<Date>> {
+    return this.range.get('departureDate') as FormControl;
   }
 
   public get range(): FormGroup {
@@ -123,73 +188,5 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
 
   public get infantsNumber(): number {
     return this.passengers.controls['infant'].value;
-  }
-
-  public getPassengersNumber(): number {
-    if (this.bookingInfo) {
-      return (
-        this.bookingInfo.passengers.adult +
-        this.bookingInfo.passengers.child +
-        this.bookingInfo.passengers.infant
-      );
-    }
-    return 0;
-  }
-
-  public trackByFn(index: number, item: Airport): number {
-    return item.id;
-  }
-
-  public setNewSearch(): void {
-    this.editMode = false;
-    const isRoungTrip =
-      this.bookingService.getCurrentBookingInfo()?.roundTrip || false;
-
-    const newSearchInfo: BookingInfo = {
-      roundTrip: isRoungTrip,
-      departureAirport: this.departure,
-      destinationAirport: this.destination,
-      departureDate: dateToString(this.departureDate.value),
-      returnDate: isRoungTrip ? dateToString(this.destinationDate.value) : '',
-      passengers: {
-        adult: this.adultsNumber,
-        child: this.childrenNumber,
-        infant: this.infantsNumber,
-      },
-    };
-    this.bookingService.setBookingInfo(newSearchInfo);
-  }
-
-  public setToEditMode(): void {
-    this.editMode = true;
-  }
-
-  public decrement(control: AbstractControl): void {
-    control.setValue(control.value - 1);
-  }
-
-  public increment(control: AbstractControl): void {
-    control.setValue(control.value + 1);
-  }
-
-  public isDecrementDisabled(control: AbstractControl): boolean {
-    return control.value <= 0;
-  }
-
-  public isIncrementDisabled(control: AbstractControl): boolean {
-    return control.value >= 9;
-  }
-
-  public toggleSelect(): void {
-    this.isSelectOpened = !this.isSelectOpened;
-  }
-
-  public ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
-
-  public get isEditAvailable(): boolean {
-    return true;
-    return window.location.pathname === FullUrls.FLIGHTS;
   }
 }

@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { Gender } from 'src/app/types/enums';
 import { NAME_REGEXP } from '../constants/string-constants';
-import DateValidators from '../validators/date.validators';
+import { DateValidators } from '../validators/date.validators';
 import { Passenger } from '../models/booking';
 import { Nullable } from '../models/types';
 
