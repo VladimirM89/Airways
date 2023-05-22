@@ -2,6 +2,7 @@
 /* eslint-disable no-return-assign */
 import { Component } from '@angular/core';
 import { BookingService } from 'src/app/core/services/booking.service';
+import { PaymentService } from 'src/app/core/services/payment.service';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 
 @Component({
@@ -12,32 +13,24 @@ import { FlightItem } from 'src/app/shared/models/flight-item';
 export class CostPassengersComponent {
   public bookingInfo$ = this.bookingService.getBookingInfo();
 
-  public constructor(private bookingService: BookingService) {}
+  public constructor(
+    private bookingService: BookingService,
+    private paymentService: PaymentService
+  ) {}
 
   public get selectedFlights(): FlightItem[] {
     return this.bookingService.flights;
   }
 
   public get fare(): number {
-    let fare = 0;
-    this.bookingService.flights.forEach(item => (fare += item.flightFare));
-    return fare;
+    return this.paymentService.fare;
   }
 
   public get tax(): number {
-    let tax = 0;
-    this.bookingService.flights.forEach(item => (tax += item.tax));
-    return tax;
+    return this.paymentService.tax;
   }
 
   public get summary(): number {
-    let summary = 0;
-    const info = this.bookingService.getCurrentBookingInfo();
-    if (this.bookingService && info) {
-      const passengersNumber =
-        info.passengers.adult + info.passengers.child + info.passengers.infant;
-      summary = passengersNumber * (this.fare + this.tax);
-    }
-    return summary;
+    return this.paymentService.summary;
   }
 }
