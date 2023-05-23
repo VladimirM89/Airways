@@ -1,32 +1,36 @@
 /* eslint-disable no-return-assign */
 import { Injectable } from '@angular/core';
-import { BookingService } from './booking.service';
+import { FlightItem } from 'src/app/shared/models/flight-item';
+import { BookingInfo } from 'src/app/shared/models/booking';
+import { Nullable } from 'src/app/shared/models/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PaymentService {
-  public constructor(private bookingService: BookingService) {}
-
-  public get fare(): number {
+  public fare(flights: FlightItem[]): number {
     let fare = 0;
-    this.bookingService.flights.forEach(item => (fare += item.flightFare));
+    flights.forEach(item => (fare += item.flightFare));
     return fare;
   }
 
-  public get tax(): number {
+  public tax(flights: FlightItem[]): number {
     let tax = 0;
-    this.bookingService.flights.forEach(item => (tax += item.tax));
+    flights.forEach(item => (tax += item.tax));
     return tax;
   }
 
-  public get summary(): number {
+  public summary(
+    bookingInfo: Nullable<BookingInfo>,
+    flights: FlightItem[]
+  ): number {
     let summary = 0;
-    const info = this.bookingService.getCurrentBookingInfo();
-    if (this.bookingService && info) {
+    if (bookingInfo) {
       const passengersNumber =
-        info.passengers.adult + info.passengers.child + info.passengers.infant;
-      summary = passengersNumber * (this.fare + this.tax);
+        bookingInfo.passengers.adult +
+        bookingInfo.passengers.child +
+        bookingInfo.passengers.infant;
+      summary = passengersNumber * (this.fare(flights) + this.tax(flights));
     }
     return summary;
   }

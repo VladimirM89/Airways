@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unsafe-optional-chaining */
-/* eslint-disable no-return-assign */
 import { KeyValue } from '@angular/common';
 import { Component } from '@angular/core';
 import { BookingService } from 'src/app/core/services/booking.service';
@@ -26,15 +23,19 @@ export class CostPassengersComponent {
   }
 
   public get fare(): number {
-    return this.paymentService.fare;
+    return this.paymentService.fare(this.bookingService.flights);
   }
 
   public get tax(): number {
-    return this.paymentService.tax;
+    return this.paymentService.tax(this.bookingService.flights);
   }
 
   public get summary(): number {
-    return this.paymentService.summary;
+    const bookingInfo = this.bookingService.getCurrentBookingInfo();
+    return this.paymentService.summary(
+      bookingInfo,
+      this.bookingService.flights
+    );
   }
 
   public trackByFn(

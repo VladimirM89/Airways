@@ -54,15 +54,13 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
   // TODO: update to use effect (first updateUser Api, second add to state)
   public addBookings(): void {
     const booking = this.userBooking();
-    console.log('booking: ', booking);
     if (!booking) return;
 
-    this.bookingService.userBookings.push(booking);
-
-    console.log('add new booking: ', this.bookingService.userBookings);
+    // TODO: delete - only for tests
+    this.bookingService.addNewBooking(booking);
 
     if (this.user) {
-      this.user.bookings?.push(booking);
+      this.bookingService.addNewBooking(booking);
 
       this.store.dispatch(
         addUserToState({
@@ -80,7 +78,7 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
       return {
         payed: false,
         bookingInfo: correntBookingInfo,
-        flight: this.bookingService.flights,
+        flights: this.bookingService.flights,
         passengers: this.bookingService.passengersInfo,
       };
     }

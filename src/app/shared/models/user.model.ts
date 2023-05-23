@@ -30,6 +30,6 @@ export interface UserBooking {
   id?: number;
   payed: boolean;
   bookingInfo: BookingInfo;
-  flight: Array<FlightItem>;
+  flights: Array<FlightItem>;
   passengers: PassangersInfo;
 }

@@ -32,9 +32,9 @@ export class BookingService {
       departureCity: 'Aberdeen',
       destinationAirport: 'GYD',
       destinationCity: 'Baku',
-      departureDate: '2023-06-19',
-      departureDateTime: '2023-06-19T09:00:00.000Z',
-      destinationDateTime: '2023-06-19T11:00:00.000Z',
+      departureDate: '2023-05-25',
+      departureDateTime: '2023-05-25T09:00:00.000Z',
+      destinationDateTime: '2023-05-25T11:00:00.000Z',
       durationMinutes: 120,
       flightFare: 128.5,
       tax: 12,
@@ -49,9 +49,9 @@ export class BookingService {
       departureCity: 'Baku',
       destinationAirport: 'ABZ',
       destinationCity: 'Aberdeen',
-      departureDate: '2023-06-25',
-      departureDateTime: '2023-06-25T15:00:00.000Z',
-      destinationDateTime: '2023-06-25T17:00:00.000Z',
+      departureDate: '2023-05-27',
+      departureDateTime: '2023-05-27T15:00:00.000Z',
+      destinationDateTime: '2023-05-27T17:00:00.000Z',
       durationMinutes: 120,
       flightFare: 100,
       tax: 30,
@@ -63,9 +63,10 @@ export class BookingService {
 
   private userBookingsInfo: Array<UserBooking> = [
     {
+      id: 1,
       payed: false,
       bookingInfo: this.getCurrentBookingInfo()!,
-      flight: this.flights,
+      flights: this.flights,
       passengers: this.passengersInfo!,
     },
   ];
@@ -108,13 +109,19 @@ export class BookingService {
     return this.userBookingsInfo;
   }
 
-  public addUserBookings(info: UserBooking): void {
-    this.userBookingsInfo.push(info);
+  public addNewBooking(booking: UserBooking): void {
+    const existingBooking = this.userBookings.find(
+      item => item.id === booking.id
+    );
+    console.log(existingBooking);
+    if (!existingBooking) {
+      this.userBookingsInfo.push(booking);
+    }
   }
 
-  public deleteUserBookings(info: UserBooking): void {
+  public deleteUserBooking(booking: UserBooking): void {
     this.userBookingsInfo = this.userBookingsInfo.filter(
-      item => item.id !== info.id
+      item => item.id !== booking.id
     );
   }
 }
