@@ -23,7 +23,42 @@ export class BookingService {
 
   private passangersInfomation: Nullable<PassangersInfo> = null;
 
-  private selectedFlights: Array<FlightItem> = [];
+  private selectedFlights: Array<FlightItem> = [
+    {
+      id: 5,
+      flightNumber: 'SU-5288',
+      departureAirport: 'MSK',
+      departureCity: 'Minsk',
+      destinationAirport: 'KLD',
+      destinationCity: 'Kaliningrad',
+      departureDate: '2023-06-19',
+      departureDateTime: '2023-06-19T09:00:00.000Z',
+      destinationDateTime: '2023-06-19T11:00:00.000Z',
+      durationMinutes: 120,
+      flightFare: 128.5,
+      tax: 12,
+      luggageFare: 20,
+      seats: 50,
+      booked: 0,
+    },
+    {
+      id: 1,
+      flightNumber: 'SU-5289',
+      departureAirport: 'KLD',
+      departureCity: 'Kaliningrad',
+      destinationAirport: 'MSK',
+      destinationCity: 'Minsk',
+      departureDate: '2023-06-25',
+      departureDateTime: '2023-06-25T15:00:00.000Z',
+      destinationDateTime: '2023-06-25T17:00:00.000Z',
+      durationMinutes: 120,
+      flightFare: 100,
+      tax: 30,
+      luggageFare: 20,
+      seats: 50,
+      booked: 0,
+    },
+  ];
 
   public getBookingInfo(): Observable<Nullable<BookingInfo>> {
     return this.bookingInformation$.asObservable();
@@ -53,5 +88,9 @@ export class BookingService {
     this.selectedFlights = this.selectedFlights.filter(
       item => item.id !== flight.id
     );
+  }
+
+  public get flights(): FlightItem[] {
+    return this.selectedFlights;
   }
 }

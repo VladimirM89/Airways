@@ -4,14 +4,13 @@
 </div>
 
 <div class="summary-container">
-  <app-summary-flight></app-summary-flight>
-  <app-summary-flight *ngIf="(bookingInfo$ | async)?.roundTrip"></app-summary-flight>
-  <app-summary-passengers></app-summary-passengers>
+  <app-summary-flight  *ngFor="let flight of sortedFlights; trackBy: trackByFn" [flight]="flight"></app-summary-flight>
+  <app-cost-passengers></app-cost-passengers>
 </div>
 
 
 <div class="btns-container">
   <button class="ghost-btn" (click)="navToPassengers()">Back</button>
-  <button class="ghost-btn ghost-btn__bordered">Add to order card</button>
+  <button class="ghost-btn ghost-btn__bordered" (click)="addBookingsToUser()">Add to order cart</button>
   <button class="primary-btn">Buy now</button>
 </div>

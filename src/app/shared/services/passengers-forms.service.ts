@@ -1,5 +1,3 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable @typescript-eslint/ban-types */
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { dateToString } from '../utils';
@@ -15,11 +13,13 @@ interface TempPassengers {
   providedIn: 'root',
 })
 export class PassengersFormsService {
-  public formsArray: FormGroup[] | null = null;
+  public formsArray: FormGroup[] = [];
+
+  public contactForm: FormGroup | null = null;
 
   public passengerInfo: TempPassengers | null = null;
 
-  public createInitialPassengersInfo(): void {
+  public constructor() {
     this.passengerInfo = {
       adult: [],
       child: [],
@@ -28,17 +28,39 @@ export class PassengersFormsService {
     };
   }
 
+  public createInitialPassengersInfo(): void {
+    if (this.passengerInfo) {
+      this.passengerInfo.adult = [];
+      this.passengerInfo.child = [];
+      this.passengerInfo.infant = [];
+    }
+  }
+
+  public createInitialContactInfo(): void {
+    if (this.passengerInfo) {
+      this.passengerInfo.contacts = [];
+    }
+  }
+
   public createInitialPassengersArray(): void {
     this.formsArray = [];
   }
 
-  public addForm(form: FormGroup): void {
+  public updatePassengersFormArray(
+    form: FormGroup,
+    passengerCategory?: string
+  ): void {
+    this.addForm(form);
+    this.passengersInfo(form, passengerCategory);
+  }
+
+  private addForm(form: FormGroup): void {
     if (this.formsArray) {
       this.formsArray.push(form);
     }
   }
 
-  public passengersInfo(form: FormGroup, passengerType?: string): void {
+  private passengersInfo(form: FormGroup, passengerType?: string): void {
     if (passengerType === 'adult') {
       this.passengerInfo?.adult.push(form);
       return;
@@ -51,7 +73,9 @@ export class PassengersFormsService {
       this.passengerInfo?.infant.push(form);
       return;
     }
-    this.passengerInfo?.contacts.push(form);
+    if (this.contactForm) {
+      this.passengerInfo?.contacts.push(this.contactForm);
+    }
   }
 
   public flattenObject(obj: { [key: string]: string | Date }): {

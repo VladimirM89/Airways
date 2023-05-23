@@ -47,8 +47,7 @@ export class PassengerItemComponent implements OnInit {
       ),
     });
 
-    this.passengersFormsService.addForm(this.passengerFormGroup);
-    this.passengersFormsService.passengersInfo(
+    this.passengersFormsService.updatePassengersFormArray(
       this.passengerFormGroup,
       this.passengerCategory
     );

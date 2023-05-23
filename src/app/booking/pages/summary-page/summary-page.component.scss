@@ -1,5 +1,6 @@
 :host {
   display: flex;
+  margin: 4rem 0;
   flex-direction: column;
   gap: 3rem;
 }
@@ -30,10 +31,32 @@
   grid-template-columns: repeat(auto-fill, minmax(40rem, 1fr));
   grid-column-gap: 2.4rem;
   grid-row-gap: 3rem;
+
+  @media screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
 }
 
 .btns-container {
   display: flex;
   gap: 4rem;
   justify-content: flex-end;
+
+  @media screen and (max-width: 700px) {
+    gap: 2rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    gap: 1rem;
+  }
+
+  @media screen and (max-width: 400px) {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
 }

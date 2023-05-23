@@ -1,5 +1,4 @@
 /* eslint-disable array-callback-return */
-/* eslint-disable class-methods-use-this */
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -43,11 +42,20 @@ export class BookingProcessPageComponent {
   }
 
   public get isAllFormsInvalid(): boolean {
-    if (this.passengersFormsService.formsArray) {
-      return this.passengersFormsService.formsArray.some(
+    let isPassengersFormInvalid = true;
+    if (
+      this.passengersFormsService.formsArray &&
+      this.passengersFormsService.contactForm
+    ) {
+      isPassengersFormInvalid = this.passengersFormsService.formsArray.some(
         item => item.invalid === true
       );
+      return (
+        isPassengersFormInvalid ||
+        this.passengersFormsService.contactForm.invalid
+      );
     }
+
     return true;
   }
 
