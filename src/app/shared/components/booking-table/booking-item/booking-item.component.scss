@@ -4,7 +4,29 @@ p {
 
 .container {
   display: flex;
+  gap: 2.5rem;
+  justify-content: space-between;
+}
+
+.booking-container {
+  width: 100%;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 3rem;
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+.number-container {
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.cost {
+  color: var(--highlight-color);
+}
+
+.menu-item {
+  border-bottom: 1px solid var(--neutral-color);
 }
