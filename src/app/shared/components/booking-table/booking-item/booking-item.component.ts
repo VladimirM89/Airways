@@ -90,7 +90,7 @@ export class BookingItemComponent {
   }
 
   public get isNotPayed(): boolean {
-    return !this.booking.payed;
+    return !this.booking.paid;
   }
 
   public deleteBooking(booking: UserBooking): void {

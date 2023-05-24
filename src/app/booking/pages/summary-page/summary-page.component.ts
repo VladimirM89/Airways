@@ -56,15 +56,19 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
     const booking = this.userBooking();
     if (!booking) return;
 
-    // TODO: delete - only for tests
-    this.bookingService.addNewBooking(booking);
+    // TODO: delete - only for tests without store
+    // this.bookingService.addNewBooking(booking);
 
     if (this.user) {
+      console.log('user exist in store: ', !!this.user, this.user);
       this.bookingService.addNewBooking(booking);
+      const user = { ...this.user };
+      user.bookings = this.bookingService.allUserBookings;
+      console.log('update user bookings: ', user);
 
       this.store.dispatch(
         addUserToState({
-          user: this.user,
+          user,
         })
       );
     }
@@ -76,7 +80,7 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
 
     if (correntBookingInfo && this.bookingService.passengersInfo) {
       return {
-        payed: false,
+        paid: false,
         bookingInfo: correntBookingInfo,
         flights: this.bookingService.flights,
         passengers: this.bookingService.passengersInfo,

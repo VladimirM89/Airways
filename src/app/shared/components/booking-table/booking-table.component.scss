@@ -6,17 +6,19 @@ p {
   display: flex;
   gap: 3rem;
   justify-content: space-between;
+  align-items: center;
   font-size: 2rem;
   font-weight: 700;
 }
 
 .bottom-line {
-  border: 1px solid var(--neutral-color);
+  border-bottom: 1px solid var(--neutral-color);
 }
 
 .bottom-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .apply-container {
@@ -29,8 +31,12 @@ p {
   padding: 0.4rem 1.6rem;
   display: flex;
   justify-content: space-between;
-  border: 1px solid var(--auxiliary-color);
+  border: 1px solid var(--auxiliary-color-opacity02);
   border-radius: 0.5rem;
+}
+
+.without-padding {
+  padding: 0;
 }
 
 .selected-container {

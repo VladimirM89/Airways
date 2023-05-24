@@ -28,7 +28,7 @@ export interface UserStateInterface {
 }
 export interface UserBooking {
   id?: number;
-  payed: boolean;
+  paid: boolean;
   bookingInfo: BookingInfo;
   flights: Array<FlightItem>;
   passengers: PassangersInfo;

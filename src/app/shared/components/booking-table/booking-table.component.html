@@ -1,9 +1,6 @@
 <div class="header-container">
 
-  <div class="number-container">
-    <mat-checkbox color="primary"></mat-checkbox>
-    <p>Select all</p>
-  </div>
+  <mat-checkbox color="primary"></mat-checkbox>
 
   <p>No</p>
 
@@ -19,8 +16,8 @@
 
 </div>
 
-<p *ngIf="!userBookings.length">No bookings. Please add new trip</p>
-<app-booking-item *ngFor="let booking of userBookings" [booking]="booking" class="bottom-line"></app-booking-item>
+<p *ngIf="!unpaidUserBookings.length">No bookings. Please add new trip</p>
+<app-booking-item *ngFor="let booking of unpaidUserBookings" [booking]="booking" class="bottom-line"></app-booking-item>
 
 <div class="bottom-container bottom-line">
   <button (click)="navToMain()">+ Add new trip</button>
@@ -31,10 +28,10 @@
 </div>
 
 <div class="apply-container">
-  <div class="promo-container">
+  <form class="promo-container">
     <input type="text" class="promo" placeholder="Promo Code">
-    <button>APPLY</button>
-  </div>
+    <button class="without-padding">APPLY</button>
+  </form>
 
   <div class="selected-container">
     <p>

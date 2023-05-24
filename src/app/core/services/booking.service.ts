@@ -64,7 +64,7 @@ export class BookingService {
   private userBookingsInfo: Array<UserBooking> = [
     {
       id: 1,
-      payed: false,
+      paid: false,
       bookingInfo: this.getCurrentBookingInfo()!,
       flights: this.flights,
       passengers: this.passengersInfo!,
@@ -105,15 +105,24 @@ export class BookingService {
     return this.selectedFlights;
   }
 
-  public get userBookings(): UserBooking[] {
+  public get allUserBookings(): UserBooking[] {
     return this.userBookingsInfo;
   }
 
+  public get unpaidUserBookings(): UserBooking[] {
+    return this.userBookingsInfo.filter(item => item.paid === false);
+  }
+
+  public get paidUserBookings(): UserBooking[] {
+    return this.userBookingsInfo.filter(item => item.paid === true);
+  }
+
   public addNewBooking(booking: UserBooking): void {
-    const existingBooking = this.userBookings.find(
+    const existingBooking = this.unpaidUserBookings.find(
       item => item.id === booking.id
     );
-    console.log(existingBooking);
+    console.log('get same booking in bookings array: ', existingBooking);
+
     if (!existingBooking) {
       this.userBookingsInfo.push(booking);
     }
