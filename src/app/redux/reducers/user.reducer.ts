@@ -4,11 +4,21 @@ import { Nullable } from 'src/app/shared/models/types';
 import { addUserToState } from '../actions/user.action';
 
 export interface UserState {
-  userData: Nullable<UserStateInterface>;
+  userDate: Nullable<UserStateInterface>;
 }
 
 const initialState: UserState = {
-  userData: null,
+  userDate: {
+    id: 2,
+    email: 'vms@mail.com',
+    password: 'Aa!11111',
+    firstName: 'Vladimir',
+    lastName: 'Milashevsky',
+    dateOfBirth: '08.06.1992',
+    sex: 'male',
+    pnone: '+375297739618',
+    citizenship: 'Belarus',
+  },
 };
 
 export const UserReducer = createReducer(
@@ -16,7 +26,7 @@ export const UserReducer = createReducer(
   on(
     addUserToState,
     (state, { user }): UserState => ({
-      userData: user,
+      userDate: user,
     })
   )
 );

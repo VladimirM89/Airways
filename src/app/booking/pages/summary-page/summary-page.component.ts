@@ -6,8 +6,9 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { BookingService } from 'src/app/core/services/booking.service';
-import { addUserToState } from 'src/app/redux/actions/user.action';
-import { selectUserData } from 'src/app/redux/selectors/user.selectors';
+import { addBookingToState } from 'src/app/redux/actions/bookings.action';
+
+import { selectUserDate } from 'src/app/redux/selectors/user.selectors';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 import { Nullable } from 'src/app/shared/models/types';
 import { User, UserBooking } from 'src/app/shared/models/user.model';
@@ -33,7 +34,7 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.userSub = this.store
-      .select(selectUserData)
+      .select(selectUserDate)
       .subscribe(user => (this.user = user));
   }
 
@@ -56,9 +57,6 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
     const booking = this.userBooking();
     if (!booking) return;
 
-    // TODO: delete - only for tests without store
-    // this.bookingService.addNewBooking(booking);
-
     if (this.user) {
       console.log('user exist in store: ', !!this.user, this.user);
       this.bookingService.addNewBooking(booking);
@@ -67,8 +65,8 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
       console.log('update user bookings: ', user);
 
       this.store.dispatch(
-        addUserToState({
-          user,
+        addBookingToState({
+          booking,
         })
       );
     }

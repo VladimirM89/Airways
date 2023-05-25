@@ -3,7 +3,7 @@ import { UserState } from '../reducers/user.reducer';
 
 const selectUser = createFeatureSelector<UserState>('user');
 
-export const selectUserData = createSelector(
+export const selectUserDate = createSelector(
   selectUser,
-  userState => userState.userData
+  userState => userState.userDate
 );

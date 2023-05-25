@@ -61,6 +61,7 @@ export class BookingService {
     },
   ];
 
+  // TODO: in initialState
   private userBookingsInfo: Array<UserBooking> = [
     {
       id: 1,
@@ -105,14 +106,17 @@ export class BookingService {
     return this.selectedFlights;
   }
 
+  // TODO create selector
   public get allUserBookings(): UserBooking[] {
     return this.userBookingsInfo;
   }
 
+  // TODO create selector
   public get unpaidUserBookings(): UserBooking[] {
     return this.userBookingsInfo.filter(item => item.paid === false);
   }
 
+  // TODO create selector
   public get paidUserBookings(): UserBooking[] {
     return this.userBookingsInfo.filter(item => item.paid === true);
   }

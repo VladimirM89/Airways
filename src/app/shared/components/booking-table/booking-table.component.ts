@@ -1,9 +1,11 @@
 /* eslint-disable no-return-assign */
 import { Component } from '@angular/core';
-import { BookingService } from 'src/app/core/services/booking.service';
 import { Paths } from 'src/app/types/enums';
 import { Router } from '@angular/router';
 import { PaymentService } from 'src/app/core/services/payment.service';
+import { Store } from '@ngrx/store';
+import { selectUnpaidBookings } from 'src/app/redux/selectors/bookings.selectors';
+import { Observable } from 'rxjs';
 import { UserBooking } from '../../models/user.model';
 
 interface ChoosenBookings {
@@ -20,23 +22,21 @@ export class BookingTableComponent {
   public selectedBookings: Array<ChoosenBookings> = [];
 
   public constructor(
-    private bookingService: BookingService,
     private router: Router,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private store: Store
   ) {}
 
-  public get unpaidUserBookings(): UserBooking[] {
-    console.log('booking table: ', this.bookingService.unpaidUserBookings);
-    return this.bookingService.unpaidUserBookings;
+  public get unpaidUserBookings$(): Observable<UserBooking[]> {
+    return this.store.select(selectUnpaidBookings);
   }
 
   public navToMain(): void {
     this.router.navigate([Paths.BOOKING]);
   }
 
-  public get summary(): number {
+  public summary(bookings: UserBooking[]): number {
     let sum = 0;
-    const bookings = this.bookingService.unpaidUserBookings;
     bookings.forEach(
       item =>
         (sum += this.paymentService.summary(item.bookingInfo, item.flights))

@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Paths } from 'src/app/types/enums';
 import { Store } from '@ngrx/store';
-import { selectUserData } from 'src/app/redux/selectors/user.selectors';
+import { selectUserDate } from 'src/app/redux/selectors/user.selectors';
 import { Subscription, tap } from 'rxjs';
 import { AuthService } from './services/auth.service';
 
@@ -29,7 +29,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.userLoginSub = this.store
-      .select(selectUserData)
+      .select(selectUserDate)
       .pipe(
         tap(item => {
           item ? (this.isUserLogin = true) : (this.isUserLogin = false);
