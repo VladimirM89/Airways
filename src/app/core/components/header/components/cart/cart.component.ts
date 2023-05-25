@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectUserData } from 'src/app/redux/selectors/user.selectors';
 import { Nullable } from 'src/app/shared/models/types';
-import { UserStateInterface } from 'src/app/shared/models/user.model';
+import { User } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -18,7 +18,7 @@ export class CartComponent {
   // TODO: get count of flights in cart from cart-service
   public count = 1;
 
-  public get isUserLogin$(): Observable<Nullable<UserStateInterface>> {
+  public get isUserLogin$(): Observable<Nullable<User>> {
     return this.store.select(selectUserData);
   }
 

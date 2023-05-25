@@ -1,10 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import { UserStateInterface } from 'src/app/shared/models/user.model';
 import { Nullable } from 'src/app/shared/models/types';
+import { User } from 'src/app/shared/models/user.model';
 import { addUserToState } from '../actions/user.action';
 
 export interface UserState {
-  userData: Nullable<UserStateInterface>;
+  userData: Nullable<User>;
 }
 
 const initialState: UserState = {
@@ -16,6 +16,7 @@ export const UserReducer = createReducer(
   on(
     addUserToState,
     (state, { user }): UserState => ({
+      ...state,
       userData: user,
     })
   )
