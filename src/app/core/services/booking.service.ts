@@ -60,7 +60,6 @@ export class BookingService {
 
   private updateFlightsState(): void {
     const currentBookingInfo = this.bookingInformation$.getValue();
-    console.log(currentBookingInfo);
     if (currentBookingInfo) {
       const forwardFlightsData: SearchFlightsDto = {
         departureAirport: currentBookingInfo.departureAirport,

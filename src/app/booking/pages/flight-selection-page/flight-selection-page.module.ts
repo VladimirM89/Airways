@@ -5,6 +5,7 @@ import { FlightSelectionPageRoutingModule } from './flight-selection-page-routin
 import { FlightSelectionPageComponent } from './flight-selection-page.component';
 import { SearchItemComponent } from '../../components/search-results/search-item/search-item.component';
 import { DateSliderComponent } from '../../components/search-results/date-slider/date-slider.component';
+import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,6 @@ import { DateSliderComponent } from '../../components/search-results/date-slider
     SearchItemComponent,
     DateSliderComponent,
   ],
-  imports: [CommonModule, FlightSelectionPageRoutingModule],
+  imports: [CommonModule, FlightSelectionPageRoutingModule, SharedModule],
 })
 export class FlightSelectionPageModule {}

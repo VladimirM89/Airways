@@ -8,5 +8,5 @@ export interface State {
 
 export const AppReducers = {
   user: UserReducer,
-  fligths: FlightsReducer,
+  flights: FlightsReducer,
 };
