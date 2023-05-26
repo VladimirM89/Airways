@@ -6,8 +6,10 @@ export interface Airport {
 
 export enum AirportCodes {
   BAKU = 'GYD',
-  ABERDEEN = 'ABZ',
   AMSTERDAM = 'AMS',
-  DUBLIN = 'DUB',
-  BARSELONA = 'BCN',
+  ISTANBUL = 'IST',
+  MOSCOW_SVO = 'SVO',
+  MOSCOW_DME = 'DME',
+  DUBAI = 'DXB',
+  SHANGAI = 'PVG',
 }

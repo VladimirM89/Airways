@@ -30,6 +30,7 @@ export class BookingService {
   public setBookingInfo(info: Nullable<BookingInfo>): void {
     this.bookingInformation$.next(info);
     this.updateFlightsState();
+    this.selectedFlights = [];
   }
 
   public getCurrentBookingInfo(): Nullable<BookingInfo> {
@@ -56,6 +57,10 @@ export class BookingService {
 
   public get flights(): FlightItem[] {
     return this.selectedFlights;
+  }
+
+  public addSelectedFlight(flight: FlightItem): void {
+    this.selectedFlights.push(flight);
   }
 
   private updateFlightsState(): void {

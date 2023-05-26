@@ -6,7 +6,7 @@
     </h2>
     <app-date-slider></app-date-slider>
     <div class="flights" *ngIf="flights.length; else noForwardFlights">
-      <app-search-item *ngFor="let flight of flights"></app-search-item>
+      <app-search-item *ngFor="let flight of flights" [flight]="flight"></app-search-item>
     </div>
     <ng-template #noForwardFlights>
       <h2 class="no-flights-message">
@@ -23,7 +23,7 @@
       </h2>
       <app-date-slider></app-date-slider>
       <div class="flights" *ngIf="returnFlights.length; else noReturnFlights">
-        <app-search-item *ngFor="let flight of returnFlights"></app-search-item>
+        <app-search-item *ngFor="let flight of returnFlights" [flight]="flight"></app-search-item>
       </div>
       <ng-template #noReturnFlights>
         <h2 class="no-flights-message">
