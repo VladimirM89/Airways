@@ -4,8 +4,9 @@ import { Paths } from 'src/app/types/enums';
 import { Router } from '@angular/router';
 import { PaymentService } from 'src/app/core/services/payment.service';
 import { Store } from '@ngrx/store';
-import { selectUnpaidBookings } from 'src/app/redux/selectors/bookings.selectors';
+
 import { Observable } from 'rxjs';
+import { selectUnpaidBookings } from 'src/app/redux/selectors/user.selectors';
 import { UserBooking } from '../../models/user.model';
 
 interface ChoosenBookings {

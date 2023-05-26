@@ -116,11 +116,6 @@ export class BookingService {
     return this.userBookingsInfo.filter(item => item.paid === false);
   }
 
-  // TODO create selector
-  public get paidUserBookings(): UserBooking[] {
-    return this.userBookingsInfo.filter(item => item.paid === true);
-  }
-
   public addNewBooking(booking: UserBooking): void {
     const existingBooking = this.unpaidUserBookings.find(
       item => item.id === booking.id

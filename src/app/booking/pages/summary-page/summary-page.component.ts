@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { BookingService } from 'src/app/core/services/booking.service';
-import { addBookingToState } from 'src/app/redux/actions/bookings.action';
+import { addBookingsToState } from 'src/app/redux/actions/user.action';
 
 import { selectUserDate } from 'src/app/redux/selectors/user.selectors';
 import { FlightItem } from 'src/app/shared/models/flight-item';
@@ -65,7 +65,7 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
       console.log('update user bookings: ', user);
 
       this.store.dispatch(
-        addBookingToState({
+        addBookingsToState({
           booking,
         })
       );

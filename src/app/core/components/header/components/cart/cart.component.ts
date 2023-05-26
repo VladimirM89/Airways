@@ -2,8 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectAllBookings } from 'src/app/redux/selectors/bookings.selectors';
-import { selectUserDate } from 'src/app/redux/selectors/user.selectors';
+
+import {
+  selectAllBookings,
+  selectUserDate,
+} from 'src/app/redux/selectors/user.selectors';
 import { Nullable } from 'src/app/shared/models/types';
 import {
   UserBooking,
