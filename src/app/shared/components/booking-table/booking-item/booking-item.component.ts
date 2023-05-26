@@ -2,8 +2,9 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { PaymentService } from 'src/app/core/services/payment.service';
+import { FlightItem } from 'src/app/shared/models/api-models';
 import { PassengersNumber } from 'src/app/shared/models/booking';
-import { FlightItem } from 'src/app/shared/models/flight-item';
+
 import { UserBooking } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
 

@@ -8,10 +8,7 @@ import {
   selectUserDate,
 } from 'src/app/redux/selectors/user.selectors';
 import { Nullable } from 'src/app/shared/models/types';
-import {
-  UserBooking,
-  UserStateInterface,
-} from 'src/app/shared/models/user.model';
+import { User, UserBooking } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -26,7 +23,7 @@ export class CartComponent {
     return this.store.select(selectAllBookings);
   }
 
-  public get isUserLogin$(): Observable<Nullable<UserStateInterface>> {
+  public get isUserLogin$(): Observable<Nullable<User>> {
     return this.store.select(selectUserDate);
   }
 

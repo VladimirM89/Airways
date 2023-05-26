@@ -9,7 +9,8 @@ import { BookingService } from 'src/app/core/services/booking.service';
 import { addBookingsToState } from 'src/app/redux/actions/user.action';
 
 import { selectUserDate } from 'src/app/redux/selectors/user.selectors';
-import { FlightItem } from 'src/app/shared/models/flight-item';
+import { FlightItem } from 'src/app/shared/models/api-models';
+
 import { Nullable } from 'src/app/shared/models/types';
 import { User, UserBooking } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';

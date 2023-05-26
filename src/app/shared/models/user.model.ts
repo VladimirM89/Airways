@@ -1,31 +1,36 @@
 import { BookingInfo, PassangersInfo } from './booking';
-import { FlightItem } from './flight-item';
 import { Nullable } from './types';
+import { FlightItem } from './api-models';
 
 export interface User {
-  id?: number;
+  id: number;
   email: string;
-  password: string;
   firstName: string;
   lastName: string;
   dateOfBirth: string;
   sex: string;
-  pnone: string;
-  citizenship?: string | null;
-  bookings?: Array<UserBooking> | null;
+  phone: string;
+  citizenship: string | null;
 }
 
-export interface UserStateInterface {
-  id?: number;
+export interface RegistrationDto {
   email: string;
   password: string;
   firstName: string;
   lastName: string;
   dateOfBirth: string;
   sex: string;
-  pnone: string;
+  phone: string;
   citizenship?: string | null;
-  // bookings?: Array<UserBooking> | null;
+}
+
+export interface UserToken {
+  token: string;
+}
+
+export interface LoginDto {
+  email: string;
+  password: string;
 }
 export interface UserBooking {
   id?: number;

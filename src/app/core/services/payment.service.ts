@@ -1,6 +1,6 @@
 /* eslint-disable no-return-assign */
 import { Injectable } from '@angular/core';
-import { FlightItem } from 'src/app/shared/models/flight-item';
+import { FlightItem } from 'src/app/shared/models/api-models';
 import { BookingInfo } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 

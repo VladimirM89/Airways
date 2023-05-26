@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BookingInfo, PassangersInfo } from 'src/app/shared/models/booking';
-import { FlightItem } from 'src/app/shared/models/flight-item';
+import { FlightItem } from 'src/app/shared/models/api-models';
 import { Nullable } from 'src/app/shared/models/types';
 import { UserBooking } from 'src/app/shared/models/user.model';
 
@@ -41,6 +41,11 @@ export class BookingService {
       luggageFare: 20,
       seats: 50,
       booked: 0,
+      direct: true,
+      transferAirport: null,
+      transferCity: null,
+      transferDuration: null,
+      transferFlightNumber: null,
     },
     {
       id: 1,
@@ -58,6 +63,11 @@ export class BookingService {
       luggageFare: 20,
       seats: 50,
       booked: 0,
+      direct: true,
+      transferAirport: null,
+      transferCity: null,
+      transferDuration: null,
+      transferFlightNumber: null,
     },
   ];
 
@@ -106,10 +116,10 @@ export class BookingService {
     return this.selectedFlights;
   }
 
-  // TODO create selector
-  public get allUserBookings(): UserBooking[] {
-    return this.userBookingsInfo;
-  }
+  // // TODO create selector
+  // public get allUserBookings(): UserBooking[] {
+  //   return this.userBookingsInfo;
+  // }
 
   // TODO create selector
   public get unpaidUserBookings(): UserBooking[] {

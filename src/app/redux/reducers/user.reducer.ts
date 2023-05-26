@@ -1,13 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import {
-  UserBooking,
-  UserStateInterface,
-} from 'src/app/shared/models/user.model';
+import { UserBooking, User } from 'src/app/shared/models/user.model';
 import { Nullable } from 'src/app/shared/models/types';
 import { addBookingsToState, addUserToState } from '../actions/user.action';
 
 export interface UserState {
-  userDate: Nullable<UserStateInterface>;
+  userDate: Nullable<User>;
   bookings: Array<UserBooking>;
 }
 
@@ -46,6 +43,11 @@ const initialState: UserState = {
           luggageFare: 20,
           seats: 50,
           booked: 0,
+          direct: true,
+          transferAirport: null,
+          transferCity: null,
+          transferDuration: null,
+          transferFlightNumber: null,
         },
         {
           id: 1,
@@ -63,6 +65,11 @@ const initialState: UserState = {
           luggageFare: 20,
           seats: 50,
           booked: 0,
+          direct: true,
+          transferAirport: null,
+          transferCity: null,
+          transferDuration: null,
+          transferFlightNumber: null,
         },
       ],
       passengers: null,
