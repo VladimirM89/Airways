@@ -31,6 +31,7 @@ export interface MobileInfo {
 }
 
 export interface Passenger {
+  category?: string;
   firstName: string;
   lastName: string;
   sex: string;

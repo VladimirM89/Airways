@@ -16,7 +16,7 @@ import { DatePipe } from '@angular/common';
 import { DateFormat, Gender } from 'src/app/types/enums';
 import { Store } from '@ngrx/store';
 import { registerUser } from 'src/app/redux/actions/user.action';
-import { User } from 'src/app/shared/models/user.model';
+import { RegistrationDto } from 'src/app/shared/models/user.model';
 import { dialCode } from 'src/app/shared/utils';
 import { AuthService } from '../../services/auth.service';
 import { CountryCodes } from './constants/country-codes';
@@ -109,7 +109,7 @@ export class RegisterFormComponent implements OnInit {
     this.authService.togglePopup();
   }
 
-  private userInfo(): User {
+  private userInfo(): RegistrationDto {
     return {
       email: this.email?.value!,
       password: this.pass?.value!,
@@ -121,7 +121,7 @@ export class RegisterFormComponent implements OnInit {
           DateFormat.DDMMYYYY
         ) || '',
       sex: this.personalInfoFormService.isMale ? Gender.MALE : Gender.FEMALE,
-      pnone: `${dialCode(this.contactFormService.countryCode?.value!)}${String(
+      phone: `${dialCode(this.contactFormService.countryCode?.value!)}${String(
         this.contactFormService.number?.value
       )}`,
       citizenship: this.citizenship?.value!,

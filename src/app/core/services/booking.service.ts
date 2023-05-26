@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BookingInfo, PassangersInfo } from 'src/app/shared/models/booking';
-import { FlightItem } from 'src/app/shared/models/flight-item';
+import { FlightItem } from 'src/app/shared/models/api-models';
 import { Nullable } from 'src/app/shared/models/types';
 
 @Injectable({
