@@ -94,9 +94,10 @@ export class BookingItemComponent {
     return !this.booking.paid;
   }
 
-  // TODO: change to delete from server and store
+  // // TODO: change to delete from server and store
   public deleteBooking(booking: UserBooking): void {
-    this.bookingService.deleteUserBooking(booking);
+    // this.bookingService.deleteUserBooking(booking);
+    console.log('booking to delete: ', booking);
   }
 
   public editInfo(): void {

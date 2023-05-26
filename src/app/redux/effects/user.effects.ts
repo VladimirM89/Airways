@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { HandleErrorApiService } from 'src/app/core/services/handle-error-api.service';
 import { ApiUserService } from 'src/app/core/services/api-user.service';
+import { HandleErrorApiService } from 'src/app/core/services/handle-error-api.service';
 import { addUserToState, registerUser } from '../actions/user.action';
 
 @Injectable()

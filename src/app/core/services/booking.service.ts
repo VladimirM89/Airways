@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { BookingInfo, PassangersInfo } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/api-models';
 import { Nullable } from 'src/app/shared/models/types';
-import { UserBooking } from 'src/app/shared/models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -71,17 +70,6 @@ export class BookingService {
     },
   ];
 
-  // TODO: in initialState
-  private userBookingsInfo: Array<UserBooking> = [
-    {
-      id: 1,
-      paid: false,
-      bookingInfo: this.getCurrentBookingInfo()!,
-      flights: this.flights,
-      passengers: this.passengersInfo!,
-    },
-  ];
-
   public getBookingInfo(): Observable<Nullable<BookingInfo>> {
     return this.bookingInformation$.asObservable();
   }
@@ -114,32 +102,5 @@ export class BookingService {
 
   public get flights(): FlightItem[] {
     return this.selectedFlights;
-  }
-
-  // // TODO create selector
-  // public get allUserBookings(): UserBooking[] {
-  //   return this.userBookingsInfo;
-  // }
-
-  // TODO create selector
-  public get unpaidUserBookings(): UserBooking[] {
-    return this.userBookingsInfo.filter(item => item.paid === false);
-  }
-
-  public addNewBooking(booking: UserBooking): void {
-    const existingBooking = this.unpaidUserBookings.find(
-      item => item.id === booking.id
-    );
-    console.log('get same booking in bookings array: ', existingBooking);
-
-    if (!existingBooking) {
-      this.userBookingsInfo.push(booking);
-    }
-  }
-
-  public deleteUserBooking(booking: UserBooking): void {
-    this.userBookingsInfo = this.userBookingsInfo.filter(
-      item => item.id !== booking.id
-    );
   }
 }

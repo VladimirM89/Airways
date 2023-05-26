@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppReducers } from './redux/state.model';
-import PostUserApi from './redux/effects/post-user-api.effect';
+import PostUserApi from './redux/effects/user.effects';
 
 @NgModule({
   declarations: [AppComponent],

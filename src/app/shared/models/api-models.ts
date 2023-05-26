@@ -27,7 +27,7 @@ export interface FlightItem {
 export interface BookingDto {
   token: string;
   forwardFlightId: number;
-  returnFlightId: number;
+  returnFlightId: number | null;
   passengers: Passenger[];
   contactInfo: ContactInfoDto;
 }
@@ -42,8 +42,9 @@ export interface BookingItem {
 }
 
 export interface ContactInfoDto {
+  email: string;
   countryCode: string;
-  dialNumber: string;
+  dialNumber?: string;
   number: string;
 }
 

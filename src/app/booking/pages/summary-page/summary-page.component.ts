@@ -1,18 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @ngrx/no-store-subscription */
-/* eslint-disable no-return-assign */
-import { Component, OnDestroy, OnInit } from '@angular/core';
+/* eslint-disable no-restricted-syntax */
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { BookingService } from 'src/app/core/services/booking.service';
-import { addBookingsToState } from 'src/app/redux/actions/user.action';
+import { createBooking } from 'src/app/redux/actions/user.action';
 
-import { selectUserDate } from 'src/app/redux/selectors/user.selectors';
-import { FlightItem } from 'src/app/shared/models/api-models';
-
-import { Nullable } from 'src/app/shared/models/types';
-import { User, UserBooking } from 'src/app/shared/models/user.model';
+import { ContactInfoDto, FlightItem } from 'src/app/shared/models/api-models';
+import { Passenger } from 'src/app/shared/models/booking';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -20,24 +14,12 @@ import { Paths } from 'src/app/types/enums';
   templateUrl: './summary-page.component.html',
   styleUrls: ['./summary-page.component.scss'],
 })
-export class SummaryPageComponent implements OnInit, OnDestroy {
-  public bookingInfo$ = this.bookingService.getBookingInfo();
-
-  private userSub!: Subscription;
-
-  private user: Nullable<User> = null;
-
+export class SummaryPageComponent {
   public constructor(
     private bookingService: BookingService,
     private router: Router,
     private store: Store
   ) {}
-
-  public ngOnInit(): void {
-    this.userSub = this.store
-      .select(selectUserDate)
-      .subscribe(user => (this.user = user));
-  }
 
   public navToPassengers(): void {
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
@@ -53,40 +35,50 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
     return array;
   }
 
-  // TODO: update to use effect (first updateUser Api, second add to state)
-  public addBookings(): void {
-    const booking = this.userBooking();
-    if (!booking) return;
-
-    if (this.user) {
-      console.log('user exist in store: ', !!this.user, this.user);
-      this.bookingService.addNewBooking(booking);
-      const user = { ...this.user };
-      user.bookings = this.bookingService.allUserBookings;
-      console.log('update user bookings: ', user);
-
-      this.store.dispatch(
-        addBookingsToState({
-          booking,
-        })
-      );
+  private createPassengersDto(): Passenger[] {
+    const passengers = this.bookingService.passengersInfo;
+    const arr = [];
+    if (passengers) {
+      for (const [key, value] of Object.entries(passengers)) {
+        if (key !== 'contacts') {
+          arr.push({
+            ...value,
+            category: key,
+          });
+        }
+      }
     }
-    this.navToCart();
+    return arr;
   }
 
-  private userBooking(): Nullable<UserBooking> {
-    const correntBookingInfo = this.bookingService.getCurrentBookingInfo();
+  private createContactsDto(): ContactInfoDto {
+    const contacts = this.bookingService.passengersInfo?.contacts;
+    return {
+      email: contacts?.email || '',
+      countryCode: contacts?.mobile.countryCode || '',
+      number: contacts?.mobile.number || '',
+    };
+  }
 
-    if (correntBookingInfo && this.bookingService.passengersInfo) {
-      return {
-        paid: false,
-        bookingInfo: correntBookingInfo,
-        flights: this.bookingService.flights,
-        passengers: this.bookingService.passengersInfo,
+  public createUserBooking(): void {
+    const currentBookingInfo = this.bookingService.getCurrentBookingInfo();
+
+    if (currentBookingInfo && this.bookingService.passengersInfo) {
+      const booking = {
+        token: localStorage.getItem('token') || '',
+        forwardFlightId: this.sortedFlights[0].id,
+        returnFlightId: this.sortedFlights[0].id || null,
+        passengers: this.createPassengersDto(),
+        contactInfo: this.createContactsDto(),
       };
+      console.log(booking);
+      // this.store.dispatch(
+      //   createBooking({
+      //     booking,
+      //   })
+      // );
+      // this.navToCart();
     }
-
-    return null;
   }
 
   public trackByFn(index: number, item: FlightItem): number {
@@ -95,9 +87,5 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
 
   private navToCart(): void {
     this.router.navigate([Paths.CART]);
-  }
-
-  public ngOnDestroy(): void {
-    this.userSub.unsubscribe();
   }
 }
