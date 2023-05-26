@@ -1,3 +1,10 @@
+<app-date-slider></app-date-slider>
+
+<div *ngIf="(this.bookingInfo$ | async)?.roundTrip">
+  <app-date-slider></app-date-slider>
+</div>
+
+
 <div class="navigation-btns">
   <button class="btn ghost-btn" (click)="navigateToMain()">Back</button>
   <button class="btn primary-btn" (click)="navigateToPassengers()">Continue</button>

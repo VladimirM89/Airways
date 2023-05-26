@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { addUserToState } from 'src/app/redux/actions/user.action';
 import { selectUserData } from 'src/app/redux/selectors/user.selectors';
-import { FlightItem } from 'src/app/shared/models/flight-item';
+import { FlightItem } from 'src/app/shared/models/api-models';
 import { Nullable } from 'src/app/shared/models/types';
 import { User } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
@@ -54,7 +54,7 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
   // TODO: update to use effect (first updateUser Api, second add to state)
   public addBookingsToUser(): void {
     if (this.user) {
-      this.user.bookings = this.bookingService.flights;
+      // this.user.bookings = this.bookingService.flights;
 
       this.store.dispatch(
         addUserToState({
