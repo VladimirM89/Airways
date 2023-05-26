@@ -10,7 +10,7 @@ import {
 } from '../actions/flights.actions';
 
 @Injectable()
-export class ApiEffects {
+export class FlightsEffects {
   public constructor(
     private actions$: Actions,
     private apiFlightsService: ApiFlightService
