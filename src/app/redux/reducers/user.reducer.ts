@@ -1,7 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import { UserBooking, User } from 'src/app/shared/models/user.model';
 import { Nullable } from 'src/app/shared/models/types';
-import { addBookingsToState, addUserToState } from '../actions/user.action';
+import {
+  addBookingsToState,
+  addUserToState,
+  logoutUser,
+} from '../actions/user.action';
 
 export interface UserState {
   userDate: Nullable<User>;
@@ -91,6 +95,13 @@ export const UserReducer = createReducer(
     (state, { booking }): UserState => ({
       userDate: state.userDate,
       bookings: [...state.bookings, booking],
+    })
+  ),
+  on(
+    logoutUser,
+    (state, { user }): UserState => ({
+      userDate: user,
+      bookings: [],
     })
   )
 );

@@ -5,10 +5,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { ApiBookingsService } from 'src/app/core/services/api-bookings.service';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { addBookingsToState } from 'src/app/redux/actions/user.action';
 
-import { selectUserDate } from 'src/app/redux/selectors/user.selectors';
+import { selectAllBookings } from 'src/app/redux/selectors/user.selectors';
 import { FlightItem } from 'src/app/shared/models/api-models';
 
 import { Nullable } from 'src/app/shared/models/types';
@@ -23,20 +24,21 @@ import { Paths } from 'src/app/types/enums';
 export class SummaryPageComponent implements OnInit, OnDestroy {
   public bookingInfo$ = this.bookingService.getBookingInfo();
 
-  private userSub!: Subscription;
+  private bookingsSub!: Subscription;
 
-  private user: Nullable<User> = null;
+  private bookings: Nullable<UserBooking[]> = null;
 
   public constructor(
     private bookingService: BookingService,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private apiBookingsService: ApiBookingsService
   ) {}
 
   public ngOnInit(): void {
-    this.userSub = this.store
-      .select(selectUserDate)
-      .subscribe(user => (this.user = user));
+    this.bookingsSub = this.store
+      .select(selectAllBookings)
+      .subscribe(bookings => (this.bookings = bookings));
   }
 
   public navToPassengers(): void {
@@ -58,13 +60,7 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
     const booking = this.userBooking();
     if (!booking) return;
 
-    if (this.user) {
-      console.log('user exist in store: ', !!this.user, this.user);
-      this.bookingService.addNewBooking(booking);
-      const user = { ...this.user };
-      user.bookings = this.bookingService.allUserBookings;
-      console.log('update user bookings: ', user);
-
+    if (this.bookings) {
       this.store.dispatch(
         addBookingsToState({
           booking,
@@ -98,6 +94,6 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.userSub.unsubscribe();
+    this.bookingsSub.unsubscribe();
   }
 }

@@ -8,8 +8,6 @@ export const selectUserDate = createSelector(
   userState => userState.userDate
 );
 
-// const selectBookings = createFeatureSelector<UserState>('bookings');
-
 export const selectAllBookings = createSelector(
   selectUser,
   userState => userState.bookings

@@ -12,6 +12,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppReducers } from './redux/state.model';
 import PostUserApi from './redux/effects/post-user-api.effect';
+import LoginUser from './redux/effects/login-user.effect';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,7 @@ import PostUserApi from './redux/effects/post-user-api.effect';
     SharedModule,
     StoreModule.forRoot(AppReducers, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([PostUserApi]),
+    EffectsModule.forRoot([PostUserApi, LoginUser]),
   ],
   providers: [],
   bootstrap: [AppComponent],

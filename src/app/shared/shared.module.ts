@@ -22,6 +22,7 @@ import { DatePickerSingleComponent } from './components/date-picker-single/date-
 import { DatePickerRangeComponent } from './components/date-picker-range/date-picker-range.component';
 import { BookingItemComponent } from './components/booking-table/booking-item/booking-item.component';
 import { BookingTableComponent } from './components/booking-table/booking-table.component';
+import { NgLetDirective } from './directives/ng-let.directive';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { BookingTableComponent } from './components/booking-table/booking-table.
     DatePickerRangeComponent,
     BookingTableComponent,
     BookingItemComponent,
+    NgLetDirective,
   ],
   imports: [
     CommonModule,
@@ -76,6 +78,7 @@ import { BookingTableComponent } from './components/booking-table/booking-table.
     DatePickerRangeComponent,
     BookingTableComponent,
     BookingItemComponent,
+    NgLetDirective,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
 })
