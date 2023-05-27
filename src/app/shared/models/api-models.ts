@@ -34,11 +34,13 @@ export interface BookingDto {
 
 export interface BookingItem {
   id: number;
-  userId: number;
+  paid: boolean;
   forwardFlightId: number;
   returnFlightId: number;
   passengers: Passenger[];
   contactInfo: ContactInfo;
+  forwardFlightData: FlightItem;
+  returnFlightData: FlightItem | null;
 }
 
 export interface ContactInfoDto {

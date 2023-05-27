@@ -15,15 +15,24 @@ import {
 export class BookingService {
   public constructor(private store: Store) {}
 
-  private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>(
-    null
-  );
+  private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>({
+    roundTrip: true,
+    departureAirport: 'AMS',
+    destinationAirport: 'GYD',
+    departureDate: '2023-05-30',
+    returnDate: '2023-05-31',
+    passengers: {
+      adult: 2,
+      child: 1,
+      infant: 0,
+    },
+  });
 
   private passangersInfomation: Nullable<PassangersInfo> = null;
 
   private selectedFlights: Array<FlightItem> = [
     {
-      id: 5,
+      id: 50,
       flightNumber: 'SU-5288',
       departureAirport: 'ABZ',
       departureCity: 'Aberdeen',
@@ -45,7 +54,7 @@ export class BookingService {
       transferFlightNumber: null,
     },
     {
-      id: 1,
+      id: 51,
       flightNumber: 'SU-5289',
       departureAirport: 'GYD',
       departureCity: 'Baku',

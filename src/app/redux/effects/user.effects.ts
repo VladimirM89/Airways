@@ -67,49 +67,36 @@ export class UserEffects {
     return this.actions$.pipe(
       ofType(createBooking),
       switchMap(action =>
-        this.apiBookingsService
-          .addBooking(action.booking)
-          .pipe(
-            map(bookingItem => {
-              const passengersNumber: PassengersNumber = {
-                adult: bookingItem.passengers.map(
-                  passenger => passenger.category === 'adult'
-                ).length,
-                child: bookingItem.passengers.map(
-                  passenger => passenger.category === 'child'
-                ).length,
-                infant: bookingItem.passengers.map(
-                  passenger => passenger.category === 'infant'
-                ).length,
-              };
-              userBooking.bookingInfo.passengers = passengersNumber;
-              userBooking.id = bookingItem.id;
-              userBooking.bookingInfo.roundTrip = !!bookingItem.returnFlightId;
-              return [bookingItem.forwardFlightId, bookingItem.returnFlightId];
-            }),
-            map(ids => {
-              ids.map(id =>
-                this.apiFlightService
-                  .getFlightById(id)
-                  .pipe(map(flight => userBooking.flights.push(flight)))
-              );
-              return userBooking;
-            })
-          )
-          .pipe(
-            map(res => {
-              res.bookingInfo.departureAirport =
-                res.flights[0].departureAirport;
-              res.bookingInfo.destinationAirport =
-                res.flights[0].destinationAirport;
-              res.bookingInfo.departureDate = res.flights[0].departureDate;
+        this.apiBookingsService.addBooking(action.booking).pipe(
+          map(bookingItem => {
+            userBooking.id = bookingItem.id;
+            userBooking.paid = bookingItem.paid;
+            userBooking.bookingInfo.roundTrip = !!bookingItem.returnFlightId;
+            userBooking.bookingInfo.departureAirport =
+              bookingItem.forwardFlightData.departureAirport;
+            userBooking.bookingInfo.destinationAirport =
+              bookingItem.forwardFlightData.destinationAirport;
+            userBooking.bookingInfo.departureDate =
+              bookingItem.forwardFlightData.departureDate;
+            userBooking.bookingInfo.returnDate = bookingItem.returnFlightData
+              ? bookingItem.returnFlightData.departureDate
+              : '';
 
-              if (res.bookingInfo.roundTrip) {
-                res.bookingInfo.returnDate = res.flights[1].departureDate;
-              }
-              return addBookingToState({ booking: res });
-            })
-          )
+            const passengersNumber: PassengersNumber = {
+              adult: bookingItem.passengers.filter(
+                passenger => passenger.category === 'adult'
+              ).length,
+              child: bookingItem.passengers.filter(
+                passenger => passenger.category === 'child'
+              ).length,
+              infant: bookingItem.passengers.filter(
+                passenger => passenger.category === 'infant'
+              ).length,
+            };
+            userBooking.bookingInfo.passengers = passengersNumber;
+            return addBookingToState({ booking: userBooking });
+          })
+        )
       )
     );
   });

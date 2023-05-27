@@ -66,8 +66,9 @@ export class SummaryPageComponent {
     if (currentBookingInfo && this.bookingService.passengersInfo) {
       const booking = {
         token: localStorage.getItem('token') || '',
+        paid: false,
         forwardFlightId: this.sortedFlights[0].id,
-        returnFlightId: this.sortedFlights[0].id || null,
+        returnFlightId: this.sortedFlights[1].id || null,
         passengers: this.createPassengersDto(),
         contactInfo: this.createContactsDto(),
       };
