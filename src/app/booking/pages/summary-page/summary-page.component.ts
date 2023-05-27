@@ -71,13 +71,13 @@ export class SummaryPageComponent {
         passengers: this.createPassengersDto(),
         contactInfo: this.createContactsDto(),
       };
-      console.log(booking);
-      // this.store.dispatch(
-      //   createBooking({
-      //     booking,
-      //   })
-      // );
-      // this.navToCart();
+
+      this.store.dispatch(
+        createBooking({
+          booking,
+        })
+      );
+      this.navToCart();
     }
   }
 

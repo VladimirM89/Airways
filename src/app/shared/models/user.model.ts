@@ -33,7 +33,7 @@ export interface LoginDto {
   password: string;
 }
 export interface UserBooking {
-  id?: number;
+  id: number;
   paid: boolean;
   bookingInfo: BookingInfo;
   flights: Array<FlightItem>;
