@@ -44,6 +44,10 @@ export function isFlightsDateRangeValid(isRoundTrip: boolean): ValidatorFn {
       return { isRangeValid: 'please select destination date' };
     }
 
+    if (!isRoundTrip) {
+      return null;
+    }
+
     if (departureDate.getTime() - destinationDate.getTime() > 0) {
       return { isRangeValid: 'destination date can not be before departure' };
     }

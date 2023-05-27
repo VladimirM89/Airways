@@ -16,7 +16,7 @@ import {
 import { ApiBookingsService } from '../../core/services/api-bookings.service';
 
 @Injectable()
-export default class PostUserApi {
+export class UserEffects {
   public constructor(
     private actions$: Actions,
     private apiUserService: ApiUserService,

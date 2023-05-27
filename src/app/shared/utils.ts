@@ -13,7 +13,7 @@ export function dateToString(date: Date | null): string {
     const month = date.getMonth() + 1;
     const day = date.getDate();
     const year = date.getFullYear();
-    return `${year}/${`0${month}`.slice(-2)}/${day}`;
+    return `${year}-${`0${month}`.slice(-2)}-${day}`;
   }
   return '';
 }

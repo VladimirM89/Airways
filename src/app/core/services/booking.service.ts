@@ -1,25 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BookingInfo, PassangersInfo } from 'src/app/shared/models/booking';
-import { FlightItem } from 'src/app/shared/models/api-models';
+import { FlightItem, SearchFlightsDto } from 'src/app/shared/models/api-models';
 import { Nullable } from 'src/app/shared/models/types';
+import { Store } from '@ngrx/store';
+import {
+  loadForwardFlights,
+  loadReturnFlights,
+} from 'src/app/redux/actions/flights.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookingService {
-  private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>({
-    roundTrip: true,
-    departureAirport: 'ABZ',
-    destinationAirport: 'GYD',
-    departureDate: '2023-05-25',
-    returnDate: '2023-05-27',
-    passengers: {
-      adult: 2,
-      child: 1,
-      infant: 0,
-    },
-  });
+  public constructor(private store: Store) {}
+
+  private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>(
+    null
+  );
 
   private passangersInfomation: Nullable<PassangersInfo> = null;
 
@@ -76,6 +74,8 @@ export class BookingService {
 
   public setBookingInfo(info: Nullable<BookingInfo>): void {
     this.bookingInformation$.next(info);
+    this.updateFlightsState();
+    this.selectedFlights = [];
   }
 
   public getCurrentBookingInfo(): Nullable<BookingInfo> {
@@ -102,5 +102,37 @@ export class BookingService {
 
   public get flights(): FlightItem[] {
     return this.selectedFlights;
+  }
+
+  public addSelectedFlight(flight: FlightItem): void {
+    this.selectedFlights.push(flight);
+  }
+
+  private updateFlightsState(): void {
+    const currentBookingInfo = this.bookingInformation$.getValue();
+    if (currentBookingInfo) {
+      const forwardFlightsData: SearchFlightsDto = {
+        departureAirport: currentBookingInfo.departureAirport,
+        destinationAirport: currentBookingInfo.destinationAirport,
+        date: currentBookingInfo.departureDate,
+      };
+      this.store.dispatch(
+        loadForwardFlights({
+          flightsDto: forwardFlightsData,
+        })
+      );
+    }
+    if (currentBookingInfo && currentBookingInfo.roundTrip) {
+      const returnFlightsData: SearchFlightsDto = {
+        departureAirport: currentBookingInfo.destinationAirport,
+        destinationAirport: currentBookingInfo.departureAirport,
+        date: currentBookingInfo.returnDate,
+      };
+      this.store.dispatch(
+        loadReturnFlights({
+          flightsDto: returnFlightsData,
+        })
+      );
+    }
   }
 }

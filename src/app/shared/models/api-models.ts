@@ -52,3 +52,9 @@ export interface DeleteBookingDto {
   id: number;
   token: string;
 }
+
+export interface SearchFlightsDto {
+  departureAirport: string;
+  destinationAirport: string;
+  date: string;
+}
