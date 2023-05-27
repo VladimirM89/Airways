@@ -5,7 +5,11 @@ import { Store } from '@ngrx/store';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { createBooking } from 'src/app/redux/actions/user.action';
 
-import { ContactInfoDto, FlightItem } from 'src/app/shared/models/api-models';
+import {
+  BookingDto,
+  ContactInfoDto,
+  FlightItem,
+} from 'src/app/shared/models/api-models';
 import { Passenger } from 'src/app/shared/models/booking';
 import { Paths } from 'src/app/types/enums';
 
@@ -37,17 +41,16 @@ export class SummaryPageComponent {
 
   private createPassengersDto(): Passenger[] {
     const passengers = this.bookingService.passengersInfo;
-    const arr = [];
-    if (passengers) {
-      for (const [key, value] of Object.entries(passengers)) {
-        if (key !== 'contacts') {
-          arr.push({
-            ...value,
-            category: key,
-          });
-        }
-      }
-    }
+    const arr: Passenger[] = [];
+    passengers?.adult.forEach(adult =>
+      arr.push({ ...adult, category: 'adult' })
+    );
+    passengers?.child.forEach(adult =>
+      arr.push({ ...adult, category: 'child' })
+    );
+    passengers?.infant.forEach(adult =>
+      arr.push({ ...adult, category: 'infant' })
+    );
     return arr;
   }
 
@@ -64,7 +67,7 @@ export class SummaryPageComponent {
     const currentBookingInfo = this.bookingService.getCurrentBookingInfo();
 
     if (currentBookingInfo && this.bookingService.passengersInfo) {
-      const booking = {
+      const booking: BookingDto = {
         token: localStorage.getItem('token') || '',
         paid: false,
         forwardFlightId: this.sortedFlights[0].id,

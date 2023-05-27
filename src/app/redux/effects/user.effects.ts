@@ -7,6 +7,7 @@ import { HandleErrorApiService } from 'src/app/core/services/handle-error-api.se
 import { UserBooking } from 'src/app/shared/models/user.model';
 import { ApiFlightService } from 'src/app/core/services/api-flight.service';
 import { PassengersNumber } from 'src/app/shared/models/booking';
+import { BookingItem } from 'src/app/shared/models/api-models';
 import {
   addBookingToState,
   addUserToState,
@@ -45,6 +46,20 @@ export class UserEffects {
   });
 
   private addBooking = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(createBooking),
+      switchMap(action =>
+        this.apiBookingsService.addBooking(action.booking).pipe(
+          map(bookingItem => {
+            const userBooking = this.convertToUserBooking(bookingItem);
+            return addBookingToState({ booking: userBooking });
+          })
+        )
+      )
+    );
+  });
+
+  private convertToUserBooking(bookingItem: BookingItem): UserBooking {
     const userBooking: UserBooking = {
       id: 0,
       paid: false,
@@ -64,40 +79,45 @@ export class UserEffects {
       passengers: null,
     };
 
-    return this.actions$.pipe(
-      ofType(createBooking),
-      switchMap(action =>
-        this.apiBookingsService.addBooking(action.booking).pipe(
-          map(bookingItem => {
-            userBooking.id = bookingItem.id;
-            userBooking.paid = bookingItem.paid;
-            userBooking.bookingInfo.roundTrip = !!bookingItem.returnFlightId;
-            userBooking.bookingInfo.departureAirport =
-              bookingItem.forwardFlightData.departureAirport;
-            userBooking.bookingInfo.destinationAirport =
-              bookingItem.forwardFlightData.destinationAirport;
-            userBooking.bookingInfo.departureDate =
-              bookingItem.forwardFlightData.departureDate;
-            userBooking.bookingInfo.returnDate = bookingItem.returnFlightData
-              ? bookingItem.returnFlightData.departureDate
-              : '';
-
-            const passengersNumber: PassengersNumber = {
-              adult: bookingItem.passengers.filter(
-                passenger => passenger.category === 'adult'
-              ).length,
-              child: bookingItem.passengers.filter(
-                passenger => passenger.category === 'child'
-              ).length,
-              infant: bookingItem.passengers.filter(
-                passenger => passenger.category === 'infant'
-              ).length,
-            };
-            userBooking.bookingInfo.passengers = passengersNumber;
-            return addBookingToState({ booking: userBooking });
-          })
-        )
-      )
+    const adult = bookingItem.passengers.filter(
+      passenger => passenger.category === 'adult'
     );
-  });
+    const child = bookingItem.passengers.filter(
+      passenger => passenger.category === 'child'
+    );
+    const infant = bookingItem.passengers.filter(
+      passenger => passenger.category === 'infant'
+    );
+
+    userBooking.id = bookingItem.id;
+    userBooking.paid = bookingItem.paid;
+    userBooking.bookingInfo.roundTrip = !!bookingItem.returnFlightId;
+    userBooking.bookingInfo.departureAirport =
+      bookingItem.forwardFlightData.departureAirport;
+    userBooking.bookingInfo.destinationAirport =
+      bookingItem.forwardFlightData.destinationAirport;
+    userBooking.bookingInfo.departureDate =
+      bookingItem.forwardFlightData.departureDate;
+    userBooking.bookingInfo.returnDate = bookingItem.returnFlightData
+      ? bookingItem.returnFlightData.departureDate
+      : '';
+
+    const passengersNumber: PassengersNumber = {
+      adult: adult.length,
+      child: child.length,
+      infant: infant.length,
+    };
+    userBooking.bookingInfo.passengers = passengersNumber;
+    userBooking.flights.push(bookingItem.forwardFlightData);
+    if (bookingItem.returnFlightData) {
+      userBooking.flights.push(bookingItem.returnFlightData);
+    }
+    userBooking.passengers = {
+      adult,
+      child,
+      infant,
+      contacts: bookingItem.contactInfo,
+    };
+    return userBooking;
+  }
 }

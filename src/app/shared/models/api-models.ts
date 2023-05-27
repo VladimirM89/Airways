@@ -26,6 +26,7 @@ export interface FlightItem {
 
 export interface BookingDto {
   token: string;
+  paid: boolean;
   forwardFlightId: number;
   returnFlightId: number | null;
   passengers: Passenger[];
