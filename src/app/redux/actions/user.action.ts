@@ -17,12 +17,12 @@ export const addUserToState = createAction(
   props<{ user: User }>()
 );
 
-export const addBookingToServer = createAction(
+export const createBooking = createAction(
   '[Booking] Add booking to the server',
   props<{ booking: BookingDto }>()
 );
 
-export const addBookingsToState = createAction(
+export const addBookingToState = createAction(
   '[Booking] Add booking to state',
   props<{ booking: UserBooking }>()
 );

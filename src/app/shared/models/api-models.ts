@@ -26,28 +26,38 @@ export interface FlightItem {
 
 export interface BookingDto {
   token: string;
+  paid: boolean;
   forwardFlightId: number;
-  returnFlightId: number;
+  returnFlightId: number | null;
   passengers: Passenger[];
   contactInfo: ContactInfoDto;
 }
 
 export interface BookingItem {
   id: number;
-  userId: number;
+  paid: boolean;
   forwardFlightId: number;
   returnFlightId: number;
   passengers: Passenger[];
   contactInfo: ContactInfo;
+  forwardFlightData: FlightItem;
+  returnFlightData: FlightItem | null;
 }
 
 export interface ContactInfoDto {
+  email: string;
   countryCode: string;
-  dialNumber: string;
+  dialNumber?: string;
   number: string;
 }
 
 export interface DeleteBookingDto {
   id: number;
   token: string;
+}
+
+export interface SearchFlightsDto {
+  departureAirport: string;
+  destinationAirport: string;
+  date: string;
 }

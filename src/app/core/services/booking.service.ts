@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BookingInfo, PassangersInfo } from 'src/app/shared/models/booking';
-import { FlightItem } from 'src/app/shared/models/api-models';
+import { FlightItem, SearchFlightsDto } from 'src/app/shared/models/api-models';
 import { Nullable } from 'src/app/shared/models/types';
-import { UserBooking } from 'src/app/shared/models/user.model';
+import { Store } from '@ngrx/store';
+import {
+  loadForwardFlights,
+  loadReturnFlights,
+} from 'src/app/redux/actions/flights.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookingService {
+  public constructor(private store: Store) {}
+
   private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>({
     roundTrip: true,
-    departureAirport: 'ABZ',
+    departureAirport: 'AMS',
     destinationAirport: 'GYD',
-    departureDate: '2023-05-25',
-    returnDate: '2023-05-27',
+    departureDate: '2023-05-30',
+    returnDate: '2023-05-31',
     passengers: {
       adult: 2,
       child: 1,
@@ -26,7 +32,7 @@ export class BookingService {
 
   private selectedFlights: Array<FlightItem> = [
     {
-      id: 5,
+      id: 50,
       flightNumber: 'SU-5288',
       departureAirport: 'ABZ',
       departureCity: 'Aberdeen',
@@ -48,7 +54,7 @@ export class BookingService {
       transferFlightNumber: null,
     },
     {
-      id: 1,
+      id: 51,
       flightNumber: 'SU-5289',
       departureAirport: 'GYD',
       departureCity: 'Baku',
@@ -71,23 +77,14 @@ export class BookingService {
     },
   ];
 
-  // TODO: in initialState
-  private userBookingsInfo: Array<UserBooking> = [
-    {
-      id: 1,
-      paid: false,
-      bookingInfo: this.getCurrentBookingInfo()!,
-      flights: this.flights,
-      passengers: this.passengersInfo!,
-    },
-  ];
-
   public getBookingInfo(): Observable<Nullable<BookingInfo>> {
     return this.bookingInformation$.asObservable();
   }
 
   public setBookingInfo(info: Nullable<BookingInfo>): void {
     this.bookingInformation$.next(info);
+    this.updateFlightsState();
+    this.selectedFlights = [];
   }
 
   public getCurrentBookingInfo(): Nullable<BookingInfo> {
@@ -116,30 +113,41 @@ export class BookingService {
     return this.selectedFlights;
   }
 
-  // // TODO create selector
-  // public get allUserBookings(): UserBooking[] {
-  //   return this.userBookingsInfo;
-  // }
-
-  // TODO create selector
-  public get unpaidUserBookings(): UserBooking[] {
-    return this.userBookingsInfo.filter(item => item.paid === false);
+  public addSelectedFlight(flight: FlightItem): void {
+    this.selectedFlights.push(flight);
   }
 
-  public addNewBooking(booking: UserBooking): void {
-    const existingBooking = this.unpaidUserBookings.find(
-      item => item.id === booking.id
-    );
-    console.log('get same booking in bookings array: ', existingBooking);
-
-    if (!existingBooking) {
-      this.userBookingsInfo.push(booking);
+  private updateFlightsState(): void {
+    const currentBookingInfo = this.bookingInformation$.getValue();
+    if (currentBookingInfo) {
+      const forwardFlightsData: SearchFlightsDto = {
+        departureAirport: currentBookingInfo.departureAirport,
+        destinationAirport: currentBookingInfo.destinationAirport,
+        date: currentBookingInfo.departureDate,
+      };
+      this.store.dispatch(
+        loadForwardFlights({
+          flightsDto: forwardFlightsData,
+        })
+      );
+    }
+    if (currentBookingInfo && currentBookingInfo.roundTrip) {
+      const returnFlightsData: SearchFlightsDto = {
+        departureAirport: currentBookingInfo.destinationAirport,
+        destinationAirport: currentBookingInfo.departureAirport,
+        date: currentBookingInfo.returnDate,
+      };
+      this.store.dispatch(
+        loadReturnFlights({
+          flightsDto: returnFlightsData,
+        })
+      );
     }
   }
 
-  public deleteUserBooking(booking: UserBooking): void {
-    this.userBookingsInfo = this.userBookingsInfo.filter(
-      item => item.id !== booking.id
-    );
+  public clearInfo(): void {
+    this.bookingInformation$.next(null);
+    this.selectedFlights = [];
+    this.passengersInfo = null;
   }
 }
