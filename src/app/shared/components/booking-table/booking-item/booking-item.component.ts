@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { BookingService } from 'src/app/core/services/booking.service';
 import { PaymentService } from 'src/app/core/services/payment.service';
+import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
 import { deleteBooking } from 'src/app/redux/actions/user.action';
 import { FlightItem } from 'src/app/shared/models/api-models';
 import { PassengersNumber } from 'src/app/shared/models/booking';
@@ -20,7 +22,9 @@ export class BookingItemComponent {
   public constructor(
     private paymentService: PaymentService,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private bookingService: BookingService,
+    private selectedBookingService: SelectedBookingService
   ) {}
 
   public get departureAirport(): string {
@@ -99,7 +103,15 @@ export class BookingItemComponent {
     this.store.dispatch(deleteBooking({ bookings: booking }));
   }
 
-  public editBooking(): void {
+  public editBooking(booking: UserBooking): void {
+    this.updateBookingService(booking);
+    this.selectedBookingService.editBookingId = booking.id;
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
+  }
+
+  private updateBookingService(booking: UserBooking): void {
+    this.bookingService.passengersInfo = booking.passengers;
+    this.bookingService.setBookingInfo(booking.bookingInfo);
+    booking.flights.forEach(flight => this.bookingService.addFlight(flight));
   }
 }

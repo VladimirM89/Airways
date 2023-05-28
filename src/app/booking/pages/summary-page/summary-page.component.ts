@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BookingService } from 'src/app/core/services/booking.service';
-import { createBooking } from 'src/app/redux/actions/user.action';
+import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
+import { createBooking, editBooking } from 'src/app/redux/actions/user.action';
 
 import {
   BookingDto,
@@ -10,6 +11,8 @@ import {
   FlightItem,
 } from 'src/app/shared/models/api-models';
 import { Passenger } from 'src/app/shared/models/booking';
+import { Nullable } from 'src/app/shared/models/types';
+import { UserBooking } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -21,7 +24,8 @@ export class SummaryPageComponent {
   public constructor(
     private bookingService: BookingService,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private selectedBookingService: SelectedBookingService
   ) {}
 
   public navToPassengers(): void {
@@ -78,7 +82,6 @@ export class SummaryPageComponent {
       })
     );
     this.bookingService.clearInfo();
-
     this.navToCart();
   }
 
@@ -88,5 +91,28 @@ export class SummaryPageComponent {
 
   private navToCart(): void {
     this.router.navigate([Paths.CART]);
+  }
+
+  public get isEditMode(): boolean {
+    return !!this.selectedBookingService.editBookingId;
+  }
+
+  public editBooking(): void {
+    let booking: Nullable<UserBooking> = null;
+    const bookingInfo = this.bookingService.getCurrentBookingInfo();
+    if (bookingInfo && this.selectedBookingService.editBookingId) {
+      booking = {
+        id: this.selectedBookingService.editBookingId,
+        paid: false,
+        bookingInfo,
+        flights: this.bookingService.flights,
+        passengers: this.bookingService.passengersInfo,
+      };
+    }
+    if (booking) {
+      this.store.dispatch(editBooking({ bookings: booking }));
+    }
+    this.selectedBookingService.editBookingId = null;
+    this.navToCart();
   }
 }

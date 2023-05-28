@@ -37,12 +37,17 @@ export const logoutUser = createAction(
   props<{ user: null }>()
 );
 
-export const initializeBookingState = createAction(
+export const updateBookingState = createAction(
   '[Booking] Add all bookings from server to state',
   props<{ bookings: UserBooking[] }>()
 );
 
 export const deleteBooking = createAction(
   '[Booking] Delete booking',
+  props<{ bookings: UserBooking }>()
+);
+
+export const editBooking = createAction(
+  '[Booking] Edit booking',
   props<{ bookings: UserBooking }>()
 );
