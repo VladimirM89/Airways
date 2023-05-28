@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { BookingService } from 'src/app/core/services/booking.service';
+import { Store } from '@ngrx/store';
 import { PaymentService } from 'src/app/core/services/payment.service';
+import { deleteBooking } from 'src/app/redux/actions/user.action';
 import { FlightItem } from 'src/app/shared/models/api-models';
 import { PassengersNumber } from 'src/app/shared/models/booking';
 
@@ -18,8 +19,8 @@ export class BookingItemComponent {
 
   public constructor(
     private paymentService: PaymentService,
-    private bookingService: BookingService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
   public get departureAirport(): string {
@@ -94,10 +95,8 @@ export class BookingItemComponent {
     return !this.booking.paid;
   }
 
-  // TODO: change to delete from server and store
   public deleteBooking(booking: UserBooking): void {
-    // this.bookingService.deleteUserBooking(booking);
-    console.log('booking to delete: ', booking);
+    this.store.dispatch(deleteBooking({ bookings: booking }));
   }
 
   public editBooking(): void {

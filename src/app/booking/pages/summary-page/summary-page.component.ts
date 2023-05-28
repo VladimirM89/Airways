@@ -35,7 +35,6 @@ export class SummaryPageComponent {
         new Date(a.departureDate).getTime() -
         new Date(b.departureDate).getTime()
     );
-    console.log(array);
     return array;
   }
 

@@ -11,6 +11,7 @@ import {
   addBookingToState,
   addUserToState,
   createBooking,
+  deleteBooking,
   initializeBookingState,
   loginUser,
   registerUser,
@@ -131,10 +132,8 @@ export class UserEffects {
           ),
           switchMap(userToken => {
             localStorage.setItem('token', userToken.token);
-            console.log('token: ', userToken.token);
             return this.apiUserService.getUser(userToken.token).pipe(
               map(user => {
-                console.log('add user to state: ', user);
                 return addUserToState({ user });
               })
             );
@@ -154,10 +153,35 @@ export class UserEffects {
             const userBookings = bookings.map(booking =>
               this.convertToUserBooking(booking)
             );
-            console.log('userBookings: ', userBookings);
             return initializeBookingState({ bookings: userBookings });
           })
         );
+      })
+    );
+  });
+
+  private deleteBooking$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(deleteBooking),
+      switchMap(action => {
+        const token = localStorage.getItem('token') || '';
+        return this.apiBookingsService
+          .deleteBooking({
+            id: action.bookings.id,
+            token,
+          })
+          .pipe(
+            switchMap(() => {
+              return this.apiBookingsService.getAllBookings(token).pipe(
+                map(bookings => {
+                  const userBookings = bookings.map(booking =>
+                    this.convertToUserBooking(booking)
+                  );
+                  return initializeBookingState({ bookings: userBookings });
+                })
+              );
+            })
+          );
       })
     );
   });

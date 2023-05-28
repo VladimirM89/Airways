@@ -41,3 +41,8 @@ export const initializeBookingState = createAction(
   '[Booking] Add all bookings from server to state',
   props<{ bookings: UserBooking[] }>()
 );
+
+export const deleteBooking = createAction(
+  '[Booking] Delete booking',
+  props<{ bookings: UserBooking }>()
+);
