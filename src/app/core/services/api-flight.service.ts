@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FLIGHTS_URL } from 'src/app/shared/constants/api-constants';
 import { Observable } from 'rxjs';
-import { FlightItem } from 'src/app/shared/models/api-models';
+import { SearchFlightsDto } from 'src/app/shared/models/api-models';
+import { FlightItem } from 'src/app/shared/models/flight-item';
 
 @Injectable({
   providedIn: 'root',
@@ -14,16 +15,12 @@ export class ApiFlightService {
     return this.http.get<FlightItem[]>(`${FLIGHTS_URL}/all`, {});
   }
 
-  public getFlights(
-    departure: string,
-    destination: string,
-    date: string
-  ): Observable<FlightItem[]> {
+  public getFlights(dto: SearchFlightsDto): Observable<FlightItem[]> {
     return this.http.get<FlightItem[]>(`${FLIGHTS_URL}`, {
       params: {
-        departureAirport: departure,
-        destinationAirport: destination,
-        departureDate: date,
+        departureAirport: dto.departureAirport,
+        destinationAirport: dto.destinationAirport,
+        departureDate: dto.date,
       },
     });
   }

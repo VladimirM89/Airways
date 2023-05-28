@@ -22,7 +22,7 @@ const routes: Routes = [
           import(
             './pages/booking-process-page/booking-process-page.module'
           ).then(m => m.BookingProcessPageModule),
-        // canActivate: [UserGuard],
+        canActivate: [UserGuard],
       },
       {
         path: Paths.BOOKING_PAYMENT,
@@ -30,7 +30,7 @@ const routes: Routes = [
           import('./pages/summary-page/summary-page.module').then(
             m => m.SummaryPageModule
           ),
-        // canActivate: [UserGuard, PassengersInfoGuard],
+        canActivate: [UserGuard, PassengersInfoGuard],
       },
       {
         path: Paths.BOOKING_FLIGHTS,
@@ -38,7 +38,7 @@ const routes: Routes = [
           import(
             './pages/flight-selection-page/flight-selection-page.module'
           ).then(m => m.FlightSelectionPageModule),
-        // canActivate: [FlightsInfoGuard],
+        canActivate: [FlightsInfoGuard],
       },
     ],
   },

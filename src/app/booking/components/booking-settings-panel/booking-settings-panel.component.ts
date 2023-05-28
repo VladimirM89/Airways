@@ -73,7 +73,7 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
             ),
             destinationDate: new FormControl<Date | null>(
               this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null,
-              [Validators.required, isDateInPast()]
+              [isDateInPast()]
             ),
           },
           [isFlightsDateRangeValid(this.bookingInfo?.roundTrip || false)]

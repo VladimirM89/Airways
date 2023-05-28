@@ -1,0 +1,50 @@
+<ng-container *ngIf="unpaidUserBookings$ | async as unpaidUserBookings">
+
+  <div class="header-container">
+
+    <mat-checkbox color="primary"></mat-checkbox>
+
+    <p>No</p>
+
+    <p>Flight</p>
+
+    <p>Type trip</p>
+
+    <p>Data & Time</p>
+
+    <p>Passengers</p>
+
+    <p>Price</p>
+
+  </div>
+
+  <p *ngIf="!unpaidUserBookings.length">No bookings. Please add new trip</p>
+  <app-booking-item *ngFor="let booking of unpaidUserBookings" [booking]="booking" class="bottom-line"></app-booking-item>
+
+  <div class="bottom-container bottom-line">
+    <button (click)="navToMain()">+ Add new trip</button>
+    <p>
+      <span>Total</span>
+      <span>{{summary(unpaidUserBookings) | currency: 'EUR'}}</span>
+    </p>
+  </div>
+
+  <div class="apply-container">
+    <form class="promo-container">
+      <input type="text" class="promo" placeholder="Promo Code">
+      <button class="without-padding">APPLY</button>
+    </form>
+
+    <div class="selected-container">
+      <p>
+        <span>1</span>
+        <span>selected</span>
+      </p>
+      <button class="primary-btn">Payment</button>
+    </div>
+  </div>
+
+</ng-container>
+
+
+

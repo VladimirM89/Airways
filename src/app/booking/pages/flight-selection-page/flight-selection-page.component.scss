@@ -5,3 +5,29 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+.page {
+  padding: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.search-results-section {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.search-results__title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.4rem;
+}
+
+.no-flights-message {
+  font-size: 1.6rem;
+  color: var(--auxiliary-color);
+}

@@ -19,3 +19,8 @@ export enum DateFormat {
   YYYYDDMM = 'YYYY.dd.MM',
   YYYYMMDD = 'YYYY.MM.dd',
 }
+
+export enum FlightDirection {
+  FORWARD = 'forward',
+  RETURN = 'return',
+}

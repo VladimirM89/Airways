@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Paths } from 'src/app/types/enums';
 import { Store } from '@ngrx/store';
-import { selectUserData } from 'src/app/redux/selectors/user.selectors';
-import { Subscription, tap } from 'rxjs';
+import { Subscription, map } from 'rxjs';
+import { addUserToState } from 'src/app/redux/actions/user.action';
+import { selectUserDate } from 'src/app/redux/selectors/user.selectors';
+import { ApiUserService } from '../../services/api-user.service';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -13,30 +14,31 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit, OnDestroy {
-  public isUserLogin = false;
+  public user$ = this.store.select(selectUserDate);
 
   private userLoginSub!: Subscription;
-
-  public userName = '';
 
   public isLoginInSelect = true;
 
   public constructor(
     public authService: AuthService,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private apiUserService: ApiUserService
   ) {}
 
   public ngOnInit(): void {
-    this.userLoginSub = this.store
-      .select(selectUserData)
-      .pipe(
-        tap(item => {
-          item ? (this.isUserLogin = true) : (this.isUserLogin = false);
-          this.userName = item?.firstName || 'Name';
-        })
-      )
-      .subscribe();
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.userLoginSub = this.apiUserService
+        .getUser(token)
+        .pipe(
+          map(user => {
+            this.store.dispatch(addUserToState({ user }));
+          })
+        )
+        .subscribe();
+    }
   }
 
   public toggleAuthForms(): void {

@@ -8,9 +8,19 @@
   <app-cost-passengers></app-cost-passengers>
 </div>
 
+<button class="primary-btn edit"
+  *ngIf="isEditMode; else notEditMode"
+  (click)="editBooking()">
+    Confirm changes
+</button>
 
-<div class="btns-container">
-  <button class="ghost-btn" (click)="navToPassengers()">Back</button>
-  <button class="ghost-btn ghost-btn__bordered" (click)="addBookingsToUser()">Add to order cart</button>
-  <button class="primary-btn">Buy now</button>
-</div>
+<ng-template #notEditMode>
+  <div class="btns-container">
+    <button class="ghost-btn" (click)="navToPassengers()">Back</button>
+    <button class="ghost-btn ghost-btn__bordered" (click)="createUserBooking()">Add to order cart</button>
+    <button class="primary-btn">Buy now</button>
+  </div>
+</ng-template>
+
+
+

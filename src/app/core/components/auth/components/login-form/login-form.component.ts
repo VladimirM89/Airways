@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -7,6 +6,8 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { loginUser } from 'src/app/redux/actions/user.action';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class LoginFormComponent implements OnInit {
 
   public hide = true;
 
-  public constructor(private authService: AuthService) {}
+  public constructor(private authService: AuthService, private store: Store) {}
 
   public ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -48,6 +49,17 @@ export class LoginFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    if (this.email && this.pass) {
+      this.store.dispatch(
+        loginUser({
+          user: {
+            email: this.email.value,
+            password: this.pass.value,
+          },
+        })
+      );
+    }
+
     this.loginForm.reset();
     this.authService.togglePopup();
   }

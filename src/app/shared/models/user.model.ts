@@ -1,5 +1,6 @@
 import { BookingInfo, PassangersInfo } from './booking';
-import { FlightItem } from './api-models';
+import { FlightItem } from './flight-item';
+import { Nullable } from './types';
 
 export interface User {
   id: number;
@@ -27,14 +28,14 @@ export interface UserToken {
   token: string;
 }
 
-export interface UserBooking {
-  id?: number;
-  selectedFlights: Array<FlightItem>;
-  passengersInfo: PassangersInfo;
-  bookingInfo: BookingInfo;
-}
-
 export interface LoginDto {
   email: string;
   password: string;
+}
+export interface UserBooking {
+  id: number;
+  paid: boolean;
+  bookingInfo: BookingInfo;
+  flights: Array<FlightItem>;
+  passengers: Nullable<PassangersInfo>;
 }

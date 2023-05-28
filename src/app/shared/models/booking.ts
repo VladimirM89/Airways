@@ -1,3 +1,6 @@
+import { FlightItem } from './flight-item';
+import { Nullable } from './types';
+
 export interface BookingInfo {
   roundTrip: boolean;
   departureAirport: string;
@@ -38,4 +41,9 @@ export interface Passenger {
   dateOfBirth: string;
   specialAssistance: boolean;
   luggage: string;
+}
+
+export interface SelectedFlights {
+  forwardFlight: Nullable<FlightItem>;
+  returnFlight: Nullable<FlightItem>;
 }

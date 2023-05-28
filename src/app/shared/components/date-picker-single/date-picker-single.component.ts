@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DateRangeFormGroup } from '../../models/forms-models';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-date-picker-single',
@@ -7,5 +7,5 @@ import { DateRangeFormGroup } from '../../models/forms-models';
   styleUrls: ['./date-picker-single.component.scss'],
 })
 export class DatePickerSingleComponent {
-  @Input() public datesForm!: DateRangeFormGroup;
+  @Input() public departureDate!: FormControl;
 }
