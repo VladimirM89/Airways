@@ -35,6 +35,7 @@ export class SummaryPageComponent {
         new Date(a.departureDate).getTime() -
         new Date(b.departureDate).getTime()
     );
+    console.log(array);
     return array;
   }
 
@@ -63,27 +64,23 @@ export class SummaryPageComponent {
   }
 
   public createUserBooking(): void {
-    const currentBookingInfo = this.bookingService.getCurrentBookingInfo();
+    const booking: BookingDto = {
+      token: localStorage.getItem('token') || '',
+      paid: false,
+      forwardFlightId: this.sortedFlights[0].id,
+      returnFlightId: this.sortedFlights[1].id || null,
+      passengers: this.createPassengersDto(),
+      contactInfo: this.createContactsDto(),
+    };
 
-    if (currentBookingInfo && this.bookingService.passengersInfo) {
-      const booking: BookingDto = {
-        token: localStorage.getItem('token') || '',
-        paid: false,
-        forwardFlightId: this.sortedFlights[0].id,
-        returnFlightId: this.sortedFlights[1].id || null,
-        passengers: this.createPassengersDto(),
-        contactInfo: this.createContactsDto(),
-      };
+    this.store.dispatch(
+      createBooking({
+        booking,
+      })
+    );
+    this.bookingService.clearInfo();
 
-      this.store.dispatch(
-        createBooking({
-          booking,
-        })
-      );
-      this.bookingService.clearInfo();
-
-      this.navToCart();
-    }
+    this.navToCart();
   }
 
   public trackByFn(index: number, item: FlightItem): number {

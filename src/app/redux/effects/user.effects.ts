@@ -5,13 +5,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ApiUserService } from 'src/app/core/services/api-user.service';
 import { HandleErrorApiService } from 'src/app/core/services/handle-error-api.service';
 import { UserBooking } from 'src/app/shared/models/user.model';
-import { ApiFlightService } from 'src/app/core/services/api-flight.service';
 import { PassengersNumber } from 'src/app/shared/models/booking';
 import { BookingItem } from 'src/app/shared/models/api-models';
 import {
   addBookingToState,
   addUserToState,
   createBooking,
+  initializeBookingState,
+  loginUser,
   registerUser,
 } from '../actions/user.action';
 import { ApiBookingsService } from '../../core/services/api-bookings.service';
@@ -22,8 +23,7 @@ export class UserEffects {
     private actions$: Actions,
     private apiUserService: ApiUserService,
     private handleErrorApiService: HandleErrorApiService,
-    private apiBookingsService: ApiBookingsService,
-    private apiFlightService: ApiFlightService
+    private apiBookingsService: ApiBookingsService
   ) {}
 
   private postUser$ = createEffect(() => {
@@ -120,4 +120,45 @@ export class UserEffects {
     };
     return userBooking;
   }
+
+  private loginUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loginUser),
+      switchMap(action =>
+        this.apiUserService.loginUser(action.user).pipe(
+          catchError((error: HttpErrorResponse) =>
+            this.handleErrorApiService.handleError(error)
+          ),
+          switchMap(userToken => {
+            localStorage.setItem('token', userToken.token);
+            console.log('token: ', userToken.token);
+            return this.apiUserService.getUser(userToken.token).pipe(
+              map(user => {
+                console.log('add user to state: ', user);
+                return addUserToState({ user });
+              })
+            );
+          })
+        )
+      )
+    );
+  });
+
+  private initializeBookingState$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(addUserToState),
+      switchMap(() => {
+        const token = localStorage.getItem('token') || '';
+        return this.apiBookingsService.getAllBookings(token).pipe(
+          map(bookings => {
+            const userBookings = bookings.map(booking =>
+              this.convertToUserBooking(booking)
+            );
+            console.log('userBookings: ', userBookings);
+            return initializeBookingState({ bookings: userBookings });
+          })
+        );
+      })
+    );
+  });
 }

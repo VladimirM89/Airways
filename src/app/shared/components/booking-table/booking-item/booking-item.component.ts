@@ -100,7 +100,7 @@ export class BookingItemComponent {
     console.log('booking to delete: ', booking);
   }
 
-  public editInfo(): void {
+  public editBooking(): void {
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
   }
 }

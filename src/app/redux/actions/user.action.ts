@@ -36,3 +36,8 @@ export const logoutUser = createAction(
   '[User] Delete user from store',
   props<{ user: null }>()
 );
+
+export const initializeBookingState = createAction(
+  '[Booking] Add all bookings from server to state',
+  props<{ bookings: UserBooking[] }>()
+);

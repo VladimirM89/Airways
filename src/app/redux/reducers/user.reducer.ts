@@ -5,6 +5,7 @@ import {
   logoutUser,
   addBookingToState,
   addUserToState,
+  initializeBookingState,
 } from '../actions/user.action';
 
 export interface UserState {
@@ -22,8 +23,8 @@ export const UserReducer = createReducer(
   on(
     addUserToState,
     (state, { user }): UserState => ({
+      ...state,
       userDate: user,
-      bookings: state.bookings,
     })
   ),
   on(
@@ -38,6 +39,13 @@ export const UserReducer = createReducer(
     (state, { user }): UserState => ({
       userDate: user,
       bookings: [],
+    })
+  ),
+  on(
+    initializeBookingState,
+    (state, { bookings }): UserState => ({
+      ...state,
+      bookings,
     })
   )
 );

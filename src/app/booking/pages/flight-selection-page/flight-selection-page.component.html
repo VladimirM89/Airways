@@ -1,5 +1,5 @@
 <section class="search-results-section" *ngIf="this.bookingInfo$ | async as bookingInfo">
-  <div class="search-results" *ngIf="forwardFlights$ | async as flights"> 
+  <div class="search-results" *ngIf="forwardFlights$ | async as flights">
     <h2 class="title search-results">
       <img src="./assets/forward-flight-icon.svg" alt="" />
       {{ bookingInfo.departureAirport | airportToCity}} to {{ bookingInfo.destinationAirport | airportToCity}}
@@ -36,5 +36,5 @@
 
 <div class="navigation-btns">
   <button class="btn ghost-btn" (click)="navigateToMain()">Back</button>
-  <button class="btn primary-btn" [disabled]="!selectedFlights.length" (click)="navigateToPassengers()">Continue</button>
+  <button class="btn primary-btn" (click)="navigateToPassengers()">Continue</button>
 </div>

@@ -32,13 +32,13 @@ export class BookingService {
 
   private selectedFlights: Array<FlightItem> = [
     {
-      id: 50,
+      id: 22,
       flightNumber: 'SU-5288',
       departureAirport: 'ABZ',
       departureCity: 'Aberdeen',
       destinationAirport: 'GYD',
       destinationCity: 'Baku',
-      departureDate: '2023-05-25',
+      departureDate: '2023-06-25',
       departureDateTime: '2023-05-25T09:00:00.000Z',
       destinationDateTime: '2023-05-25T11:00:00.000Z',
       durationMinutes: 120,
@@ -54,13 +54,13 @@ export class BookingService {
       transferFlightNumber: null,
     },
     {
-      id: 51,
+      id: 110,
       flightNumber: 'SU-5289',
       departureAirport: 'GYD',
       departureCity: 'Baku',
       destinationAirport: 'ABZ',
       destinationCity: 'Aberdeen',
-      departureDate: '2023-05-27',
+      departureDate: '2023-06-30',
       departureDateTime: '2023-05-27T15:00:00.000Z',
       destinationDateTime: '2023-05-27T17:00:00.000Z',
       durationMinutes: 120,
