@@ -1,13 +1,17 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription, map } from 'rxjs';
 import { BookingService } from 'src/app/core/services/booking.service';
-import { createBooking } from 'src/app/redux/actions/user.action';
+import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
+import { createBooking, editBooking } from 'src/app/redux/actions/user.action';
 
 import { BookingDto, ContactInfoDto } from 'src/app/shared/models/api-models';
 import { Passenger, SelectedFlights } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/flight-item';
+import { Nullable } from 'src/app/shared/models/types';
+import { UserBooking } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -19,7 +23,8 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
   public constructor(
     private bookingService: BookingService,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private selectedBookingService: SelectedBookingService
   ) {}
 
   private sub!: Subscription;
@@ -83,7 +88,6 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
 
   public createUserBooking(): void {
     const currentBookingInfo = this.bookingService.getCurrentBookingInfo();
-
     if (
       currentBookingInfo &&
       this.bookingService.passengersInfo &&
@@ -115,6 +119,32 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
 
   private navToCart(): void {
     this.router.navigate([Paths.CART]);
+  }
+
+  public get isEditMode(): boolean {
+    return !!this.selectedBookingService.editBookingId;
+  }
+
+  public editBooking(): void {
+    let booking: Nullable<UserBooking> = null;
+    const bookingInfo = this.bookingService.getCurrentBookingInfo();
+    if (bookingInfo && this.selectedBookingService.editBookingId) {
+      booking = {
+        id: this.selectedBookingService.editBookingId,
+        paid: false,
+        bookingInfo,
+        flights: [
+          this.bookingService.getCurrentSelectedFlights().forwardFlight!,
+          this.bookingService.getCurrentSelectedFlights().returnFlight!,
+        ],
+        passengers: this.bookingService.passengersInfo,
+      };
+    }
+    if (booking) {
+      this.store.dispatch(editBooking({ bookings: booking }));
+    }
+    this.selectedBookingService.editBookingId = null;
+    this.navToCart();
   }
 
   public ngOnDestroy(): void {

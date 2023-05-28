@@ -1,4 +1,4 @@
-import { ContactInfo, Passenger } from './booking';
+import { Passenger } from './booking';
 import { FlightItem } from './flight-item';
 
 export interface BookingDto {
@@ -16,7 +16,7 @@ export interface BookingItem {
   forwardFlightId: number;
   returnFlightId: number;
   passengers: Passenger[];
-  contactInfo: ContactInfo;
+  contactInfo: ContactInfoDto;
   forwardFlightData: FlightItem;
   returnFlightData: FlightItem | null;
 }

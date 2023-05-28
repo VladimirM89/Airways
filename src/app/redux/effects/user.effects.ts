@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -5,14 +6,24 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ApiUserService } from 'src/app/core/services/api-user.service';
 import { HandleErrorApiService } from 'src/app/core/services/handle-error-api.service';
 import { UserBooking } from 'src/app/shared/models/user.model';
-import { ApiFlightService } from 'src/app/core/services/api-flight.service';
-import { PassengersNumber } from 'src/app/shared/models/booking';
-import { BookingItem } from 'src/app/shared/models/api-models';
+import {
+  PassangersInfo,
+  Passenger,
+  PassengersNumber,
+} from 'src/app/shared/models/booking';
+import { BookingDto, BookingItem } from 'src/app/shared/models/api-models';
+import { BookingService } from 'src/app/core/services/booking.service';
+import { TypedAction } from '@ngrx/store/src/models';
+import { Observable } from 'rxjs';
 import {
   addBookingToState,
   addUserToState,
   createBooking,
+  deleteBooking,
+  updateBookingState,
+  loginUser,
   registerUser,
+  editBooking,
 } from '../actions/user.action';
 import { ApiBookingsService } from '../../core/services/api-bookings.service';
 
@@ -23,7 +34,7 @@ export class UserEffects {
     private apiUserService: ApiUserService,
     private handleErrorApiService: HandleErrorApiService,
     private apiBookingsService: ApiBookingsService,
-    private apiFlightService: ApiFlightService
+    private bookingService: BookingService
   ) {}
 
   private postUser$ = createEffect(() => {
@@ -116,8 +127,130 @@ export class UserEffects {
       adult,
       child,
       infant,
-      contacts: bookingItem.contactInfo,
+      contacts: {
+        mobile: {
+          countryCode: bookingItem.contactInfo.countryCode,
+          number: bookingItem.contactInfo.number,
+        },
+        email: bookingItem.contactInfo.email,
+      },
     };
     return userBooking;
+  }
+
+  private loginUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loginUser),
+      switchMap(action =>
+        this.apiUserService.loginUser(action.user).pipe(
+          catchError((error: HttpErrorResponse) =>
+            this.handleErrorApiService.handleError(error)
+          ),
+          switchMap(userToken => {
+            localStorage.setItem('token', userToken.token);
+            return this.apiUserService.getUser(userToken.token).pipe(
+              map(user => {
+                return addUserToState({ user });
+              })
+            );
+          })
+        )
+      )
+    );
+  });
+
+  private updateBookingState$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(addUserToState),
+      switchMap(() => {
+        const token = localStorage.getItem('token') || '';
+        return this.apiBookingsService.getAllBookings(token).pipe(
+          map(bookings => {
+            const userBookings = bookings.map(booking =>
+              this.convertToUserBooking(booking)
+            );
+            return updateBookingState({ bookings: userBookings });
+          })
+        );
+      })
+    );
+  });
+
+  private deleteBooking$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(deleteBooking),
+      switchMap(action => {
+        const token = localStorage.getItem('token') || '';
+        return this.apiBookingsService
+          .deleteBooking({
+            id: action.bookings.id,
+            token,
+          })
+          .pipe(switchMap(() => this.getAllBookings(token)));
+      })
+    );
+  });
+
+  private editBooking$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(editBooking),
+      switchMap(action => {
+        const token = localStorage.getItem('token') || '';
+        return this.apiBookingsService
+          .editBooking(
+            action.bookings.id,
+            this.convertToBookingDto(action.bookings)
+          )
+          .pipe(switchMap(() => this.getAllBookings(token)));
+      })
+    );
+  });
+
+  private getAllBookings(token: string): Observable<
+    {
+      bookings: UserBooking[];
+    } & TypedAction<'[Booking] Add all bookings from server to state'>
+  > {
+    return this.apiBookingsService.getAllBookings(token).pipe(
+      map(bookings => {
+        const userBookings = bookings.map(booking =>
+          this.convertToUserBooking(booking)
+        );
+        return updateBookingState({ bookings: userBookings });
+      })
+    );
+  }
+
+  private convertToBookingDto(booking: UserBooking): BookingDto {
+    const token = localStorage.getItem('token') || '';
+    return {
+      token,
+      paid: false,
+      forwardFlightId: booking.flights[0].id,
+      returnFlightId: booking.flights[1].id,
+      passengers: this.convertToPassengers(booking.passengers!),
+      contactInfo: {
+        email: booking.passengers?.contacts.email || '',
+        countryCode: booking.passengers?.contacts.mobile.countryCode || '',
+        dialNumber: booking.passengers?.contacts.mobile.number || '',
+        number: booking.passengers?.contacts.mobile.number || '',
+      },
+    };
+  }
+
+  private convertToPassengers(passengers: PassangersInfo): Passenger[] {
+    const passengerArray: Passenger[] = [];
+    if (passengers) {
+      passengers.adult.forEach(item =>
+        passengerArray.push({ category: 'adult', ...item })
+      );
+      passengers.child.forEach(item =>
+        passengerArray.push({ category: 'child', ...item })
+      );
+      passengers.infant.forEach(item =>
+        passengerArray.push({ category: 'infant', ...item })
+      );
+    }
+    return passengerArray;
   }
 }

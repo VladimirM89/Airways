@@ -95,6 +95,10 @@ export class BookingService {
     return this.selectedFlights$ as Observable<SelectedFlights>;
   }
 
+  public getCurrentSelectedFlights(): SelectedFlights {
+    return this.selectedFlights$.getValue();
+  }
+
   private updateForwardFlightsState(): void {
     const currentBookingInfo = this.bookingInformation$.getValue();
     if (currentBookingInfo) {
