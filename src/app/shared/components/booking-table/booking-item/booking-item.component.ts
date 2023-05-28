@@ -5,8 +5,8 @@ import { BookingService } from 'src/app/core/services/booking.service';
 import { PaymentService } from 'src/app/core/services/payment.service';
 import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
 import { deleteBooking } from 'src/app/redux/actions/user.action';
-import { FlightItem } from 'src/app/shared/models/api-models';
 import { PassengersNumber } from 'src/app/shared/models/booking';
+import { FlightItem } from 'src/app/shared/models/flight-item';
 
 import { UserBooking } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
@@ -112,6 +112,13 @@ export class BookingItemComponent {
   private updateBookingService(booking: UserBooking): void {
     this.bookingService.passengersInfo = booking.passengers;
     this.bookingService.setBookingInfo(booking.bookingInfo);
-    booking.flights.forEach(flight => this.bookingService.addFlight(flight));
+    const sortedArr = booking.flights.slice();
+    sortedArr.sort(
+      (a, b) =>
+        new Date(a.departureDate).getTime() -
+        new Date(b.departureDate).getTime()
+    );
+    this.bookingService.addForwardFlight(sortedArr[0]);
+    this.bookingService.addReturnFlight(sortedArr[1]);
   }
 }

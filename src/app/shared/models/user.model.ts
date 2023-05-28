@@ -1,6 +1,6 @@
 import { BookingInfo, PassangersInfo } from './booking';
+import { FlightItem } from './flight-item';
 import { Nullable } from './types';
-import { FlightItem } from './api-models';
 
 export interface User {
   id: number;

@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppReducers } from './redux/state.model';
-// import LoginUser from './redux/effects/login-user.effect';
 import { UserEffects } from './redux/effects/user.effects';
 import { FlightsEffects } from './redux/effects/flights.effects';
 

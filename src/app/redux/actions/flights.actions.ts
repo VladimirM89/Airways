@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { FlightItem, SearchFlightsDto } from 'src/app/shared/models/api-models';
+import { SearchFlightsDto } from 'src/app/shared/models/api-models';
+import { FlightItem } from 'src/app/shared/models/flight-item';
 
 export const updateForwardFlights = createAction(
   '[FLIGHTS] Update forward flights',

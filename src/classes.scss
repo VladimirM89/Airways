@@ -64,6 +64,7 @@
 
 .highlight-btn {
   @include btn-hover-effect();
+  height: 3rem;
   color: var(--contrast-color);
   border: 1px solid var(--primary-color);
   background: linear-gradient(108.75deg, #0090BD 59.91%, #073590 95.36%);

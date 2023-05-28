@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription, map } from 'rxjs';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
 import { createBooking, editBooking } from 'src/app/redux/actions/user.action';
 
-import {
-  BookingDto,
-  ContactInfoDto,
-  FlightItem,
-} from 'src/app/shared/models/api-models';
-import { Passenger } from 'src/app/shared/models/booking';
+import { BookingDto, ContactInfoDto } from 'src/app/shared/models/api-models';
+import { Passenger, SelectedFlights } from 'src/app/shared/models/booking';
+import { FlightItem } from 'src/app/shared/models/flight-item';
 import { Nullable } from 'src/app/shared/models/types';
 import { UserBooking } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
@@ -20,7 +19,7 @@ import { Paths } from 'src/app/types/enums';
   templateUrl: './summary-page.component.html',
   styleUrls: ['./summary-page.component.scss'],
 })
-export class SummaryPageComponent {
+export class SummaryPageComponent implements OnInit, OnDestroy {
   public constructor(
     private bookingService: BookingService,
     private router: Router,
@@ -28,18 +27,39 @@ export class SummaryPageComponent {
     private selectedBookingService: SelectedBookingService
   ) {}
 
-  public navToPassengers(): void {
-    this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
+  private sub!: Subscription;
+
+  private selectedFlights!: SelectedFlights;
+
+  public ngOnInit(): void {
+    this.sub = this.bookingService
+      .getSelectedFlights()
+      .pipe(
+        map(flights => {
+          this.selectedFlights = flights;
+        })
+      )
+      .subscribe();
   }
 
-  public get sortedFlights(): FlightItem[] {
-    const array = this.bookingService.flights.slice();
-    array.sort(
-      (a, b) =>
-        new Date(a.departureDate).getTime() -
-        new Date(b.departureDate).getTime()
-    );
-    return array;
+  public get sortedFlights(): Array<FlightItem> {
+    if (
+      this.selectedFlights.forwardFlight &&
+      this.selectedFlights.returnFlight
+    ) {
+      return [
+        this.selectedFlights.forwardFlight,
+        this.selectedFlights.returnFlight,
+      ];
+    }
+    if (this.selectedFlights.forwardFlight) {
+      return [this.selectedFlights.forwardFlight];
+    }
+    return [];
+  }
+
+  public navToPassengers(): void {
+    this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
   }
 
   private createPassengersDto(): Passenger[] {
@@ -67,22 +87,30 @@ export class SummaryPageComponent {
   }
 
   public createUserBooking(): void {
-    const booking: BookingDto = {
-      token: localStorage.getItem('token') || '',
-      paid: false,
-      forwardFlightId: this.sortedFlights[0].id,
-      returnFlightId: this.sortedFlights[1].id || null,
-      passengers: this.createPassengersDto(),
-      contactInfo: this.createContactsDto(),
-    };
+    const currentBookingInfo = this.bookingService.getCurrentBookingInfo();
+    if (
+      currentBookingInfo &&
+      this.bookingService.passengersInfo &&
+      this.selectedFlights.forwardFlight
+    ) {
+      const booking: BookingDto = {
+        token: localStorage.getItem('token') || '',
+        paid: false,
+        forwardFlightId: this.selectedFlights.forwardFlight.id,
+        returnFlightId: this.selectedFlights.returnFlight?.id || null,
+        passengers: this.createPassengersDto(),
+        contactInfo: this.createContactsDto(),
+      };
 
-    this.store.dispatch(
-      createBooking({
-        booking,
-      })
-    );
-    this.bookingService.clearInfo();
-    this.navToCart();
+      this.store.dispatch(
+        createBooking({
+          booking,
+        })
+      );
+      this.bookingService.clearInfo();
+
+      this.navToCart();
+    }
   }
 
   public trackByFn(index: number, item: FlightItem): number {
@@ -105,7 +133,10 @@ export class SummaryPageComponent {
         id: this.selectedBookingService.editBookingId,
         paid: false,
         bookingInfo,
-        flights: this.bookingService.flights,
+        flights: [
+          this.bookingService.getCurrentSelectedFlights().forwardFlight!,
+          this.bookingService.getCurrentSelectedFlights().returnFlight!,
+        ],
         passengers: this.bookingService.passengersInfo,
       };
     }
@@ -114,5 +145,9 @@ export class SummaryPageComponent {
     }
     this.selectedBookingService.editBookingId = null;
     this.navToCart();
+  }
+
+  public ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }
