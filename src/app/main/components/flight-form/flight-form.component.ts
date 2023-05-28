@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -24,7 +24,9 @@ import { Paths } from 'src/app/types/enums';
   templateUrl: './flight-form.component.html',
   styleUrls: ['./flight-form.component.scss'],
 })
-export class FlightFormComponent implements OnInit, OnDestroy {
+export class FlightFormComponent
+  implements OnInit, OnDestroy, AfterContentInit
+{
   public constructor(
     private bookingService: BookingService,
     private router: Router
@@ -56,21 +58,16 @@ export class FlightFormComponent implements OnInit, OnDestroy {
           this.bookingInfo?.destinationAirport || '',
           [Validators.required, checkIfFlightDirectionValid()]
         ),
-        range: new FormGroup(
-          {
-            departureDate: new FormControl<Date | null>(
-              this.bookingInfo
-                ? new Date(this.bookingInfo.departureDate)
-                : null,
-              [Validators.required, isDateInPast()]
-            ),
-            destinationDate: new FormControl<Date | null>(
-              this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null,
-              [isDateInPast()]
-            ),
-          },
-          [isFlightsDateRangeValid(this.bookingInfo?.roundTrip || false)]
-        ),
+        range: new FormGroup({
+          departureDate: new FormControl<Date | null>(
+            this.bookingInfo ? new Date(this.bookingInfo.departureDate) : null,
+            [Validators.required, isDateInPast()]
+          ),
+          destinationDate: new FormControl<Date | null>(
+            this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null,
+            [isDateInPast()]
+          ),
+        }),
         passengers: new FormGroup(
           {
             adult: new FormControl<number>(
@@ -88,6 +85,10 @@ export class FlightFormComponent implements OnInit, OnDestroy {
       },
       [checkIfFlightDirectionsDuplicate()]
     );
+  }
+
+  public ngAfterContentInit(): void {
+    this.range.addValidators([isFlightsDateRangeValid(this.isRoundTrip)]);
   }
 
   public trackByFn(index: number, item: Airport): number {

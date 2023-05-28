@@ -51,11 +51,11 @@
       </ng-template>
     <app-passengers-counter-form [passengersForm]="passengers"></app-passengers-counter-form>
   </div>
-  <div class="form-section">
+  <div class="form-section validation-section">
     <div class="validation">
       <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isDuplicate']}}</p>
       <p class="error-message" *ngIf="passengers.invalid">{{passengers.errors?.['isPassengersValid']}}</p>
     </div>
+    <button class="btn primary-btn search-btn" [disabled]="form.invalid" (click)="setSearch()">Search</button>
   </div> 
-  <button class="btn primary-btn search-btn" (click)="setSearch()">Search</button>
 </form>
