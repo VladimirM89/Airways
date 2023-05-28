@@ -1,38 +1,36 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { Airports } from 'src/app/shared/constants/airports';
 import { Airport } from 'src/app/shared/models/airport';
 import { BookingInfo } from 'src/app/shared/models/booking';
 import { Nullable } from 'src/app/shared/models/types';
 import { dateToString } from 'src/app/shared/utils';
-import { Subscription } from 'rxjs';
-import { FullUrls } from 'src/app/shared/constants/full-urls';
-import {
-  checkIfFlightDirectionsDuplicate,
-  checkIfFlightDirectionValid,
-} from 'src/app/shared/validators/flightDirections.validators';
-import { checkIfPassengersValid } from 'src/app/shared/validators/passengersCounterForm.validators';
 import {
   isDateInPast,
   isFlightsDateRangeValid,
 } from 'src/app/shared/validators/date.validators';
-import { RouterService } from 'src/app/core/services/router.service';
+import {
+  checkIfFlightDirectionValid,
+  checkIfFlightDirectionsDuplicate,
+} from 'src/app/shared/validators/flightDirections.validators';
+import { checkIfPassengersValid } from 'src/app/shared/validators/passengersCounterForm.validators';
+import { Paths } from 'src/app/types/enums';
 
 @Component({
-  selector: 'app-booking-settings-panel',
-  templateUrl: './booking-settings-panel.component.html',
-  styleUrls: ['./booking-settings-panel.component.scss'],
+  selector: 'app-flight-form',
+  templateUrl: './flight-form.component.html',
+  styleUrls: ['./flight-form.component.scss'],
 })
-export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
+export class FlightFormComponent implements OnInit, OnDestroy {
   public constructor(
     private bookingService: BookingService,
-    private routerService: RouterService
+    private router: Router
   ) {}
 
   public form!: FormGroup;
-
-  public editMode = false;
 
   public airports: Airport[] = Airports;
 
@@ -45,16 +43,11 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
       this.bookingInfo = info;
     });
 
-    this.sub.add(
-      this.routerService.checkUrl().subscribe(event => {
-        if (event.url !== FullUrls.FLIGHTS) {
-          this.editMode = false;
-        }
-      })
-    );
-
     this.form = new FormGroup(
       {
+        roundTrip: new FormControl<string>(
+          this.bookingInfo?.roundTrip ? 'round' : 'one-way'
+        ),
         departure: new FormControl<string>(
           this.bookingInfo?.departureAirport || '',
           [Validators.required, checkIfFlightDirectionValid()]
@@ -97,41 +90,20 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
     );
   }
 
-  public toggleFlightDirections(): void {
-    const currentDeparture = this.departure.value;
-    const currentDestinaton = this.destination.value;
-    this.destination.setValue(currentDeparture);
-    this.departure.setValue(currentDestinaton);
-    this.setNewSearch();
-  }
-
-  public getPassengersNumber(): number {
-    if (this.bookingInfo) {
-      return (
-        this.bookingInfo.passengers.adult +
-        this.bookingInfo.passengers.child +
-        this.bookingInfo.passengers.infant
-      );
-    }
-    return 0;
-  }
-
   public trackByFn(index: number, item: Airport): number {
     return item.id;
   }
 
-  public setNewSearch(): void {
+  public setSearch(): void {
     if (this.form.valid) {
-      this.editMode = false;
-      const isRoungTrip =
-        this.bookingService.getCurrentBookingInfo()?.roundTrip || false;
-
       const newSearchInfo: BookingInfo = {
-        roundTrip: isRoungTrip,
+        roundTrip: this.isRoundTrip,
         departureAirport: this.departure.value,
         destinationAirport: this.destination.value,
         departureDate: dateToString(this.departureDate.value),
-        returnDate: isRoungTrip ? dateToString(this.destinationDate.value) : '',
+        returnDate: this.isRoundTrip
+          ? dateToString(this.destinationDate.value)
+          : '',
         passengers: {
           adult: this.adultsNumber,
           child: this.childrenNumber,
@@ -139,19 +111,12 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
         },
       };
       this.bookingService.setBookingInfo(newSearchInfo);
+      this.router.navigate([Paths.BOOKING]);
     }
-  }
-
-  public setToEditMode(): void {
-    this.editMode = true;
   }
 
   public ngOnDestroy(): void {
     this.sub.unsubscribe();
-  }
-
-  public get isEditAvailable(): boolean {
-    return window.location.pathname === FullUrls.FLIGHTS;
   }
 
   public get destination(): FormControl<string> {
@@ -188,5 +153,13 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
 
   public get infantsNumber(): number {
     return this.passengers.controls['infant'].value;
+  }
+
+  public get isRoundTrip(): boolean {
+    return this.roundTripRadio.value === 'round';
+  }
+
+  public get roundTripRadio(): FormControl {
+    return this.form.get('roundTrip') as FormControl;
   }
 }

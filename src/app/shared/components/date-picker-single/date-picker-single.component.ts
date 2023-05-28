@@ -8,4 +8,6 @@ import { FormControl } from '@angular/forms';
 })
 export class DatePickerSingleComponent {
   @Input() public departureDate!: FormControl;
+
+  @Input() public appearance: 'fill' | 'outline' = 'fill';
 }

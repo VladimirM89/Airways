@@ -20,66 +20,15 @@ import { FlightItem } from 'src/app/shared/models/flight-item';
 export class BookingService {
   public constructor(private store: Store) {}
 
-  private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>({
-    roundTrip: true,
-    departureAirport: 'GYD',
-    destinationAirport: 'IST',
-    departureDate: '2023-06-02',
-    returnDate: '2023-06-08',
-    passengers: {
-      adult: 1,
-      child: 0,
-      infant: 0,
-    },
-  });
+  private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>(
+    null
+  );
 
   private passangersInfomation: Nullable<PassangersInfo> = null;
 
   private selectedFlights$ = new BehaviorSubject<SelectedFlights>({
-    forwardFlight: {
-      id: 50,
-      flightNumber: 'SU-5288',
-      departureAirport: 'ABZ',
-      departureCity: 'Aberdeen',
-      destinationAirport: 'GYD',
-      destinationCity: 'Baku',
-      departureDate: '2023-05-25',
-      departureDateTime: '2023-05-25T09:00:00.000Z',
-      destinationDateTime: '2023-05-25T11:00:00.000Z',
-      durationMinutes: 120,
-      flightFare: 128.5,
-      tax: 12,
-      luggageFare: 20,
-      seats: 50,
-      booked: 0,
-      direct: true,
-      transferAirport: null,
-      transferCity: null,
-      transferDuration: null,
-      transferFlightNumber: null,
-    },
-    returnFlight: {
-      id: 51,
-      flightNumber: 'SU-5289',
-      departureAirport: 'GYD',
-      departureCity: 'Baku',
-      destinationAirport: 'ABZ',
-      destinationCity: 'Aberdeen',
-      departureDate: '2023-05-27',
-      departureDateTime: '2023-05-27T15:00:00.000Z',
-      destinationDateTime: '2023-05-27T17:00:00.000Z',
-      durationMinutes: 120,
-      flightFare: 100,
-      tax: 30,
-      luggageFare: 20,
-      seats: 50,
-      booked: 0,
-      direct: true,
-      transferAirport: null,
-      transferCity: null,
-      transferDuration: null,
-      transferFlightNumber: null,
-    },
+    forwardFlight: null,
+    returnFlight: null,
   });
 
   public getBookingInfo(): Observable<Nullable<BookingInfo>> {

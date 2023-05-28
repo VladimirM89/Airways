@@ -8,4 +8,6 @@ import { DateRangeFormGroup } from '../../models/forms-models';
 })
 export class DatePickerRangeComponent {
   @Input() public datesForm!: DateRangeFormGroup;
+
+  @Input() public appearance: 'fill' | 'outline' = 'fill';
 }
