@@ -2,8 +2,11 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 0;
   background-color: var(--accent-bg-color);
+  border-radius: .5rem;
+  box-shadow: var(--box-shadow);
 
   p {
     margin: 0;
@@ -27,13 +30,10 @@
 .destination {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: .8rem;
 }
 
-.date,
-.utc,
-.city,
-.flight-number .label {
+.auxiliary-info {
   color: var(--auxiliary-color);
 }
 
@@ -58,6 +58,13 @@
 
 .flight-duration {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+
+  p {
+    text-align: center;
+  }
 }
 
 .flight-image {
@@ -72,4 +79,24 @@
   background-color: var(--accent-bg-color);
   width: min-content;
   padding: 0 .5rem;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 3rem;
+  color: var(--primary-color);
+}
+
+.ticket {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  align-items: center;
+}
+
+.price-n-seats {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  text-align: end;
 }
