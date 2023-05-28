@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FlightItem } from 'src/app/shared/models/api-models';
+import { getLocalUTC, getFullUTC } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-search-item',
@@ -8,4 +9,10 @@ import { FlightItem } from 'src/app/shared/models/api-models';
 })
 export class SearchItemComponent {
   @Input() public flight!: FlightItem;
+
+  @Input() public selected = false;
+
+  public getFullUTC = getFullUTC;
+
+  public getLocalUTC = getLocalUTC;
 }

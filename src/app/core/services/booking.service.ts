@@ -17,13 +17,13 @@ export class BookingService {
 
   private bookingInformation$ = new BehaviorSubject<Nullable<BookingInfo>>({
     roundTrip: true,
-    departureAirport: 'AMS',
-    destinationAirport: 'GYD',
-    departureDate: '2023-05-30',
-    returnDate: '2023-05-31',
+    departureAirport: 'GYD',
+    destinationAirport: 'IST',
+    departureDate: '2023-06-02',
+    returnDate: '2023-06-08',
     passengers: {
-      adult: 2,
-      child: 1,
+      adult: 1,
+      child: 0,
       infant: 0,
     },
   });

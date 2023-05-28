@@ -45,4 +45,15 @@ export class FlightSelectionPageComponent implements OnInit {
   public navigateToMain(): void {
     this.router.navigate([Paths.BASE]);
   }
+
+  public isAllFlightsSelected(): boolean {
+    const isRoundTrip = this.bookingService.getCurrentBookingInfo()?.roundTrip;
+    if (isRoundTrip) {
+      return this.selectedFlights.length === 2;
+    }
+    if (!isRoundTrip) {
+      return !!this.selectedFlights.length;
+    }
+    return false;
+  }
 }

@@ -1,1 +1,42 @@
-<p>{{ flight.flightNumber}}</p>
+<section class="flight-info">
+  <div class="departure">
+    <p class="date">{{ flight.departureDateTime | date: 'EEE, dd LLL YYYY' : getFullUTC(flight.departureCity)}}</p>
+    <div class="time">
+      <p class="time-data">{{flight.departureDateTime  | date: 'HH:mm' :  getFullUTC(flight.departureCity)}}</p>
+      <p class="utc">UTC {{ getLocalUTC(flight.departureCity) }}</p>
+    </div>
+    <p class="city">{{ flight.departureCity }}</p>
+  </div>
+
+  <div class="flight-duration">
+    <p>{{ flight.durationMinutes }}</p>
+    <div>
+      <img src="./assets/airplane_takeoff.svg" alt="">
+    </div>
+    <p>{{ flight.direct ? 'Direct' : flight.transferAirport }}</p>
+  </div>
+
+  <div class="destination">
+    <p class="date">{{ flight.destinationDateTime | date: 'EEE, dd LLL YYYY' : getFullUTC(flight.destinationCity)}}</p>
+    <div class="time">
+      <p class="time-data">{{flight.destinationDateTime  | date: 'HH:mm' :  getFullUTC(flight.destinationCity)}}</p>
+      <p class="utc">UTC {{ getLocalUTC(flight.destinationCity) }}</p>
+    </div>
+    <p class="city">{{ flight.destinationCity }}</p>
+  </div>
+
+  <div class="flight-number">
+    <p class="label">Flight no.</p>
+    <p>{{ flight.flightNumber }}</p>
+  </div>
+
+</section>
+<section class="ticket">
+  <div class="price-n-seats">
+
+  </div>
+  <button *ngIf="!selected; else edit" class="btn highlight-btn">Select</button>
+  <ng-template #edit>
+    <button class="btn ghost-btn">Edit</button>
+  </ng-template>
+</section>

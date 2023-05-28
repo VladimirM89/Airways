@@ -1,0 +1,54 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+.flight-info,
+.ticket {
+  padding: 1.5rem 3rem;
+}
+
+.flight-info {
+  border-right: 2px dashed var(--auxiliary-color);
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+}
+
+.departure, 
+.destination {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.date,
+.utc,
+.city,
+.flight-number .label {
+  color: var(--auxiliary-color);
+}
+
+.time {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.time-data {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.city {
+  font-size: 1.2rem;
+}
+
+.utc {
+  font-size: 1rem;
+}
