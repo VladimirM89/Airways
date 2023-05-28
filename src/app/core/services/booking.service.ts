@@ -88,7 +88,8 @@ export class BookingService {
 
   public setBookingInfo(info: Nullable<BookingInfo>): void {
     this.bookingInformation$.next(info);
-    this.updateFlightsState();
+    this.updateForwardFlightsState();
+    this.updateReturnFlightsState();
     this.selectedFlights$.next({
       forwardFlight: null,
       returnFlight: null,
@@ -129,6 +130,7 @@ export class BookingService {
       forwardFlight: null,
       returnFlight: currentFlights?.returnFlight || null,
     });
+    this.updateForwardFlightsState();
   }
 
   public deleteReturnFlight(): void {
@@ -137,13 +139,14 @@ export class BookingService {
       forwardFlight: currentFlights?.forwardFlight || null,
       returnFlight: null,
     });
+    this.updateReturnFlightsState();
   }
 
   public getSelectedFlights(): Observable<SelectedFlights> {
     return this.selectedFlights$ as Observable<SelectedFlights>;
   }
 
-  private updateFlightsState(): void {
+  private updateForwardFlightsState(): void {
     const currentBookingInfo = this.bookingInformation$.getValue();
     if (currentBookingInfo) {
       const forwardFlightsData: SearchFlightsDto = {
@@ -157,6 +160,10 @@ export class BookingService {
         })
       );
     }
+  }
+
+  private updateReturnFlightsState(): void {
+    const currentBookingInfo = this.bookingInformation$.getValue();
     if (currentBookingInfo && currentBookingInfo.roundTrip) {
       const returnFlightsData: SearchFlightsDto = {
         departureAirport: currentBookingInfo.destinationAirport,

@@ -11,7 +11,7 @@
   <div class="flight-duration">
     <p>{{ getFlightDuration() }}</p>
     <div class="flight-image">
-      <img class="flight-icon" src="./assets/airplane_takeoff.svg" alt="">
+      <img class="flight-icon" [src]="direction === 'forward' ? './assets/airplane_takeoff.svg' : './assets/airplane_return.svg'" alt="">
     </div>
     <p>{{ flight.direct ? 'Direct' : flight.transferAirport }}</p>
   </div>
@@ -33,7 +33,7 @@
 </section>
 <section class="ticket">
   <div class="price-n-seats">
-    <p *ngIf="!selected">{{ flight.seats - flight.booked }} seats <br>available </p>
+    <p appSeatsColor [seats]="flight.seats - flight.booked" *ngIf="!selected">{{ flight.seats - flight.booked }} seats <br>available </p>
     <p *ngIf="!selected" class="auxiliary-info">Price</p>
     <p class="price">{{ flight.flightFare + flight.tax | currency:'EUR':'symbol-narrow' }}</p>
   </div>

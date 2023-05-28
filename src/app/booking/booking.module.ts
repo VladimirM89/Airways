@@ -9,7 +9,11 @@ import { SharedModule } from '../shared/shared.module';
 import { FlightDurationPipe } from './pipes/flight-duration.pipe';
 
 @NgModule({
-  declarations: [BookingComponent, BookingSettingsPanelComponent, FlightDurationPipe],
+  declarations: [
+    BookingComponent,
+    BookingSettingsPanelComponent,
+    FlightDurationPipe,
+  ],
   imports: [
     CommonModule,
     BookingRoutingModule,
