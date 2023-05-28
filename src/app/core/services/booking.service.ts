@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { BookingInfo, PassangersInfo } from 'src/app/shared/models/booking';
-import { FlightItem, SearchFlightsDto } from 'src/app/shared/models/api-models';
+import {
+  BookingInfo,
+  PassangersInfo,
+  SelectedFlights,
+} from 'src/app/shared/models/booking';
+import { SearchFlightsDto } from 'src/app/shared/models/api-models';
 import { Nullable } from 'src/app/shared/models/types';
 import { Store } from '@ngrx/store';
 import {
   loadForwardFlights,
   loadReturnFlights,
 } from 'src/app/redux/actions/flights.actions';
+import { FlightItem } from 'src/app/shared/models/flight-item';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +35,8 @@ export class BookingService {
 
   private passangersInfomation: Nullable<PassangersInfo> = null;
 
-  private selectedFlights: Array<FlightItem> = [
-    {
+  private selectedFlights$ = new BehaviorSubject<SelectedFlights>({
+    forwardFlight: {
       id: 50,
       flightNumber: 'SU-5288',
       departureAirport: 'ABZ',
@@ -53,7 +58,7 @@ export class BookingService {
       transferDuration: null,
       transferFlightNumber: null,
     },
-    {
+    returnFlight: {
       id: 51,
       flightNumber: 'SU-5289',
       departureAirport: 'GYD',
@@ -75,7 +80,7 @@ export class BookingService {
       transferDuration: null,
       transferFlightNumber: null,
     },
-  ];
+  });
 
   public getBookingInfo(): Observable<Nullable<BookingInfo>> {
     return this.bookingInformation$.asObservable();
@@ -84,7 +89,10 @@ export class BookingService {
   public setBookingInfo(info: Nullable<BookingInfo>): void {
     this.bookingInformation$.next(info);
     this.updateFlightsState();
-    this.selectedFlights = [];
+    this.selectedFlights$.next({
+      forwardFlight: null,
+      returnFlight: null,
+    });
   }
 
   public getCurrentBookingInfo(): Nullable<BookingInfo> {
@@ -99,22 +107,40 @@ export class BookingService {
     this.passangersInfomation = info;
   }
 
-  public addFlight(flight: FlightItem): void {
-    this.selectedFlights.push(flight);
+  public addForwardFlight(flight: FlightItem): void {
+    const currentFlights = this.selectedFlights$.getValue();
+    this.selectedFlights$.next({
+      forwardFlight: flight,
+      returnFlight: currentFlights?.returnFlight || null,
+    });
   }
 
-  public deleteFlight(flight: FlightItem): void {
-    this.selectedFlights = this.selectedFlights.filter(
-      item => item.id !== flight.id
-    );
+  public addReturnFlight(flight: FlightItem): void {
+    const currentFlights = this.selectedFlights$.getValue();
+    this.selectedFlights$.next({
+      forwardFlight: currentFlights?.forwardFlight || null,
+      returnFlight: flight,
+    });
   }
 
-  public get flights(): FlightItem[] {
-    return this.selectedFlights;
+  public deleteForwardFlight(): void {
+    const currentFlights = this.selectedFlights$.getValue();
+    this.selectedFlights$.next({
+      forwardFlight: null,
+      returnFlight: currentFlights?.returnFlight || null,
+    });
   }
 
-  public addSelectedFlight(flight: FlightItem): void {
-    this.selectedFlights.push(flight);
+  public deleteReturnFlight(): void {
+    const currentFlights = this.selectedFlights$.getValue();
+    this.selectedFlights$.next({
+      forwardFlight: currentFlights?.forwardFlight || null,
+      returnFlight: null,
+    });
+  }
+
+  public getSelectedFlights(): Observable<SelectedFlights> {
+    return this.selectedFlights$ as Observable<SelectedFlights>;
   }
 
   private updateFlightsState(): void {
@@ -147,7 +173,10 @@ export class BookingService {
 
   public clearInfo(): void {
     this.bookingInformation$.next(null);
-    this.selectedFlights = [];
+    this.selectedFlights$.next({
+      forwardFlight: null,
+      returnFlight: null,
+    });
     this.passengersInfo = null;
   }
 }

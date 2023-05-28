@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FlightItem } from 'src/app/shared/models/api-models';
+import { FlightItem } from 'src/app/shared/models/flight-item';
 import { getLocalUTC, getFullUTC } from 'src/app/shared/utils';
 
 @Component({

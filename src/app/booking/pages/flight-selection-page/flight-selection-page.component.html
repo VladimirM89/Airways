@@ -1,49 +1,63 @@
-<section class="search-results-section" *ngIf="this.bookingInfo$ | async as bookingInfo">
-  <div class="search-results" *ngIf="forwardFlights$ | async as flights"> 
-    <h2 class="title search-results">
-      <img src="./assets/forward-flight-icon.svg" alt="" />
-      {{ bookingInfo.departureAirport | airportToCity}} to {{ bookingInfo.destinationAirport | airportToCity}}
-    </h2>
-    <app-date-slider></app-date-slider>
-    <div class="flights" *ngIf="selectedFlights.length; else flightsSearch">
-      <app-search-item [flight]="selectedFlights[0]" [selected]="true"></app-search-item>
+<section class="page" *ngIf="bookingInfo$ | async as bookingInfo">
+  <section class="search-results-section">
+    <div class="common-info">
+      <h2 class="title search-results">
+        <img src="./assets/forward-flight-icon.svg" alt="" />
+        {{ bookingInfo.departureAirport | airportToCity}} to {{ bookingInfo.destinationAirport | airportToCity}}
+      </h2>
+      <app-date-slider></app-date-slider>
     </div>
-    <ng-template #flightsSearch>
-      <div class="flights" *ngIf="flights.length; else noForwardFlights">
-        <app-search-item *ngFor="let flight of flights" [flight]="flight"></app-search-item>
+  
+    <div class="flights-section">
+      <div *ngIf="selectedFlights && selectedFlights.forwardFlight; else searchResults">
+        <div class="flights">
+          <app-search-item [flight]="selectedFlights.forwardFlight" [selected]="true"></app-search-item>
+        </div>
       </div>
-      <ng-template #noForwardFlights>
-        <h2 class="no-flights-message">
-          No flights from {{ bookingInfo.departureAirport | airportToCity }} to {{ bookingInfo.destinationAirport | airportToCity }} on this dates.
-        </h2>
+      <ng-template #searchResults>
+        <div *ngIf="forwardFlights$ | async as flights">
+          <div class="flights" *ngIf="flights.length; else noForwardFlights">
+            <app-search-item *ngFor="let flight of flights" [flight]="flight"></app-search-item>
+          </div>
+          <ng-template #noForwardFlights>
+            <h2 class="no-flights-message">
+              No flights from {{ bookingInfo.departureAirport | airportToCity }} to {{ bookingInfo.destinationAirport | airportToCity }} on this dates.
+            </h2>
+          </ng-template>
+        </div>
       </ng-template>
-    </ng-template>
-  </div>
+    </div>
+  </section>
 
-  <div *ngIf="bookingInfo.roundTrip">
-    <div class="search-results" *ngIf="returnFlights$ | async as returnFlights">
+  <section class="search-results-section" *ngIf="bookingInfo.roundTrip">
+    <div class="common-info">
       <h2 class="title search-results">
         <img src="./assets/return-flight-icon.svg" alt="" />
         {{ bookingInfo.destinationAirport | airportToCity}} to {{ bookingInfo.departureAirport | airportToCity}}
       </h2>
       <app-date-slider></app-date-slider>
-
-      <div class="flights" *ngIf="selectedFlights.length > 1; else returnFlightsSearch">
-        <app-search-item [flight]="selectedFlights[1]" [selected]="true"></app-search-item>
-      </div>
-
-      <ng-template #returnFlightsSearch>
-        <div class="flights" *ngIf="returnFlights.length; else noReturnFlights">
-          <app-search-item *ngFor="let flight of returnFlights" [flight]="flight"></app-search-item>
+    </div>
+  
+    <div class="flights-section">
+      <div *ngIf="selectedFlights && selectedFlights.returnFlight; else searchResultsReturnFlights">
+        <div class="flights">
+          <app-search-item [flight]="selectedFlights.returnFlight" [selected]="true"></app-search-item>
         </div>
-        <ng-template #noReturnFlights>
-          <h2 class="no-flights-message">
-            No flights from {{ bookingInfo.destinationAirport | airportToCity }} to {{ bookingInfo.departureAirport | airportToCity }} on this dates.
-          </h2>
-        </ng-template>
+      </div>
+      <ng-template #searchResultsReturnFlights>
+        <div *ngIf="returnFlights$ | async as returnFlights">
+          <div class="flights" *ngIf="returnFlights.length; else noReturnFlights">
+            <app-search-item *ngFor="let flight of returnFlights" [flight]="flight"></app-search-item>
+          </div>
+          <ng-template #noReturnFlights>
+            <h2 class="no-flights-message">
+              No flights from {{ bookingInfo.destinationAirport | airportToCity }} to {{ bookingInfo.departureAirport | airportToCity }} on this dates.
+            </h2>
+          </ng-template>
+        </div>
       </ng-template>
     </div>
-  </div>
+  </section>
 </section>
 
 <div class="navigation-btns">

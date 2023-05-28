@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BookingService } from 'src/app/core/services/booking.service';
@@ -6,17 +6,18 @@ import {
   selectForwardFligths,
   selectReturnFligths,
 } from 'src/app/redux/selectors/flights.selectors';
-import { FlightItem } from 'src/app/shared/models/api-models';
 import { Paths } from 'src/app/types/enums';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, map } from 'rxjs';
 import { Nullable } from 'src/app/shared/models/types';
+import { FlightItem } from 'src/app/shared/models/flight-item';
+import { SelectedFlights } from 'src/app/shared/models/booking';
 
 @Component({
   selector: 'app-flight-selection-page',
   templateUrl: './flight-selection-page.component.html',
   styleUrls: ['./flight-selection-page.component.scss'],
 })
-export class FlightSelectionPageComponent implements OnInit {
+export class FlightSelectionPageComponent implements OnInit, OnDestroy {
   public constructor(
     private router: Router,
     private bookingService: BookingService,
@@ -29,13 +30,21 @@ export class FlightSelectionPageComponent implements OnInit {
 
   public returnFlights$: Nullable<Observable<FlightItem[]>> = null;
 
+  private sub!: Subscription;
+
+  public selectedFlights: Nullable<SelectedFlights> = null;
+
   public ngOnInit(): void {
+    this.sub = this.bookingService
+      .getSelectedFlights()
+      .pipe(
+        map(flights => {
+          this.selectedFlights = flights;
+        })
+      )
+      .subscribe();
     this.forwardFlights$ = this.store.select(selectForwardFligths);
     this.returnFlights$ = this.store.select(selectReturnFligths);
-  }
-
-  public get selectedFlights(): FlightItem[] {
-    return this.bookingService.flights;
   }
 
   public navigateToPassengers(): void {
@@ -49,11 +58,18 @@ export class FlightSelectionPageComponent implements OnInit {
   public isAllFlightsSelected(): boolean {
     const isRoundTrip = this.bookingService.getCurrentBookingInfo()?.roundTrip;
     if (isRoundTrip) {
-      return this.selectedFlights.length === 2;
+      return (
+        !!this.selectedFlights?.forwardFlight &&
+        !!this.selectedFlights?.returnFlight
+      );
     }
     if (!isRoundTrip) {
-      return !!this.selectedFlights.length;
+      return !!this.selectedFlights?.forwardFlight;
     }
     return false;
+  }
+
+  public ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }
