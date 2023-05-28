@@ -9,9 +9,9 @@
   </div>
 
   <div class="flight-duration">
-    <p>{{ flight.durationMinutes }}</p>
-    <div>
-      <img src="./assets/airplane_takeoff.svg" alt="">
+    <p>{{ getFlightDuration() }}</p>
+    <div class="flight-image">
+      <img class="flight-icon" src="./assets/airplane_takeoff.svg" alt="">
     </div>
     <p>{{ flight.direct ? 'Direct' : flight.transferAirport }}</p>
   </div>
@@ -35,8 +35,8 @@
   <div class="price-n-seats">
 
   </div>
-  <button *ngIf="!selected; else edit" class="btn highlight-btn">Select</button>
+  <button *ngIf="!selected; else edit" class="btn highlight-btn" (click)="selectFlight()">Select</button>
   <ng-template #edit>
-    <button class="btn ghost-btn">Edit</button>
+    <button class="btn ghost-btn" (click)="editFlight()">Edit</button>
   </ng-template>
 </section>

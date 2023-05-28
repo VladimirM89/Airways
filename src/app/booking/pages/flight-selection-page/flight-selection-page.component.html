@@ -11,13 +11,13 @@
     <div class="flights-section">
       <div *ngIf="selectedFlights && selectedFlights.forwardFlight; else searchResults">
         <div class="flights">
-          <app-search-item [flight]="selectedFlights.forwardFlight" [selected]="true"></app-search-item>
+          <app-search-item [flight]="selectedFlights.forwardFlight" [selected]="true" direction="forward"></app-search-item>
         </div>
       </div>
       <ng-template #searchResults>
         <div *ngIf="forwardFlights$ | async as flights">
           <div class="flights" *ngIf="flights.length; else noForwardFlights">
-            <app-search-item *ngFor="let flight of flights" [flight]="flight"></app-search-item>
+            <app-search-item *ngFor="let flight of flights" [flight]="flight" direction="forward"></app-search-item>
           </div>
           <ng-template #noForwardFlights>
             <h2 class="no-flights-message">
@@ -41,13 +41,13 @@
     <div class="flights-section">
       <div *ngIf="selectedFlights && selectedFlights.returnFlight; else searchResultsReturnFlights">
         <div class="flights">
-          <app-search-item [flight]="selectedFlights.returnFlight" [selected]="true"></app-search-item>
+          <app-search-item [flight]="selectedFlights.returnFlight" [selected]="true" direction="return"></app-search-item>
         </div>
       </div>
       <ng-template #searchResultsReturnFlights>
         <div *ngIf="returnFlights$ | async as returnFlights">
           <div class="flights" *ngIf="returnFlights.length; else noReturnFlights">
-            <app-search-item *ngFor="let flight of returnFlights" [flight]="flight"></app-search-item>
+            <app-search-item *ngFor="let flight of returnFlights" [flight]="flight" direction="return"></app-search-item>
           </div>
           <ng-template #noReturnFlights>
             <h2 class="no-flights-message">

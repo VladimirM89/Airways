@@ -1,7 +1,9 @@
 :host {
+  width: 100%;
   display: flex;
   flex-direction: row;
   gap: 0;
+  background-color: var(--accent-bg-color);
 
   p {
     margin: 0;
@@ -14,10 +16,11 @@
 }
 
 .flight-info {
+  flex-grow: 1;
   border-right: 2px dashed var(--auxiliary-color);
   display: flex;
   flex-direction: row;
-  gap: 2.5rem;
+  gap: 3rem;
 }
 
 .departure, 
@@ -51,4 +54,22 @@
 
 .utc {
   font-size: 1rem;
+}
+
+.flight-duration {
+  flex-grow: 1;
+}
+
+.flight-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 10rem;
+  background: linear-gradient(0deg, transparent 0 40%, #D0D9DF 40% 50%, transparent 50% 100%);
+}
+
+.flight-icon {
+  background-color: var(--accent-bg-color);
+  width: min-content;
+  padding: 0 .5rem;
 }
