@@ -20,6 +20,9 @@ import { AirportToCityPipe } from './pipes/airport-to-city.pipe';
 import { PassengersCounterFormComponent } from './components/passengers-counter-form/passengers-counter-form.component';
 import { DatePickerSingleComponent } from './components/date-picker-single/date-picker-single.component';
 import { DatePickerRangeComponent } from './components/date-picker-range/date-picker-range.component';
+import { BookingItemComponent } from './components/booking-table/booking-item/booking-item.component';
+import { BookingTableComponent } from './components/booking-table/booking-table.component';
+import { NgLetDirective } from './directives/ng-let.directive';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,9 @@ import { DatePickerRangeComponent } from './components/date-picker-range/date-pi
     PassengersCounterFormComponent,
     DatePickerSingleComponent,
     DatePickerRangeComponent,
+    BookingTableComponent,
+    BookingItemComponent,
+    NgLetDirective,
   ],
   imports: [
     CommonModule,
@@ -70,6 +76,9 @@ import { DatePickerRangeComponent } from './components/date-picker-range/date-pi
     PassengersCounterFormComponent,
     DatePickerSingleComponent,
     DatePickerRangeComponent,
+    BookingTableComponent,
+    BookingItemComponent,
+    NgLetDirective,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
 })

@@ -1,24 +1,24 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { HandleErrorApiService } from 'src/app/core/services/handle-error-api.service';
+import { switchMap, catchError, map } from 'rxjs';
 import { ApiUserService } from 'src/app/core/services/api-user.service';
-import { addUserToState, registerUser } from '../actions/user.action';
+import { HandleErrorApiService } from 'src/app/core/services/handle-error-api.service';
+import { addUserToState, loginUser } from '../actions/user.action';
 
 @Injectable()
-export default class PostUserApi {
+export default class LoginUser {
   public constructor(
     private actions$: Actions,
     private apiUserService: ApiUserService,
     private handleErrorApiService: HandleErrorApiService
   ) {}
 
-  private postUser$ = createEffect(() => {
+  private loginUser$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(registerUser),
+      ofType(loginUser),
       switchMap(action =>
-        this.apiUserService.registerUser(action.user).pipe(
+        this.apiUserService.loginUser(action.user).pipe(
           catchError((error: HttpErrorResponse) =>
             this.handleErrorApiService.handleError(error)
           ),

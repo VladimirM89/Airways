@@ -13,7 +13,7 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, map, take } from 'rxjs';
-import { selectUserData } from 'src/app/redux/selectors/user.selectors';
+import { selectUserDate } from 'src/app/redux/selectors/user.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -44,7 +44,7 @@ export class UserGuard implements CanActivate, CanLoad {
   }
 
   private userLogin(): Observable<boolean> {
-    return this.store.select(selectUserData).pipe(
+    return this.store.select(selectUserDate).pipe(
       map(item => {
         return item !== null;
       })

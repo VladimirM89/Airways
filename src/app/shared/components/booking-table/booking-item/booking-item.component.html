@@ -1,0 +1,58 @@
+<div class="container">
+
+  <mat-checkbox color="primary" *ngIf="isNotPayed"></mat-checkbox>
+
+  <div class="booking-container">
+
+    <div class="number-container">
+      <p>{{flightNumber}}</p>
+      <p *ngIf="roundTrip">{{returnflightNumber}}</p>
+    </div>
+
+    <div>
+      <p>
+        {{departureAirport | airportToCity }} &mdash; {{destinationAirport | airportToCity}}
+      </p>
+      <p *ngIf="roundTrip">
+        {{destinationAirport | airportToCity }} &mdash; {{departureAirport | airportToCity}}
+      </p>
+    </div>
+
+    <p>{{roundTrip ? 'Round Trip' : 'One Way'}}</p>
+
+    <div>
+      <p>
+        <span>{{departureDate | date: 'd MMMM, y'}}, </span>
+        <span>{{departureTime | date: 'H:mm'}} &mdash; </span>
+        <span>{{destinationTime | date: 'H:mm'}}</span>
+      </p>
+      <p *ngIf="roundTrip">
+        <span>{{departureBackDate | date: 'd MMMM, y'}}, </span>
+        <span>{{departureBackTime | date: 'H:mm'}} &mdash; </span>
+        <span>{{destinationBackTime | date: 'H:mm'}}</span>
+      </p>
+    </div>
+
+    <ul>
+      <ng-container *ngFor="let passenger of passengers | keyvalue">
+        <li *ngIf="passenger.value">
+          <p>{{passenger.value}} x {{passenger.key | titlecase}}</p>
+        </li>
+      </ng-container>
+    </ul>
+
+    <p class="cost">{{cost | currency: 'EUR'}}</p>
+
+  </div>
+
+  <div *ngIf="isNotPayed">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item class="menu-item" (click)="deleteBooking(booking)">Delete</button>
+      <button mat-menu-item (click)="editInfo()">Edit</button>
+    </mat-menu>
+  </div>
+
+</div>

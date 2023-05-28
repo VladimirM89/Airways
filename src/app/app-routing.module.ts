@@ -19,13 +19,13 @@ const routes: Routes = [
       import('./shopping-cart/shopping-cart.module').then(
         m => m.ShoppingCartModule
       ),
-    canActivate: [UserGuard],
+    // canActivate: [UserGuard],
   },
   {
     path: Paths.ACCOUNT,
     loadChildren: () =>
       import('./account/account.module').then(m => m.AccountModule),
-    canActivate: [UserGuard],
+    // canActivate: [UserGuard],
   },
 ];
 

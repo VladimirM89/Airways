@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -11,7 +10,8 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppReducers } from './redux/state.model';
-import PostUserApi from './redux/effects/post-user-api.effect';
+import LoginUser from './redux/effects/login-user.effect';
+import { UserEffects } from './redux/effects/user.effects';
 import { FlightsEffects } from './redux/effects/flights.effects';
 
 @NgModule({
@@ -24,7 +24,7 @@ import { FlightsEffects } from './redux/effects/flights.effects';
     SharedModule,
     StoreModule.forRoot(AppReducers, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([PostUserApi, FlightsEffects]),
+    EffectsModule.forRoot([UserEffects, FlightsEffects, LoginUser]),
   ],
   providers: [],
   bootstrap: [AppComponent],

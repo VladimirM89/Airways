@@ -1,12 +1,16 @@
 <div [ngClass]="{'overlay': authService.isPopupActive}" (click)="togglePopup()"></div>
 
-<button class="select-btn select-btn__medium select-btn__dark" (click)="isUserLogin ? navToUserPage(): togglePopup()">
-  <span class="logo"></span>
-  <span class="user-state-title" *ngIf="isUserLogin; else userLogout">{{userName}}</span>
-  <ng-template #userLogout>
-    <span class="user-state-title">Sign in</span>
-  </ng-template>
-</button>
+<ng-container *appNgLet="user$ | async as user">
+  <button class="select-btn select-btn__medium select-btn__dark" (click)="user ? navToUserPage(): togglePopup()">
+    <span class="logo"></span>
+    <span class="user-state-title" *ngIf="user; else userLogout">{{user.firstName}}</span>
+    <ng-template #userLogout>
+      <span class="user-state-title">Sign in</span>
+    </ng-template>
+  </button>
+</ng-container>
+
+
 
 <div class="auth-popup" [ngClass]="{'active': authService.isPopupActive}">
   <div class="popup-container">

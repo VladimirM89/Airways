@@ -2,9 +2,13 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectUserData } from 'src/app/redux/selectors/user.selectors';
+
+import {
+  selectAllBookings,
+  selectUserDate,
+} from 'src/app/redux/selectors/user.selectors';
 import { Nullable } from 'src/app/shared/models/types';
-import { User } from 'src/app/shared/models/user.model';
+import { User, UserBooking } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -15,11 +19,12 @@ import { Paths } from 'src/app/types/enums';
 export class CartComponent {
   public constructor(private router: Router, private store: Store) {}
 
-  // TODO: get count of flights in cart from cart-service
-  public count = 1;
+  public get bookings$(): Observable<UserBooking[]> {
+    return this.store.select(selectAllBookings);
+  }
 
   public get isUserLogin$(): Observable<Nullable<User>> {
-    return this.store.select(selectUserData);
+    return this.store.select(selectUserDate);
   }
 
   public navToCart(): void {
