@@ -33,6 +33,8 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
 
   private isPayNowMode = false;
 
+  public isPopupVisible = false;
+
   public ngOnInit(): void {
     this.sub = this.bookingService
       .getSelectedFlights()
@@ -152,9 +154,18 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
     this.navToCart();
   }
 
-  public payNowBooking(): void {
+  public buyNowBooking(): void {
+    this.togglePopup();
+  }
+
+  public togglePopup(): void {
+    this.isPopupVisible = !this.isPopupVisible;
+  }
+
+  public handleProceedPayment(): void {
     this.isPayNowMode = true;
     this.createUserBooking();
+    this.togglePopup();
     this.router.navigate([Paths.ACCOUNT]);
   }
 
