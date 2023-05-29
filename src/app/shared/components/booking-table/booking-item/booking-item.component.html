@@ -1,6 +1,6 @@
 <div class="container">
 
-  <mat-checkbox color="primary" *ngIf="isNotPayed"></mat-checkbox>
+  <mat-checkbox color="primary" *ngIf="isNotPayed" [checked]="isChecked" (change)="isChecked" (click)="checkBooking(booking)"></mat-checkbox>
 
   <div class="booking-container">
 

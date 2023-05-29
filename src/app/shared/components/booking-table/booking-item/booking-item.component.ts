@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+/* eslint-disable no-return-assign */
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { PaymentService } from 'src/app/core/services/payment.service';
 import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
@@ -16,8 +18,10 @@ import { Paths } from 'src/app/types/enums';
   templateUrl: './booking-item.component.html',
   styleUrls: ['./booking-item.component.scss'],
 })
-export class BookingItemComponent {
+export class BookingItemComponent implements OnInit {
   @Input() public booking!: UserBooking;
+
+  public isChecked = false;
 
   public constructor(
     private paymentService: PaymentService,
@@ -26,6 +30,21 @@ export class BookingItemComponent {
     private bookingService: BookingService,
     private selectedBookingService: SelectedBookingService
   ) {}
+
+  public ngOnInit(): void {
+    this.selectedBookingService.isAllBookingSelected
+      .pipe(map(value => (this.isChecked = value)))
+      .subscribe();
+  }
+
+  public checkBooking(booking: UserBooking): void {
+    this.isChecked = !this.isChecked;
+    if (this.isChecked) {
+      this.selectedBookingService.addBooking(this.isChecked, booking);
+    } else {
+      this.selectedBookingService.deleteBooking(booking);
+    }
+  }
 
   public get departureAirport(): string {
     return this.booking.bookingInfo.departureAirport;

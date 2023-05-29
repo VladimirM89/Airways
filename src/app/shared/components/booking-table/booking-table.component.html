@@ -2,7 +2,7 @@
 
   <div class="header-container">
 
-    <mat-checkbox color="primary"></mat-checkbox>
+    <mat-checkbox color="primary" [checked]="isAllChecked" (click)="isAllBookingsSelected(unpaidUserBookings)"></mat-checkbox>
 
     <p>No</p>
 
@@ -36,10 +36,13 @@
     </form>
 
     <div class="selected-container">
-      <p>
-        <span>1</span>
+      <p *ngIf="selectedCount; else noSelect">
+        <span>{{selectedCount}}</span>
         <span>selected</span>
       </p>
+      <ng-template #noSelect>
+        <p>No booking selected</p>
+      </ng-template>
       <button class="primary-btn">Payment</button>
     </div>
   </div>
