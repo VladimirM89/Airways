@@ -3,9 +3,12 @@ p {
 }
 
 .container {
+  padding: 3rem 0;
   display: flex;
   gap: 2.5rem;
   justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--neutral-color);
 }
 
 .booking-container {
@@ -13,18 +16,39 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 3rem;
+  gap: 1rem;
   font-size: 1.7rem;
   font-weight: 500;
 }
 
 .number-container {
+  width: 10rem;
   font-weight: 700;
   color: var(--secondary-color);
 }
 
+.flight-number-container {
+  width: 25rem;
+}
+
+.way {
+  width: 10rem;
+}
+
+.time-cintainer {
+  width: 25rem;
+}
+
+.passengers-container {
+  width: 11rem;
+}
+
 .cost {
   color: var(--highlight-color);
+}
+
+.more-btn {
+  padding: 0;
 }
 
 .menu-item {

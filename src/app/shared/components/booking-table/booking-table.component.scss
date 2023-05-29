@@ -3,25 +3,88 @@ p {
 }
 
 .header-container {
+  padding: 2rem 3.5rem;
   display: flex;
-  gap: 3rem;
-  justify-content: space-between;
+  gap: 2.5rem;
   align-items: center;
   font-size: 2rem;
   font-weight: 700;
+  background-color: var(--title-table-color);
 }
+
+.header-content-container {
+  display: flex;
+  padding-right: 6.5rem;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.number-container {
+  width: 10rem;
+}
+
+.flight-number-container {
+  width: 25rem;
+}
+
+.way {
+  width: 10rem;
+}
+
+.time-cintainer {
+  width: 25rem;
+}
+
+.passengers-container {
+  width: 11rem;
+}
+
+.bookings-container {
+  padding: 0 3.5rem;
+}
+
 
 .bottom-line {
   border-bottom: 1px solid var(--neutral-color);
 }
 
 .bottom-container {
+  padding: 4rem 3.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+.add-btn-text {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--bg-neutral);
+  color: var(--primary-color);
+}
+
+.total-container {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  font-weight: 700;
+}
+
+.total-title {
+  font-size: 2rem;
+}
+
+.total-cost {
+  height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 3rem;
+  background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .apply-container {
+  padding: 4rem 3.5rem 0;
   display: flex;
   justify-content: space-between;
 }
@@ -35,6 +98,12 @@ p {
   border-radius: 0.5rem;
 }
 
+.promo-apply {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
 .without-padding {
   padding: 0;
 }
@@ -43,4 +112,10 @@ p {
   display: flex;
   align-items: center;
   gap: 3.8rem;
+}
+
+.select-content {
+  display: flex;
+  gap: 1rem;
+  color: var(--auxiliary-color);
 }

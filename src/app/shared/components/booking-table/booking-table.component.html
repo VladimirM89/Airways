@@ -4,44 +4,45 @@
 
     <mat-checkbox color="primary" [checked]="isAllChecked" (click)="isAllBookingsSelected(unpaidUserBookings)"></mat-checkbox>
 
-    <p>No</p>
-
-    <p>Flight</p>
-
-    <p>Type trip</p>
-
-    <p>Data & Time</p>
-
-    <p>Passengers</p>
-
-    <p>Price</p>
+    <div class="header-content-container">
+      <p class="number-container">No.</p>
+      <p class="flight-number-container">Flight</p>
+      <p class="way">Type trip</p>
+      <p class="time-cintainer">Data & Time</p>
+      <p class="passengers-container">Passengers</p>
+      <p>Price</p>
+    </div>
 
   </div>
 
   <p *ngIf="!unpaidUserBookings.length">No bookings. Please add new trip</p>
-  <app-booking-item *ngFor="let booking of unpaidUserBookings" [booking]="booking" class="bottom-line"></app-booking-item>
+  <div class="bookings-container">
+    <app-booking-item *ngFor="let booking of unpaidUserBookings" [booking]="booking" class="bottom-line"></app-booking-item>
+  </div>
 
   <div class="bottom-container bottom-line">
-    <button (click)="navToMain()">+ Add new trip</button>
-    <p>
-      <span>Total</span>
-      <span>{{summary(unpaidUserBookings) | currency: 'EUR'}}</span>
-    </p>
+    <button class="without-padding" (click)="navToMain()">
+      <span class="add-btn-text">+ Add new trip</span>
+    </button>
+    <div class="total-container">
+      <p class="total-title">Total</p>
+      <p class="total-cost">{{summary(unpaidUserBookings) | currency: 'EUR'}}</p>
+    </div>
   </div>
 
   <div class="apply-container">
     <form class="promo-container">
       <input type="text" class="promo" placeholder="Promo Code">
-      <button class="without-padding">APPLY</button>
+      <button class="promo-apply without-padding">APPLY</button>
     </form>
 
     <div class="selected-container">
-      <p *ngIf="selectedCount; else noSelect">
+      <p *ngIf="selectedCount; else noSelect" class="select-content">
         <span>{{selectedCount}}</span>
         <span>selected</span>
       </p>
       <ng-template #noSelect>
-        <p>No booking selected</p>
+        <p class="select-content">No booking selected</p>
       </ng-template>
       <button class="primary-btn">Payment</button>
     </div>
