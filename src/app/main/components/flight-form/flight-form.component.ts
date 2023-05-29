@@ -111,8 +111,12 @@ export class FlightFormComponent implements OnInit, OnDestroy {
         },
       };
       this.bookingService.setBookingInfo(newSearchInfo);
-      this.router.navigate([Paths.BOOKING]);
     }
+  }
+
+  public submitForm() {
+    this.setSearch();
+    this.router.navigate([Paths.BOOKING]);
   }
 
   public ngOnDestroy(): void {
@@ -161,5 +165,13 @@ export class FlightFormComponent implements OnInit, OnDestroy {
 
   public get roundTripRadio(): FormControl {
     return this.form.get('roundTrip') as FormControl;
+  }
+
+  public toggleFlightDirections(): void {
+    const currentDeparture = this.departure.value;
+    const currentDestinaton = this.destination.value;
+    this.destination.setValue(currentDeparture);
+    this.departure.setValue(currentDestinaton);
+    this.setSearch();
   }
 }
