@@ -17,8 +17,8 @@
 <ng-template #notEditMode>
   <div class="btns-container">
     <button class="ghost-btn" (click)="navToPassengers()">Back</button>
-    <button class="ghost-btn ghost-btn__bordered" (click)="createUserBooking()">Add to order cart</button>
-    <button class="primary-btn">Buy now</button>
+    <button class="ghost-btn ghost-btn__bordered" (click)="handleAddToCart()">Add to order cart</button>
+    <button class="primary-btn" (click)="payNowBooking()">Buy now</button>
   </div>
 </ng-template>
 

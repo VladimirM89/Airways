@@ -31,6 +31,8 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
 
   private selectedFlights!: SelectedFlights;
 
+  private isPayNowMode = false;
+
   public ngOnInit(): void {
     this.sub = this.bookingService
       .getSelectedFlights()
@@ -95,7 +97,7 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
     ) {
       const booking: BookingDto = {
         token: localStorage.getItem('token') || '',
-        paid: false,
+        paid: !!this.isPayNowMode,
         forwardFlightId: this.selectedFlights.forwardFlight.id,
         returnFlightId: this.selectedFlights.returnFlight?.id || null,
         passengers: this.createPassengersDto(),
@@ -108,9 +110,12 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
         })
       );
       this.bookingService.clearInfo();
-
-      this.navToCart();
     }
+  }
+
+  public handleAddToCart(): void {
+    this.createUserBooking();
+    this.navToCart();
   }
 
   public trackByFn(index: number, item: FlightItem): number {
@@ -145,6 +150,12 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
     }
     this.selectedBookingService.editBookingId = null;
     this.navToCart();
+  }
+
+  public payNowBooking(): void {
+    this.isPayNowMode = true;
+    this.createUserBooking();
+    this.router.navigate([Paths.ACCOUNT]);
   }
 
   public ngOnDestroy(): void {

@@ -52,6 +52,7 @@ import { NgLetDirective } from './directives/ng-let.directive';
     MatCheckboxModule,
     MatMenuModule,
     MatSlideToggleModule,
+    MatCardModule,
   ],
   exports: [
     CommonModule,
