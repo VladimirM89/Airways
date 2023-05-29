@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
 import { selectUnpaidBookings } from 'src/app/redux/selectors/user.selectors';
+import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
 import { UserBooking } from '../../models/user.model';
 
 interface ChoosenBookings {
@@ -25,8 +26,13 @@ export class BookingTableComponent {
   public constructor(
     private router: Router,
     private paymentService: PaymentService,
-    private store: Store
+    private store: Store,
+    private selectedBookingService: SelectedBookingService
   ) {}
+
+  public get isAllChecked(): boolean {
+    return this.selectedBookingService.getCurrentAllSelectedValue();
+  }
 
   public get unpaidUserBookings$(): Observable<UserBooking[]> {
     return this.store.select(selectUnpaidBookings);
@@ -43,5 +49,22 @@ export class BookingTableComponent {
         (sum += this.paymentService.summary(item.bookingInfo, item.flights))
     );
     return sum;
+  }
+
+  public get selectedCount(): number {
+    return this.selectedBookingService.bookings.length;
+  }
+
+  public isAllBookingsSelected(bookings: UserBooking[]): void {
+    this.selectedBookingService.changeAllSelectedValue();
+    const isAllChecked =
+      this.selectedBookingService.getCurrentAllSelectedValue();
+    if (isAllChecked) {
+      bookings.forEach(booking =>
+        this.selectedBookingService.addBooking(isAllChecked, booking)
+      );
+    } else {
+      this.selectedBookingService.clearBookings();
+    }
   }
 }

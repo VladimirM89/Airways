@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { UserBooking } from 'src/app/shared/models/user.model';
+
+interface SelectedBookings {
+  isSelected: boolean;
+  booking: UserBooking;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +13,9 @@ import { UserBooking } from 'src/app/shared/models/user.model';
 export class SelectedBookingService {
   private bookingId: number | null = null;
 
-  private selectedBookings: Array<UserBooking> = [];
+  private selectedBookings: Array<SelectedBookings> = [];
+
+  public isAllBookingSelected = new BehaviorSubject<boolean>(false);
 
   public get editBookingId(): number | null {
     return this.bookingId;
@@ -17,18 +25,39 @@ export class SelectedBookingService {
     this.bookingId = value;
   }
 
-  public addBooking(booking: UserBooking): void {
-    this.selectedBookings.push(booking);
+  public changeAllSelectedValue(): void {
+    const isSelected = this.isAllBookingSelected.getValue();
+    this.isAllBookingSelected.next(!isSelected);
+  }
+
+  public getCurrentAllSelectedValue(): boolean {
+    return this.isAllBookingSelected.getValue();
+  }
+
+  public addBooking(isSelected: boolean, booking: UserBooking): void {
+    const isExist = this.selectedBookings.find(
+      selectedBooking => selectedBooking.booking.id === booking.id
+    );
+    if (!isExist) {
+      this.selectedBookings.push({
+        isSelected,
+        booking,
+      });
+    }
   }
 
   public deleteBooking(booking: UserBooking): void {
     const array = this.selectedBookings.filter(
-      selectedBooking => selectedBooking.id !== booking.id
+      selectedBooking => selectedBooking.booking.id !== booking.id
     );
     this.selectedBookings = array;
   }
 
   public clearBookings(): void {
     this.selectedBookings.length = 0;
+  }
+
+  public get bookings(): SelectedBookings[] {
+    return this.selectedBookings;
   }
 }
