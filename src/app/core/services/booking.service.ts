@@ -57,7 +57,7 @@ export class BookingService {
     this.passangersInfomation = info;
   }
 
-  public addForwardFlight(flight: FlightItem): void {
+  public addForwardFlight(flight: Nullable<FlightItem>): void {
     const currentFlights = this.selectedFlights$.getValue();
     this.selectedFlights$.next({
       forwardFlight: flight,
@@ -65,7 +65,7 @@ export class BookingService {
     });
   }
 
-  public addReturnFlight(flight: FlightItem): void {
+  public addReturnFlight(flight: Nullable<FlightItem>): void {
     const currentFlights = this.selectedFlights$.getValue();
     this.selectedFlights$.next({
       forwardFlight: currentFlights?.forwardFlight || null,

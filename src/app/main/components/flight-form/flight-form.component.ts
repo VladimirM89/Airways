@@ -114,7 +114,7 @@ export class FlightFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  public submitForm() {
+  public submitForm(): void {
     this.setSearch();
     this.router.navigate([Paths.BOOKING]);
   }
