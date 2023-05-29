@@ -1,0 +1,57 @@
+.date-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--accent-bg-color);
+  gap: 0;
+  padding: 1rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  max-width: 22rem;
+}
+
+p {
+  font-size: 1.4rem;
+  margin: 0;
+  padding: 0;
+}
+
+.disabled {
+  cursor: auto;
+  pointer-events: none;
+  color: var(--auxiliary-color);
+}
+
+.price-tag {
+  font-weight: bold;
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.week-day {
+  font-size: 1.2rem;
+  color: var(--auxiliary-color);
+}
+
+.date {
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.no-flight {
+  margin-top: .5rem;
+}
+
+.active {
+  box-shadow: var(--box-shadow);
+  & .date {
+    font-size: 2rem;
+    color: var(--primary-color);
+  }
+
+  & .price-tag {
+    margin-top: .5rem;
+    font-size: 3rem;
+  }
+}

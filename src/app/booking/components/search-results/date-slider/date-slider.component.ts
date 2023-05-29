@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BookingService } from 'src/app/core/services/booking.service';
+import { DateSliderItemDto } from '../../../models/date-slider-item';
 
 @Component({
   selector: 'app-date-slider',
@@ -8,4 +9,10 @@ import { BookingService } from 'src/app/core/services/booking.service';
 })
 export class DateSliderComponent {
   public constructor(private bookingService: BookingService) {}
+
+  public data: DateSliderItemDto = {
+    date: new Date(),
+    price: 440,
+    available: true,
+  };
 }
