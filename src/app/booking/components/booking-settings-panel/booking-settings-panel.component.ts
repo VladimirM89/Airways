@@ -18,6 +18,11 @@ import {
   isFlightsDateRangeValid,
 } from 'src/app/shared/validators/date.validators';
 import { RouterService } from 'src/app/core/services/router.service';
+import {
+  DateRangeFormGroup,
+  FlightsForm,
+  PassengersFormGroup,
+} from 'src/app/shared/models/forms-models';
 
 @Component({
   selector: 'app-booking-settings-panel',
@@ -53,8 +58,11 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.form = new FormGroup(
+    this.form = new FormGroup<FlightsForm>(
       {
+        roundTrip: new FormControl<'round' | 'one-way'>(
+          this.bookingInfo?.roundTrip ? 'round' : 'one-way'
+        ),
         departure: new FormControl<string>(
           this.bookingInfo?.departureAirport || '',
           [Validators.required, checkIfFlightDirectionValid()]
@@ -63,22 +71,17 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
           this.bookingInfo?.destinationAirport || '',
           [Validators.required, checkIfFlightDirectionValid()]
         ),
-        range: new FormGroup(
-          {
-            departureDate: new FormControl<Date | null>(
-              this.bookingInfo
-                ? new Date(this.bookingInfo.departureDate)
-                : null,
-              [Validators.required, isDateInPast()]
-            ),
-            destinationDate: new FormControl<Date | null>(
-              this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null,
-              [isDateInPast()]
-            ),
-          },
-          [isFlightsDateRangeValid(this.bookingInfo?.roundTrip || false)]
-        ),
-        passengers: new FormGroup(
+        range: new FormGroup<DateRangeFormGroup>({
+          departureDate: new FormControl<Date | null>(
+            this.bookingInfo ? new Date(this.bookingInfo.departureDate) : null,
+            [Validators.required, isDateInPast()]
+          ),
+          destinationDate: new FormControl<Date | null>(
+            this.bookingInfo ? new Date(this.bookingInfo.returnDate) : null,
+            [isDateInPast()]
+          ),
+        }),
+        passengers: new FormGroup<PassengersFormGroup>(
           {
             adult: new FormControl<number>(
               this.bookingInfo?.passengers.adult || 1
@@ -93,7 +96,7 @@ export class BookingSettingsPanelComponent implements OnInit, OnDestroy {
           [checkIfPassengersValid()]
         ),
       },
-      [checkIfFlightDirectionsDuplicate()]
+      [checkIfFlightDirectionsDuplicate(), isFlightsDateRangeValid()]
     );
   }
 

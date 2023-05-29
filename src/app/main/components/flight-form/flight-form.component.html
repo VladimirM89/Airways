@@ -55,6 +55,7 @@
     <div class="validation">
       <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isDuplicate']}}</p>
       <p class="error-message" *ngIf="passengers.invalid">{{passengers.errors?.['isPassengersValid']}}</p>
+      <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isRangeValid']}}</p>
     </div>
     <button class="btn primary-btn search-btn" [disabled]="form.invalid" (click)="setSearch()">Search</button>
   </div> 

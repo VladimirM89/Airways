@@ -1,9 +1,11 @@
 import {
   AbstractControl,
   FormControl,
+  FormGroup,
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
+import { FlightsForm } from '../models/forms-models';
 
 export class DateValidators {
   public static isFutureDate(
@@ -31,10 +33,14 @@ export function isDateInPast(): ValidatorFn {
   };
 }
 
-export function isFlightsDateRangeValid(isRoundTrip: boolean): ValidatorFn {
-  return (rangeFormGroup: AbstractControl): ValidationErrors | null => {
-    const departureDate = rangeFormGroup.get('departureDate')?.value;
-    const destinationDate = rangeFormGroup.get('destinationDate')?.value;
+export function isFlightsDateRangeValid(): ValidatorFn {
+  return (form: AbstractControl): ValidationErrors | null => {
+    const flightsForm = form as FormGroup<FlightsForm>;
+    const departureDate =
+      flightsForm.controls.range.get('departureDate')?.value;
+    const destinationDate =
+      flightsForm.controls.range.get('destinationDate')?.value;
+    const isRoundTrip = flightsForm.controls.roundTrip.value === 'round';
 
     if (!departureDate && !destinationDate) {
       return null;
@@ -47,11 +53,11 @@ export function isFlightsDateRangeValid(isRoundTrip: boolean): ValidatorFn {
     if (!isRoundTrip) {
       return null;
     }
-
-    if (departureDate.getTime() - destinationDate.getTime() > 0) {
-      return { isRangeValid: 'destination date can not be before departure' };
+    if (departureDate && destinationDate) {
+      return departureDate.getTime() - destinationDate.getTime() > 0
+        ? { isRangeValid: 'destination date can not be before departure' }
+        : null;
     }
-
     return null;
   };
 }
