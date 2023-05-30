@@ -39,6 +39,13 @@ p {
   width: 11rem;
 }
 
+.no-bookings-text {
+  padding: 0 3.5rem;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
 .bookings-container {
   padding: 0 3.5rem;
 }
@@ -60,6 +67,10 @@ p {
   border-radius: 0.5rem;
   background-color: var(--bg-neutral);
   color: var(--primary-color);
+}
+
+.position-center {
+  justify-content: center;
 }
 
 .total-container {
@@ -119,3 +130,43 @@ p {
   gap: 1rem;
   color: var(--auxiliary-color);
 }
+
+.popup {
+  width: 32rem;
+  padding: 2rem;
+  display: none;
+  flex-direction: column;
+  gap: 5rem;
+  align-items: flex-end;
+  font-size: 1.8rem;
+  position: absolute;
+  top: 10vh;
+  left: calc(50% - 16rem);
+}
+
+.approve-text {
+  text-align: center;
+  font-weight: 400;
+  font-size: 2.2rem;
+  line-height: 3rem;
+}
+
+.pisioned-right {
+  width: 11rem;
+}
+
+.visible {
+  display: flex;
+  z-index: 20;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: var(--auxiliary-color-opacity02);
+}
+

@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectUnpaidBookings } from 'src/app/redux/selectors/user.selectors';
 import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
+import { editBooking } from 'src/app/redux/actions/user.action';
 import { UserBooking } from '../../models/user.model';
 
 interface ChoosenBookings {
@@ -22,6 +23,8 @@ interface ChoosenBookings {
 })
 export class BookingTableComponent {
   public selectedBookings: Array<ChoosenBookings> = [];
+
+  public isPopupVisible = false;
 
   public constructor(
     private router: Router,
@@ -39,7 +42,7 @@ export class BookingTableComponent {
   }
 
   public navToMain(): void {
-    this.router.navigate([Paths.BOOKING]);
+    this.router.navigate([Paths.BASE]);
   }
 
   public summary(bookings: UserBooking[]): number {
@@ -66,5 +69,26 @@ export class BookingTableComponent {
     } else {
       this.selectedBookingService.clearBookings();
     }
+  }
+
+  public payBookings(): void {
+    const array = this.selectedBookingService.bookings.slice();
+    array.forEach(item => {
+      const booking: UserBooking = {
+        id: item.booking.id,
+        paid: true,
+        bookingInfo: item.booking.bookingInfo,
+        flights: item.booking.flights,
+        passengers: item.booking.passengers,
+      };
+      this.store.dispatch(editBooking({ bookings: booking }));
+    });
+    this.selectedBookingService.clearBookings();
+    this.selectedBookingService.changeAllSelectedValue();
+    this.togglePopup();
+  }
+
+  public togglePopup(): void {
+    this.isPopupVisible = !this.isPopupVisible;
   }
 }

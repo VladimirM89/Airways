@@ -225,9 +225,9 @@ export class UserEffects {
     const token = localStorage.getItem('token') || '';
     return {
       token,
-      paid: false,
+      paid: booking.paid,
       forwardFlightId: booking.flights[0].id,
-      returnFlightId: booking.flights[1].id,
+      returnFlightId: booking.flights[1] ? booking.flights[1].id : null,
       passengers: this.convertToPassengers(booking.passengers!),
       contactInfo: {
         email: booking.passengers?.contacts.email || '',
