@@ -39,7 +39,7 @@ export class DateSliderComponent implements OnChanges, OnDestroy {
               date: date.date,
               active: date.active,
               price: fare?.flightFare || null,
-              available: !!fare,
+              available: fare ? date.date > new Date() : false,
             };
             return fareData;
           });

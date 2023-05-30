@@ -1,3 +1,7 @@
+:host {
+  width: 100%;
+}
+
 .date-card {
   cursor: pointer;
   display: flex;
@@ -8,7 +12,6 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  max-width: 22rem;
 }
 
 p {
