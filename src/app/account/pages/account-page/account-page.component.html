@@ -2,8 +2,8 @@
 
   <mat-card class="cart-container">
     <p class="title account-title">Account</p>
+    <app-booking-table [userBookings$]="allUserBookings$"></app-booking-table>
+    <button class="btn primary-btn logout-btn" (click)="logout()">Logout</button>
   </mat-card>
-
-  <button class="btn primary-btn logout-btn" (click)="logout()">Logout</button>
 
 </div>

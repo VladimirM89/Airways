@@ -1,11 +1,9 @@
-<div [ngClass]="{'overlay': isPopupVisible}" (click)="togglePopup()"></div>
+<ng-container *ngIf="userBookings$ | async as userBookings">
 
-<ng-container *ngIf="unpaidUserBookings$ | async as unpaidUserBookings">
-
-  <div class="header-container" *ngIf="unpaidUserBookings.length">
+  <div class="header-container" *ngIf="userBookings.length">
 
     <mat-checkbox color="primary" [checked]="isAllChecked"
-      (click)="isAllBookingsSelected(unpaidUserBookings)">
+      (click)="isAllBookingsSelected(userBookings)">
     </mat-checkbox>
 
     <div class="header-content-container">
@@ -20,58 +18,27 @@
   </div>
 
   <p class="no-bookings-text"
-    *ngIf="!unpaidUserBookings.length">
+    *ngIf="!userBookings.length">
     No bookings to pay. Please add new trip
   </p>
   <div class="bookings-container">
-    <app-booking-item *ngFor="let booking of unpaidUserBookings"
+    <app-booking-item *ngFor="let booking of userBookings"
       [booking]="booking" class="bottom-line">
     </app-booking-item>
   </div>
 
   <div class="bottom-container bottom-line"
-    [ngClass]="{'position-center': !unpaidUserBookings.length}">
+    [ngClass]="{'position-center': !userBookings.length}">
       <button class="without-padding" (click)="navToMain()">
         <span class="add-btn-text">+ Add new trip</span>
       </button>
-      <div class="total-container" *ngIf="unpaidUserBookings.length">
+      <div class="total-container" *ngIf="userBookings.length">
         <p class="total-title">Total</p>
-        <p class="total-cost">{{summary(unpaidUserBookings) | currency: 'EUR'}}</p>
+        <p class="total-cost">{{summary(userBookings) | currency: 'EUR'}}</p>
       </div>
   </div>
 
-  <div class="apply-container" *ngIf="unpaidUserBookings.length">
-    <form class="promo-container">
-      <input type="text" class="promo" placeholder="Promo Code">
-      <button class="promo-apply without-padding">APPLY</button>
-    </form>
-
-    <div class="selected-container">
-      <p *ngIf="selectedCount; else noSelect" class="select-content">
-        <span>{{selectedCount}}</span>
-        <span>selected</span>
-      </p>
-      <ng-template #noSelect>
-        <p class="select-content">No booking selected</p>
-      </ng-template>
-      <button class="primary-btn"
-        (click)="payBookings()"
-        [disabled]="!selectedCount">
-        Payment
-      </button>
-    </div>
-  </div>
-
 </ng-container>
-
-<mat-card class="popup" [ngClass]="{'visible': isPopupVisible}">
-  <p class="approve-text">All bookings you have chosen have been paid</p>
-  <button class="secondary-btn pisioned-right"
-    (click)="togglePopup()">
-    Close
-  </button>
-</mat-card>
-
 
 
 
