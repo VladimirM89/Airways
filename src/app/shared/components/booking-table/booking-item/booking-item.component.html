@@ -9,7 +9,7 @@
       <p *ngIf="roundTrip">{{returnflightNumber}}</p>
     </div>
 
-    <div class="flight-number-container">
+    <div class="flight-name-container">
       <p>
         {{departureAirport | airportToCity }} &mdash; {{destinationAirport | airportToCity}}
       </p>
@@ -21,16 +21,20 @@
     <p class="way">{{roundTrip ? 'Round Trip' : 'One Way'}}</p>
 
     <div class="time-container">
-      <p>
-        <span>{{departureDate | date: 'd MMMM, y'}}, </span>
-        <span>{{departureTime | date: 'H:mm'}} &mdash; </span>
-        <span>{{destinationTime | date: 'H:mm'}}</span>
-      </p>
-      <p *ngIf="roundTrip">
-        <span>{{departureBackDate | date: 'd MMMM, y'}}, </span>
-        <span>{{departureBackTime | date: 'H:mm'}} &mdash; </span>
-        <span>{{destinationBackTime | date: 'H:mm'}}</span>
-      </p>
+      <div class="departure-time-container">
+        <span class="departure-date">{{departureDate | date: 'd MMMM, y'}}, </span>
+        <p class="departure-time">
+          <span>{{departureTime | date: 'H:mm'}} &mdash; </span>
+          <span>{{destinationTime | date: 'H:mm'}}</span>
+        </p>
+      </div>
+      <div class="departure-time-container" *ngIf="roundTrip">
+        <span class="departure-date">{{departureBackDate | date: 'd MMMM, y'}}, </span>
+        <p class="departure-time">
+          <span>{{departureBackTime | date: 'H:mm'}} &mdash; </span>
+          <span>{{destinationBackTime | date: 'H:mm'}}</span>
+        </p>
+      </div>
     </div>
 
     <ul class="passengers-container">

@@ -11,10 +11,16 @@ p {
   font-size: 2.4rem;
   font-weight: 700;
   line-height: 2.8rem;
+
+  @media screen and (max-width: 450px) {
+    padding: 0 2.7rem 2rem;
+  }
+
 }
 
 .overlay {
   position: fixed;
+  overflow: hidden;
   z-index: 5;
   top: 0;
   left: 0;
@@ -26,11 +32,25 @@ p {
 .apply-container {
   padding: 4rem 3.5rem 0;
   display: flex;
+  gap: 3rem;
   justify-content: space-between;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 450px) {
+    padding: 2rem 1.5rem 0;
+  }
+
 }
 
 .promo-container {
-  width: 31rem;
+  width: 100%;
+  max-width: 31rem;
+  min-width: 25rem;
   padding: 0.4rem 1.6rem;
   display: flex;
   justify-content: space-between;
@@ -55,9 +75,11 @@ p {
 }
 
 .select-content {
+  min-width: 8rem;
   display: flex;
   gap: 1rem;
   color: var(--auxiliary-color);
+  text-align: center;
 }
 
 .popup {
@@ -69,7 +91,7 @@ p {
   align-items: flex-end;
   font-size: 1.8rem;
   position: absolute;
-  top: 10vh;
+  top: 20%;
   left: calc(50% - 16rem);
 }
 

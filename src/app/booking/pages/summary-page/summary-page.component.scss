@@ -75,7 +75,7 @@
   align-items: flex-end;
   font-size: 1.8rem;
   position: absolute;
-  top: 10vh;
+  top: 20%;
   left: calc(50% - 16rem);
 }
 
@@ -97,6 +97,7 @@
 
 .overlay {
   position: fixed;
+  overflow: hidden;
   z-index: 5;
   top: 0;
   left: 0;

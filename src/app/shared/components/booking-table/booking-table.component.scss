@@ -10,10 +10,21 @@ p {
   font-size: 2rem;
   font-weight: 700;
   background-color: var(--title-table-color);
+
+  @media screen and (max-width: 600px) {
+    gap: 1.5rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+  }
+
 }
 
 .header-content-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   flex-grow: 1;
   justify-content: space-between;
@@ -21,11 +32,13 @@ p {
 
 .number-container {
   max-width: 10rem;
+  min-width: 7rem;
   flex-grow: 1;
 }
 
-.flight-number-container {
+.flight-name-container {
   max-width: 28rem;
+  min-width: 14rem;
   flex-grow: 1;
 }
 
@@ -35,12 +48,14 @@ p {
 }
 
 .time-container {
-  max-width: 25rem;
+  max-width: 29rem;
+  min-width: 15rem;
   flex-grow: 1;
 }
 
 .passengers-container {
   max-width: 11rem;
+  min-width: max-content;
   flex-grow: 1;
 }
 
@@ -63,6 +78,11 @@ p {
 
 .bookings-container {
   padding: 0 3.5rem;
+
+  @media screen and (max-width: 450px) {
+    padding: 2rem 1.5rem;
+  }
+
 }
 
 
@@ -73,9 +93,22 @@ p {
 .bottom-container {
   padding: 4rem 3.5rem;
   display: flex;
+  gap: 3rem;
   justify-content: space-between;
   align-items: center;
+
+  @media screen and (max-width: 450px) {
+    flex-direction: column-reverse;
+    gap: 2rem;
+    padding: 2rem 1.5rem;
+  }
 }
+
+.add-btn {
+  min-width: max-content;
+  padding: 0;
+}
+
 
 .add-btn-text {
   padding: 0.5rem;
