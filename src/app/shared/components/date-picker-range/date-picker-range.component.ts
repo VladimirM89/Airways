@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { DateRangeFormGroup } from '../../models/forms-models';
 
 @Component({
@@ -7,5 +8,7 @@ import { DateRangeFormGroup } from '../../models/forms-models';
   styleUrls: ['./date-picker-range.component.scss'],
 })
 export class DatePickerRangeComponent {
-  @Input() public datesForm!: DateRangeFormGroup;
+  @Input() public datesForm!: FormGroup<DateRangeFormGroup>;
+
+  @Input() public appearance: 'fill' | 'outline' = 'fill';
 }

@@ -151,6 +151,7 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
       this.store.dispatch(editBooking({ bookings: booking }));
     }
     this.selectedBookingService.editBookingId = null;
+    this.bookingService.clearInfo();
     this.navToCart();
   }
 

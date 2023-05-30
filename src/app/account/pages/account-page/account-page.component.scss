@@ -12,3 +12,13 @@ p {
   font-weight: 700;
   line-height: 2.8rem;
 }
+.page-wrapper {
+  padding: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.logout-btn {
+  align-self: flex-end;
+}

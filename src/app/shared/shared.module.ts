@@ -12,6 +12,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
+import {
+  MAT_RADIO_DEFAULT_OPTIONS,
+  MatRadioModule,
+} from '@angular/material/radio';
 import { PersonalInfoFormComponent } from './components/passengers-info-form/personal-info-form.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { CountryCodeFilterPipe } from './pipes/country-code-filter.pipe';
@@ -52,6 +56,7 @@ import { NgLetDirective } from './directives/ng-let.directive';
     MatCheckboxModule,
     MatMenuModule,
     MatSlideToggleModule,
+    MatRadioModule,
     MatCardModule,
   ],
   exports: [
@@ -80,7 +85,14 @@ import { NgLetDirective } from './directives/ng-let.directive';
     BookingTableComponent,
     BookingItemComponent,
     NgLetDirective,
+    MatRadioModule,
   ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    {
+      provide: MAT_RADIO_DEFAULT_OPTIONS,
+      useValue: { color: 'primary' },
+    },
+  ],
 })
 export class SharedModule {}

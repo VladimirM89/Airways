@@ -22,7 +22,7 @@ const routes: Routes = [
           import(
             './pages/booking-process-page/booking-process-page.module'
           ).then(m => m.BookingProcessPageModule),
-        canActivate: [UserGuard],
+        canActivate: [UserGuard, FlightsInfoGuard],
       },
       {
         path: Paths.BOOKING_PAYMENT,

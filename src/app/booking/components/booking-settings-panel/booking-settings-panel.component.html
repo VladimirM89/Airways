@@ -77,4 +77,5 @@
 <div class="validation" *ngIf="editMode && form.invalid">
   <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isDuplicate']}}</p>
   <p class="error-message" *ngIf="passengers.invalid">{{passengers.errors?.['isPassengersValid']}}</p>
+  <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isRangeValid']}}</p>
 </div>

@@ -47,3 +47,9 @@ export interface SelectedFlights {
   forwardFlight: Nullable<FlightItem>;
   returnFlight: Nullable<FlightItem>;
 }
+
+export interface FullBookingInfo {
+  booking: BookingInfo;
+  selected: SelectedFlights;
+  passengers: PassangersInfo;
+}

@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { PassengerCounter } from 'src/app/booking/models/passenger-counter';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { PassengersFormGroup } from '../../models/forms-models';
 
 @Component({
@@ -15,7 +15,7 @@ import { PassengersFormGroup } from '../../models/forms-models';
   styleUrls: ['./passengers-counter-form.component.scss'],
 })
 export class PassengersCounterFormComponent implements OnInit {
-  @Input() public passengersForm!: PassengersFormGroup;
+  @Input() public passengersForm!: FormGroup<PassengersFormGroup>;
 
   public passengersArr: Array<PassengerCounter> = [];
 
@@ -47,15 +47,15 @@ export class PassengersCounterFormComponent implements OnInit {
   }
 
   public get adultsNumber(): number {
-    return this.passengersForm.controls.adult.value;
+    return this.passengersForm.controls.adult.value || 0;
   }
 
   public get childrenNumber(): number {
-    return this.passengersForm.controls.children.value;
+    return this.passengersForm.controls.children.value || 0;
   }
 
   public get infantsNumber(): number {
-    return this.passengersForm.controls.infant.value;
+    return this.passengersForm.controls.infant.value || 0;
   }
 
   public decrement(control: AbstractControl): void {
