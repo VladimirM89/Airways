@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DateSliderItemDto } from 'src/app/booking/models/date-slider.models';
+import { dateObjToString } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-date-item',
@@ -8,4 +9,10 @@ import { DateSliderItemDto } from 'src/app/booking/models/date-slider.models';
 })
 export class DateItemComponent {
   @Input() public dateItemDto!: DateSliderItemDto;
+
+  @Output() public changeDate = new EventEmitter<string>();
+
+  public selectDate(): void {
+    this.changeDate.emit(dateObjToString(this.dateItemDto.date));
+  }
 }

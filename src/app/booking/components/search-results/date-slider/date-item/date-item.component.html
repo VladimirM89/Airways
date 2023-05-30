@@ -1,4 +1,4 @@
-<div [ngClass]="{'date-card': true, 'disabled': !dateItemDto.available, 'active': dateItemDto.active}">
+<div [ngClass]="{'date-card': true, 'disabled': !dateItemDto.available, 'active': dateItemDto.active}" (click)="selectDate()">
   <p class="date">{{ dateItemDto.date | date: 'dd MMM' }}</p>
   <p class="week-day">{{ dateItemDto.date | date: 'EEEE' }}</p>
   <p class="price-tag" *ngIf="dateItemDto.available; else noFlight">{{ dateItemDto.price | currency:'EUR':'symbol-narrow' }}</p>

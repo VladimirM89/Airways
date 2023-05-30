@@ -3,6 +3,8 @@ import { ApiFlightService } from 'src/app/core/services/api-flight.service';
 import { GetFligthsFareDto } from 'src/app/shared/models/api-models';
 import { Subscription, map } from 'rxjs';
 import { dateObjToString } from 'src/app/shared/utils';
+import { BookingService } from 'src/app/core/services/booking.service';
+import { BookingInfo } from 'src/app/shared/models/booking';
 import {
   DateSliderItemDto,
   DirectionsData,
@@ -14,7 +16,10 @@ import {
   styleUrls: ['./date-slider.component.scss'],
 })
 export class DateSliderComponent implements OnChanges, OnDestroy {
-  public constructor(private apiService: ApiFlightService) {}
+  public constructor(
+    private apiService: ApiFlightService,
+    private bookingService: BookingService
+  ) {}
 
   @Input() public currentDate!: string;
 
@@ -73,6 +78,29 @@ export class DateSliderComponent implements OnChanges, OnDestroy {
       departureAirport: this.flightDirections.from,
       destinationAirport: this.flightDirections.to,
     };
+  }
+
+  public selectNewDate(date: string): void {
+    const currentBookingInfo = this.bookingService.getCurrentBookingInfo();
+    if (currentBookingInfo) {
+      const isRoundTrip = currentBookingInfo.roundTrip;
+      if (
+        isRoundTrip &&
+        this.flightDirections.from !== currentBookingInfo.departureAirport
+      ) {
+        const dto: BookingInfo = {
+          ...currentBookingInfo,
+          returnDate: date,
+        };
+        this.bookingService.changeReturnDate(dto);
+      } else {
+        const dto: BookingInfo = {
+          ...currentBookingInfo,
+          departureDate: date,
+        };
+        this.bookingService.changeForwardDate(dto);
+      }
+    }
   }
 
   public ngOnDestroy(): void {

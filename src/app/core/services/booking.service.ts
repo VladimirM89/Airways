@@ -45,6 +45,16 @@ export class BookingService {
     });
   }
 
+  public changeForwardDate(info: BookingInfo): void {
+    this.bookingInformation$.next(info);
+    this.deleteForwardFlight();
+  }
+
+  public changeReturnDate(info: BookingInfo): void {
+    this.bookingInformation$.next(info);
+    this.deleteReturnFlight();
+  }
+
   public getCurrentBookingInfo(): Nullable<BookingInfo> {
     return this.bookingInformation$.getValue();
   }
