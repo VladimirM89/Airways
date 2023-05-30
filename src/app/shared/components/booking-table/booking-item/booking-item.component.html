@@ -24,15 +24,15 @@
       <div class="departure-time-container">
         <span class="departure-date">{{departureDate | date: 'd MMMM, y'}}, </span>
         <p class="departure-time">
-          <span>{{departureTime | date: 'H:mm'}} &mdash; </span>
-          <span>{{destinationTime | date: 'H:mm'}}</span>
+          <span>{{departureTime | date: 'H:mm' : getFullUTC(booking.flights[0].departureCity)}} &mdash; </span>
+          <span>{{destinationTime | date: 'H:mm': getFullUTC(booking.flights[0].destinationCity)}}</span>
         </p>
       </div>
       <div class="departure-time-container" *ngIf="roundTrip">
         <span class="departure-date">{{departureBackDate | date: 'd MMMM, y'}}, </span>
         <p class="departure-time">
-          <span>{{departureBackTime | date: 'H:mm'}} &mdash; </span>
-          <span>{{destinationBackTime | date: 'H:mm'}}</span>
+          <span>{{departureBackTime | date: 'H:mm': getFullUTC(booking.flights[1].destinationCity || '')}} &mdash; </span>
+          <span>{{destinationBackTime | date: 'H:mm': getFullUTC(booking.flights[1].departureCity || '')}}</span>
         </p>
       </div>
     </div>

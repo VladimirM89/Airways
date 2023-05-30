@@ -11,6 +11,7 @@ import { PassengersNumber } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 
 import { UserBooking } from 'src/app/shared/models/user.model';
+import { getFullUTC } from 'src/app/shared/utils';
 import { Paths } from 'src/app/types/enums';
 
 @Component({
@@ -24,6 +25,8 @@ export class BookingItemComponent implements OnInit {
   public isChecked = false;
 
   public isCartPage = false;
+
+  public getFullUTC = getFullUTC;
 
   public constructor(
     private paymentService: PaymentService,
