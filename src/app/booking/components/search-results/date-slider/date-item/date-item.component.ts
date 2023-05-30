@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DateSliderItemDto } from 'src/app/booking/models/date-slider-item';
+import { DateSliderItemDto } from 'src/app/booking/models/date-slider.models';
 
 @Component({
   selector: 'app-date-item',
@@ -8,6 +8,4 @@ import { DateSliderItemDto } from 'src/app/booking/models/date-slider-item';
 })
 export class DateItemComponent {
   @Input() public dateItemDto!: DateSliderItemDto;
-
-  @Input() public isActive = false;
 }

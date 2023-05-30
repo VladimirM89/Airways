@@ -1,1 +1,5 @@
-<app-date-item [dateItemDto]="data"></app-date-item>
+<section class="date-slider">
+  <div class="inner-section">
+    <app-date-item *ngFor="let item of sliderData" [dateItemDto]="item"></app-date-item>
+  </div>
+</section>

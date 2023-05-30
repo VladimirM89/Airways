@@ -45,6 +45,9 @@ p {
 
 .active {
   box-shadow: var(--box-shadow);
+  padding-top: 1rem;
+  border-bottom: .4rem solid red;
+
   & .date {
     font-size: 2rem;
     color: var(--primary-color);
