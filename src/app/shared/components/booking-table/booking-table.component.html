@@ -1,11 +1,11 @@
-<ng-container *ngIf="userBookings$ | async as userBookings">
+<ng-container *ngIf="unpaidUserBooking$ | async as unpaidUserBookings">
 
-  <div class="header-container" *ngIf="userBookings.length">
+  <div class="header-container" *ngIf="unpaidUserBookings.length">
 
     <mat-checkbox color="primary"
       *ngIf="isCartPage"
       [checked]="isAllChecked"
-      (click)="isAllBookingsSelected(userBookings)">
+      (click)="isAllBookingsSelected(unpaidUserBookings)">
     </mat-checkbox>
 
     <div class="header-content-container">
@@ -22,25 +22,51 @@
   </div>
 
   <p class="no-bookings-text"
-    *ngIf="!userBookings.length">
+    *ngIf="!unpaidUserBookings.length">
     No bookings to pay. Please add new trip
   </p>
+
   <div class="bookings-container">
-    <app-booking-item *ngFor="let booking of userBookings"
+
+    <p class="paid-title title" *ngIf="!isCartPage">Unpaid bookings</p>
+    <app-booking-item *ngFor="let booking of unpaidUserBookings"
       [booking]="booking" class="bottom-line">
     </app-booking-item>
+
   </div>
 
   <div class="bottom-container bottom-line"
-    [ngClass]="{'position-center': !userBookings.length}">
-      <button class="add-btn" (click)="navToMain()">
-        <span class="add-btn-text">+ Add new trip</span>
+    [ngClass]="{'position-center': !unpaidUserBookings.length}">
+      <button class="add-btn" (click)="navToMain()" *ngIf="isCartPage">
+        <span class="add-btn-text" >+ Add new trip</span>
       </button>
-      <div class="total-container" *ngIf="userBookings.length">
+      <div class="total-container" *ngIf="unpaidUserBookings.length">
         <p class="total-title">Total</p>
-        <p class="total-cost">{{summary(userBookings) | currency: 'EUR'}}</p>
+        <p class="total-cost">{{summary(unpaidUserBookings) | currency: 'EUR'}}</p>
       </div>
   </div>
+
+  <ng-container *ngIf="!isCartPage">
+
+    <ng-container *appNgLet="paidUserBookings$ | async as paidUserBookings">
+
+      <div class="bookings-container">
+        <p  class="paid-title title">Paid bookings</p>
+      <app-booking-item *ngFor="let booking of paidUserBookings"
+        [booking]="booking" class="bottom-line">
+      </app-booking-item>
+      </div>
+
+      <div class="bottom-container bottom-line">
+        <div class="total-container">
+          <p class="total-title">Total</p>
+          <p class="total-cost">{{summary(paidUserBookings) | currency: 'EUR'}}</p>
+        </div>
+      </div>
+
+    </ng-container>
+
+  </ng-container>
 
 </ng-container>
 
