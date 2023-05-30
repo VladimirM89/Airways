@@ -14,29 +14,44 @@ p {
 
 .header-content-container {
   display: flex;
-  padding-right: 6.5rem;
+  gap: 1rem;
   flex-grow: 1;
   justify-content: space-between;
 }
 
 .number-container {
-  width: 10rem;
+  max-width: 10rem;
+  flex-grow: 1;
 }
 
 .flight-number-container {
-  width: 25rem;
+  max-width: 28rem;
+  flex-grow: 1;
 }
 
 .way {
-  width: 10rem;
+  max-width: 10rem;
+  flex-grow: 1;
 }
 
-.time-cintainer {
-  width: 28rem;
+.time-container {
+  max-width: 25rem;
+  flex-grow: 1;
 }
 
 .passengers-container {
-  width: 11rem;
+  max-width: 11rem;
+  flex-grow: 1;
+}
+
+.cost {
+  max-width: 10rem;
+  flex-grow: 1;
+  text-align: start;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .no-bookings-text {

@@ -1,5 +1,5 @@
 /* eslint-disable no-return-assign */
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Paths } from 'src/app/types/enums';
 import { Router } from '@angular/router';
 import { PaymentService } from 'src/app/core/services/payment.service';
@@ -17,16 +17,22 @@ interface ChoosenBookings {
   templateUrl: './booking-table.component.html',
   styleUrls: ['./booking-table.component.scss'],
 })
-export class BookingTableComponent {
+export class BookingTableComponent implements OnInit {
   public selectedBookings: Array<ChoosenBookings> = [];
 
   @Input() public userBookings$!: Observable<UserBooking[]>;
+
+  public isCartPage = false;
 
   public constructor(
     private router: Router,
     private paymentService: PaymentService,
     private selectedBookingService: SelectedBookingService
   ) {}
+
+  public ngOnInit(): void {
+    this.isCartPage = this.router.url === `/${Paths.CART}`;
+  }
 
   public get isAllChecked(): boolean {
     return this.selectedBookingService.getCurrentAllSelectedValue();

@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { PaymentService } from 'src/app/core/services/payment.service';
+import { Observable, Subscription } from 'rxjs';
 import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
 import { editBooking } from 'src/app/redux/actions/user.action';
 import { selectUnpaidBookings } from 'src/app/redux/selectors/user.selectors';
@@ -16,9 +14,9 @@ import { UserBooking } from 'src/app/shared/models/user.model';
 export class CartPageComponent {
   public isPopupVisible = false;
 
+  public sub!: Subscription;
+
   public constructor(
-    private router: Router,
-    private paymentService: PaymentService,
     private store: Store,
     private selectedBookingService: SelectedBookingService
   ) {}

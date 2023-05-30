@@ -23,6 +23,8 @@ export class BookingItemComponent implements OnInit {
 
   public isChecked = false;
 
+  public isCartPage = false;
+
   public constructor(
     private paymentService: PaymentService,
     private router: Router,
@@ -35,6 +37,8 @@ export class BookingItemComponent implements OnInit {
     this.selectedBookingService.isAllBookingSelected
       .pipe(map(value => (this.isChecked = value)))
       .subscribe();
+
+    this.isCartPage = this.router.url === `/${Paths.CART}`;
   }
 
   public checkBooking(booking: UserBooking): void {

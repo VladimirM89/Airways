@@ -19,6 +19,12 @@ p {
   flex-direction: column;
 }
 
-.logout-btn {
+.btn-container {
+  padding: 4rem 3.5rem 0;
   align-self: flex-end;
+
+  .non-displaid {
+    display: none;
+  }
+
 }

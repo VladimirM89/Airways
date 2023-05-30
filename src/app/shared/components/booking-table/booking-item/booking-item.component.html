@@ -1,6 +1,6 @@
 <div class="container">
 
-  <mat-checkbox color="primary" *ngIf="isNotPayed" [checked]="isChecked" (change)="isChecked" (click)="checkBooking(booking)"></mat-checkbox>
+  <mat-checkbox color="primary" *ngIf="isNotPayed && isCartPage" [checked]="isChecked" (change)="isChecked" (click)="checkBooking(booking)"></mat-checkbox>
 
   <div class="booking-container">
 
@@ -20,7 +20,7 @@
 
     <p class="way">{{roundTrip ? 'Round Trip' : 'One Way'}}</p>
 
-    <div class="time-cintainer">
+    <div class="time-container">
       <p>
         <span>{{departureDate | date: 'd MMMM, y'}}, </span>
         <span>{{departureTime | date: 'H:mm'}} &mdash; </span>
@@ -45,7 +45,7 @@
 
   </div>
 
-  <div *ngIf="isNotPayed">
+  <div *ngIf="isNotPayed && isCartPage">
     <button mat-icon-button [matMenuTriggerFor]="menu" class="more-btn">
       <mat-icon>more_vert</mat-icon>
     </button>

@@ -12,7 +12,8 @@ p {
 }
 
 .booking-container {
-  width: 100%;
+  max-width: 100%;
+  flex-grow: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,28 +23,36 @@ p {
 }
 
 .number-container {
-  width: 10rem;
+  max-width: 10rem;
+  flex-grow: 1;
   font-weight: 700;
   color: var(--secondary-color);
 }
 
 .flight-number-container {
-  width: 28rem;
+  max-width: 28rem;
+  flex-grow: 1;
 }
 
 .way {
-  width: 10rem;
+  max-width: 10rem;
+  flex-grow: 1;
 }
 
-.time-cintainer {
-  width: 25rem;
+.time-container {
+  max-width: 25rem;
+  flex-grow: 1;
 }
 
 .passengers-container {
-  width: 11rem;
+  max-width: 11rem;
+  flex-grow: 1;
 }
 
 .cost {
+  max-width: 10rem;
+  flex-grow: 1;
+  text-align: start;
   color: var(--highlight-color);
 }
 
