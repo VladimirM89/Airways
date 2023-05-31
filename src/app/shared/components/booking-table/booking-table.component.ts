@@ -20,7 +20,9 @@ interface ChoosenBookings {
 export class BookingTableComponent implements OnInit {
   public selectedBookings: Array<ChoosenBookings> = [];
 
-  @Input() public userBookings$!: Observable<UserBooking[]>;
+  @Input() public paidUserBookings$!: Observable<UserBooking[]>;
+
+  @Input() public unpaidUserBooking$!: Observable<UserBooking[]>;
 
   public isCartPage = false;
 
