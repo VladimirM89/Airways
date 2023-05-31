@@ -1,7 +1,39 @@
+.date-slider {
+  position: relative;
+}
+
 .inner-section {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: end;
   width: 100%;
+}
+
+.slider-arrow-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
+  position: absolute;
+  background-color: var(--bg-neutral);
+  z-index: 1;
+  top: calc(50% - 1rem);
+  margin: 0;
+  padding: 0;
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    background-color: #c4dcfae3;
+  }
+}
+
+.btn-prev {
+  left: 0;
+}
+
+.btn-next {
+  right: 0
 }

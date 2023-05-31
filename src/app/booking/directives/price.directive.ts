@@ -32,7 +32,7 @@ export class PriceColorDirective implements OnInit {
         this.setColor(this.red);
       } else if (this.price - average > 15) {
         this.setColor(this.yellow);
-      } else if (average - this.price > 25) {
+      } else if (average - this.price > 20) {
         this.setColor(this.green);
       } else {
         this.setColor(this.primary);

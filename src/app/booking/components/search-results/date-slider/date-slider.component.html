@@ -1,8 +1,14 @@
 <section class="date-slider">
+  <button class="slider-arrow-btn btn-prev">
+    <img src="/assets/less.svg" alt="prev">
+  </button>
   <div class="inner-section">
     <app-date-item *ngFor="let item of sliderData" [dateItemDto]="item"
                     (changeDate)="selectNewDate($event)" 
                     appPriceColor [price]="item.price" [pricesForPeriod]="sliderData">
     </app-date-item>
   </div>
+  <button class="slider-arrow-btn btn-next">
+    <img src="/assets/more.svg" alt="next">
+  </button>
 </section>
