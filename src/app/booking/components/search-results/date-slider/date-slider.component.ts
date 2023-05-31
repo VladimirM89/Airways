@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { ApiFlightService } from 'src/app/core/services/api-flight.service';
 import { GetFligthsFareDto } from 'src/app/shared/models/api-models';
 import { Subscription, map } from 'rxjs';
@@ -15,7 +15,7 @@ import {
   templateUrl: './date-slider.component.html',
   styleUrls: ['./date-slider.component.scss'],
 })
-export class DateSliderComponent implements OnInit, OnDestroy {
+export class DateSliderComponent implements OnChanges, OnDestroy {
   public constructor(
     private apiService: ApiFlightService,
     private bookingService: BookingService
@@ -29,7 +29,7 @@ export class DateSliderComponent implements OnInit, OnDestroy {
 
   public sliderData: DateSliderItemDto[] = [];
 
-  public ngOnInit(): void {
+  public ngOnChanges(): void {
     const dto = this.createFlightFaresDto();
     this.createSliderDateArray(new Date(dto.fromDate));
     this.sub = this.apiService
