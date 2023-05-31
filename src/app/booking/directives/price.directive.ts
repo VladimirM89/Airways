@@ -22,17 +22,20 @@ export class PriceColorDirective implements OnInit {
 
   public ngOnInit(): void {
     if (this.price && this.pricesForPeriod.length) {
+      const notNullableValues = this.pricesForPeriod.filter(
+        item => item.price !== null
+      );
       const average =
-        this.pricesForPeriod.reduce(
+        notNullableValues.reduce(
           (accum, next) => accum + (next.price ? next.price : 0),
           0
-        ) / this.pricesForPeriod.length;
+        ) / notNullableValues.length;
 
-      if (this.price - average > 25) {
+      if (this.price - average > 20) {
         this.setColor(this.red);
       } else if (this.price - average > 15) {
         this.setColor(this.yellow);
-      } else if (average - this.price > 20) {
+      } else if (average - this.price > 10) {
         this.setColor(this.green);
       } else {
         this.setColor(this.primary);
