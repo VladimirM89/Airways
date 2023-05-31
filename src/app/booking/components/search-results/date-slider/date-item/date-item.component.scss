@@ -29,7 +29,7 @@ p {
 .price-tag {
   font-weight: bold;
   font-size: 2rem;
-  color: var(--primary-color);
+  color: inherit;
 }
 
 .week-day {
@@ -49,7 +49,7 @@ p {
 .active {
   box-shadow: var(--box-shadow);
   padding-top: 1rem;
-  border-bottom: .4rem solid red;
+  border-bottom: .4rem solid;
 
   & .date {
     font-size: 2rem;

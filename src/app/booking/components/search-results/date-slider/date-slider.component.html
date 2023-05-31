@@ -1,5 +1,8 @@
 <section class="date-slider">
   <div class="inner-section">
-    <app-date-item *ngFor="let item of sliderData" [dateItemDto]="item" (changeDate)="selectNewDate($event)"></app-date-item>
+    <app-date-item *ngFor="let item of sliderData" [dateItemDto]="item"
+                    (changeDate)="selectNewDate($event)" 
+                    appPriceColor [price]="item.price" [pricesForPeriod]="sliderData">
+    </app-date-item>
   </div>
 </section>
