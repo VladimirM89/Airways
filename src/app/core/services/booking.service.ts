@@ -24,7 +24,7 @@ export class BookingService {
     null
   );
 
-  private passangersInfomation: Nullable<PassangersInfo> = null;
+  private passengersInformation: Nullable<PassangersInfo> = null;
 
   private selectedFlights$ = new BehaviorSubject<SelectedFlights>({
     forwardFlight: null,
@@ -60,11 +60,11 @@ export class BookingService {
   }
 
   public get passengersInfo(): Nullable<PassangersInfo> {
-    return this.passangersInfomation;
+    return this.passengersInformation;
   }
 
   public set passengersInfo(info: Nullable<PassangersInfo>) {
-    this.passangersInfomation = info;
+    this.passengersInformation = info;
   }
 
   public addForwardFlight(flight: Nullable<FlightItem>): void {

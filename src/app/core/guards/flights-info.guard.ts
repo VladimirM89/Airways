@@ -2,46 +2,48 @@
 /* eslint-disable class-methods-use-this */
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
   CanActivate,
   CanLoad,
   Route,
-  RouterStateSnapshot,
+  Router,
   UrlSegment,
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { FullUrls } from 'src/app/shared/constants/full-urls';
 import { BookingService } from '../services/booking.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FlightsInfoGuard implements CanActivate, CanLoad {
-  public constructor(private bookingService: BookingService) {}
+  public constructor(
+    private bookingService: BookingService,
+    private router: Router
+  ) {}
 
-  public canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return this.flightsInfoSelected();
+  public canActivate(): boolean | UrlTree {
+    if (this.isFlightsSelected()) {
+      return true;
+    }
+    return this.router.createUrlTree([FullUrls.FLIGHTS]);
   }
 
-  public canLoad(
-    route: Route,
-    segments: UrlSegment[]
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return this.flightsInfoSelected();
+  public canLoad(): boolean | UrlTree {
+    if (this.isFlightsSelected()) {
+      return true;
+    }
+    return this.router.createUrlTree([FullUrls.FLIGHTS]);
   }
 
-  private flightsInfoSelected(): boolean {
-    return !!this.bookingService.getBookingInfo();
+  private isFlightsSelected(): boolean {
+    const flightsSelected = this.bookingService.getCurrentSelectedFlights();
+    const bookingInfo = this.bookingService.getCurrentBookingInfo();
+    if (bookingInfo && flightsSelected) {
+      return bookingInfo.roundTrip
+        ? !!flightsSelected.forwardFlight && !!flightsSelected.returnFlight
+        : !!flightsSelected.forwardFlight;
+    }
+    return false;
   }
 }
