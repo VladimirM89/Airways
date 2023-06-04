@@ -16,7 +16,7 @@ import { BookingService } from '../services/booking.service';
 @Injectable({
   providedIn: 'root',
 })
-export class FlightsInfoGuard implements CanActivate, CanLoad {
+export class SelectedFlightsGuard implements CanActivate, CanLoad {
   public constructor(
     private bookingService: BookingService,
     private router: Router
