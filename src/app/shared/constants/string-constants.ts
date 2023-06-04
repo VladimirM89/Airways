@@ -13,3 +13,4 @@ export const SPECIAL_SYMBOLS_TEXT =
 export const INITIAL_BAGGAGE = 0;
 export const MAX_BAGGAGE = 2;
 export const DIAL_CODE_REGEXP = /\((.*?)\)/;
+export const LOCAL_STORAGE_BOOKING_KEY = 'currentBookingInfo';
