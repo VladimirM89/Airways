@@ -19,11 +19,6 @@ export class BookingComponent implements OnDestroy, OnInit {
     this.saveBookingToLocalStorage();
   }
 
-  // @HostListener('window:load', ['$event'])
-  // public onloadHandler(): void {
-  //   this.getBookingFromLocalStorage();
-  // }
-
   private saveBookingToLocalStorage(): void {
     const booking = this.bookingService.getCurrentBookingInfo();
     const selected = this.bookingService.getCurrentSelectedFlights();
