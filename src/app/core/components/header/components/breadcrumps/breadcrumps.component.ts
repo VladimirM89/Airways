@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Breadcrumbs } from 'src/app/core/components/header/components/breadcrumps/constants/breadcrumbs-constant';
 import { RouterService } from 'src/app/core/services/router.service';
 import { BreadcrumbInterface } from 'src/app/types/interfaces';
+import { Paths } from 'src/app/types/enums';
 
 @Component({
   selector: 'app-breadcrumps',
@@ -36,6 +37,9 @@ export class BreadcrumpsComponent implements OnInit, OnDestroy {
       if (item.url === url) {
         this.activeIndex = index;
         this.isBookingPage = true;
+      }
+      if (!url.includes(Paths.BOOKING)) {
+        this.isBookingPage = false;
       }
     });
   }
