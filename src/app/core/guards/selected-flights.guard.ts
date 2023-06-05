@@ -1,15 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable class-methods-use-this */
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  CanLoad,
-  Route,
-  Router,
-  UrlSegment,
-  UrlTree,
-} from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, CanLoad, Router, UrlTree } from '@angular/router';
 import { FullUrls } from 'src/app/shared/constants/full-urls';
 import { BookingService } from '../services/booking.service';
 import { LocalStorageService } from '../services/local-storage.service';

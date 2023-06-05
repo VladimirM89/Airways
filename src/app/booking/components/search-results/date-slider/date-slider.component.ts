@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+} from '@angular/core';
 import { ApiFlightService } from 'src/app/core/services/api-flight.service';
 import { GetFligthsFareDto } from 'src/app/shared/models/api-models';
 import { Subscription, map } from 'rxjs';
@@ -18,7 +25,8 @@ import {
 export class DateSliderComponent implements OnChanges, OnDestroy {
   public constructor(
     private apiService: ApiFlightService,
-    private bookingService: BookingService
+    private bookingService: BookingService,
+    private cdr: ChangeDetectorRef // TO DO: add markForCheck with onPush stategy
   ) {}
 
   @Input() public currentDate!: string;
@@ -29,7 +37,11 @@ export class DateSliderComponent implements OnChanges, OnDestroy {
 
   public sliderData: DateSliderItemDto[] = [];
 
-  public ngOnChanges(): void {
+  public ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    console.log(changes['currentDate']?.currentValue);
+    console.log(changes['currentDate']?.previousValue);
+
     const dto = this.createFlightFaresDto();
     this.createSliderDateArray(new Date(dto.fromDate));
     this.sub = this.apiService

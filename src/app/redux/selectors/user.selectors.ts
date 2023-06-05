@@ -20,3 +20,8 @@ export const selectUnpaidBookings = createSelector(selectUser, userState =>
 export const selectPaidBookings = createSelector(selectUser, userState =>
   userState.bookings.filter(item => item.paid === true)
 );
+
+export const selectUserAuthBoolean = createSelector(
+  selectUserDate,
+  user => !!user
+);
