@@ -21,25 +21,11 @@ import { selectUserDate } from 'src/app/redux/selectors/user.selectors';
 export class UserGuard implements CanActivate, CanLoad {
   public constructor(private store: Store) {}
 
-  public canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  public canActivate(): Observable<boolean> {
     return this.userLogin();
   }
 
-  public canLoad(
-    route: Route,
-    segments: UrlSegment[]
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  public canLoad(): Observable<boolean> {
     return this.userLogin();
   }
 
