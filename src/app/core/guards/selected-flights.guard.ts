@@ -12,6 +12,7 @@ import {
 import { Observable } from 'rxjs';
 import { FullUrls } from 'src/app/shared/constants/full-urls';
 import { BookingService } from '../services/booking.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,30 +20,32 @@ import { BookingService } from '../services/booking.service';
 export class SelectedFlightsGuard implements CanActivate, CanLoad {
   public constructor(
     private bookingService: BookingService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {}
 
   public canActivate(): boolean | UrlTree {
-    if (this.isFlightsSelected()) {
-      return true;
-    }
-    return this.router.createUrlTree([FullUrls.FLIGHTS]);
+    return this.isFlightsSelected()
+      ? true
+      : this.router.createUrlTree([FullUrls.FLIGHTS]);
   }
 
   public canLoad(): boolean | UrlTree {
-    if (this.isFlightsSelected()) {
-      return true;
-    }
-    return this.router.createUrlTree([FullUrls.FLIGHTS]);
+    return this.isFlightsSelected()
+      ? true
+      : this.router.createUrlTree([FullUrls.FLIGHTS]);
   }
 
   private isFlightsSelected(): boolean {
-    const flightsSelected = this.bookingService.getCurrentSelectedFlights();
+    if (!this.bookingService.getCurrentBookingInfo()) {
+      this.localStorageService.getBookingFromLocalStorage();
+    }
     const bookingInfo = this.bookingService.getCurrentBookingInfo();
-    if (bookingInfo && flightsSelected) {
-      return bookingInfo.roundTrip
-        ? !!flightsSelected.forwardFlight && !!flightsSelected.returnFlight
-        : !!flightsSelected.forwardFlight;
+    const selectedFlights = this.bookingService.getCurrentSelectedFlights();
+    if (bookingInfo && selectedFlights) {
+      return bookingInfo?.roundTrip
+        ? !!selectedFlights.forwardFlight && !!selectedFlights.returnFlight
+        : !!selectedFlights.forwardFlight;
     }
     return false;
   }
