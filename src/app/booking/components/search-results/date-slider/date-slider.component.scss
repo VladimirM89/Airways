@@ -1,5 +1,7 @@
 .date-slider {
   position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
 .inner-section {
@@ -8,7 +10,8 @@
   flex-wrap: nowrap;
   align-items: flex-end;
   width: 100%;
-  height: 8rem;
+  height: 10rem;
+  transform: translateX(-20%);
 }
 
 .slider-arrow-btn {
