@@ -2,10 +2,12 @@
   <button class="slider-arrow-btn btn-prev">
     <img src="/assets/less.svg" alt="prev">
   </button>
-  <div class="inner-section">
-    <app-date-item *ngFor="let item of sliderData" [dateItemDto]="item"
+  <div class="inner-section" *ngIf="sliderData | async as items">
+    <app-date-item *ngFor="let item of items, trackBy: trackByFn" [dateItemDto]="item"
                     (changeDate)="selectNewDate($event)" 
-                    appPriceColor [price]="item.price" [pricesForPeriod]="sliderData">
+                    appPriceColor [price]="item.price" [pricesForPeriod]="items"
+                    [isActive]="checkIfActiveDate(item)"
+                    >
     </app-date-item>
   </div>
   <button class="slider-arrow-btn btn-next">

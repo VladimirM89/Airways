@@ -1,12 +1,12 @@
 import { Directive, OnInit, Input, ElementRef, Renderer2 } from '@angular/core';
 import { Nullable } from 'src/app/shared/models/types';
-import { DateSliderItemDto } from '../models/date-slider.models';
+import { DateSliderItem } from '../models/date-slider.models';
 
 @Directive({
   selector: '[appPriceColor]',
 })
 export class PriceColorDirective implements OnInit {
-  @Input() public pricesForPeriod: DateSliderItemDto[] = [];
+  @Input() public pricesForPeriod: DateSliderItem[] = [];
 
   @Input() public price: Nullable<number> = null;
 

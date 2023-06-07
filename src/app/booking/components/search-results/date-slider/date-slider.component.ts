@@ -1,19 +1,23 @@
+/* eslint-disable prettier/prettier */
 import {
-  ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
-  OnDestroy,
+  OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { ApiFlightService } from 'src/app/core/services/api-flight.service';
-import { GetFligthsFareDto } from 'src/app/shared/models/api-models';
-import { Subscription, map } from 'rxjs';
+import {
+  FlightFare,
+  GetFligthsFareDto,
+} from 'src/app/shared/models/api-models';
+import { Observable, map } from 'rxjs';
 import { dateObjToString } from 'src/app/shared/utils';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { BookingInfo } from 'src/app/shared/models/booking';
+import { DAYS_AFTER_CURRENT, DAYS_BEFORE_CURRENT, SLIDER_LENGTH } from 'src/app/booking/constants/slider-data.constants';
 import {
-  DateSliderItemDto,
+  DateSliderItem,
   DirectionsData,
 } from '../../../models/date-slider.models';
 
@@ -22,74 +26,49 @@ import {
   templateUrl: './date-slider.component.html',
   styleUrls: ['./date-slider.component.scss'],
 })
-export class DateSliderComponent implements OnChanges, OnDestroy {
+export class DateSliderComponent implements OnInit, OnChanges {
   public constructor(
     private apiService: ApiFlightService,
-    private bookingService: BookingService,
-    private cdr: ChangeDetectorRef // TO DO: add markForCheck with onPush stategy
+    private bookingService: BookingService
   ) {}
 
   @Input() public currentDate!: string;
 
   @Input() public flightDirections!: DirectionsData;
 
-  private sub!: Subscription;
+  public sliderData: Observable<DateSliderItem[]> | null = null;
 
-  public sliderData: DateSliderItemDto[] = [];
+  public ngOnInit(): void {
+    this.sliderData = this.createNewSliderItems();
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
     console.log(changes['currentDate']?.currentValue);
     console.log(changes['currentDate']?.previousValue);
-
-    const dto = this.createFlightFaresDto();
-    this.createSliderDateArray(new Date(dto.fromDate));
-    this.sub = this.apiService
-      .getFlightsFare(dto)
-      .pipe(
-        map(fares => {
-          this.sliderData = this.sliderData.map(date => {
-            const fare = fares.find(
-              item => item.date === dateObjToString(date.date)
-            );
-            const fareData: DateSliderItemDto = {
-              date: date.date,
-              active: date.active,
-              price: fare?.flightFare || null,
-              available: fare ? date.date > new Date() : false,
-            };
-            return fareData;
-          });
-        })
-      )
-      .subscribe();
   }
 
-  private createSliderDateArray(fromDate: Date): void {
-    const active = new Date(this.currentDate);
-    this.sliderData = [];
-    for (let i = 0; i < 5; i += 1) {
-      const from = new Date(fromDate.toISOString());
-      this.sliderData.push({
-        date: from,
-        price: null,
-        available: false,
-        active: from.toJSON() === active.toJSON(),
-      });
-      fromDate.setDate(fromDate.getDate() + 1);
-    }
-  }
-
-  private createFlightFaresDto(): GetFligthsFareDto {
-    const current = new Date(this.currentDate);
-    const fromDate = new Date(this.currentDate).setDate(current.getDate() - 2);
-    const toDate = new Date(this.currentDate).setDate(current.getDate() + 2);
-    return {
-      fromDate: dateObjToString(new Date(fromDate)),
-      toDate: dateObjToString(new Date(toDate)),
-      departureAirport: this.flightDirections.from,
-      destinationAirport: this.flightDirections.to,
-    };
+  private createNewSliderItems(): Observable<DateSliderItem[]> {
+    const fromDate = this.changeDateForDaysNumber(new Date(this.currentDate), DAYS_BEFORE_CURRENT);
+    const toDate = this.changeDateForDaysNumber(new Date(this.currentDate), DAYS_AFTER_CURRENT);
+    const current = new Date(fromDate);
+    const fares = this.getFaresForPeriod(fromDate, toDate).pipe(
+      map(items => {
+        const arr: DateSliderItem[] = [];
+        for (let i = 0; i < SLIDER_LENGTH; i += 1) {
+          const fare = items.find(
+            item => item.date === dateObjToString(current)
+          );
+          arr.push({
+            date: new Date(current),
+            price: fare?.flightFare || null,
+          })
+          current.setDate(current.getDate() + 1)
+        }
+        return arr;
+      })
+    )
+    return fares;
   }
 
   public selectNewDate(date: string): void {
@@ -112,23 +91,32 @@ export class DateSliderComponent implements OnChanges, OnDestroy {
         };
         this.bookingService.changeForwardDate(dto);
       }
-      this.updateActiveItem(date);
     }
   }
 
-  private updateActiveItem(date: string): void {
-    this.sliderData = this.sliderData.map(item => {
-      return { ...item, active: false };
-    });
-    this.sliderData = this.sliderData.map(item => {
-      if (date === dateObjToString(item.date)) {
-        return { ...item, active: true };
-      }
-      return item;
-    });
+  public checkIfActiveDate(item: DateSliderItem): boolean {
+    return dateObjToString(item.date) === this.currentDate;
   }
 
-  public ngOnDestroy(): void {
-    this.sub.unsubscribe();
+  private getFaresForPeriod(
+    fromDate: Date,
+    toDate: Date
+  ): Observable<FlightFare[]> {
+    const dto: GetFligthsFareDto = {
+      fromDate: dateObjToString(new Date(fromDate)),
+      toDate: dateObjToString(new Date(toDate)),
+      departureAirport: this.flightDirections.from,
+      destinationAirport: this.flightDirections.to,
+    };
+    return this.apiService.getFlightsFare(dto);
+  }
+
+  private changeDateForDaysNumber(date: Date, days: number): Date {
+    const newDateInMS = new Date(dateObjToString(date)).setDate(date.getDate() + days);
+    return new Date(newDateInMS);
+  }
+
+  public trackByFn(index: number, item: DateSliderItem): string {
+    return item.date.toISOString();
   }
 }
