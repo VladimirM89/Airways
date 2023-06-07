@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
@@ -11,22 +12,19 @@ import {
   FlightFare,
   GetFligthsFareDto,
 } from 'src/app/shared/models/api-models';
-import { Observable, map } from 'rxjs';
+import { Observable, Subscription, map } from 'rxjs';
 import { dateObjToString } from 'src/app/shared/utils';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { BookingInfo } from 'src/app/shared/models/booking';
 import { DAYS_AFTER_CURRENT, DAYS_BEFORE_CURRENT, SLIDER_LENGTH } from 'src/app/booking/constants/slider-data.constants';
-import {
-  DateSliderItem,
-  DirectionsData,
-} from '../../../models/date-slider.models';
+import { DateSliderItem, DirectionsData } from '../../../models/date-slider.models';
 
 @Component({
   selector: 'app-date-slider',
   templateUrl: './date-slider.component.html',
   styleUrls: ['./date-slider.component.scss'],
 })
-export class DateSliderComponent implements OnInit, OnChanges {
+export class DateSliderComponent implements OnInit, OnChanges, OnDestroy {
   public constructor(
     private apiService: ApiFlightService,
     private bookingService: BookingService
@@ -36,23 +34,37 @@ export class DateSliderComponent implements OnInit, OnChanges {
 
   @Input() public flightDirections!: DirectionsData;
 
-  public sliderData: Observable<DateSliderItem[]> | null = null;
+  public sliderData: DateSliderItem[] | null = null;
+
+  private sub: Subscription | null = null;
 
   public ngOnInit(): void {
-    this.sliderData = this.createNewSliderItems();
+    this.createNewSliderItems();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    console.log(changes['currentDate']?.currentValue);
-    console.log(changes['currentDate']?.previousValue);
-  }
+    const prevDirection = changes['flightDirections']?.previousValue;
+    const currentDirection = changes['flightDirections']?.currentValue;
 
-  private createNewSliderItems(): Observable<DateSliderItem[]> {
+    if (this.sliderData) {
+      if (currentDirection && prevDirection) {
+        if (currentDirection.from !== prevDirection.from || currentDirection.to !== prevDirection.to) {
+          this.createNewSliderItems();
+          return;
+        } 
+      }
+      const isDateInSlider = this.sliderData.find((item, index, obj) => dateObjToString(item.date) === this.currentDate && index !== 0 && index !== obj.length - 1)
+      if (!isDateInSlider) {
+        this.createNewSliderItems();
+       }
+    }   
+  }
+  
+  private createNewSliderItems(): void {
     const fromDate = this.changeDateForDaysNumber(new Date(this.currentDate), DAYS_BEFORE_CURRENT);
     const toDate = this.changeDateForDaysNumber(new Date(this.currentDate), DAYS_AFTER_CURRENT);
     const current = new Date(fromDate);
-    const fares = this.getFaresForPeriod(fromDate, toDate).pipe(
+    this.sub = this.getFaresForPeriod(fromDate, toDate).pipe(
       map(items => {
         const arr: DateSliderItem[] = [];
         for (let i = 0; i < SLIDER_LENGTH; i += 1) {
@@ -67,8 +79,9 @@ export class DateSliderComponent implements OnInit, OnChanges {
         }
         return arr;
       })
-    )
-    return fares;
+    ).subscribe((items) => {
+      this.sliderData = items
+    })
   }
 
   public selectNewDate(date: string): void {
@@ -118,5 +131,9 @@ export class DateSliderComponent implements OnInit, OnChanges {
 
   public trackByFn(index: number, item: DateSliderItem): string {
     return item.date.toISOString();
+  }
+
+  public ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 }
