@@ -2,7 +2,10 @@
 
   <mat-card class="cart-container">
     <p class="title account-title">Account</p>
-    <app-booking-table [paidUserBookings$]="paidUserBookings$" [unpaidUserBooking$]="unpaidUserBookings$"></app-booking-table>
+    <p  class="paid-title title">Paid bookings</p>
+    <app-booking-table [userBookings$]="paidUserBookings$"></app-booking-table>
+    <p class="paid-title title">Unpaid bookings</p>
+    <app-booking-table [userBookings$]="unpaidUserBookings$"></app-booking-table>
     <div class="btn-container">
       <button class="btn primary-btn" (click)="logout()">Logout</button>
     </div>

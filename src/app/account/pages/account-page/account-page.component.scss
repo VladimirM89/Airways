@@ -1,5 +1,8 @@
 .cart-container {
   padding:3.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }
 
 p {
@@ -7,7 +10,7 @@ p {
 }
 
 .account-title {
-  padding: 0 2.7rem 3.5rem;
+  padding: 0 2.7rem;
   font-size: 2.4rem;
   font-weight: 700;
   line-height: 2.8rem;
@@ -19,7 +22,19 @@ p {
   flex-direction: column;
 }
 
+.paid-title {
+  padding: 0 3.5rem;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+
+  @media screen and (max-width: 450px) {
+    padding: 2rem 1.5rem 0;
+  }
+
+}
+
 .btn-container {
-  padding: 4rem 3.5rem 0;
+  padding: 0 3.5rem;
   align-self: flex-end;
 }
