@@ -32,3 +32,7 @@ export function getFullUTC(city: string): string {
   );
   return cityData ? cityData.fullUtc : UTC0Full;
 }
+
+export function dateObjToString(date: Date): string {
+  return date.toJSON().split('T')[0];
+}

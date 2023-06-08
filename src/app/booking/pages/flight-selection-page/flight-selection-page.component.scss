@@ -31,3 +31,9 @@
   font-size: 1.6rem;
   color: var(--auxiliary-color);
 }
+
+.flights {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}

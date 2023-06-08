@@ -1,3 +1,9 @@
+:host {
+  padding-top: .5rem;
+  width: calc(100% / 5);
+  flex-shrink: 0;
+}
+
 .date-card {
   cursor: pointer;
   display: flex;
@@ -8,7 +14,7 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  max-width: 22rem;
+  transition: all .2s ease-in-out;
 }
 
 p {
@@ -26,7 +32,7 @@ p {
 .price-tag {
   font-weight: bold;
   font-size: 2rem;
-  color: var(--primary-color);
+  color: inherit;
 }
 
 .week-day {
@@ -44,10 +50,10 @@ p {
 }
 
 .active {
-  box-shadow: var(--box-shadow);
-  padding-top: 1rem;
-  border-bottom: .4rem solid red;
-
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  border-bottom: .4rem solid;
+  margin: 2px;
+  
   & .date {
     font-size: 2rem;
     color: var(--primary-color);
