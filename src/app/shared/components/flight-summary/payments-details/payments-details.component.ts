@@ -7,11 +7,11 @@ import { PassengersNumber } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 
 @Component({
-  selector: 'app-cost-passengers',
-  templateUrl: './cost-passengers.component.html',
-  styleUrls: ['./cost-passengers.component.scss'],
+  selector: 'app-payments-details',
+  templateUrl: './payments-details.component.html',
+  styleUrls: ['./payments-details.component.scss'],
 })
-export class CostPassengersComponent implements OnInit, OnDestroy {
+export class PaymentsDetailsComponent implements OnInit, OnDestroy {
   public bookingInfo$ = this.bookingService.getBookingInfo();
 
   private sub!: Subscription;

@@ -1,20 +1,20 @@
 <mat-card class="container" *ngIf="bookingInfo$ | async as bookingInfo">
   <ul class="summary-cost-container">
-    <ng-container *ngFor="let passenger of bookingInfo.passengers | keyvalue; trackBy: trackByFn" >
+    <ng-container *ngFor="let passenger of bookingInfo.passengers | keyvalue" >
       <li class="cost-passenger" *ngIf="passenger.value">
 
         <p class="line-conrainer description-title">
           <span>
-            {{ passenger.value }} x {{ passenger.key | titlecase}} Fare
+            {{ passenger.value }} x {{ passenger.key | titlecase }} Fare
           </span>
           <span>
-            {{passenger.value * (fare + tax) | currency: 'EUR'}}
+            {{ passenger.value * (fare + tax) | currency: 'EUR' }}
           </span>
         </p>
         <div class="description">
           <p class="line-conrainer">
             <span>Fare</span>
-            <span>{{passenger.value * fare | currency: 'EUR'}}</span>
+            <span>{{ passenger.value * fare | currency: 'EUR'}}</span>
           </p>
 
           <p class="line-conrainer">

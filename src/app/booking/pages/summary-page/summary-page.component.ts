@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -9,7 +8,6 @@ import { createBooking, editBooking } from 'src/app/redux/actions/user.action';
 
 import { BookingDto, ContactInfoDto } from 'src/app/shared/models/api-models';
 import { Passenger, SelectedFlights } from 'src/app/shared/models/booking';
-import { FlightItem } from 'src/app/shared/models/flight-item';
 import { Nullable } from 'src/app/shared/models/types';
 import { UserBooking } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
@@ -29,7 +27,7 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
 
   private sub!: Subscription;
 
-  private selectedFlights!: SelectedFlights;
+  public selectedFlights!: SelectedFlights;
 
   private isPayNowMode = false;
 
@@ -44,22 +42,6 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
-  }
-
-  public get sortedFlights(): Array<FlightItem> {
-    if (
-      this.selectedFlights.forwardFlight &&
-      this.selectedFlights.returnFlight
-    ) {
-      return [
-        this.selectedFlights.forwardFlight,
-        this.selectedFlights.returnFlight,
-      ];
-    }
-    if (this.selectedFlights.forwardFlight) {
-      return [this.selectedFlights.forwardFlight];
-    }
-    return [];
   }
 
   public navToPassengers(): void {
@@ -118,10 +100,6 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
   public handleAddToCart(): void {
     this.createUserBooking();
     this.navToCart();
-  }
-
-  public trackByFn(index: number, item: FlightItem): number {
-    return item.id;
   }
 
   private navToCart(): void {

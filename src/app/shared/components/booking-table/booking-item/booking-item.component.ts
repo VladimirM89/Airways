@@ -150,6 +150,6 @@ export class BookingItemComponent implements OnInit {
   }
 
   public navToSummary(): void {
-    this.router.navigate([FullUrls.PAYMENT]);
+    this.router.navigate([FullUrls.SUMMARY]);
   }
 }

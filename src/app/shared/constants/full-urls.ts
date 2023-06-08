@@ -3,4 +3,5 @@ export enum FullUrls {
   FLIGHTS = '/booking/flights',
   PASSENGERS = '/booking/passengers',
   PAYMENT = '/booking/payment',
+  SUMMARY = '/account/summary',
 }

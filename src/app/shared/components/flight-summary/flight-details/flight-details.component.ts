@@ -5,18 +5,16 @@ import { Passenger } from 'src/app/shared/models/booking';
 import { getFullUTC } from 'src/app/shared/utils';
 
 @Component({
-  selector: 'app-summary-flight',
-  templateUrl: './summary-flight.component.html',
-  styleUrls: ['./summary-flight.component.scss'],
+  selector: 'app-flight-details',
+  templateUrl: './flight-details.component.html',
+  styleUrls: ['./flight-details.component.scss'],
 })
-export class SummaryFlightComponent {
+export class FlightDetailsComponent {
   @Input() public flight!: FlightItem;
 
   public getFullUTC = getFullUTC;
 
   public constructor(private bookingService: BookingService) {}
-
-  public bookingInfo$ = this.bookingService.getBookingInfo();
 
   public get passengers(): Passenger[] {
     const allPassengers: Array<Passenger[]> = [];

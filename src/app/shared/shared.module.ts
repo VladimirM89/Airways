@@ -27,6 +27,9 @@ import { DatePickerRangeComponent } from './components/date-picker-range/date-pi
 import { BookingItemComponent } from './components/booking-table/booking-item/booking-item.component';
 import { BookingTableComponent } from './components/booking-table/booking-table.component';
 import { NgLetDirective } from './directives/ng-let.directive';
+import { FlightDetailsComponent } from './components/flight-summary/flight-details/flight-details.component';
+import { FlightSummaryComponent } from './components/flight-summary/flight-summary.component';
+import { PaymentsDetailsComponent } from './components/flight-summary/payments-details/payments-details.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,9 @@ import { NgLetDirective } from './directives/ng-let.directive';
     BookingTableComponent,
     BookingItemComponent,
     NgLetDirective,
+    FlightDetailsComponent,
+    PaymentsDetailsComponent,
+    FlightSummaryComponent,
   ],
   imports: [
     CommonModule,
@@ -86,6 +92,9 @@ import { NgLetDirective } from './directives/ng-let.directive';
     BookingItemComponent,
     NgLetDirective,
     MatRadioModule,
+    FlightDetailsComponent,
+    PaymentsDetailsComponent,
+    FlightSummaryComponent,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
