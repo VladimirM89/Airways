@@ -1,5 +1,5 @@
 <section class="date-slider" *ngIf="sliderData">
-  <button class="slider-arrow-btn btn-prev">
+  <button class="slider-arrow-btn btn-prev" (click)="showPrev()">
     <img src="/assets/less.svg" alt="prev">
   </button>
   <div class="inner-section">
@@ -10,7 +10,7 @@
                     >
     </app-date-item>
   </div>
-  <button class="slider-arrow-btn btn-next">
+  <button class="slider-arrow-btn btn-next" (click)="showNext()">
     <img src="/assets/more.svg" alt="next">
   </button>
 </section>

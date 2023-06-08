@@ -12,7 +12,7 @@ import {
   FlightFare,
   GetFligthsFareDto,
 } from 'src/app/shared/models/api-models';
-import { Observable, Subscription, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, map, take } from 'rxjs';
 import { dateObjToString } from 'src/app/shared/utils';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { BookingInfo } from 'src/app/shared/models/booking';
@@ -34,14 +34,18 @@ export class DateSliderComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() public flightDirections!: DirectionsData;
 
-  public sliderData: DateSliderItem[] | null = null;
+  public sliderItemsSubject$ = new BehaviorSubject<DateSliderItem[]>([]);
 
-  private sub: Subscription | null = null;
+  public sliderData: DateSliderItem[] = [];
+
+  private sub!: Subscription;
 
   public ngOnInit(): void {
-    this.createNewSliderItems();
+    this.sub = this.sliderItemsSubject$.subscribe(items => {
+      this.sliderData = items;
+    })
   }
-
+  
   public ngOnChanges(changes: SimpleChanges): void {
     const prevDirection = changes['flightDirections']?.previousValue;
     const currentDirection = changes['flightDirections']?.currentValue;
@@ -49,13 +53,13 @@ export class DateSliderComponent implements OnInit, OnChanges, OnDestroy {
     if (this.sliderData) {
       if (currentDirection && prevDirection) {
         if (currentDirection.from !== prevDirection.from || currentDirection.to !== prevDirection.to) {
-          this.createNewSliderItems();
+           this.createNewSliderItems();
           return;
         } 
       }
       const isDateInSlider = this.sliderData.find((item, index, obj) => dateObjToString(item.date) === this.currentDate && index !== 0 && index !== obj.length - 1)
       if (!isDateInSlider) {
-        this.createNewSliderItems();
+         this.createNewSliderItems();
        }
     }   
   }
@@ -64,7 +68,7 @@ export class DateSliderComponent implements OnInit, OnChanges, OnDestroy {
     const fromDate = this.changeDateForDaysNumber(new Date(this.currentDate), DAYS_BEFORE_CURRENT);
     const toDate = this.changeDateForDaysNumber(new Date(this.currentDate), DAYS_AFTER_CURRENT);
     const current = new Date(fromDate);
-    this.sub = this.getFaresForPeriod(fromDate, toDate).pipe(
+    this.getFaresForPeriod(fromDate, toDate).pipe(
       map(items => {
         const arr: DateSliderItem[] = [];
         for (let i = 0; i < SLIDER_LENGTH; i += 1) {
@@ -77,11 +81,10 @@ export class DateSliderComponent implements OnInit, OnChanges, OnDestroy {
           })
           current.setDate(current.getDate() + 1)
         }
-        return arr;
-      })
-    ).subscribe((items) => {
-      this.sliderData = items
-    })
+        this.sliderItemsSubject$.next(arr);
+      }),
+      take(1),
+    ).subscribe();
   }
 
   public selectNewDate(date: string): void {
@@ -104,6 +107,46 @@ export class DateSliderComponent implements OnInit, OnChanges, OnDestroy {
         };
         this.bookingService.changeForwardDate(dto);
       }
+    }
+  }
+
+  public showNext(): void {
+      const lastDate = this.sliderData[this.sliderData.length - 1].date;
+      const newDateMs = new Date(lastDate).setDate(lastDate.getDate() + 1);
+      if (this.sliderData) {
+      const newArr = this.sliderData.slice(1);
+       this.getFaresForPeriod(new Date(newDateMs), new Date(newDateMs))
+          .pipe(
+            map(items => {
+              const [fare, ] = items;
+              newArr.push({
+                  date: new Date(newDateMs),
+                  price: fare?.flightFare || null,
+              })
+              this.sliderItemsSubject$.next(newArr);
+            }),
+            take(1),
+          ).subscribe()
+    }
+  }
+
+  public showPrev(): void {
+    const firstDate = this.sliderData[0].date;
+    const newDateMs = new Date(firstDate).setDate(firstDate.getDate() - 1);
+      if (this.sliderData) {
+      const newArr = this.sliderData.slice(0, -1);
+       this.getFaresForPeriod(new Date(newDateMs), new Date(newDateMs))
+          .pipe(
+            map(items => {
+              const [fare, ] = items;
+              newArr.unshift({
+                date: new Date(newDateMs),
+                price: fare?.flightFare || null,
+              })
+              this.sliderItemsSubject$.next(newArr);
+            }),
+            take(1),
+          ).subscribe()
     }
   }
 
@@ -134,6 +177,6 @@ export class DateSliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.sub.unsubscribe();
   }
 }
