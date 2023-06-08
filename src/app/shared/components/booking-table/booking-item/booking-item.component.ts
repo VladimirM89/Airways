@@ -7,6 +7,7 @@ import { BookingService } from 'src/app/core/services/booking.service';
 import { PaymentService } from 'src/app/core/services/payment.service';
 import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
 import { deleteBooking } from 'src/app/redux/actions/user.action';
+import { FullUrls } from 'src/app/shared/constants/full-urls';
 import { PassengersNumber } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 
@@ -146,5 +147,9 @@ export class BookingItemComponent implements OnInit {
     );
     this.bookingService.addForwardFlight(sortedArr[0]);
     this.bookingService.addReturnFlight(sortedArr[1]);
+  }
+
+  public navToSummary(): void {
+    this.router.navigate([FullUrls.PAYMENT]);
   }
 }
