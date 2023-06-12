@@ -8,6 +8,7 @@ import { createBooking, editBooking } from 'src/app/redux/actions/user.action';
 
 import { BookingDto, ContactInfoDto } from 'src/app/shared/models/api-models';
 import { Passenger, SelectedFlights } from 'src/app/shared/models/booking';
+import { FlightItem } from 'src/app/shared/models/flight-item';
 import { Nullable } from 'src/app/shared/models/types';
 import { UserBooking } from 'src/app/shared/models/user.model';
 import { Paths } from 'src/app/types/enums';
@@ -46,6 +47,16 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
 
   public navToPassengers(): void {
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
+  }
+
+  public get passengers(): Passenger[] {
+    const allPassengers: Array<Passenger[]> = [];
+    if (this.bookingService.passengersInfo) {
+      allPassengers.push(this.bookingService.passengersInfo.adult);
+      allPassengers.push(this.bookingService.passengersInfo.child);
+      allPassengers.push(this.bookingService.passengersInfo.infant);
+    }
+    return allPassengers.flat();
   }
 
   private createPassengersDto(): Passenger[] {
@@ -113,15 +124,19 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
   public editBooking(): void {
     let booking: Nullable<UserBooking> = null;
     const bookingInfo = this.bookingService.getCurrentBookingInfo();
+    const { forwardFlight } = this.bookingService.getCurrentSelectedFlights();
+    const { returnFlight } = this.bookingService.getCurrentSelectedFlights();
+    let flights: FlightItem[] = [];
+    if (forwardFlight && returnFlight) {
+      flights = [forwardFlight, returnFlight];
+    }
+
     if (bookingInfo && this.selectedBookingService.editBookingId) {
       booking = {
         id: this.selectedBookingService.editBookingId,
         paid: false,
         bookingInfo,
-        flights: [
-          this.bookingService.getCurrentSelectedFlights().forwardFlight!,
-          this.bookingService.getCurrentSelectedFlights().returnFlight!,
-        ],
+        flights,
         passengers: this.bookingService.passengersInfo,
       };
     }

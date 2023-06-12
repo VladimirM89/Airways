@@ -1,30 +1,49 @@
-import { Component, Input } from '@angular/core';
-import { BookingService } from 'src/app/core/services/booking.service';
+/* eslint-disable no-return-assign */
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 import { Passenger } from 'src/app/shared/models/booking';
 import { getFullUTC } from 'src/app/shared/utils';
+import { UserBooking } from 'src/app/shared/models/user.model';
+import { Store } from '@ngrx/store';
+import { selectAllBookings } from 'src/app/redux/selectors/user.selectors';
+import { tap } from 'rxjs/operators';
+import { Nullable } from 'src/app/shared/models/types';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-flight-details',
   templateUrl: './flight-details.component.html',
   styleUrls: ['./flight-details.component.scss'],
 })
-export class FlightDetailsComponent {
+export class FlightDetailsComponent implements OnInit, OnDestroy {
   @Input() public flight!: FlightItem;
+
+  @Input() public passengers!: Passenger[];
 
   public getFullUTC = getFullUTC;
 
-  public constructor(private bookingService: BookingService) {}
+  public existingBooking: Nullable<UserBooking> = null;
 
-  public get passengers(): Passenger[] {
-    const allPassengers: Array<Passenger[]> = [];
-    if (this.bookingService.passengersInfo) {
-      allPassengers.push(this.bookingService.passengersInfo?.adult);
-      allPassengers.push(this.bookingService.passengersInfo?.child);
-      allPassengers.push(this.bookingService.passengersInfo?.infant);
+  private bookingSub!: Subscription;
+
+  public ngOnInit(): void {
+    const booking = localStorage.getItem('details');
+    if (booking) {
+      const userBooking: UserBooking = JSON.parse(booking);
+      this.bookingSub = this.store
+        .select(selectAllBookings)
+        .pipe(
+          tap(
+            bookings =>
+              (this.existingBooking =
+                bookings.find(item => item.id === userBooking.id) || null)
+          )
+        )
+        .subscribe();
     }
-    return allPassengers.flat();
   }
+
+  public constructor(private store: Store) {}
 
   public luggageCount(value: string): number {
     return Number(value);
@@ -56,5 +75,9 @@ export class FlightDetailsComponent {
 
   public trackByFn(index: number, item: Passenger): string {
     return item.dateOfBirth;
+  }
+
+  public ngOnDestroy(): void {
+    this.bookingSub.unsubscribe();
   }
 }

@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BookingService } from 'src/app/core/services/booking.service';
-import { SelectedFlights } from 'src/app/shared/models/booking';
+import { Passenger, SelectedFlights } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 
 @Component({
@@ -11,7 +10,7 @@ import { FlightItem } from 'src/app/shared/models/flight-item';
 export class FlightSummaryComponent {
   @Input() public selectedFlights!: SelectedFlights;
 
-  public constructor(private bookingService: BookingService) {}
+  @Input() public passengers!: Passenger[];
 
   public get sortedFlights(): Array<FlightItem> {
     if (

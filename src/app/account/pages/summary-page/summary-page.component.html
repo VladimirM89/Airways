@@ -1,10 +1,12 @@
-<div class="title-content">
-  <span class="summary-logo"></span>
-  <span class="summary-title title">Booking summary</span>
+<div class="wrapper summary-wrapper">
+  <div class="title-content title">
+    <span class="summary-title title">Booking summary</span>
+  </div>
+
+  <app-flight-summary [selectedFlights]="selectedFlights" [passengers]="passengers"></app-flight-summary>
+
+  <button class="primary-btn edit" (click)="navToAccount()">
+      Back to account
+  </button>
 </div>
 
-<!-- <app-flight-summary></app-flight-summary> -->
-
-<button class="primary-btn edit" (click)="navToAccount()">
-    Back to account
-</button>

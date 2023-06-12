@@ -149,7 +149,8 @@ export class BookingItemComponent implements OnInit {
     this.bookingService.addReturnFlight(sortedArr[1]);
   }
 
-  public navToSummary(): void {
+  public navToSummary(booking: UserBooking): void {
+    localStorage.setItem('details', JSON.stringify(booking));
     this.router.navigate([FullUrls.SUMMARY]);
   }
 }

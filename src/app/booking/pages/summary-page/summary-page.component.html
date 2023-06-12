@@ -5,7 +5,7 @@
   <span class="summary-title title">Summary</span>
 </div>
 
-<app-flight-summary [selectedFlights]="selectedFlights"></app-flight-summary>
+<app-flight-summary [selectedFlights]="selectedFlights" [passengers]="passengers"></app-flight-summary>
 
 <button class="primary-btn edit"
   *ngIf="isEditMode; else notEditMode"
