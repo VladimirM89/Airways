@@ -57,6 +57,7 @@ import { NgLetDirective } from './directives/ng-let.directive';
     MatMenuModule,
     MatSlideToggleModule,
     MatRadioModule,
+    MatCardModule,
   ],
   exports: [
     CommonModule,

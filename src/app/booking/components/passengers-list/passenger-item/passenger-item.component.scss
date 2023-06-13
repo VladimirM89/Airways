@@ -39,17 +39,16 @@
 }
 
 
-
-
-
-
-
 .add-info-container {
   display: flex;
   gap: 1.5rem;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
+
+  @media screen and (max-width: 560px) {
+    justify-content: center;
+  }
 }
 
 .container {
@@ -106,39 +105,24 @@
   color: var(--auxiliary-color);
 }
 
-.baggage-input {
-  width: 10rem;
-  text-align: center;
-
-  button {
-    padding: 0.3rem;
-  }
+.counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: .4rem;
 }
 
-.add-info-container {
-  ::ng-deep {
-    .mat-mdc-form-field-subscript-wrapper {
-      display: none;
-    }
+.counter-btn{
+  padding: 0;
+}
 
-    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-      background-color: transparent;
-    }
-
-    .mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input, .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
-      height: 2rem;
-      width: 2rem;
-      text-align: center;
-    }
-
-    .mat-mdc-form-field-flex {
-      height: 3rem;
-    }
-
-    .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
-      padding: 0.4rem 0 0;
-    }
-  }
+.number-input {
+  width: 3rem;
+  background-color: transparent;
+  text-align: center;
+  max-width: min-content;
+  cursor: auto;
 }
 
 .error-baggage {

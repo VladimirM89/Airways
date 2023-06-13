@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 import { Passenger } from 'src/app/shared/models/booking';
+import { getFullUTC } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-summary-flight',
@@ -10,6 +11,8 @@ import { Passenger } from 'src/app/shared/models/booking';
 })
 export class SummaryFlightComponent {
   @Input() public flight!: FlightItem;
+
+  public getFullUTC = getFullUTC;
 
   public constructor(private bookingService: BookingService) {}
 

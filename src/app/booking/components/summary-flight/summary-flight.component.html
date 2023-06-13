@@ -6,7 +6,11 @@
     </p>
     <p class="time-info">
       <span>{{departureDate | date: 'EEEE, d MMMM, y'}}</span>
-      <span>{{departureTime | date: 'H:mm'}} &mdash; {{destinationTime | date: 'H:mm'}}</span>
+      <span>
+        {{departureTime | date: 'H:mm' : getFullUTC(flight.departureCity)}}
+        &mdash;
+        {{destinationTime | date: 'H:mm' : getFullUTC(flight.destinationCity)}}
+      </span>
     </p>
   </div>
   <ul class="passengers-list">

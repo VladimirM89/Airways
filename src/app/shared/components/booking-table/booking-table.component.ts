@@ -1,12 +1,10 @@
 /* eslint-disable no-return-assign */
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Paths } from 'src/app/types/enums';
 import { Router } from '@angular/router';
 import { PaymentService } from 'src/app/core/services/payment.service';
-import { Store } from '@ngrx/store';
-
 import { Observable } from 'rxjs';
-import { selectUnpaidBookings } from 'src/app/redux/selectors/user.selectors';
+import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
 import { UserBooking } from '../../models/user.model';
 
 interface ChoosenBookings {
@@ -19,21 +17,31 @@ interface ChoosenBookings {
   templateUrl: './booking-table.component.html',
   styleUrls: ['./booking-table.component.scss'],
 })
-export class BookingTableComponent {
+export class BookingTableComponent implements OnInit {
   public selectedBookings: Array<ChoosenBookings> = [];
+
+  @Input() public paidUserBookings$!: Observable<UserBooking[]>;
+
+  @Input() public unpaidUserBooking$!: Observable<UserBooking[]>;
+
+  public isCartPage = false;
 
   public constructor(
     private router: Router,
     private paymentService: PaymentService,
-    private store: Store
+    private selectedBookingService: SelectedBookingService
   ) {}
 
-  public get unpaidUserBookings$(): Observable<UserBooking[]> {
-    return this.store.select(selectUnpaidBookings);
+  public ngOnInit(): void {
+    this.isCartPage = this.router.url === `/${Paths.CART}`;
+  }
+
+  public get isAllChecked(): boolean {
+    return this.selectedBookingService.getCurrentAllSelectedValue();
   }
 
   public navToMain(): void {
-    this.router.navigate([Paths.BOOKING]);
+    this.router.navigate([Paths.BASE]);
   }
 
   public summary(bookings: UserBooking[]): number {
@@ -43,5 +51,18 @@ export class BookingTableComponent {
         (sum += this.paymentService.summary(item.bookingInfo, item.flights))
     );
     return sum;
+  }
+
+  public isAllBookingsSelected(bookings: UserBooking[]): void {
+    this.selectedBookingService.changeAllSelectedValue();
+    const isAllChecked =
+      this.selectedBookingService.getCurrentAllSelectedValue();
+    if (isAllChecked) {
+      bookings.forEach(booking =>
+        this.selectedBookingService.addBooking(isAllChecked, booking)
+      );
+    } else {
+      this.selectedBookingService.clearBookings();
+    }
   }
 }

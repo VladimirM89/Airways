@@ -1,1 +1,11 @@
-<button class="primary-btn" (click)="logout()">Logout</button>
+<div class="wrapper page-wrapper">
+
+  <mat-card class="cart-container">
+    <p class="title account-title">Account</p>
+    <app-booking-table [paidUserBookings$]="paidUserBookings$" [unpaidUserBooking$]="unpaidUserBookings$"></app-booking-table>
+    <div class="btn-container">
+      <button class="btn primary-btn" (click)="logout()">Logout</button>
+    </div>
+  </mat-card>
+
+</div>

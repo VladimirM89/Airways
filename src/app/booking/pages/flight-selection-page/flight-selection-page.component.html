@@ -5,7 +5,7 @@
         <img src="./assets/forward-flight-icon.svg" alt="" />
         {{ bookingInfo.departureAirport | airportToCity}} to {{ bookingInfo.destinationAirport | airportToCity}}
       </h2>
-      <app-date-slider></app-date-slider>
+      <app-date-slider [currentDate]="bookingInfo.departureDate" [flightDirections]="{from: bookingInfo.departureAirport, to: bookingInfo.destinationAirport}"></app-date-slider>
     </div>
 
     <div class="flights-section">
@@ -35,7 +35,7 @@
         <img src="./assets/return-flight-icon.svg" alt="" />
         {{ bookingInfo.destinationAirport | airportToCity}} to {{ bookingInfo.departureAirport | airportToCity}}
       </h2>
-      <app-date-slider></app-date-slider>
+      <app-date-slider [currentDate]="bookingInfo.returnDate" [flightDirections]="{from: bookingInfo.destinationAirport, to: bookingInfo.departureAirport}"></app-date-slider>
     </div>
 
     <div class="flights-section">

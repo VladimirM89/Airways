@@ -3,44 +3,155 @@ p {
 }
 
 .header-container {
+  padding: 2rem 3.5rem;
   display: flex;
-  gap: 3rem;
-  justify-content: space-between;
+  gap: 2.5rem;
   align-items: center;
   font-size: 2rem;
   font-weight: 700;
+  background-color: var(--title-table-color);
+
+  @media screen and (max-width: 600px) {
+    gap: 1.5rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+  }
+
 }
+
+.header-content-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.number-container {
+  max-width: 10rem;
+  min-width: 7rem;
+  flex-grow: 1;
+}
+
+.flight-name-container {
+  max-width: 28rem;
+  min-width: 14rem;
+  flex-grow: 1;
+}
+
+.way {
+  max-width: 10rem;
+  flex-grow: 1;
+}
+
+.time-container {
+  max-width: 29rem;
+  min-width: 15rem;
+  flex-grow: 1;
+}
+
+.passengers-container {
+  max-width: 11rem;
+  min-width: max-content;
+  flex-grow: 1;
+}
+
+.cost {
+  max-width: 10rem;
+  flex-grow: 1;
+  text-align: start;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.no-bookings-text {
+  padding: 0 3.5rem;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.bookings-container {
+  padding: 0 3.5rem;
+
+  @media screen and (max-width: 450px) {
+    padding: 2rem 1.5rem;
+  }
+
+}
+
+.paid-title {
+  padding: 2rem 3.5rem 0;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+
+  @media screen and (max-width: 450px) {
+    padding: 2rem 1.5rem 0;
+  }
+
+}
+
 
 .bottom-line {
   border-bottom: 1px solid var(--neutral-color);
 }
 
 .bottom-container {
+  padding: 4rem 3.5rem;
   display: flex;
+  gap: 3rem;
   justify-content: space-between;
   align-items: center;
+
+  @media screen and (max-width: 450px) {
+    flex-direction: column-reverse;
+    gap: 2rem;
+    padding: 2rem 1.5rem;
+  }
 }
 
-.apply-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.promo-container {
-  width: 31rem;
-  padding: 0.4rem 1.6rem;
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid var(--auxiliary-color-opacity02);
-  border-radius: 0.5rem;
-}
-
-.without-padding {
+.add-btn {
+  min-width: max-content;
   padding: 0;
 }
 
-.selected-container {
+
+.add-btn-text {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--bg-neutral);
+  color: var(--primary-color);
+}
+
+.position-center {
+  justify-content: center;
+}
+
+.total-container {
+  margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 3.8rem;
+  gap: 2.5rem;
+  font-weight: 700;
 }
+
+.total-title {
+  font-size: 2rem;
+}
+
+.total-cost {
+  height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 3rem;
+  background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+

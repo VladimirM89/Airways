@@ -1,6 +1,6 @@
 <div class="container">
 
-  <mat-checkbox color="primary" *ngIf="isNotPayed"></mat-checkbox>
+  <mat-checkbox color="primary" *ngIf="isNotPayed && isCartPage" [checked]="isChecked" (change)="isChecked" (click)="checkBooking(booking)"></mat-checkbox>
 
   <div class="booking-container">
 
@@ -9,7 +9,7 @@
       <p *ngIf="roundTrip">{{returnflightNumber}}</p>
     </div>
 
-    <div>
+    <div class="flight-name-container">
       <p>
         {{departureAirport | airportToCity }} &mdash; {{destinationAirport | airportToCity}}
       </p>
@@ -18,22 +18,26 @@
       </p>
     </div>
 
-    <p>{{roundTrip ? 'Round Trip' : 'One Way'}}</p>
+    <p class="way">{{roundTrip ? 'Round Trip' : 'One Way'}}</p>
 
-    <div>
-      <p>
-        <span>{{departureDate | date: 'd MMMM, y'}}, </span>
-        <span>{{departureTime | date: 'H:mm'}} &mdash; </span>
-        <span>{{destinationTime | date: 'H:mm'}}</span>
-      </p>
-      <p *ngIf="roundTrip">
-        <span>{{departureBackDate | date: 'd MMMM, y'}}, </span>
-        <span>{{departureBackTime | date: 'H:mm'}} &mdash; </span>
-        <span>{{destinationBackTime | date: 'H:mm'}}</span>
-      </p>
+    <div class="time-container">
+      <div class="departure-time-container">
+        <span class="departure-date">{{departureDate | date: 'd MMMM, y'}}, </span>
+        <p class="departure-time">
+          <span>{{departureTime | date: 'H:mm' : getFullUTC(booking.flights[0].departureCity)}} &mdash; </span>
+          <span>{{destinationTime | date: 'H:mm': getFullUTC(booking.flights[0].destinationCity)}}</span>
+        </p>
+      </div>
+      <div class="departure-time-container" *ngIf="roundTrip">
+        <span class="departure-date">{{departureBackDate | date: 'd MMMM, y'}}, </span>
+        <p class="departure-time">
+          <span>{{departureBackTime | date: 'H:mm': getFullUTC(booking.flights[1].destinationCity || '')}} &mdash; </span>
+          <span>{{destinationBackTime | date: 'H:mm': getFullUTC(booking.flights[1].departureCity || '')}}</span>
+        </p>
+      </div>
     </div>
 
-    <ul>
+    <ul class="passengers-container">
       <ng-container *ngFor="let passenger of passengers | keyvalue">
         <li *ngIf="passenger.value">
           <p>{{passenger.value}} x {{passenger.key | titlecase}}</p>
@@ -45,8 +49,8 @@
 
   </div>
 
-  <div *ngIf="isNotPayed">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+  <div *ngIf="isNotPayed && isCartPage">
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="more-btn">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">

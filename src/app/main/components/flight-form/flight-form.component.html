@@ -24,7 +24,11 @@
       <mat-error *ngIf="departure.hasError('required')">this field can not be empty</mat-error>
       <mat-error *ngIf="departure.hasError('isDirectionValid')">{{departure.errors?.['isDirectionValid']}}</mat-error>
     </mat-form-field>
-  
+    
+    <button class="toggle-btn" (click)="toggleFlightDirections()">
+      <img src="/assets/reverse-btn.svg" alt="Change directions">
+    </button>
+
     <mat-form-field class="input-container" appearance="outline">
       <mat-label>Destination</mat-label>
       <input type="text"
@@ -55,7 +59,8 @@
     <div class="validation">
       <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isDuplicate']}}</p>
       <p class="error-message" *ngIf="passengers.invalid">{{passengers.errors?.['isPassengersValid']}}</p>
+      <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isRangeValid']}}</p>
     </div>
-    <button class="btn primary-btn search-btn" [disabled]="form.invalid" (click)="setSearch()">Search</button>
+    <button class="btn primary-btn search-btn" [disabled]="form.invalid" (click)="submitForm()">Search</button>
   </div> 
 </form>

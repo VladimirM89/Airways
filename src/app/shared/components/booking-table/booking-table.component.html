@@ -1,50 +1,75 @@
-<ng-container *ngIf="unpaidUserBookings$ | async as unpaidUserBookings">
+<ng-container *ngIf="unpaidUserBooking$ | async as unpaidUserBookings">
 
-  <div class="header-container">
+  <div class="header-container" *ngIf="unpaidUserBookings.length">
 
-    <mat-checkbox color="primary"></mat-checkbox>
+    <mat-checkbox color="primary"
+      *ngIf="isCartPage"
+      [checked]="isAllChecked"
+      (click)="isAllBookingsSelected(unpaidUserBookings)">
+    </mat-checkbox>
 
-    <p>No</p>
-
-    <p>Flight</p>
-
-    <p>Type trip</p>
-
-    <p>Data & Time</p>
-
-    <p>Passengers</p>
-
-    <p>Price</p>
-
-  </div>
-
-  <p *ngIf="!unpaidUserBookings.length">No bookings. Please add new trip</p>
-  <app-booking-item *ngFor="let booking of unpaidUserBookings" [booking]="booking" class="bottom-line"></app-booking-item>
-
-  <div class="bottom-container bottom-line">
-    <button (click)="navToMain()">+ Add new trip</button>
-    <p>
-      <span>Total</span>
-      <span>{{summary(unpaidUserBookings) | currency: 'EUR'}}</span>
-    </p>
-  </div>
-
-  <div class="apply-container">
-    <form class="promo-container">
-      <input type="text" class="promo" placeholder="Promo Code">
-      <button class="without-padding">APPLY</button>
-    </form>
-
-    <div class="selected-container">
-      <p>
-        <span>1</span>
-        <span>selected</span>
-      </p>
-      <button class="primary-btn">Payment</button>
+    <div class="header-content-container">
+      <p class="number-container">No.</p>
+      <p class="flight-name-container">Flight</p>
+      <p class="way">Type trip</p>
+      <p class="time-container">Data & Time</p>
+      <p class="passengers-container">Passengers</p>
+      <p class="cost">Price</p>
     </div>
+
+    <mat-icon class="hidden" [style]="isCartPage ? '' : 'display: none'">more_vert</mat-icon>
+
   </div>
+
+  <p class="no-bookings-text"
+    *ngIf="!unpaidUserBookings.length">
+    No bookings to pay. Please add new trip
+  </p>
+
+  <div class="bookings-container">
+
+    <p class="paid-title title" *ngIf="!isCartPage">Unpaid bookings</p>
+    <app-booking-item *ngFor="let booking of unpaidUserBookings"
+      [booking]="booking" class="bottom-line">
+    </app-booking-item>
+
+  </div>
+
+  <div class="bottom-container bottom-line"
+    [ngClass]="{'position-center': !unpaidUserBookings.length}">
+      <button class="add-btn" (click)="navToMain()" *ngIf="isCartPage">
+        <span class="add-btn-text" >+ Add new trip</span>
+      </button>
+      <div class="total-container" *ngIf="unpaidUserBookings.length">
+        <p class="total-title">Total</p>
+        <p class="total-cost">{{summary(unpaidUserBookings) | currency: 'EUR'}}</p>
+      </div>
+  </div>
+
+  <ng-container *ngIf="!isCartPage">
+
+    <ng-container *appNgLet="paidUserBookings$ | async as paidUserBookings">
+
+      <div class="bookings-container">
+        <p  class="paid-title title">Paid bookings</p>
+      <app-booking-item *ngFor="let booking of paidUserBookings"
+        [booking]="booking" class="bottom-line">
+      </app-booking-item>
+      </div>
+
+      <div class="bottom-container bottom-line">
+        <div class="total-container">
+          <p class="total-title">Total</p>
+          <p class="total-cost">{{summary(paidUserBookings) | currency: 'EUR'}}</p>
+        </div>
+      </div>
+
+    </ng-container>
+
+  </ng-container>
 
 </ng-container>
+
 
 
 

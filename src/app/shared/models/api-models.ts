@@ -38,3 +38,15 @@ export interface SearchFlightsDto {
   destinationAirport: string;
   date: string;
 }
+
+export interface GetFligthsFareDto {
+  departureAirport: string;
+  destinationAirport: string;
+  fromDate: string;
+  toDate: string;
+}
+
+export interface FlightFare {
+  date: string;
+  flightFare: number;
+}

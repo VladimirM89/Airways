@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import {
-  selectAllBookings,
+  selectUnpaidBookings,
   selectUserDate,
 } from 'src/app/redux/selectors/user.selectors';
 import { Nullable } from 'src/app/shared/models/types';
@@ -20,7 +20,7 @@ export class CartComponent {
   public constructor(private router: Router, private store: Store) {}
 
   public get bookings$(): Observable<UserBooking[]> {
-    return this.store.select(selectAllBookings);
+    return this.store.select(selectUnpaidBookings);
   }
 
   public get isUserLogin$(): Observable<Nullable<User>> {

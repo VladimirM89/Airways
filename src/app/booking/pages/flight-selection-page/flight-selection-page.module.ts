@@ -7,6 +7,8 @@ import { SearchItemComponent } from '../../components/search-results/search-item
 import { DateSliderComponent } from '../../components/search-results/date-slider/date-slider.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { SeatsColorDirective } from '../../directives/seats.derective';
+import { DateItemComponent } from '../../components/search-results/date-slider/date-item/date-item.component';
+import { PriceColorDirective } from '../../directives/price.directive';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import { SeatsColorDirective } from '../../directives/seats.derective';
     SearchItemComponent,
     DateSliderComponent,
     SeatsColorDirective,
+    DateItemComponent,
+    PriceColorDirective,
   ],
   imports: [CommonModule, FlightSelectionPageRoutingModule, SharedModule],
 })

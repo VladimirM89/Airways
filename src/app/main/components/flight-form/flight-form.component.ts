@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -6,6 +6,11 @@ import { BookingService } from 'src/app/core/services/booking.service';
 import { Airports } from 'src/app/shared/constants/airports';
 import { Airport } from 'src/app/shared/models/airport';
 import { BookingInfo } from 'src/app/shared/models/booking';
+import {
+  DateRangeFormGroup,
+  FlightsForm,
+  PassengersFormGroup,
+} from 'src/app/shared/models/forms-models';
 import { Nullable } from 'src/app/shared/models/types';
 import { dateToString } from 'src/app/shared/utils';
 import {
@@ -24,9 +29,7 @@ import { Paths } from 'src/app/types/enums';
   templateUrl: './flight-form.component.html',
   styleUrls: ['./flight-form.component.scss'],
 })
-export class FlightFormComponent
-  implements OnInit, OnDestroy, AfterContentInit
-{
+export class FlightFormComponent implements OnInit, OnDestroy {
   public constructor(
     private bookingService: BookingService,
     private router: Router
@@ -45,9 +48,9 @@ export class FlightFormComponent
       this.bookingInfo = info;
     });
 
-    this.form = new FormGroup(
+    this.form = new FormGroup<FlightsForm>(
       {
-        roundTrip: new FormControl<string>(
+        roundTrip: new FormControl<'round' | 'one-way'>(
           this.bookingInfo?.roundTrip ? 'round' : 'one-way'
         ),
         departure: new FormControl<string>(
@@ -58,7 +61,7 @@ export class FlightFormComponent
           this.bookingInfo?.destinationAirport || '',
           [Validators.required, checkIfFlightDirectionValid()]
         ),
-        range: new FormGroup({
+        range: new FormGroup<DateRangeFormGroup>({
           departureDate: new FormControl<Date | null>(
             this.bookingInfo ? new Date(this.bookingInfo.departureDate) : null,
             [Validators.required, isDateInPast()]
@@ -68,7 +71,7 @@ export class FlightFormComponent
             [isDateInPast()]
           ),
         }),
-        passengers: new FormGroup(
+        passengers: new FormGroup<PassengersFormGroup>(
           {
             adult: new FormControl<number>(
               this.bookingInfo?.passengers.adult || 1
@@ -83,12 +86,8 @@ export class FlightFormComponent
           [checkIfPassengersValid()]
         ),
       },
-      [checkIfFlightDirectionsDuplicate()]
+      [checkIfFlightDirectionsDuplicate(), isFlightsDateRangeValid()]
     );
-  }
-
-  public ngAfterContentInit(): void {
-    this.range.addValidators([isFlightsDateRangeValid(this.isRoundTrip)]);
   }
 
   public trackByFn(index: number, item: Airport): number {
@@ -112,8 +111,12 @@ export class FlightFormComponent
         },
       };
       this.bookingService.setBookingInfo(newSearchInfo);
-      this.router.navigate([Paths.BOOKING]);
     }
+  }
+
+  public submitForm(): void {
+    this.setSearch();
+    this.router.navigate([Paths.BOOKING]);
   }
 
   public ngOnDestroy(): void {
@@ -162,5 +165,13 @@ export class FlightFormComponent
 
   public get roundTripRadio(): FormControl {
     return this.form.get('roundTrip') as FormControl;
+  }
+
+  public toggleFlightDirections(): void {
+    const currentDeparture = this.departure.value;
+    const currentDestinaton = this.destination.value;
+    this.destination.setValue(currentDeparture);
+    this.departure.setValue(currentDestinaton);
+    this.setSearch();
   }
 }
