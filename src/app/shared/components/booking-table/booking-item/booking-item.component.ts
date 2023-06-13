@@ -117,7 +117,7 @@ export class BookingItemComponent implements OnInit {
 
   public get cost(): number {
     return this.paymentService.summary(
-      this.booking.bookingInfo,
+      this.booking.bookingInfo.passengers,
       this.booking.flights
     );
   }

@@ -1,7 +1,5 @@
 import { KeyValue } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, map } from 'rxjs';
-import { BookingService } from 'src/app/core/services/booking.service';
+import { Component, Input } from '@angular/core';
 import { PaymentService } from 'src/app/core/services/payment.service';
 import { PassengersNumber } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/flight-item';
@@ -11,37 +9,12 @@ import { FlightItem } from 'src/app/shared/models/flight-item';
   templateUrl: './payments-details.component.html',
   styleUrls: ['./payments-details.component.scss'],
 })
-export class PaymentsDetailsComponent implements OnInit, OnDestroy {
-  public bookingInfo$ = this.bookingService.getBookingInfo();
+export class PaymentsDetailsComponent {
+  @Input() public passengers!: PassengersNumber;
 
-  private sub!: Subscription;
+  @Input() public flights!: FlightItem[];
 
-  private flights: Array<FlightItem> = [];
-
-  public constructor(
-    private bookingService: BookingService,
-    private paymentService: PaymentService
-  ) {}
-
-  public ngOnInit(): void {
-    this.sub = this.bookingService
-      .getSelectedFlights()
-      .pipe(
-        map(flightsObject => {
-          if (flightsObject.forwardFlight && flightsObject.returnFlight) {
-            this.flights = [
-              flightsObject.forwardFlight,
-              flightsObject.returnFlight,
-            ];
-          } else if (flightsObject.forwardFlight) {
-            this.flights = [flightsObject.forwardFlight];
-          } else {
-            this.flights = [];
-          }
-        })
-      )
-      .subscribe();
-  }
+  public constructor(private paymentService: PaymentService) {}
 
   public get fare(): number {
     return this.paymentService.fare(this.flights);
@@ -52,8 +25,7 @@ export class PaymentsDetailsComponent implements OnInit, OnDestroy {
   }
 
   public get summary(): number {
-    const bookingInfo = this.bookingService.getCurrentBookingInfo();
-    return this.paymentService.summary(bookingInfo, this.flights);
+    return this.paymentService.summary(this.passengers, this.flights);
   }
 
   public trackByFn(
@@ -61,9 +33,5 @@ export class PaymentsDetailsComponent implements OnInit, OnDestroy {
     passenger: KeyValue<keyof PassengersNumber, number>
   ): string {
     return passenger.key;
-  }
-
-  public ngOnDestroy(): void {
-    this.sub.unsubscribe();
   }
 }

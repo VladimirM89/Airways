@@ -1,6 +1,6 @@
-<mat-card class="container" *ngIf="bookingInfo$ | async as bookingInfo">
+<mat-card class="container">
   <ul class="summary-cost-container">
-    <ng-container *ngFor="let passenger of bookingInfo.passengers | keyvalue" >
+    <ng-container *ngFor="let passenger of passengers | keyvalue" >
       <li class="cost-passenger" *ngIf="passenger.value">
 
         <p class="line-conrainer description-title">

@@ -46,7 +46,10 @@ export class BookingTableComponent implements OnInit {
     let sum = 0;
     bookings.forEach(
       item =>
-        (sum += this.paymentService.summary(item.bookingInfo, item.flights))
+        (sum += this.paymentService.summary(
+          item.bookingInfo.passengers,
+          item.flights
+        ))
     );
     return sum;
   }

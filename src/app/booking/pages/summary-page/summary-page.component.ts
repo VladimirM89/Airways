@@ -49,28 +49,20 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
   }
 
-  public get passengers(): Passenger[] {
-    const allPassengers: Array<Passenger[]> = [];
-    if (this.bookingService.passengersInfo) {
-      allPassengers.push(this.bookingService.passengersInfo.adult);
-      allPassengers.push(this.bookingService.passengersInfo.child);
-      allPassengers.push(this.bookingService.passengersInfo.infant);
-    }
-    return allPassengers.flat();
-  }
-
-  private createPassengersDto(): Passenger[] {
+  public createPassengersDto(): Passenger[] {
     const passengers = this.bookingService.passengersInfo;
     const arr: Passenger[] = [];
-    passengers?.adult.forEach(adult =>
-      arr.push({ ...adult, category: 'adult' })
-    );
-    passengers?.child.forEach(adult =>
-      arr.push({ ...adult, category: 'child' })
-    );
-    passengers?.infant.forEach(adult =>
-      arr.push({ ...adult, category: 'infant' })
-    );
+    if (passengers) {
+      passengers.adult.forEach(adult =>
+        arr.push({ ...adult, category: 'adult' })
+      );
+      passengers.child.forEach(child =>
+        arr.push({ ...child, category: 'child' })
+      );
+      passengers.infant.forEach(infant =>
+        arr.push({ ...infant, category: 'infant' })
+      );
+    }
     return arr;
   }
 
