@@ -5,10 +5,7 @@
   <span class="summary-title title">Summary</span>
 </div>
 
-<div class="summary-container">
-  <app-summary-flight  *ngFor="let flight of sortedFlights; trackBy: trackByFn" [flight]="flight"></app-summary-flight>
-  <app-cost-passengers></app-cost-passengers>
-</div>
+<app-flight-summary [selectedFlights]="selectedFlights" [passengers]="createPassengersDto()"></app-flight-summary>
 
 <button class="primary-btn edit"
   *ngIf="isEditMode; else notEditMode"

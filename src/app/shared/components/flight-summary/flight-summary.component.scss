@@ -1,0 +1,14 @@
+.summary-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40rem, 1fr));
+  grid-column-gap: 2.4rem;
+  grid-row-gap: 3rem;
+
+  @media screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+}

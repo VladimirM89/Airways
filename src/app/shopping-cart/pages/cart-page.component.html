@@ -3,7 +3,7 @@
 <div class="wrapper page-wrapper">
   <mat-card class="cart-container wrapper">
     <p class="title cart-title">Cart</p>
-    <app-booking-table [unpaidUserBooking$]="unpaidUserBookings$"></app-booking-table>
+    <app-booking-table [userBookings$]="unpaidUserBookings$"></app-booking-table>
 
     <ng-container *ngIf="unpaidUserBookings$ | async as unpaidUserBookings">
 

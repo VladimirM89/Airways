@@ -20,9 +20,7 @@ interface ChoosenBookings {
 export class BookingTableComponent implements OnInit {
   public selectedBookings: Array<ChoosenBookings> = [];
 
-  @Input() public paidUserBookings$!: Observable<UserBooking[]>;
-
-  @Input() public unpaidUserBooking$!: Observable<UserBooking[]>;
+  @Input() public userBookings$!: Observable<UserBooking[]>;
 
   public isCartPage = false;
 
@@ -48,7 +46,10 @@ export class BookingTableComponent implements OnInit {
     let sum = 0;
     bookings.forEach(
       item =>
-        (sum += this.paymentService.summary(item.bookingInfo, item.flights))
+        (sum += this.paymentService.summary(
+          item.bookingInfo.passengers,
+          item.flights
+        ))
     );
     return sum;
   }

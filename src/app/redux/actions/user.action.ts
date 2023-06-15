@@ -44,10 +44,10 @@ export const updateBookingState = createAction(
 
 export const deleteBooking = createAction(
   '[Booking] Delete booking',
-  props<{ bookings: UserBooking }>()
+  props<{ booking: UserBooking }>()
 );
 
 export const editBooking = createAction(
   '[Booking] Edit booking',
-  props<{ bookings: UserBooking }>()
+  props<{ booking: UserBooking }>()
 );

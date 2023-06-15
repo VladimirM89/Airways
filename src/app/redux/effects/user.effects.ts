@@ -183,7 +183,7 @@ export class UserEffects {
         const token = localStorage.getItem('token') || '';
         return this.apiBookingsService
           .deleteBooking({
-            id: action.bookings.id,
+            id: action.booking.id,
             token,
           })
           .pipe(switchMap(() => this.getAllBookings(token)));
@@ -198,8 +198,8 @@ export class UserEffects {
         const token = localStorage.getItem('token') || '';
         return this.apiBookingsService
           .editBooking(
-            action.bookings.id,
-            this.convertToBookingDto(action.bookings)
+            action.booking.id,
+            this.convertToBookingDto(action.booking)
           )
           .pipe(switchMap(() => this.getAllBookings(token)));
       })

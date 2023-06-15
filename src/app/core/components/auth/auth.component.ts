@@ -41,8 +41,12 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
   }
 
-  public toggleAuthForms(): void {
-    this.isLoginInSelect = !this.isLoginInSelect;
+  public openLoginForm(): void {
+    this.isLoginInSelect = true;
+  }
+
+  public openRegisterForm(): void {
+    this.isLoginInSelect = false;
   }
 
   public togglePopup(): void {

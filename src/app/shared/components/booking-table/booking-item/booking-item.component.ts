@@ -7,6 +7,7 @@ import { BookingService } from 'src/app/core/services/booking.service';
 import { PaymentService } from 'src/app/core/services/payment.service';
 import { SelectedBookingService } from 'src/app/core/services/selected-booking.service';
 import { deleteBooking } from 'src/app/redux/actions/user.action';
+import { FullUrls } from 'src/app/shared/constants/full-urls';
 import { PassengersNumber } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/flight-item';
 
@@ -116,7 +117,7 @@ export class BookingItemComponent implements OnInit {
 
   public get cost(): number {
     return this.paymentService.summary(
-      this.booking.bookingInfo,
+      this.booking.bookingInfo.passengers,
       this.booking.flights
     );
   }
@@ -126,7 +127,7 @@ export class BookingItemComponent implements OnInit {
   }
 
   public deleteBooking(booking: UserBooking): void {
-    this.store.dispatch(deleteBooking({ bookings: booking }));
+    this.store.dispatch(deleteBooking({ booking }));
   }
 
   public editBooking(booking: UserBooking): void {
@@ -146,5 +147,10 @@ export class BookingItemComponent implements OnInit {
     );
     this.bookingService.addForwardFlight(sortedArr[0]);
     this.bookingService.addReturnFlight(sortedArr[1]);
+  }
+
+  public navToSummary(booking: UserBooking): void {
+    localStorage.setItem('details', JSON.stringify(booking));
+    this.router.navigate([FullUrls.SUMMARY]);
   }
 }
