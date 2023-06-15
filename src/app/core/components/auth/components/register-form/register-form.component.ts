@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
-/* eslint-disable class-methods-use-this */
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,

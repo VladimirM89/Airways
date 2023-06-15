@@ -39,10 +39,9 @@ export class CartPageComponent {
         flights: item.booking.flights,
         passengers: item.booking.passengers,
       };
-      this.store.dispatch(editBooking({ bookings: booking }));
+      this.store.dispatch(editBooking({ booking }));
     });
     this.selectedBookingService.clearBookings();
-    this.selectedBookingService.changeAllSelectedValue();
     this.togglePopup();
   }
 

@@ -119,8 +119,11 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
     const { forwardFlight } = this.bookingService.getCurrentSelectedFlights();
     const { returnFlight } = this.bookingService.getCurrentSelectedFlights();
     let flights: FlightItem[] = [];
-    if (forwardFlight && returnFlight) {
-      flights = [forwardFlight, returnFlight];
+    if (forwardFlight) {
+      flights = [forwardFlight];
+      if (returnFlight) {
+        flights.push(returnFlight);
+      }
     }
 
     if (bookingInfo && this.selectedBookingService.editBookingId) {
@@ -133,7 +136,7 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
       };
     }
     if (booking) {
-      this.store.dispatch(editBooking({ bookings: booking }));
+      this.store.dispatch(editBooking({ booking }));
     }
     this.selectedBookingService.editBookingId = null;
     this.bookingService.clearInfo();

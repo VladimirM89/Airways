@@ -127,7 +127,7 @@ export class BookingItemComponent implements OnInit {
   }
 
   public deleteBooking(booking: UserBooking): void {
-    this.store.dispatch(deleteBooking({ bookings: booking }));
+    this.store.dispatch(deleteBooking({ booking }));
   }
 
   public editBooking(booking: UserBooking): void {

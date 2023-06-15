@@ -78,6 +78,8 @@ export class FlightDetailsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.bookingSub.unsubscribe();
+    if (this.existingBooking) {
+      this.bookingSub.unsubscribe();
+    }
   }
 }

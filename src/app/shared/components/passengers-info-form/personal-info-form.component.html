@@ -98,6 +98,10 @@
       *ngIf="dateOfBirthErrors?.['isFutureDate'] && !dateOfBirthErrors?.['required']">
         The date is invalid. You choose future date.
     </small>
+    <small class="error-message"
+      *ngIf="dateOfBirthErrors?.['isAgeValid'] && !dateOfBirthErrors?.['required']">
+        {{dateOfBirthErrors?.['isAgeValid']}}
+    </small>
    </div>
   </div>
 
