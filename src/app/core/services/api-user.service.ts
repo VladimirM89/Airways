@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AUTH_URL } from 'src/app/shared/constants/api-constants';
@@ -28,5 +28,17 @@ export class ApiUserService {
     return this.http.get<User>(`${AUTH_URL}`, {
       params,
     });
+  }
+
+  public LoginWithGoogle(credentials: string): Observable<User> {
+    const header = new HttpHeaders().set('Content-type', 'application/json');
+    return this.http.post<User>(
+      `${AUTH_URL}/google`,
+      JSON.stringify(credentials),
+      {
+        headers: header,
+        withCredentials: true,
+      }
+    );
   }
 }
