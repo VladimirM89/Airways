@@ -51,3 +51,8 @@ export const editBooking = createAction(
   '[Booking] Edit booking',
   props<{ bookings: UserBooking }>()
 );
+
+export const authGoogle = createAction(
+  '[User] Auth with google',
+  props<{ jwtCredentials: string }>()
+);

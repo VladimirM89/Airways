@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { CredentialResponse } from 'google-one-tap';
 import { GOOGLE_CLIENT } from 'src/app/shared/constants/api-constants';
+import { Store } from '@ngrx/store';
+import { authGoogle } from 'src/app/redux/actions/user.action';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -11,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./social-media-form.component.scss'],
 })
 export class SocialMediaFormComponent implements OnInit {
-  public constructor(private authService: AuthService) {}
+  public constructor(private store: Store, private authService: AuthService) {}
 
   public ngOnInit(): void {
     // @ts-ignore
@@ -37,6 +39,11 @@ export class SocialMediaFormComponent implements OnInit {
   }
 
   private handleCredentialResponse(response: CredentialResponse): void {
-    console.log(response);
+    this.store.dispatch(
+      authGoogle({
+        jwtCredentials: response.credential,
+      })
+    );
+    this.authService.togglePopup();
   }
 }

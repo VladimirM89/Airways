@@ -12,7 +12,6 @@ import {
   PassengersNumber,
 } from 'src/app/shared/models/booking';
 import { BookingDto, BookingItem } from 'src/app/shared/models/api-models';
-import { BookingService } from 'src/app/core/services/booking.service';
 import { TypedAction } from '@ngrx/store/src/models';
 import { Observable } from 'rxjs';
 import {
@@ -24,6 +23,7 @@ import {
   loginUser,
   registerUser,
   editBooking,
+  authGoogle,
 } from '../actions/user.action';
 import { ApiBookingsService } from '../../core/services/api-bookings.service';
 
@@ -33,8 +33,7 @@ export class UserEffects {
     private actions$: Actions,
     private apiUserService: ApiUserService,
     private handleErrorApiService: HandleErrorApiService,
-    private apiBookingsService: ApiBookingsService,
-    private bookingService: BookingService
+    private apiBookingsService: ApiBookingsService
   ) {}
 
   private postUser$ = createEffect(() => {
@@ -253,4 +252,25 @@ export class UserEffects {
     }
     return passengerArray;
   }
+
+  private authGoogle$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(authGoogle),
+      switchMap(action =>
+        this.apiUserService
+          .authWithGoogle({ token: action.jwtCredentials })
+          .pipe(
+            catchError((error: HttpErrorResponse) =>
+              this.handleErrorApiService.handleError(error)
+            ),
+            switchMap(userToken => {
+              localStorage.setItem('token', userToken.token);
+              return this.apiUserService
+                .getUser(userToken.token)
+                .pipe(map(user => addUserToState({ user })));
+            })
+          )
+      )
+    );
+  });
 }
