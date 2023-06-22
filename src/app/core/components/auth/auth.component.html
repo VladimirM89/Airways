@@ -18,14 +18,14 @@
     <div class="btns-container">
       <button
         class="sign-btn"
-        (click)="toggleAuthForms()"
+        (click)="openLoginForm()"
         [ngClass]="{'selected-form': isLoginInSelect}"
       >
         Login in
       </button>
       <button
         class="sign-btn"
-        (click)="toggleAuthForms()"
+        (click)="openRegisterForm()"
         [ngClass]="{'selected-form': !isLoginInSelect}"
       >
         Sign up

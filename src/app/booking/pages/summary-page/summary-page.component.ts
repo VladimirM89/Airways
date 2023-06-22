@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -29,7 +28,7 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
 
   private sub!: Subscription;
 
-  private selectedFlights!: SelectedFlights;
+  public selectedFlights!: SelectedFlights;
 
   private isPayNowMode = false;
 
@@ -46,38 +45,24 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  public get sortedFlights(): Array<FlightItem> {
-    if (
-      this.selectedFlights.forwardFlight &&
-      this.selectedFlights.returnFlight
-    ) {
-      return [
-        this.selectedFlights.forwardFlight,
-        this.selectedFlights.returnFlight,
-      ];
-    }
-    if (this.selectedFlights.forwardFlight) {
-      return [this.selectedFlights.forwardFlight];
-    }
-    return [];
-  }
-
   public navToPassengers(): void {
     this.router.navigate([Paths.BOOKING, Paths.BOOKING_PASSENGERS]);
   }
 
-  private createPassengersDto(): Passenger[] {
+  public createPassengersDto(): Passenger[] {
     const passengers = this.bookingService.passengersInfo;
     const arr: Passenger[] = [];
-    passengers?.adult.forEach(adult =>
-      arr.push({ ...adult, category: 'adult' })
-    );
-    passengers?.child.forEach(adult =>
-      arr.push({ ...adult, category: 'child' })
-    );
-    passengers?.infant.forEach(adult =>
-      arr.push({ ...adult, category: 'infant' })
-    );
+    if (passengers) {
+      passengers.adult.forEach(adult =>
+        arr.push({ ...adult, category: 'adult' })
+      );
+      passengers.child.forEach(child =>
+        arr.push({ ...child, category: 'child' })
+      );
+      passengers.infant.forEach(infant =>
+        arr.push({ ...infant, category: 'infant' })
+      );
+    }
     return arr;
   }
 
@@ -120,10 +105,6 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
     this.navToCart();
   }
 
-  public trackByFn(index: number, item: FlightItem): number {
-    return item.id;
-  }
-
   private navToCart(): void {
     this.router.navigate([Paths.CART]);
   }
@@ -135,20 +116,27 @@ export class SummaryPageComponent implements OnInit, OnDestroy {
   public editBooking(): void {
     let booking: Nullable<UserBooking> = null;
     const bookingInfo = this.bookingService.getCurrentBookingInfo();
+    const { forwardFlight } = this.bookingService.getCurrentSelectedFlights();
+    const { returnFlight } = this.bookingService.getCurrentSelectedFlights();
+    let flights: FlightItem[] = [];
+    if (forwardFlight) {
+      flights = [forwardFlight];
+      if (returnFlight) {
+        flights.push(returnFlight);
+      }
+    }
+
     if (bookingInfo && this.selectedBookingService.editBookingId) {
       booking = {
         id: this.selectedBookingService.editBookingId,
         paid: false,
         bookingInfo,
-        flights: [
-          this.bookingService.getCurrentSelectedFlights().forwardFlight!,
-          this.bookingService.getCurrentSelectedFlights().returnFlight!,
-        ],
+        flights,
         passengers: this.bookingService.passengersInfo,
       };
     }
     if (booking) {
-      this.store.dispatch(editBooking({ bookings: booking }));
+      this.store.dispatch(editBooking({ booking }));
     }
     this.selectedBookingService.editBookingId = null;
     this.bookingService.clearInfo();

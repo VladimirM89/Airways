@@ -1,8 +1,7 @@
 /* eslint-disable no-return-assign */
 import { Injectable } from '@angular/core';
-import { BookingInfo } from 'src/app/shared/models/booking';
+import { PassengersNumber } from 'src/app/shared/models/booking';
 import { FlightItem } from 'src/app/shared/models/flight-item';
-import { Nullable } from 'src/app/shared/models/types';
 
 @Injectable({
   providedIn: 'root',
@@ -20,18 +19,9 @@ export class PaymentService {
     return tax;
   }
 
-  public summary(
-    bookingInfo: Nullable<BookingInfo>,
-    flights: FlightItem[]
-  ): number {
-    let summary = 0;
-    if (bookingInfo) {
-      const passengersNumber =
-        bookingInfo.passengers.adult +
-        bookingInfo.passengers.child +
-        bookingInfo.passengers.infant;
-      summary = passengersNumber * (this.fare(flights) + this.tax(flights));
-    }
-    return summary;
+  public summary(passengers: PassengersNumber, flights: FlightItem[]): number {
+    const passengersNumber =
+      passengers.adult + passengers.child + passengers.infant;
+    return passengersNumber * (this.fare(flights) + this.tax(flights));
   }
 }

@@ -37,7 +37,8 @@ export class PassengerItemComponent implements OnInit {
   public ngOnInit(): void {
     this.passengerFormGroup = new FormGroup({
       personalFormGroup: this.personalInfoFormService.createPersonalInfoForm(
-        this.passengerData
+        this.passengerData,
+        this.passengerCategory
       ),
       specialAssistance: new FormControl<boolean>(
         this.passengerData?.specialAssistance || false
