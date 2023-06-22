@@ -5,7 +5,7 @@ import { CredentialResponse } from 'google-one-tap';
 import { GOOGLE_CLIENT } from 'src/app/shared/constants/api-constants';
 import { Store } from '@ngrx/store';
 import { authGoogle } from 'src/app/redux/actions/user.action';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-social-media-form',

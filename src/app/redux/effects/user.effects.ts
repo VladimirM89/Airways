@@ -26,6 +26,7 @@ import {
   authGoogle,
 } from '../actions/user.action';
 import { ApiBookingsService } from '../../core/services/api-bookings.service';
+import { ToasterService } from '../../core/services/toaster.service';
 
 @Injectable()
 export class UserEffects {
@@ -33,7 +34,8 @@ export class UserEffects {
     private actions$: Actions,
     private apiUserService: ApiUserService,
     private handleErrorApiService: HandleErrorApiService,
-    private apiBookingsService: ApiBookingsService
+    private apiBookingsService: ApiBookingsService,
+    private toasterService: ToasterService
   ) {}
 
   private postUser$ = createEffect(() => {
@@ -41,11 +43,13 @@ export class UserEffects {
       ofType(registerUser),
       switchMap(action =>
         this.apiUserService.registerUser(action.user).pipe(
-          catchError((error: HttpErrorResponse) =>
-            this.handleErrorApiService.handleError(error)
-          ),
+          catchError((error: HttpErrorResponse) => {
+            this.toasterService.showError(error.error.message);
+            return this.handleErrorApiService.handleError(error);
+          }),
           switchMap(userToken => {
             localStorage.setItem('token', userToken.token);
+            this.toasterService.showSuccess('You have successfully registered');
             return this.apiUserService
               .getUser(userToken.token)
               .pipe(map(user => addUserToState({ user })));
@@ -60,8 +64,13 @@ export class UserEffects {
       ofType(createBooking),
       switchMap(action =>
         this.apiBookingsService.addBooking(action.booking).pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.toasterService.showError(error.error.message);
+            return this.handleErrorApiService.handleError(error);
+          }),
           map(bookingItem => {
             const userBooking = this.convertToUserBooking(bookingItem);
+            this.toasterService.showSuccess('Booking added');
             return addBookingToState({ booking: userBooking });
           })
         )
@@ -142,11 +151,13 @@ export class UserEffects {
       ofType(loginUser),
       switchMap(action =>
         this.apiUserService.loginUser(action.user).pipe(
-          catchError((error: HttpErrorResponse) =>
-            this.handleErrorApiService.handleError(error)
-          ),
+          catchError((error: HttpErrorResponse) => {
+            this.toasterService.showError(error.error.message);
+            return this.handleErrorApiService.handleError(error);
+          }),
           switchMap(userToken => {
             localStorage.setItem('token', userToken.token);
+            this.toasterService.showSuccess('You have successfully signed in');
             return this.apiUserService.getUser(userToken.token).pipe(
               map(user => {
                 return addUserToState({ user });
@@ -260,11 +271,15 @@ export class UserEffects {
         this.apiUserService
           .authWithGoogle({ token: action.jwtCredentials })
           .pipe(
-            catchError((error: HttpErrorResponse) =>
-              this.handleErrorApiService.handleError(error)
-            ),
+            catchError((error: HttpErrorResponse) => {
+              this.toasterService.showError('Can not log in with google');
+              return this.handleErrorApiService.handleError(error);
+            }),
             switchMap(userToken => {
               localStorage.setItem('token', userToken.token);
+              this.toasterService.showSuccess(
+                'You have successfully signed in'
+              );
               return this.apiUserService
                 .getUser(userToken.token)
                 .pipe(map(user => addUserToState({ user })));

@@ -14,7 +14,7 @@ export const registerUser = createAction(
 
 export const addUserToState = createAction(
   '[User] Add user to store',
-  props<{ user: User }>()
+  props<{ user: User | null }>()
 );
 
 export const createBooking = createAction(
