@@ -22,7 +22,7 @@ export class SocialMediaFormComponent implements OnInit {
       google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT,
         callback: this.handleCredentialResponse.bind(this), // Whatever function you want to trigger...
-        auto_select: false,
+        auto_select: true,
         cancel_on_tap_outside: true,
       });
 
@@ -33,8 +33,6 @@ export class SocialMediaFormComponent implements OnInit {
         size: 'large',
         width: parent.offsetWidth,
       });
-      // @ts-ignore
-      google.accounts.id.prompt(() => {});
     };
   }
 
@@ -44,6 +42,6 @@ export class SocialMediaFormComponent implements OnInit {
         jwtCredentials: response.credential,
       })
     );
-    this.authService.togglePopup();
+    this.authService.closePopup();
   }
 }

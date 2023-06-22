@@ -10,7 +10,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://accounts.google.com/gsi/client"></script>
-  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups">
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups" defer>
+  <meta Content-Security-Policy-Report-Only: script-src
+    https://accounts.google.com/gsi/client; frame-src
+    https://accounts.google.com/gsi/; connect-src
+    https://accounts.google.com/gsi/; />
 </head>
 <body class="mat-typography">
   <app-root></app-root>
