@@ -21,7 +21,7 @@ export class SocialMediaFormComponent implements OnInit {
       // @ts-ignore
       google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT,
-        callback: this.handleCredentialResponse.bind(this), // Whatever function you want to trigger...
+        callback: this.handleCredentialResponse.bind(this),
         auto_select: false,
         cancel_on_tap_outside: true,
       });
