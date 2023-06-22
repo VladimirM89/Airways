@@ -13,7 +13,7 @@ import {
 } from 'src/app/shared/models/booking';
 import { BookingDto, BookingItem } from 'src/app/shared/models/api-models';
 import { TypedAction } from '@ngrx/store/src/models';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   addBookingToState,
   addUserToState,
@@ -24,6 +24,7 @@ import {
   registerUser,
   editBooking,
   authGoogle,
+  cancelAction,
 } from '../actions/user.action';
 import { ApiBookingsService } from '../../core/services/api-bookings.service';
 import { ToasterService } from '../../core/services/toaster.service';
@@ -153,16 +154,21 @@ export class UserEffects {
         this.apiUserService.loginUser(action.user).pipe(
           catchError((error: HttpErrorResponse) => {
             this.toasterService.showError(error.error.message);
-            return this.handleErrorApiService.handleError(error);
+            return of(null);
           }),
           switchMap(userToken => {
-            localStorage.setItem('token', userToken.token);
-            this.toasterService.showSuccess('You have successfully signed in');
-            return this.apiUserService.getUser(userToken.token).pipe(
-              map(user => {
-                return addUserToState({ user });
-              })
-            );
+            if (userToken) {
+              localStorage.setItem('token', userToken.token);
+              this.toasterService.showSuccess(
+                'You have successfully signed in'
+              );
+              return this.apiUserService.getUser(userToken.token).pipe(
+                map(user => {
+                  return addUserToState({ user });
+                })
+              );
+            }
+            return of(cancelAction());
           })
         )
       )

@@ -42,6 +42,8 @@ export const updateBookingState = createAction(
   props<{ bookings: UserBooking[] }>()
 );
 
+export const cancelAction = createAction('[User] Cancel action');
+
 export const deleteBooking = createAction(
   '[Booking] Delete booking',
   props<{ booking: UserBooking }>()

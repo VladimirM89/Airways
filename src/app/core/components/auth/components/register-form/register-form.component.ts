@@ -17,7 +17,7 @@ import { Store } from '@ngrx/store';
 import { registerUser } from 'src/app/redux/actions/user.action';
 import { RegistrationDto } from 'src/app/shared/models/user.model';
 import { dialCode } from 'src/app/shared/utils';
-import { AuthService } from '../../../../services/auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { CountryCodes } from './constants/country-codes';
 import { CountryCode } from './constants/types';
 

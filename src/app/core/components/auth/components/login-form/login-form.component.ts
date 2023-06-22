@@ -7,8 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { loginUser } from 'src/app/redux/actions/user.action';
-import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-login-form',
@@ -59,7 +59,6 @@ export class LoginFormComponent implements OnInit {
         })
       );
     }
-
     this.loginForm.reset();
     this.authService.togglePopup();
   }
