@@ -46,14 +46,19 @@ export class UserEffects {
         this.apiUserService.registerUser(action.user).pipe(
           catchError((error: HttpErrorResponse) => {
             this.toasterService.showError(error.error.message);
-            return this.handleErrorApiService.handleError(error);
+            return of(null);
           }),
           switchMap(userToken => {
-            localStorage.setItem('token', userToken.token);
-            this.toasterService.showSuccess('You have successfully registered');
-            return this.apiUserService
-              .getUser(userToken.token)
-              .pipe(map(user => addUserToState({ user })));
+            if (userToken) {
+              localStorage.setItem('token', userToken.token);
+              this.toasterService.showSuccess(
+                'You have successfully registered'
+              );
+              return this.apiUserService
+                .getUser(userToken.token)
+                .pipe(map(user => addUserToState({ user })));
+            }
+            return of(cancelAction());
           })
         )
       )
