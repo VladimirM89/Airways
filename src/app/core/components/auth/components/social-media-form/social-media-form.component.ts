@@ -17,12 +17,12 @@ export class SocialMediaFormComponent implements OnInit {
 
   public ngOnInit(): void {
     // @ts-ignore
-    window.onGoogleLibraryLoad = () => {
+    window.onload = () => {
       // @ts-ignore
       google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT,
         callback: this.handleCredentialResponse.bind(this), // Whatever function you want to trigger...
-        auto_select: true,
+        auto_select: false,
         cancel_on_tap_outside: true,
       });
 
@@ -31,7 +31,7 @@ export class SocialMediaFormComponent implements OnInit {
       google.accounts.id.renderButton(parent, {
         theme: 'outline',
         size: 'large',
-        width: parent.offsetWidth,
+        text: 'continue_with',
       });
     };
   }
