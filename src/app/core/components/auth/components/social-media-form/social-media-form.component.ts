@@ -17,7 +17,7 @@ export class SocialMediaFormComponent implements OnInit {
 
   public ngOnInit(): void {
     // @ts-ignore
-    window.onload = () => {
+    window.onload = (): void => {
       // @ts-ignore
       google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT,
