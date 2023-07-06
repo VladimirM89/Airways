@@ -1,10 +1,12 @@
 <div class="header" [ngClass]="{'initial': !isMainPage}">
   <header class="wrapper wrapper-header">
     <app-logo></app-logo>
-    <app-breadcrumps></app-breadcrumps>
-    <app-profile [ngClass]="{'contrast': !isMainPage}"></app-profile>
-    <app-auth [ngClass]="{'contrast': !isMainPage}"></app-auth>
-    <app-cart [ngClass]="{'contrast': !isMainPage}"></app-cart>
+    <app-breadcrumps  [ngClass]="{'full': !isMainPage}"></app-breadcrumps>
+    <div class="user-panel">
+      <app-profile [ngClass]="{'contrast': !isMainPage}"></app-profile>
+      <app-auth [ngClass]="{'contrast': !isMainPage}"></app-auth>
+      <app-cart *ngIf="isUserLoggedIn | async" [ngClass]="{'contrast': !isMainPage}"></app-cart>
+    </div>
   </header>
 </div>
 
