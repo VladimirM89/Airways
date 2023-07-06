@@ -13,7 +13,6 @@ import { CartComponent } from './components/header/components/cart/cart.componen
 import { AuthComponent } from './components/auth/auth.component';
 import { LoginFormComponent } from './components/auth/components/login-form/login-form.component';
 import { RegisterFormComponent } from './components/auth/components/register-form/register-form.component';
-import { SocialMediaFormComponent } from './components/auth/components/social-media-form/social-media-form.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +24,6 @@ import { SocialMediaFormComponent } from './components/auth/components/social-me
     AuthComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    SocialMediaFormComponent,
     CartComponent,
   ],
   imports: [BrowserModule, CommonModule, SharedModule, HttpClientModule],
