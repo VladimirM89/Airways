@@ -47,9 +47,7 @@
 }
 
 .breadcrumps-plug {
-  font-size: 1.6rem;
   color: var(--contrast-color);
-  line-height: 2.4rem;
   text-align: end;
 }
 
@@ -83,5 +81,11 @@
   .name {
     flex-shrink: 1;
     line-height: 100%;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  .breadcrumps-plug {
+    display: none;
   }
 }

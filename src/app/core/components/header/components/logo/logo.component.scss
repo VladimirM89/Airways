@@ -21,3 +21,10 @@
   color: var(--primary-color);
   text-transform: uppercase;
 }
+
+@media screen and (max-width: 475px) { 
+  .logo {
+    width: 3rem;
+    height: 3rem;
+  }
+}

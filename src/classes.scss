@@ -12,6 +12,10 @@
   max-width: 120rem;
   padding: 0 2rem;
   margin: 1rem auto;
+
+  @media screen and (max-width: 450px) {
+    padding: 0 1rem;
+  }
 }
 
 .title {
@@ -74,7 +78,7 @@
   display: flex;
   gap: 1rem;
   width: 16rem;
-  height: 4rem;
+  min-height: 4rem;
   padding: 0 1rem;
   background: var(--neutral-color-90);
   border: 0.5px solid var(--contrast-color);
@@ -88,8 +92,9 @@
     width: 8rem;
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 650px) {
     width: fit-content;
+    min-height: 3rem;
 
     &__medium, 
     &__small {
@@ -102,6 +107,8 @@
   font-size: 1.2rem;
   line-height: 1.6rem;
   color: var(--auxiliary-color);
+  display: flex;
+  flex-direction: column;
 
   .error-message {
     padding: 0 1rem;

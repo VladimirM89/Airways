@@ -36,6 +36,10 @@
 
 @media screen and (max-width: 720px) {
   .wrapper-header {
-    justify-content: center;
+    gap: 1rem;
+  }
+
+  .user-panel {
+    gap: 1rem;
   }
 }
