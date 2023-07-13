@@ -1,0 +1,25 @@
+<mat-card class="top-border">
+  <div class="flight-container">
+    <p class="flight-info">
+      <span class="flight-number">{{flightNumber}}</span>
+      <span>{{departureAirport | airportToCity }} &mdash; {{destinationAirport | airportToCity}}</span>
+    </p>
+    <p class="time-info">
+      <span>{{departureDate | date: 'EEEE, d MMMM, y'}}</span>
+      <span>
+        {{departureTime | date: 'H:mm' : getFullUTC(flight.departureCity)}}
+        &mdash;
+        {{destinationTime | date: 'H:mm' : getFullUTC(flight.destinationCity)}}
+      </span>
+    </p>
+  </div>
+  <ul class="passengers-list">
+    <li class="passenger" *ngFor="let passenger of passengers; trackBy: trackByFn">
+      <p class="name">{{passenger.firstName}} {{passenger.lastName}}</p>
+      <div class="passenger-info">
+        <p class="baggage" *ngIf="passenger.luggage">{{passenger.luggage}} checked bag{{luggageCount(passenger.luggage) > 1 ?'s' : ''}} (total 23 kg) included</p>
+        <p class="add-baggage">1 cabin bag + personal item (max. 8 kg) included</p>
+      </div>
+    </li>
+  </ul>
+</mat-card>

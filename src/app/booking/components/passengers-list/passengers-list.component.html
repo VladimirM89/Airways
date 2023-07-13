@@ -1,0 +1,11 @@
+<div class="passengers-container">
+  <ul class="passengers-list">
+    <li *ngFor="let item of items; let i = index; trackBy: trackByFn">
+      <div class="container">
+        <app-passenger-item [index]="i" [passengerCategory]="item" [passengerData]="passengersDataArray[i]"></app-passenger-item>
+      </div>
+    </li>
+  </ul>
+</div>
+
+

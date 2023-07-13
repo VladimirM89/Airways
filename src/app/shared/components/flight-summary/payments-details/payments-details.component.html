@@ -1,0 +1,37 @@
+<mat-card class="container">
+  <ul class="summary-cost-container">
+    <ng-container *ngFor="let passenger of passengers | keyvalue" >
+      <li class="cost-passenger" *ngIf="passenger.value">
+
+        <p class="line-conrainer description-title">
+          <span>
+            {{ passenger.value }} x {{ passenger.key | titlecase }} Fare
+          </span>
+          <span>
+            {{ passenger.value * (fare + tax) | currency: 'EUR' }}
+          </span>
+        </p>
+        <div class="description">
+          <p class="line-conrainer">
+            <span>Fare</span>
+            <span>{{ passenger.value * fare | currency: 'EUR'}}</span>
+          </p>
+
+          <p class="line-conrainer">
+            <span>Tax & Service Charge</span>
+            <span>{{passenger.value * tax | currency: 'EUR'}}</span>
+          </p>
+        </div>
+
+      </li>
+
+    </ng-container>
+
+  </ul>
+
+  <p class="line-conrainer total-container">
+    <span>total:</span>
+    <span class="highlight">{{summary | currency: 'EUR'}}</span>
+  </p>
+
+</mat-card>

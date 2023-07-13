@@ -1,0 +1,9 @@
+<div class="summary-container">
+  <app-flight-details *ngFor="let flight of sortedFlights;
+    trackBy: trackByFn"
+    [flight]="flight"
+    [passengers]="passengers">
+  </app-flight-details>
+  <app-payments-details [flights]="sortedFlights" [passengers]="passengersNumber"></app-payments-details>
+</div>
+

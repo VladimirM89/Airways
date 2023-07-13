@@ -1,0 +1,101 @@
+<form class="form-container" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+  <mat-form-field class="input-container" [ngClass]="{'invalid': email!.invalid && email!.touched}">
+    <mat-label>Email</mat-label>
+    <input matInput
+      formControlName="email"
+      type="text">
+  </mat-form-field>
+
+  <div
+    *ngIf="email!.invalid && email!.touched"
+    class="validation">
+      <small class="error-message"
+        *ngIf="emailErrors?.['required']">
+          Please enter a login email.
+      </small>
+      <small class="error-message"
+      *ngIf="emailErrors?.['email']">
+        The login email is invalid.
+      </small>
+  </div>
+
+  <mat-form-field class="input-container" [ngClass]="{'invalid': pass!.invalid && pass!.touched}">
+    <mat-label>Password</mat-label>
+      <input matInput
+      autocomplete="on"
+      type="password"
+      formControlName="pass">
+
+      <mat-icon matSuffix class="info-modal-icon" [matMenuTriggerFor]="passMenu"
+        *ngIf="!(pass!.invalid && pass!.touched); else errorPassIcon"
+      >error_outline
+      </mat-icon>
+      <ng-template #errorPassIcon>
+          <mat-icon matSuffix class="invalid-icon" [matMenuTriggerFor]="passMenu">error</mat-icon>
+      </ng-template>
+
+      <mat-menu #passMenu="matMenu">
+        <span class="menu-content">
+          Create a password. Password should contain minimum 8 characters, contain numbers both uppercase and lowercase letters and special characters.
+        </span>
+      </mat-menu>
+
+  </mat-form-field>
+
+  <div
+    *ngIf="pass!.invalid && pass!.touched"
+    class="validation">
+      <small class="error-message"
+        *ngIf="passErrors?.['required']">
+          Please enter a password.
+      </small>
+      <div *ngIf="passErrors?.['checkStrongPassword']
+      && !passErrors?.['required']"
+    >
+      <small class="error-message">Your password isn't strong enough. Should contain:</small>
+      <ul class="errors-list">
+        <li *ngFor="let error of passErrors?.['checkStrongPassword']; trackBy: trackByFnErr">
+          <small>{{error}}</small>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <app-passengers-info-form [personalFormGroup]="passengersInfo"></app-passengers-info-form>
+
+  <app-contact-form [contactFormGroup]="contactForm"></app-contact-form>
+
+  <mat-form-field class="input-container" appearance="fill">
+    <mat-label>Citizenship</mat-label>
+    <input type="text"
+           matInput
+           formControlName="citizenship"
+           [matAutocomplete]="autoCountry"
+    >
+    <mat-icon matSuffix>arrow_drop_down</mat-icon>
+    <mat-autocomplete #autoCountry="matAutocomplete">
+      <mat-option
+        *ngFor="let countryName of countriesName | countryCodeFilter: citizenship!.value trackBy: trackByFnCountries"
+        [value]="countryName.name"
+      >
+        {{countryName.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <div class="policy-container">
+    <mat-checkbox formControlName="isAgree" color="primary"></mat-checkbox>
+    <p class="policy-text">
+      I agree to Airway's
+      <span class="highlight">Privacy Policy</span> and
+      <span class="highlight">Terms of Use</span>
+    </p>
+  </div>
+
+  <button mat-button type="submit"
+    class="primary-btn"
+    [disabled]="registerForm.invalid"
+  >Login</button>
+</form>
+
