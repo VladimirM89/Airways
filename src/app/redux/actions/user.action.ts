@@ -14,7 +14,7 @@ export const registerUser = createAction(
 
 export const addUserToState = createAction(
   '[User] Add user to store',
-  props<{ user: User }>()
+  props<{ user: User | null }>()
 );
 
 export const createBooking = createAction(
@@ -42,6 +42,8 @@ export const updateBookingState = createAction(
   props<{ bookings: UserBooking[] }>()
 );
 
+export const cancelAction = createAction('[User] Cancel action');
+
 export const deleteBooking = createAction(
   '[Booking] Delete booking',
   props<{ booking: UserBooking }>()
@@ -50,4 +52,9 @@ export const deleteBooking = createAction(
 export const editBooking = createAction(
   '[Booking] Edit booking',
   props<{ booking: UserBooking }>()
+);
+
+export const authGoogle = createAction(
+  '[User] Auth with google',
+  props<{ jwtCredentials: string }>()
 );

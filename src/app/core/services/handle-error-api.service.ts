@@ -9,11 +9,11 @@ import { Observable, take, throwError } from 'rxjs';
 export class HandleErrorApiService {
   public handleError(error: HttpErrorResponse): Observable<never> {
     if (error.status === 500) {
-      return throwError('This user is already registered');
+      return throwError('Internal server error');
     }
     if (error.status === 404) {
       take(3);
-      return throwError('Server not found');
+      return throwError('Not found');
     }
     return throwError('Unknown error');
   }

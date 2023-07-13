@@ -6,7 +6,7 @@ import { Subscription, map } from 'rxjs';
 import { addUserToState } from 'src/app/redux/actions/user.action';
 import { selectUserDate } from 'src/app/redux/selectors/user.selectors';
 import { ApiUserService } from '../../services/api-user.service';
-import { AuthService } from './services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-auth',

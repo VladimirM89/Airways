@@ -29,4 +29,8 @@ export class ApiUserService {
       params,
     });
   }
+
+  public authWithGoogle(credentials: { token: string }): Observable<UserToken> {
+    return this.http.post<UserToken>(`${AUTH_URL}/google`, credentials);
+  }
 }

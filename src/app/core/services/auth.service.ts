@@ -9,4 +9,8 @@ export class AuthService {
   public togglePopup(): void {
     this.isPopupActive = !this.isPopupActive;
   }
+
+  public closePopup(): void {
+    this.isPopupActive = false;
+  }
 }
