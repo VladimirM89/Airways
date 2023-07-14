@@ -121,12 +121,17 @@ button {
 }
 
 .mat-typography,
-.mat-mdc-select {
+.mat-mdc-select,
+.mat-mdc-form-field {
   @include font-main();
 
   @media screen and (max-width: 700px) {
-    @include font-main($size: 1.3rem, $line-height: 2rem);
+    @include font-main($size: 1.4rem, $line-height: 2rem);
   }
+}
+
+.font-main {
+  @include font-main();
 }
 
 .font_small {

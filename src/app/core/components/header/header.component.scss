@@ -43,3 +43,9 @@
     gap: 1rem;
   }
 }
+
+@media screen and (max-width: 460px) {
+  .wrapper-header {
+    justify-content: center;
+  }
+}

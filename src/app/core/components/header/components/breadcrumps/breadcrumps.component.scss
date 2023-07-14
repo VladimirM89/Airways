@@ -73,11 +73,7 @@
   :host.full {
     min-width: 100%;
   }
-
-  .breadcrumb::after{
-    display: none;
-  }
-
+  
   .name {
     flex-shrink: 1;
     line-height: 100%;
