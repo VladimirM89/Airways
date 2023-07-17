@@ -1,0 +1,19 @@
+.counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: .4rem;
+}
+
+.counter-btn{
+  padding: 0;
+}
+
+.number-input {
+  width: min-content;
+  background-color: transparent;
+  text-align: center;
+  max-width: min-content;
+  cursor: auto;
+}

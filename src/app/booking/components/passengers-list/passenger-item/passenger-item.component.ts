@@ -92,8 +92,15 @@ export class PassengerItemComponent implements OnInit {
   public shouldDisableIncrement(): boolean {
     if (this.luggageValue >= MAX_BAGGAGE + 1) {
       this.luggageCount = MAX_BAGGAGE;
-      this.isLuggageError = true;
+      this.showLuggageError();
     }
     return this.luggageValue >= MAX_BAGGAGE + 1;
+  }
+
+  private showLuggageError(): void {
+    this.isLuggageError = true;
+    setTimeout(() => {
+      this.isLuggageError = false;
+    }, 2000);
   }
 }

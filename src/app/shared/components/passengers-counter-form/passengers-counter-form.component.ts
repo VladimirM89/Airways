@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { PassengerCounter } from 'src/app/booking/models/passenger-counter';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { PassengersFormGroup } from '../../models/forms-models';
 
 @Component({
@@ -56,22 +56,6 @@ export class PassengersCounterFormComponent implements OnInit {
 
   public get infantsNumber(): number {
     return this.passengersForm.controls.infant.value || 0;
-  }
-
-  public decrement(control: AbstractControl): void {
-    control.setValue(control.value - 1);
-  }
-
-  public increment(control: AbstractControl): void {
-    control.setValue(control.value + 1);
-  }
-
-  public isDecrementDisabled(control: AbstractControl): boolean {
-    return control.value <= 0;
-  }
-
-  public isIncrementDisabled(control: AbstractControl): boolean {
-    return control.value >= 9;
   }
 
   public toggleSelect(event: Event): void {

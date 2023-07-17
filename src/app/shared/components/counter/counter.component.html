@@ -1,0 +1,17 @@
+<div class="counter">
+  <button
+    class="counter-btn"
+    (click)="decrement()"
+    [disabled]="isDecrementDisabled()" 
+  >
+    <mat-icon>remove</mat-icon>
+  </button>
+  <input class="number-input" type="number" [formControl]="formControl" readonly/>
+  <button
+    class="counter-btn"
+    (click)="increment()"
+    [disabled]="isIncrementDisabled()"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>  

@@ -74,14 +74,6 @@
   opacity: 1;
 }
 
-.number-input {
-  width: min-content;
-  background-color: transparent;
-  text-align: center;
-  max-width: min-content;
-  cursor: auto;
-}
-
 .option {
   display: flex;
   flex-direction: row;
@@ -99,21 +91,8 @@
   }
 }
 
-.counter {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: .4rem;
-}
-
-.counter-btn{
-  padding: 0;
-}
-
 .passengers-select__label {
   color: var(--auxiliary-color);
-  font-size: 1.3rem;
 }
 
 .label_active {
