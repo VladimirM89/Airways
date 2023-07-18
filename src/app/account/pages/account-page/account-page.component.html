@@ -1,14 +1,12 @@
-<div class="wrapper page-wrapper">
+<div class="wrapper">
 
   <mat-card class="cart-container">
-    <p class="title account-title">Account</p>
-    <p  class="paid-title title">Paid bookings</p>
+    <h2 class="title paid-title">Paid bookings</h2>
     <app-booking-table [userBookings$]="paidUserBookings$"></app-booking-table>
-    <p class="paid-title title">Unpaid bookings</p>
+    <h2 class="title paid-title">Unpaid bookings</h2>
     <app-booking-table [userBookings$]="unpaidUserBookings$"></app-booking-table>
     <div class="btn-container">
       <button class="btn primary-btn" (click)="logout()">Logout</button>
     </div>
   </mat-card>
-
 </div>

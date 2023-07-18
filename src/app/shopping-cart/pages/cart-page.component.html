@@ -2,16 +2,15 @@
 
 <div class="wrapper page-wrapper">
   <mat-card class="cart-container wrapper">
-    <p class="title cart-title">Cart</p>
+    <h2 class="title">Cart</h2>
     <app-booking-table [userBookings$]="unpaidUserBookings$"></app-booking-table>
 
-    <ng-container *ngIf="unpaidUserBookings$ | async as unpaidUserBookings">
-
+    <ng-container *ngIf="unpaidUserBookings$ | async as unpaidUserBookings" class="bookings-container">
       <div class="apply-container" *ngIf="unpaidUserBookings.length">
-        <form class="promo-container">
+        <!-- <form class="promo-container">
           <input type="text" class="promo" placeholder="Promo Code">
           <button class="promo-apply without-padding">APPLY</button>
-        </form>
+        </form> -->
 
         <div class="selected-container">
           <p *ngIf="selectedCount; else noSelect" class="select-content">
@@ -28,14 +27,9 @@
           </button>
         </div>
       </div>
-
     </ng-container>
-
   </mat-card>
 </div>
-
-
-
 
 <mat-card class="popup" [ngClass]="{'visible': isPopupVisible}">
   <p class="approve-text">All bookings you have chosen have been paid</p>

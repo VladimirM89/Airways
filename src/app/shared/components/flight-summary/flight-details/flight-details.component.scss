@@ -1,13 +1,7 @@
 :host {
   @media screen and (max-width: 900px) {
-    max-width: 90%;
     width: 100%;
   }
-
-  @media screen and (max-width: 550px) {
-    max-width: none;
-  }
-
 }
 
 p {

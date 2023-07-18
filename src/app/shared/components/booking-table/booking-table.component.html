@@ -1,24 +1,19 @@
 <ng-container *ngIf="userBookings$ | async as userBookings">
-
-  <div class="header-container" *ngIf="userBookings.length">
-
+  <div class="row-container t-head" *ngIf="userBookings.length">
     <mat-checkbox color="primary"
       *ngIf="isCartPage"
       [checked]="isAllChecked"
       (click)="isAllBookingsSelected(userBookings)">
     </mat-checkbox>
-
-    <div class="header-content-container">
+    <div class="table-row">
       <p class="number-container">No.</p>
-      <p class="flight-name-container">Flight</p>
-      <p class="way">Type trip</p>
-      <p class="time-container">Data & Time</p>
+      <p class="flight-name-container">{{isSmallScreen ? 'Flight information' : "Destination" }}</p>
+      <p class="way">Type</p>
+      <p class="time-container">Date & Time</p>
       <p class="passengers-container">Passengers</p>
       <p class="cost">Price</p>
     </div>
-
-    <mat-icon class="hidden" [style]="isCartPage ? '' : 'display: none'">more_vert</mat-icon>
-
+    <mat-icon class="hidden">more_vert</mat-icon>
   </div>
 
   <p class="no-bookings-text"
@@ -26,13 +21,9 @@
     No bookings to pay. Please add new trip
   </p>
 
-  <div class="bookings-container">
-
-    <app-booking-item *ngFor="let booking of userBookings"
-      [booking]="booking" class="bottom-line">
-    </app-booking-item>
-
-  </div>
+  <app-booking-item *ngFor="let booking of userBookings"
+    [booking]="booking" class="bottom-line">
+  </app-booking-item>
 
   <div class="bottom-container bottom-line"
     [ngClass]="{'position-center': !userBookings.length}">
@@ -40,11 +31,10 @@
         <span class="add-btn-text" >+ Add new trip</span>
       </button>
       <div class="total-container" *ngIf="userBookings.length">
-        <p class="total-title">Total</p>
-        <p class="total-cost" [style]="isCartPage ? 'fontSize: 3rem' : 'fontSize: 2rem'">{{summary(userBookings) | currency: 'EUR'}}</p>
+        <h2 class="title">Total</h2>
+        <h3 class="total-cost">{{summary(userBookings) | currency: 'EUR'}}</h3>
       </div>
   </div>
-
 </ng-container>
 
 

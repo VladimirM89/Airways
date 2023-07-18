@@ -40,10 +40,14 @@
 
 .active {
   background-image: url('/assets/step-active.svg');
+  background-size: contain;
+  background-position: center;
 }
 
 .done {
   background-image: url('/assets/step-done.svg');
+  background-size: contain;
+  background-position: center;
 }
 
 .breadcrumps-plug {
@@ -73,10 +77,19 @@
   :host.full {
     min-width: 100%;
   }
+
+  .breadcrumb {
+    gap: .5rem;
+  }
   
   .name {
-    flex-shrink: 1;
+    font-size: 1.3rem;
     line-height: 100%;
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }
 
