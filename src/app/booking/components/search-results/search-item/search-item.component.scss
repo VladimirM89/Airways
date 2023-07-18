@@ -103,7 +103,7 @@
 }
 
 .seats {
-  max-width: min-content;
+  max-width: 13rem;
 }
 
 @media screen and (max-width: 900px) {
@@ -154,7 +154,7 @@
   }
 
   .seats {
-    max-width: max-content;
+    max-width: fit-content;
   }
 
   .flight-number {
