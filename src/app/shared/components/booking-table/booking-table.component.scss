@@ -6,6 +6,7 @@
 
 .t-head {
   background-color: var(--title-table-color);
+  min-height: 4rem;
 }
 
 .table-row {
@@ -13,7 +14,7 @@
   grid-template-areas: "number flight way time passengers cost";
   grid-template-columns: 7rem 1.2fr 0.7fr 1.2fr 0.7fr 8rem;
   align-items: center;
-  flex-grow: 1;
+  flex-grow: 1; 
   column-gap: 2rem;
 }
 
