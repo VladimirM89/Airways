@@ -91,25 +91,6 @@
   color: var(--auxiliary-color);
 }
 
-.counter {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: .4rem;
-}
-
-.counter-btn{
-  padding: 0;
-}
-
-.number-input {
-  background-color: transparent;
-  text-align: center;
-  max-width: min-content;
-  cursor: auto;
-}
-
 .error-baggage {
   margin: 0 auto;
   color: var(--error-color);

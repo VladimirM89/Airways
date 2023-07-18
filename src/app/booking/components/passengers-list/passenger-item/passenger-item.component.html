@@ -21,33 +21,9 @@
           <span class="icon baggage-icon"></span>
           <span class="description">Additional baggage</span>
         </p>
-
-        <div class="counter">
-          <button
-            class="counter-btn"
-            (click)="decrement()"
-            [disabled]="shouldDisableDecrement()"
-          >
-            <mat-icon>remove</mat-icon>
-          </button>
-          <input class="number-input" type="number" formControlName="luggage" readonly/>
-          <button
-            class="counter-btn"
-            (click)="increment()"
-            [disabled]="shouldDisableIncrement()"
-          >
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
-      </div>
-
-      <div class="error-baggage validation">
-        <p class="error-message" [ngClass]="{'error': true, 'error_visible': isLuggageError}">
-          You can't add more than 2 luggage items per person
-        </p>
+        <app-counter [control]="luggage" [max]="2"></app-counter>
       </div>
     </div>
-
   </div>
 
 </form>

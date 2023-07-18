@@ -97,6 +97,7 @@ import { CounterComponent } from './components/counter/counter.component';
     FlightDetailsComponent,
     PaymentsDetailsComponent,
     FlightSummaryComponent,
+    CounterComponent,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },

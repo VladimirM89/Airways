@@ -6,7 +6,9 @@
   >
     <mat-icon>remove</mat-icon>
   </button>
-  <input class="number-input" type="number" [formControl]="formControl" readonly/>
+  <span class="input-container">
+    <input class="number-input" type="number" [formControl]="control" readonly/>
+  </span>
   <button
     class="counter-btn"
     (click)="increment()"
