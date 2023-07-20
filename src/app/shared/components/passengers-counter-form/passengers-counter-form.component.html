@@ -1,0 +1,20 @@
+<div class="passengers-select font-main" [formGroup]="passengersForm">
+  <div class="selected-option">
+    <span [ngClass]="{'passengers-select__label': true, 'label_active': isSelectOpened, 'error': passengersForm.hasError('isPassengersValid')}">Passengers*</span>
+    <div class="select" (click)="toggleSelect($event)">
+      <p class="select-text">{{adultsNumber}} Adults, {{childrenNumber}} Children, {{infantsNumber}} Infants </p>
+      <button [ngClass]="{ 'arrow-btn': true, 'arrow-btn_active': isSelectOpened }">
+        <mat-icon aria-hidden="false" aria-label="open options" fontIcon="arrow_drop_down"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <ul [ngClass]="{ 'options': true, 'options_opened': isSelectOpened }">
+      <li class="option" *ngFor="let pas of passengersArr">
+        <div class="passenger-category">
+          <span>{{pas.category}}</span>
+          <span class="description">{{pas.description}}</span>
+        </div>
+        <app-counter [control]="pas.control" [min]="0" [max]="9"></app-counter>
+      </li>
+    </ul>
+  </div>

@@ -1,0 +1,43 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.title-content {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.passengers-logo {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: inline-flex;
+  background-image: url('/assets/pass-logo.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.passengers-description {
+  margin: 0;
+}
+
+.btns-container {
+  display: flex;
+  gap: 4rem;
+  justify-content: flex-end;
+}

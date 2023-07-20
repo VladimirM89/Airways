@@ -1,0 +1,40 @@
+<div [ngClass]="{'overlay': isPopupVisible}" (click)="togglePopup()"></div>
+
+<div class="wrapper page-wrapper">
+  <mat-card class="cart-container wrapper">
+    <h2 class="title">Cart</h2>
+    <app-booking-table [userBookings$]="unpaidUserBookings$"></app-booking-table>
+
+    <ng-container *ngIf="unpaidUserBookings$ | async as unpaidUserBookings" class="bookings-container">
+      <div class="apply-container" *ngIf="unpaidUserBookings.length">
+        <!-- <form class="promo-container">
+          <input type="text" class="promo" placeholder="Promo Code">
+          <button class="promo-apply without-padding">APPLY</button>
+        </form> -->
+
+        <div class="selected-container">
+          <p *ngIf="selectedCount; else noSelect" class="select-content">
+            <span>{{selectedCount}}</span>
+            <span>selected</span>
+          </p>
+          <ng-template #noSelect>
+            <p class="select-content">No booking selected</p>
+          </ng-template>
+          <button class="primary-btn"
+            (click)="payBookings()"
+            [disabled]="!selectedCount">
+            Payment
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </mat-card>
+</div>
+
+<mat-card class="popup" [ngClass]="{'visible': isPopupVisible}">
+  <p class="approve-text">All bookings you have chosen have been paid</p>
+  <button class="secondary-btn pisioned-right"
+    (click)="togglePopup()">
+    Close
+  </button>
+</mat-card>

@@ -1,0 +1,51 @@
+:host {
+  width: 100%;
+  position: sticky;
+  z-index: 3;
+  top: 0;
+}
+
+.header {
+  display: flex;
+  background-color: var(--auxiliary-color-opacity02);
+}
+
+.wrapper-header,
+.user-panel {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  justify-content: space-between;
+}
+
+.wrapper-header {
+  width: 100%;
+  row-gap: 2rem;
+  justify-content: space-between;
+}
+
+.initial {
+  background-color: var(--accent-bg-color);
+}
+
+@media screen and (max-width: 1030px) { 
+  .wrapper-header {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .wrapper-header {
+    gap: 1rem;
+  }
+
+  .user-panel {
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .wrapper-header {
+    justify-content: center;
+  }
+}

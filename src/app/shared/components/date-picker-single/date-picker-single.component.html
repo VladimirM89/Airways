@@ -1,0 +1,7 @@
+<mat-form-field [appearance]="appearance" class="form-field">
+  <mat-label>Date</mat-label>
+  <input matInput [matDatepicker]="oneWayPicker" [formControl]="departureDate">
+  <mat-datepicker-toggle matIconSuffix [for]="oneWayPicker"></mat-datepicker-toggle>
+  <mat-datepicker #oneWayPicker></mat-datepicker>
+  <mat-error *ngIf="departureDate.hasError('isDateInPast')">date should be in future</mat-error>
+</mat-form-field>

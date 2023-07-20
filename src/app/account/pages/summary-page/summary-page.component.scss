@@ -1,0 +1,17 @@
+.summary-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.title-content {
+  padding: 0 2.7rem;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 2.8rem;
+}
+
+.back {
+  width: 18rem;
+  margin-left: auto;
+}

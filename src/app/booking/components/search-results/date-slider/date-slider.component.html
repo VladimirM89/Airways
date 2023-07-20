@@ -1,0 +1,16 @@
+<section class="date-slider" *ngIf="sliderData">
+  <button class="slider-arrow-btn btn-prev" (click)="showPrev()">
+    <img src="/assets/less.svg" alt="prev">
+  </button>
+  <div [ngClass]="{'inner-section': true, 'inner-section_small': sliderSize === 'small'}">
+    <app-date-item [ngClass]="{'date-item': true, 'date-item_small': sliderSize === 'small'}" *ngFor="let item of sliderData, trackBy: trackByFn" [dateItemDto]="item"
+                    (changeDate)="selectNewDate($event)" 
+                    appPriceColor [price]="item.price" [pricesForPeriod]="sliderData"
+                    [isActive]="checkIfActiveDate(item)"
+                    >
+    </app-date-item>
+  </div>
+  <button class="slider-arrow-btn btn-next" (click)="showNext()">
+    <img src="/assets/more.svg" alt="next">
+  </button>
+</section>

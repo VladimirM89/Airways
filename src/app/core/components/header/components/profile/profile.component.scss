@@ -1,0 +1,58 @@
+.form-container {
+  display: flex;
+  gap: 1.6rem;
+}
+
+.option {
+  display: flex;
+  gap: 0.5rem;
+}
+
+::ng-deep {
+  .mat-mdc-select-trigger {
+    justify-content: space-evenly;
+  }
+
+  .mat-mdc-select-value,
+  .cdk-overlay-pane {
+    width: auto !important;
+  }
+
+  .mat-mdc-option .mat-pseudo-checkbox-minimal {
+    margin: 0 !important;
+
+    &::after {
+      color: var(--main-color);
+    }
+  }
+
+  .mat-mdc-select-value {
+    width: initial;
+    color: var(--contrast-color);
+  }
+
+  .mat-mdc-select-arrow {
+    color: var(--contrast-color);
+  }
+
+  .mat-mdc-select-arrow-wrapper {
+    padding-left: 5px;
+  }
+
+  .contrast {
+    .select-btn__dark{
+      border-color: var(--auxiliary-color);
+    }
+
+    .mat-mdc-select-value,
+    .mat-mdc-select-arrow {
+      color: var(--main-color);
+    }
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .form-container {
+    gap: 1rem;
+  }
+}

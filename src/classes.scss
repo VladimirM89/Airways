@@ -1,0 +1,121 @@
+@mixin btn-hover-effect() {
+  &:hover {
+    transform: translateY(-.2rem);
+    box-shadow: 2px 2px 3px rgba(29, 29, 29, 0.2);
+  }
+  &:active {
+    box-shadow: -1px -1px 3px rgba(29, 29, 29, 0.2);
+  }
+}
+
+.wrapper {
+  max-width: 120rem;
+  padding: 0 2rem;
+  margin: 1rem auto;
+
+  @media screen and (max-width: 450px) {
+    padding: 0 1rem;
+  }
+}
+
+.title {
+  color: var(--primary-color) !important;
+}
+
+.link {
+  color: var(--secondary-color);
+}
+
+.primary-btn {
+  @include btn-hover-effect();
+  background-color: var(--primary-color);
+  color: var(--contrast-color);
+
+  &:disabled {
+    background-color: var(--auxiliary-color);
+  }
+}
+
+.secondary-btn {
+  @include btn-hover-effect();
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.ghost-btn {
+  background-color: var(--bg-neutral);
+  border: none;
+  color: var(--primary-color);
+  font-weight: 500;
+  display: flex;
+  padding: .5rem 1.5rem;
+
+  &:hover {
+    transform: translateY(-.2rem);
+    text-shadow: 0px 3px 2px rgba(48, 48, 56, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0rem);
+    text-shadow: none;
+  }
+
+  &__bordered {
+    border: 1px solid var(--primary-color);
+  }
+}
+
+.highlight-btn {
+  @include btn-hover-effect();
+  height: 3rem;
+  color: var(--contrast-color);
+  border: 1px solid var(--primary-color);
+  background: linear-gradient(108.75deg, #0090BD 59.91%, #073590 95.36%);
+}
+
+.select-btn {
+  display: flex;
+  gap: 1rem;
+  width: 16rem;
+  min-height: 4rem;
+  padding: 0 1rem;
+  background: var(--neutral-color-90);
+  border: 0.5px solid var(--contrast-color);
+  border-radius: 0.4rem;
+
+  &__medium {
+    width: 11.5rem;
+  }
+
+  &__small {
+    width: 8rem;
+  }
+
+  @media screen and (max-width: 650px) {
+    width: fit-content;
+    min-height: 3rem;
+
+    &__medium, 
+    &__small {
+      width: fit-content;
+    }
+  }
+}
+
+.validation {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--auxiliary-color);
+  display: flex;
+  flex-direction: column;
+
+  .error-message {
+    padding: 0 1rem;
+    color: var(--error-color);
+  }
+}
+
+.hidden {
+  display: none;
+}

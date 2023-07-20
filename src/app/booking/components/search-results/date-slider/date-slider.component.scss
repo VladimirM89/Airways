@@ -1,0 +1,56 @@
+.date-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.inner-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  transform: translateX(calc(-100% / 5));
+}
+
+.inner-section_small {
+  transform: translateX(calc(-100% / 3));
+}
+
+.slider-arrow-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
+  position: absolute;
+  background-color: var(--bg-neutral);
+  z-index: 1;
+  top: calc(50% - 1rem);
+  margin: 0;
+  padding: 0;
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    background-color: #c4dcfae3;
+  }
+}
+
+.btn-prev {
+  left: 0;
+}
+
+.btn-next {
+  right: 0
+}
+
+.date-item {
+  width: calc(100% / 5);
+  flex-shrink: 0;
+}
+
+.date-item_small {
+  width: calc(100% / 3);
+}

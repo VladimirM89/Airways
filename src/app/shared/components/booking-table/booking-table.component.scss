@@ -1,0 +1,149 @@
+.row-container {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.t-head {
+  background-color: var(--title-table-color);
+  min-height: 4rem;
+}
+
+.table-row {
+  display: grid;
+  grid-template-areas: "number flight way time passengers cost";
+  grid-template-columns: 7rem 1.2fr 0.7fr 1.2fr 0.7fr 8rem;
+  align-items: center;
+  flex-grow: 1; 
+  column-gap: 2rem;
+}
+
+.number-container {
+  grid-area: number;
+}
+
+.flight-name-container {
+  grid-area: flight;
+}
+
+.way {
+  grid-area: way;
+}
+
+.time-container {
+  grid-area: time;
+}
+
+.passengers-container {
+  grid-area: passengers;
+}
+
+.cost {
+  grid-area: cost;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.no-bookings-text {
+  padding: 0 3.5rem;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.bottom-line {
+  border-bottom: 1px solid var(--neutral-color);
+}
+
+.bottom-container {
+  padding: 3rem 1rem;
+  display: flex;
+  column-gap: 3rem;
+  row-gap: 1rem;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.add-btn {
+  min-width: max-content;
+  padding: 0;
+}
+
+.add-btn-text {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--bg-neutral);
+  color: var(--primary-color);
+}
+
+.position-center {
+  justify-content: center;
+}
+
+.total-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: auto;
+}
+
+.total-cost {
+  height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media screen and (max-width: 820px) {
+  .way {
+   display: none;
+  }
+
+  .table-row {
+    grid-template-columns: 6rem 1fr 1fr 1fr 1fr 8rem;
+    grid-template-areas: "number flight flight time time passengers"
+                         "number flight flight time time cost";
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .table-row {
+    grid-template-areas: "number flight flight flight flight passengers"
+                         "number time time time time cost";
+    column-gap: 1rem;
+  }
+
+  .row-container {
+    gap: 0rem;
+  }
+
+  .bottom-container {
+    padding: 2rem .5rem;
+  }
+}
+
+@media screen and (max-width: 460px) {
+   .table-row {
+    grid-template-areas: "number flight flight flight flight flight"
+                         "number time time time time time"
+                         "number passengers passengers passengers passengers passengers"
+                         "number cost cost cost cost cost";
+    column-gap: 1rem;
+  }
+
+  .t-head > .table-row {
+    .way,
+    .time-container,
+    .passengers-container,
+    .cost {
+     display: none;
+    }
+  }
+}

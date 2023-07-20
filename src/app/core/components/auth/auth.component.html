@@ -1,0 +1,52 @@
+<div [ngClass]="{'overlay': authService.isPopupActive}" (click)="togglePopup()"></div>
+
+<ng-container *appNgLet="user$ | async as user">
+  <button class="select-btn select-btn__medium select-btn__dark" (click)="user ? navToUserPage(): togglePopup()">
+    <span class="logo"></span>
+    <span class="user-state-title" *ngIf="user; else userLogout">{{user.firstName}}</span>
+    <ng-template #userLogout>
+      <span class="user-state-title">Sign in</span>
+    </ng-template>
+  </button>
+</ng-container>
+
+
+
+<div class="auth-popup" [ngClass]="{'active': authService.isPopupActive}">
+  <div class="popup-container">
+
+    <div class="btns-container">
+      <button
+        class="sign-btn"
+        (click)="openLoginForm()"
+        [ngClass]="{'selected-form': isLoginInSelect}"
+      >
+        Login in
+      </button>
+      <button
+        class="sign-btn"
+        (click)="openRegisterForm()"
+        [ngClass]="{'selected-form': !isLoginInSelect}"
+      >
+        Sign up
+      </button>
+    </div>
+
+    <div class="separator-container">
+      <span class="separator-line"></span>
+      <span class="separator">{{isLoginInSelect ? "log in with your email" : "create an account"}}</span>
+      <span class="separator-line"></span>
+    </div>
+
+    <ng-container *ngIf="isLoginInSelect; else signUpForm">
+      <app-login-form></app-login-form>
+    </ng-container>
+    <ng-template #signUpForm>
+      <app-register-form></app-register-form>
+    </ng-template>
+
+  </div>
+  <div class="close" (click)="togglePopup()"></div>
+</div>
+
+

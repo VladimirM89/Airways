@@ -1,0 +1,106 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.contact-title {
+  margin: 0;
+  display: flex;
+  gap: 1.6rem;
+}
+
+.contact-icon {
+  width: 1.6rem;
+  height: 2rem;
+  display: inline-flex;
+  background-image: url('/assets/contact_icon.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.contact-container {
+  max-width: 100%;
+  padding: 3.2rem 4.4rem;
+  display: flex;
+  gap: 4rem;
+  flex-grow: 1;
+  background: var(--accent-bg-color);
+  box-shadow: 0px 1px 4px var(--box-shadow);
+  border-radius: 0.8rem;
+
+  @media screen and (max-width: 850px) {
+    gap: 2rem;
+  }
+
+  @media screen and (max-width: 650px) {
+    padding: 1.5rem 2.2rem;
+  }
+
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    padding: 1.5rem;
+  }
+}
+
+.email-content {
+  max-width: 42rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @media screen and (max-width: 800px) {
+    max-width: none
+  }
+}
+
+.input-container {
+  border-radius: 0.5rem;
+  border: 1px solid var(--auxiliary-color);
+}
+
+.invalid {
+  border: 1px solid var(--error-color);
+}
+
+.invalid-icon {
+  color: var(--error-color);
+  cursor: pointer;
+}
+
+.contact-container {
+  ::ng-deep {
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      background-color: var(--contrast-bg-color);
+    }
+
+    .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::before,
+    .mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-line-ripple::after,
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before,
+    .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-line-ripple::after {
+      border-bottom: none;
+    }
+
+    .mat-mdc-menu-content {
+      max-width: 16rem;
+      line-height: 1.2rem;
+      padding: 0.5rem !important;
+    }
+  }
+}

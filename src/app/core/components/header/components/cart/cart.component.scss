@@ -1,0 +1,45 @@
+.cart-icon-container {
+  display: flex;
+}
+
+.cart-icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: inline-flex;
+  background-image: url('/assets/shopping_basket_light.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  cursor: pointer;
+}
+
+::ng-deep {
+  .contrast {
+    .cart-icon_dark {
+      background-image: url('/assets/shopping_basket_dark.svg');
+    }
+  }
+}
+
+.icon {
+  width: 1.7rem;
+  height: 1.7rem;
+  display: inline-flex;
+  position: relative;
+  left: -10px;
+  top: -5px;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--error-color);
+
+}
+
+.icon-count {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  color: var(--contrast-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.6rem;
+}

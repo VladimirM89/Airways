@@ -1,0 +1,59 @@
+<div class="row-container container">
+  <mat-checkbox color="primary" *ngIf="isNotPayed && isCartPage" [checked]="isChecked" (change)="isChecked" (click)="checkBooking(booking)"></mat-checkbox>
+  <div class="table-row">
+    <div class="number-container">
+      <p>{{flightNumber}}</p>
+      <p *ngIf="roundTrip">{{returnflightNumber}}</p>
+    </div>
+    <div class="flight-name-container">
+      <p>
+        {{departureAirport | airportToCity }} &mdash; {{destinationAirport | airportToCity}}
+      </p>
+      <p *ngIf="roundTrip">
+        {{destinationAirport | airportToCity }} &mdash; {{departureAirport | airportToCity}}
+      </p>
+    </div>
+    <p class="way">{{roundTrip ? 'Round Trip' : 'One Way'}}</p>
+    <div class="time-container">
+      <div class="departure-time-container">
+        <span class="departure-date">{{departureDate | date: 'd MMMM, y'}}, </span>
+        <span class="departure-time">
+          {{departureTime | date: 'H:mm' : getFullUTC(booking.flights[0].departureCity)}} &mdash;
+          {{destinationTime | date: 'H:mm': getFullUTC(booking.flights[0].destinationCity)}}
+        </span>
+      </div>
+      <div class="departure-time-container" *ngIf="roundTrip">
+        <span class="departure-date">{{departureBackDate | date: 'd MMMM, y'}}, </span>
+        <span class="departure-time">
+          {{departureBackTime | date: 'H:mm': getFullUTC(booking.flights[1].destinationCity || '')}} &mdash; 
+          {{destinationBackTime | date: 'H:mm': getFullUTC(booking.flights[1].departureCity || '')}}
+        </span>
+      </div>
+    </div>
+    <div class="passengers-container">
+      <ng-container *ngFor="let passenger of passengers | keyvalue">
+        <span *ngIf="passenger.value" class="passenger-count">
+          {{passenger.value}} x {{passenger.key | titlecase}}
+        </span>
+      </ng-container>
+    </div>
+    <p class="cost">{{cost | currency: 'EUR'}}</p>
+  </div>
+
+  <div *ngIf="isNotPayed && isCartPage; else accPage">
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="more-btn">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item class="menu-item" (click)="deleteBooking(booking)">Delete</button>
+      <button mat-menu-item (click)="editBooking(booking)">Edit</button>
+    </mat-menu>
+  </div>
+
+  <ng-template #accPage>
+    <button class="more-btn" (click)="navToSummary(booking)">
+      <mat-icon>read_more</mat-icon>
+    </button>
+  </ng-template>
+
+</div>

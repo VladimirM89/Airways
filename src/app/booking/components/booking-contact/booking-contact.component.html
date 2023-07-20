@@ -1,0 +1,36 @@
+<div class="contact-content">
+  <div class="contact-title">
+    <span class="contact-icon"></span>
+    <h2 class="title">Contact details</h2>
+  </div>
+
+  <p class="contact-description font-main">
+    We need contact details to be able to deliver the latest information regarding your flight.
+  </p>
+</div>
+
+<form [formGroup]="contactForm" class="contact-container">
+  <app-contact-form [contactFormGroup]="contactFormGroup"></app-contact-form>
+
+  <div class="email-content">
+    <mat-form-field class="input-container" [ngClass]="{'invalid': email!.invalid && email!.touched}">
+      <mat-label>Email</mat-label>
+      <input matInput
+        formControlName="email"
+        type="text">
+    </mat-form-field>
+    <div
+      *ngIf="email!.invalid && email!.touched"
+      class="validation">
+        <small class="error-message"
+          *ngIf="email!.errors?.['required']">
+            Please enter a login email
+        </small>
+        <small class="error-message"
+        *ngIf="emailErrors?.['email']">
+          The login email is invalid
+        </small>
+    </div>
+  </div>
+
+</form>

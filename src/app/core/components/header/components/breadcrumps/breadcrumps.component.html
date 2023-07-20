@@ -1,0 +1,23 @@
+<div *ngIf="isBookingPage; else plug">
+  <ul class="breadcrumbs-list">
+    <li class="breadcrumb" *ngFor="let breadcrumb of breadcrumbs, let i = index; trackBy: trackByFn">
+      <span
+        class="icon"
+        [ngClass]="{'active': breadcrumb.isActive, 'done': breadcrumb.isDone}">
+          <span
+            class="icon-step"
+            *ngIf="!breadcrumb.isActive && !breadcrumb.isDone">
+              {{i + 1}}
+          </span>
+      </span>
+      <span class="name">
+        {{ breadcrumb.label }}
+      </span>
+    </li>
+  </ul>
+</div>
+<ng-template #plug>
+  <div class="breadcrumps-plug">
+    Book flights
+  </div>
+</ng-template>

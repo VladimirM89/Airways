@@ -1,0 +1,30 @@
+.container-link {
+  display: flex;
+  gap:0.65rem;
+  align-items: center;
+}
+
+.logo {
+  display: block;
+  width: 3.8rem;
+  height: 3.8rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url('/assets/logo.svg');
+}
+
+.logo-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 475px) { 
+  .logo {
+    width: 3rem;
+    height: 3rem;
+  }
+}

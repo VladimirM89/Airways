@@ -1,0 +1,33 @@
+<div [ngClass]="{'overlay': isPopupVisible}" (click)="togglePopup()"></div>
+
+<div class="title-content">
+  <span class="summary-logo"></span>
+  <span class="summary-title title">Summary</span>
+</div>
+
+<app-flight-summary [selectedFlights]="selectedFlights" [passengers]="createPassengersDto()"></app-flight-summary>
+
+<button class="primary-btn edit"
+  *ngIf="isEditMode; else notEditMode"
+  (click)="editBooking()">
+    Confirm changes
+</button>
+
+<ng-template #notEditMode>
+  <div class="btns-container">
+    <button class="ghost-btn" (click)="navToPassengers()">Back</button>
+    <button class="ghost-btn ghost-btn__bordered" (click)="handleAddToCart()">Add to order cart</button>
+    <button class="primary-btn" (click)="buyNowBooking()">Buy now</button>
+  </div>
+</ng-template>
+
+<mat-card class="popup" [ngClass]="{'visible': isPopupVisible}">
+  <p class="approve-text">Chosen booking have been paid</p>
+  <button class="secondary-btn pisioned-right"
+    (click)="handleProceedPayment()">
+    Close
+  </button>
+</mat-card>
+
+
+

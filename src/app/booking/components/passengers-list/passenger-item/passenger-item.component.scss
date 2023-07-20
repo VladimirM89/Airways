@@ -1,0 +1,106 @@
+:host,
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.passenger-form {
+  ::ng-deep {
+    form.container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+
+      @media screen and (max-width: 1100px) {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      @media screen and (max-width: 650px) {
+        grid-template-columns: 1fr;
+      }
+  }}
+}
+
+.title {
+  text-transform: capitalize;
+}
+
+.invisible {
+  display: none;
+}
+
+
+.add-info-container {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.baggage-content {
+  display: flex;
+  gap: 1.7rem;
+  align-items: center;
+}
+
+.container-title {
+  margin: 0;
+  display: flex;
+  gap: 0.8rem;
+
+  ::ng-deep {
+    .mdc-form-field {
+      gap: 1.7rem;
+    }
+
+    .mdc-form-field>label {
+      padding: 0;
+      display: flex;
+      gap: 0.8rem;
+    }
+  }
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.assist-icon {
+  background-image: url('/assets/assistance.svg');
+}
+
+.baggage-icon {
+  background-image: url('/assets/buggage_icon.svg');
+}
+
+.description {
+  color: var(--auxiliary-color);
+}
+
+.error-baggage {
+  margin: 0 auto;
+  color: var(--error-color);
+}
+
+.error {
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+
+.error_visible {
+  opacity: 1;
+}

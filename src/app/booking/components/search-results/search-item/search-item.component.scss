@@ -1,0 +1,187 @@
+:host {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  background-color: var(--accent-bg-color);
+  border-radius: .5rem;
+  box-shadow: var(--box-shadow);
+
+  p {
+    margin: 0;
+  }
+}
+
+.flight-info,
+.ticket {
+  padding: 1.5rem 3rem;
+}
+
+.flight-info {
+  flex-grow: 1;
+  border-right: 2px dashed var(--auxiliary-color);
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
+
+.departure, 
+.destination {
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+}
+
+.auxiliary-info {
+  color: var(--auxiliary-color);
+  line-height: 115%;
+}
+
+.time {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.time-data {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.city {
+  font-size: 1.2rem;
+}
+
+.utc {
+  font-size: 1rem;
+}
+
+.flight-duration {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+
+  p {
+    text-align: center;
+  }
+}
+
+.flight-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 10rem;
+  background: linear-gradient(0deg, transparent 0 40%, #D0D9DF 40% 50%, transparent 50% 100%);
+}
+
+.flight-icon {
+  background-color: var(--accent-bg-color);
+  width: min-content;
+  padding: 0 .5rem;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 3rem;
+  color: var(--primary-color);
+}
+
+.ticket {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  align-items: center;
+}
+
+.price-n-seats {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  text-align: end;
+}
+
+.seats {
+  max-width: 13rem;
+}
+
+@media screen and (max-width: 900px) {
+  .flight-info,
+  .ticket {
+    padding: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  .flight-info,
+  .ticket {
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  :host {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .flight-info {
+    border-right: none;
+    border-bottom: 2px dashed var(--auxiliary-color);
+  }
+
+  .time-data,
+  .price {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .utc, 
+  .city {
+    font-size: 1rem;
+  }
+
+  .price-n-seats {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+
+  .price-p {
+    display: none;
+  }
+
+  .seats {
+    max-width: fit-content;
+  }
+
+  .flight-number {
+    flex-grow: .3;
+    text-align: center;
+  }
+
+  .departure, 
+  .destination {
+    gap: .5rem;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .flight-number {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .time {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .departure, 
+  .destination {
+    max-width: 6.5rem;
+  }
+}

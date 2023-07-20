@@ -1,0 +1,81 @@
+<div class="search-panel">
+  <div class="search-panel_info" *ngIf="bookingInfo; else noInfo">
+    <div class="cities">
+      <span>{{ bookingInfo.departureAirport | airportToCity }}</span>
+      <button class="toggle-btn" (click)="toggleFlightDirections()" [disabled]="!isEditAvailable"><img src="/assets/toggle-trip-way-btn.svg" alt="Change directions"></button>
+      <span>{{ bookingInfo.destinationAirport | airportToCity }}</span>
+    </div>
+    <div class="dates-n-passengers">
+      <span class="dotted">{{ bookingInfo.roundTrip ? 'Two-way' : 'One-way' }}</span>
+      <span class="dotted" *ngIf="bookingInfo.roundTrip; else oneWayDepartureDate">{{ bookingInfo.departureDate | date: 'dd MMM' }} - {{ bookingInfo.returnDate | date: 'dd MMM' }}</span>
+      <ng-template #oneWayDepartureDate>
+        <span class="dotted">{{ bookingInfo.departureDate | date: 'dd MMM' }}</span>
+      </ng-template>
+      <div>
+        <span> {{ getPassengersNumber() }} </span>
+        <img src="/assets/passenger-icon.svg" alt="passengers">
+      </div>
+    </div>
+  </div>
+  <ng-template #noInfo>Please edit search parameters</ng-template>
+
+  <ng-container *ngIf="isEditAvailable">
+    <button class="ghost-btn" *ngIf="editMode; else edit" (click)="setNewSearch()" [disabled]="form.invalid">Confirm</button>
+    <ng-template #edit>
+      <button class="ghost-btn" (click)="setToEditMode()">Edit</button>
+    </ng-template>
+  </ng-container>
+</div>
+
+<form [formGroup]="form" class="settings-form" *ngIf="editMode">
+  <mat-form-field class="input-container" appearance="fill">
+    <mat-label>From</mat-label>
+    <input type="text"
+         matInput
+         formControlName="departure"
+         [matAutocomplete]="autoAirportDeparture"
+    >
+    <mat-autocomplete #autoAirportDeparture="matAutocomplete">
+      <mat-option
+        *ngFor="let airport of airports | airportFilterPipe: departure.value; trackBy: trackByFn"
+        [value]="airport.airportCode"
+      >
+        {{airport.city}} ({{airport.airportCode}})
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="departure.hasError('required')">this field can not be empty</mat-error>
+    <mat-error *ngIf="departure.hasError('isDirectionValid')">{{departure.errors?.['isDirectionValid']}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="input-container" appearance="fill">
+    <mat-label>Destination</mat-label>
+    <input type="text"
+         matInput
+         formControlName="destination"
+         [matAutocomplete]="autoAirportDestination"
+    >
+    <mat-autocomplete #autoAirportDestination="matAutocomplete">
+      <mat-option
+        *ngFor="let airport of airports | airportFilterPipe: destination.value; trackBy: trackByFn"
+        [value]="airport.airportCode"
+      >
+        {{airport.city}} ({{airport.airportCode}})
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="destination.hasError('required')">this field can not be empty</mat-error>
+    <mat-error *ngIf="destination.hasError('isDirectionValid')">{{destination.errors?.['isDirectionValid']}}</mat-error>
+  </mat-form-field>
+
+  <app-date-picker-range class="input-container" [datesForm]="range" *ngIf="bookingInfo?.roundTrip; else oneWayDatePicker"></app-date-picker-range>
+  <ng-template #oneWayDatePicker>
+    <app-date-picker-single [departureDate]="departureDate" class="input-container"></app-date-picker-single>
+  </ng-template>
+
+  <app-passengers-counter-form class="input-container" [passengersForm]="passengers"></app-passengers-counter-form>
+</form>
+  
+<div class="validation" *ngIf="editMode && form.invalid">
+  <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isDuplicate']}}</p>
+  <p class="error-message" *ngIf="passengers.invalid">{{passengers.errors?.['isPassengersValid']}}</p>
+  <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isRangeValid']}}</p>
+</div>

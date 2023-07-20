@@ -1,0 +1,6 @@
+<div class="cart-icon-container" (click)="navToCart()" *ngIf="bookings$ | async as bookings">
+  <span class="cart-icon cart-icon_dark"></span>
+  <span class="icon" *ngIf="bookings.length > 0 && (isUserLogin$ | async)">
+    <span class="icon-count">{{ bookings.length }}</span>
+</span>
+</div>

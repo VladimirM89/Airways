@@ -1,0 +1,93 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.title-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.summary-logo {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: inline-flex;
+  background-image: url('/assets/summary_icon.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.summary-title {
+  font-size: 2.7rem;
+  font-weight: 700;
+}
+
+.btns-container {
+  display: flex;
+  gap: 4rem;
+  justify-content: flex-end;
+
+  @media screen and (max-width: 700px) {
+    gap: 2rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    gap: 1rem;
+  }
+
+  @media screen and (max-width: 400px) {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+}
+
+.edit {
+  width: 18rem;
+  margin-left: auto;
+}
+
+.popup {
+  width: 32rem;
+  padding: 2rem;
+  display: none;
+  flex-direction: column;
+  gap: 5rem;
+  align-items: flex-end;
+  font-size: 1.8rem;
+  position: absolute;
+  top: 20%;
+  left: calc(50% - 16rem);
+}
+
+.approve-text {
+  text-align: center;
+  font-weight: 400;
+  font-size: 2.2rem;
+  line-height: 3rem;
+}
+
+.pisioned-right {
+  width: 11rem;
+}
+
+.visible {
+  display: flex;
+  z-index: 20;
+}
+
+.overlay {
+  position: fixed;
+  overflow: hidden;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: var(--auxiliary-color-opacity02);
+}
+
+

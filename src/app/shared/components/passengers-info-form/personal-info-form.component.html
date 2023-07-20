@@ -1,0 +1,128 @@
+<form [formGroup]="personalFormGroup" class="container">
+
+  <div class="input-container">
+    <mat-form-field class="input-content"
+      [ngClass]="{'invalid': firstName!.invalid && firstName!.touched}"
+    >
+    <mat-label>First name</mat-label>
+    <input matInput
+      formControlName="firstName"
+      type="text"
+      >
+    <mat-icon matSuffix [matMenuTriggerFor]="firstNameMenu"
+      *ngIf="!(firstName!.invalid && firstName!.touched); else errorFirstNameIcon"
+    >error_outline
+    </mat-icon>
+    <ng-template #errorFirstNameIcon>
+      <mat-icon matSuffix class="invalid-icon" [matMenuTriggerFor]="firstNameMenu">error</mat-icon>
+    </ng-template>
+    <mat-menu #firstNameMenu="matMenu">
+    <span class="menu-content">
+      Add the passenger's first name as it is written on their documents (passport or ID). Do not use any accents or special characters. Do not use a nickname.
+    </span>
+    </mat-menu>
+    </mat-form-field>
+    <div
+      *ngIf="firstName!.invalid && firstName!.touched"
+      class="validation"
+    >
+      <small class="error-message"
+        *ngIf="firstNameErrors?.['required']">
+          Please enter first name.
+      </small>
+      <small class="error-message"
+        *ngIf="firstNameErrors?.['pattern']">
+          Invalid character.
+      </small>
+      <small class="error-message"
+        *ngIf="firstNameErrors?.['minlength']?.['requiredLength']">
+          The first name is too short (minimum 3 letters)
+      </small>
+    </div>
+  </div>
+
+  <div class="input-container">
+    <mat-form-field class="input-content"
+      [ngClass]="{'invalid': lastName!.invalid && lastName!.touched}"
+    >
+      <mat-label>Last name</mat-label>
+      <input matInput
+        formControlName="lastName"
+        type="text"
+      >
+        <mat-icon matSuffix [matMenuTriggerFor]="lastNameMenu"
+          *ngIf="!(lastName!.invalid && lastName!.touched); else errorLastNameIcon"
+        >error_outline
+        </mat-icon>
+        <ng-template #errorLastNameIcon>
+          <mat-icon matSuffix class="invalid-icon" [matMenuTriggerFor]="lastNameMenu">error</mat-icon>
+        </ng-template>
+        <mat-menu #lastNameMenu="matMenu">
+          <span class="menu-content">
+            Add the passenger's last name as it is written on their documents (passport or ID). Do not use any accents or special characters. Do not use a nickname.
+          </span>
+        </mat-menu>
+    </mat-form-field>
+    <div
+      *ngIf="lastName!.invalid && lastName!.touched"
+      class="validation"
+    >
+      <small class="error-message"
+        *ngIf="lastNameErrors?.['required']">
+          Please enter last name.
+      </small>
+      <small class="error-message"
+      *ngIf="lastNameErrors?.['pattern']">
+        Invalid character.
+      </small>
+      <small class="error-message"
+      *ngIf="lastNameErrors?.['minlength']?.['requiredLength']">
+        The last name is too short.
+      </small>
+    </div>
+  </div>
+
+  <div class="input-container">
+    <mat-form-field appearance="fill" class="input-content">
+      <mat-label>Date of birth</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" readonly>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+   </mat-form-field>
+   <div *ngIf="dateOfBirth!.invalid && dateOfBirth!.touched" class="validation">
+    <small class="error-message"
+      *ngIf="dateOfBirthErrors?.['required']">
+        Please enter a correct creation date
+    </small>
+    <small class="error-message"
+      *ngIf="dateOfBirthErrors?.['isFutureDate'] && !dateOfBirthErrors?.['required']">
+        The date is invalid. You choose future date.
+    </small>
+    <small class="error-message"
+      *ngIf="dateOfBirthErrors?.['isAgeValid'] && !dateOfBirthErrors?.['required']">
+        {{dateOfBirthErrors?.['isAgeValid']}}
+    </small>
+   </div>
+  </div>
+
+  <div class="gender-container">
+    <button
+      class="gender-btn gender-btn__left"
+      type="button"
+      (click)="toggleGender()"
+      [ngClass]="{'selected-gender': isMale}"
+    >
+      <span [ngClass]="{'select-icon': isMale}"></span>
+      Male
+    </button>
+    <button
+      class="gender-btn gender-btn__right"
+      type="button"
+      (click)="toggleGender()"
+      [ngClass]="{'selected-gender': !isMale}"
+    >
+      <span [ngClass]="{'select-icon': !isMale}"></span>
+      Female
+    </button>
+  </div>
+</form>

@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="title-container">
+    <div class="title-content">
+      <span class="passengers-logo"></span>
+      <h2 class="title">Passengers</h2>
+    </div>
+    <p class="passengers-description font-main">
+      Enter the passenger's names as they appear on document (passport or ID).
+    </p>
+  </div>
+  <app-passengers-list></app-passengers-list>
+</div>
+
+<app-booking-contact [contactData]="contact"></app-booking-contact>
+
+<div class="btns-container">
+  <button class="ghost-btn" (click)="navToFlights()">Back</button>
+  <button class="primary-btn" [disabled]="isAllFormsInvalid" (click)="setPassengersInfo()">Continue</button>
+</div>

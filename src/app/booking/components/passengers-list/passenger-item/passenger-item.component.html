@@ -1,0 +1,31 @@
+<h3 class="title">
+  {{index + 1}}.{{passengerCategory}}
+</h3>
+
+<form [formGroup]="passengerFormGroup" class="form-container">
+
+  <app-passengers-info-form
+    [personalFormGroup]="passengersInfo"
+    class="passenger-form">
+  </app-passengers-info-form>
+
+  <div class="add-info-container" [ngClass]="{'invisible': passengerCategory === 'infant'}">
+    <mat-slide-toggle class="container-title" color="primary" formControlName="specialAssistance">
+      <span class="icon assist-icon"></span>
+      <span class="description">Need special assistance?</span>
+    </mat-slide-toggle>
+
+    <div class="container">
+      <div class="baggage-content">
+        <p class="container-title">
+          <span class="icon baggage-icon"></span>
+          <span class="description">Additional baggage</span>
+        </p>
+        <app-counter [control]="luggage" [max]="2"></app-counter>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+

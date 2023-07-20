@@ -1,0 +1,67 @@
+<form [formGroup]="contactFormGroup" class="container">
+
+  <div class="number-container">
+
+    <div class="number-content">
+      <mat-form-field class="input-container" appearance="fill">
+        <mat-label>Country code</mat-label>
+        <input type="text"
+               matInput
+               formControlName="countryCode"
+               [matAutocomplete]="autoCode"
+        >
+        <mat-autocomplete #autoCode="matAutocomplete">
+          <mat-option
+            *ngFor="let country of countries | countryCodeFilter: countryCode!.value; trackBy: trackByFn"
+            [value]="country.name + ' ' + '(' + country.dial_code + ')'"
+          >
+            {{country.name}} ({{country.dial_code}})
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div *ngIf="countryCode!.invalid && countryCode!.touched" class="validation">
+        <small class="error-message"
+          *ngIf="countryCodeErrors?.['required']">
+            Please select country
+        </small>
+        <small class="error-message"
+        *ngIf="countryCodeErrors?.['isIncorrectValue'] && !countryCodeErrors?.['required']">
+          Please enter in correct format
+      </small>
+      </div>
+
+    </div>
+
+    <div class="number-content">
+      <mat-form-field class="input-container" [ngClass]="{'invalid': number!.invalid && number!.touched}">
+        <mat-label>Mobile phone number</mat-label>
+        <input matInput
+          formControlName="number"
+          type="tel">
+      </mat-form-field>
+
+      <div *ngIf="number!.invalid && number!.touched" class="validation">
+        <small class="error-message"
+          *ngIf="numberErrors?.['required']">
+            Please enter phone number
+        </small>
+        <small class="error-message"
+        *ngIf="numberErrors?.['pattern']">
+          Please enter only numbers
+          </small>
+        <small class="error-message"
+          *ngIf="numberErrors?.['minlength']?.['requiredLength']">
+            The number is too short
+        </small>
+        <small class="error-message"
+          *ngIf="numberErrors?.['maxlength']?.['requiredLength']">
+            The number is too long
+        </small>
+      </div>
+
+    </div>
+
+  </div>
+
+</form>

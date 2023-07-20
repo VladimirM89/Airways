@@ -1,0 +1,79 @@
+:host {
+  grid-column: 2/3;
+  @media screen and (max-width: 900px) {
+    width: 100%;
+  }
+}
+
+p {
+  margin: 0;
+}
+
+.summary-cost-container {
+  padding: 2.4rem 7.2rem 1.6rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  border-bottom: 1px solid var(--neutral-color);
+
+  @media screen and (max-width: 700px) {
+    padding: 2.4rem 2rem 1.6rem 2.4rem;
+  }
+
+}
+
+.cost-passenger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 1.6rem;
+}
+
+.line-conrainer {
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (max-width: 500px) {
+    gap: 5rem;
+  }
+
+}
+
+.description-title {
+  font-weight: 700;
+}
+
+.description-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.description {
+  padding-left: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  @media screen and (max-width: 500px) {
+    padding-left: 1rem;
+  }
+
+}
+
+.total-container {
+  padding: 2rem 7.2rem 2rem 4rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: 700;
+
+  @media screen and (max-width: 700px) {
+    padding: 2rem 2rem 2rem 2.4rem;
+  }
+
+}
+
+.highlight {
+  color: var(--primary-color);
+}

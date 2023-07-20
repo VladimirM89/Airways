@@ -1,0 +1,11 @@
+<mat-form-field [appearance]="appearance" class="form-field">
+  <mat-label>Dates</mat-label>
+  <mat-date-range-input [formGroup]="datesForm" [rangePicker]="picker">
+    <input matStartDate [formControl]="datesForm.controls.departureDate" placeholder="Start date">
+    <input matEndDate [formControl]="datesForm.controls.destinationDate" placeholder="End date">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker color="primary"></mat-date-range-picker>
+  <mat-error *ngIf="datesForm.controls.destinationDate.hasError('isDateInPast') || datesForm.controls.departureDate.hasError('isDateInPast')">Dates should be in future</mat-error>
+  <mat-error *ngIf="datesForm.hasError('isRangeValid')">{{datesForm.errors?.['isRangeValid']}}</mat-error>
+</mat-form-field>

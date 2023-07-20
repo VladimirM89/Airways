@@ -1,0 +1,44 @@
+<section class="flight-info">
+  <div class="departure">
+    <p class="date auxiliary-info">{{ flight.departureDateTime | date: 'EEE, dd LLL YYYY' : getFullUTC(flight.departureCity)}}</p>
+    <div class="time">
+      <p class="time-data">{{flight.departureDateTime  | date: 'HH:mm' :  getFullUTC(flight.departureCity)}}</p>
+      <p class="utc auxiliary-info">UTC {{ getLocalUTC(flight.departureCity) }}</p>
+    </div>
+    <p class="city auxiliary-info">{{ flight.departureCity }}</p>
+  </div>
+
+  <div class="flight-duration">
+    <p>{{ getFlightDuration() }}</p>
+    <div class="flight-image">
+      <img class="flight-icon" [src]="direction === 'forward' ? './assets/airplane_takeoff.svg' : './assets/airplane_return.svg'" alt="">
+    </div>
+    <p>{{ flight.direct ? 'Direct' : flight.transferAirport }}</p>
+  </div>
+
+  <div class="destination">
+    <p class="date auxiliary-info">{{ flight.destinationDateTime | date: 'EEE, dd LLL YYYY' : getFullUTC(flight.destinationCity)}}</p>
+    <div class="time">
+      <p class="time-data">{{flight.destinationDateTime  | date: 'HH:mm' :  getFullUTC(flight.destinationCity)}}</p>
+      <p class="utc auxiliary-info">UTC {{ getLocalUTC(flight.destinationCity) }}</p>
+    </div>
+    <p class="city auxiliary-info">{{ flight.destinationCity }}</p>
+  </div>
+
+  <div class="flight-number">
+    <p class="label auxiliary-info">Flight no.</p>
+    <p>{{ flight.flightNumber }}</p>
+  </div>
+
+</section>
+<section class="ticket">
+  <div class="price-n-seats">
+    <p class="seats" appSeatsColor [seats]="flight.seats - flight.booked" *ngIf="!selected">{{ flight.seats - flight.booked }} seats available </p>
+    <p *ngIf="!selected" class="auxiliary-info price-p">Price</p>
+    <p class="price">{{ flight.flightFare + flight.tax | currency:'EUR':'symbol-narrow' }}</p>
+  </div>
+  <button *ngIf="!selected; else edit" class="btn highlight-btn" (click)="selectFlight()">Select</button>
+  <ng-template #edit>
+    <button class="btn ghost-btn" (click)="editFlight()">Edit</button>
+  </ng-template>
+</section>

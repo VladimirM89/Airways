@@ -1,0 +1,66 @@
+<form [formGroup]="form" class="flights-form">
+  <div class="form-section">
+    <mat-radio-group [formControl]="roundTripRadio" class="radio-group">
+      <mat-radio-button value='round'>Round Trip</mat-radio-button>
+      <mat-radio-button value='one-way'>One way</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="form-section airports-section">
+    <mat-form-field class="input-container" appearance="outline">
+      <mat-label>From</mat-label>
+      <input type="text"
+           matInput
+           formControlName="departure"
+           [matAutocomplete]="autoAirportDeparture"
+      >
+      <mat-autocomplete #autoAirportDeparture="matAutocomplete">
+        <mat-option
+          *ngFor="let airport of airports | airportFilterPipe: departure.value; trackBy: trackByFn"
+          [value]="airport.airportCode"
+        >
+          {{airport.city}} ({{airport.airportCode}})
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="departure.hasError('required')">this field can not be empty</mat-error>
+      <mat-error *ngIf="departure.hasError('isDirectionValid')">{{departure.errors?.['isDirectionValid']}}</mat-error>
+    </mat-form-field>
+    
+    <button class="toggle-btn" (click)="toggleFlightDirections()">
+      <img src="/assets/reverse-btn.svg" alt="Change directions">
+    </button>
+
+    <mat-form-field class="input-container" appearance="outline">
+      <mat-label>Destination</mat-label>
+      <input type="text"
+           matInput
+           formControlName="destination"
+           [matAutocomplete]="autoAirportDestination"
+      >
+      <mat-autocomplete #autoAirportDestination="matAutocomplete">
+        <mat-option
+          *ngFor="let airport of airports | airportFilterPipe: destination.value; trackBy: trackByFn"
+          [value]="airport.airportCode"
+        >
+          {{airport.city}} ({{airport.airportCode}})
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="destination.hasError('required')">this field can not be empty</mat-error>
+      <mat-error *ngIf="destination.hasError('isDirectionValid')">{{destination.errors?.['isDirectionValid']}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-section date-n-passengers-section">
+    <app-date-picker-range class="date-picker" [datesForm]="range" appearance="outline" *ngIf="isRoundTrip; else oneWayDatePicker"></app-date-picker-range>
+      <ng-template #oneWayDatePicker>
+        <app-date-picker-single class="date-picker" appearance="outline" [departureDate]="departureDate"></app-date-picker-single>
+      </ng-template>
+    <app-passengers-counter-form [passengersForm]="passengers"></app-passengers-counter-form>
+  </div>
+  <div class="form-section validation-section">
+    <div class="validation">
+      <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isDuplicate']}}</p>
+      <p class="error-message" *ngIf="passengers.invalid">{{passengers.errors?.['isPassengersValid']}}</p>
+      <p class="error-message" *ngIf="form.invalid">{{form.errors?.['isRangeValid']}}</p>
+    </div>
+    <button class="btn primary-btn search-btn" [disabled]="form.invalid" (click)="submitForm()">Search</button>
+  </div> 
+</form>
