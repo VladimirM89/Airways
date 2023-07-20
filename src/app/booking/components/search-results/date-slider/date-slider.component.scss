@@ -10,8 +10,12 @@
   flex-wrap: nowrap;
   align-items: flex-end;
   width: 100%;
-  height: 10rem;
-  transform: translateX(-20%);
+  height: 100%;
+  transform: translateX(calc(-100% / 5));
+}
+
+.inner-section_small {
+  transform: translateX(calc(-100% / 3));
 }
 
 .slider-arrow-btn {
@@ -40,4 +44,13 @@
 
 .btn-next {
   right: 0
+}
+
+.date-item {
+  width: calc(100% / 5);
+  flex-shrink: 0;
+}
+
+.date-item_small {
+  width: calc(100% / 3);
 }

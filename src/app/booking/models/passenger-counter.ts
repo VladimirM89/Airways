@@ -1,8 +1,8 @@
-import { AbstractControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 export interface PassengerCounter {
   category: string;
   description: string;
   controlName: string;
-  control: AbstractControl;
+  control: FormControl<number | null>;
 }

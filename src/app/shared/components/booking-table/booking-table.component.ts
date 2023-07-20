@@ -1,5 +1,5 @@
 /* eslint-disable no-return-assign */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Paths } from 'src/app/types/enums';
 import { Router } from '@angular/router';
 import { PaymentService } from 'src/app/core/services/payment.service';
@@ -21,6 +21,19 @@ export class BookingTableComponent implements OnInit {
   public selectedBookings: Array<ChoosenBookings> = [];
 
   @Input() public userBookings$!: Observable<UserBooking[]>;
+
+  public isSmallScreen = window.innerWidth <= 540;
+
+  @HostListener('window:resize', ['$event'])
+  private onResize(event: Event): void {
+    const smallScreen = (event.target as Window).innerWidth <= 540;
+    if (smallScreen && !this.isSmallScreen) {
+      this.isSmallScreen = true;
+    }
+    if (!smallScreen && this.isSmallScreen) {
+      this.isSmallScreen = false;
+    }
+  }
 
   public isCartPage = false;
 

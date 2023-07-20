@@ -1,0 +1,41 @@
+.counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: .4rem;
+}
+
+.counter-btn{
+  padding: 0;
+  color: var(--primary-color);
+
+  &:hover {
+    color: var(--secondary-color);
+    text-shadow: 1px 2px 3px rgba(48, 48, 56, 0.3);
+  }
+
+  &:disabled {
+    color: var(--disabled-color);
+  }
+}
+
+.number-input {
+  width: 100%;
+  background-color: transparent;
+  text-align: center;
+  cursor: auto;
+}
+
+.number-input::-webkit-inner-spin-button, 
+.number-input::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  margin: 0;
+  display: none;
+}
+
+.input-container {
+  position: relative;
+  width: 3rem;
+  max-width: fit-content;
+}

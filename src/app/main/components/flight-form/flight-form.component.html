@@ -1,6 +1,6 @@
 <form [formGroup]="form" class="flights-form">
   <div class="form-section">
-    <mat-radio-group [formControl]="roundTripRadio">
+    <mat-radio-group [formControl]="roundTripRadio" class="radio-group">
       <mat-radio-button value='round'>Round Trip</mat-radio-button>
       <mat-radio-button value='one-way'>One way</mat-radio-button>
     </mat-radio-group>
@@ -48,10 +48,10 @@
       <mat-error *ngIf="destination.hasError('isDirectionValid')">{{destination.errors?.['isDirectionValid']}}</mat-error>
     </mat-form-field>
   </div>
-  <div class="form-section">
-    <app-date-picker-range [datesForm]="range" appearance="outline" *ngIf="isRoundTrip; else oneWayDatePicker"></app-date-picker-range>
+  <div class="form-section date-n-passengers-section">
+    <app-date-picker-range class="date-picker" [datesForm]="range" appearance="outline" *ngIf="isRoundTrip; else oneWayDatePicker"></app-date-picker-range>
       <ng-template #oneWayDatePicker>
-        <app-date-picker-single appearance="outline" [departureDate]="departureDate"></app-date-picker-single>
+        <app-date-picker-single class="date-picker" appearance="outline" [departureDate]="departureDate"></app-date-picker-single>
       </ng-template>
     <app-passengers-counter-form [passengersForm]="passengers"></app-passengers-counter-form>
   </div>

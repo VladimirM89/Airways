@@ -5,15 +5,6 @@
   gap: 1.5rem;
 }
 
-.passenger-title {
-  margin: 0;
-  display: flex;
-  gap: 0.5rem;
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: var(--primary-color);
-}
-
 .passenger-form {
   ::ng-deep {
     form.container {
@@ -45,10 +36,7 @@
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-
-  @media screen and (max-width: 560px) {
-    justify-content: center;
-  }
+  width: 100%;
 }
 
 .container {
@@ -61,7 +49,6 @@
   display: flex;
   gap: 1.7rem;
   align-items: center;
-  justify-content: flex-end;
 }
 
 .container-title {
@@ -101,42 +88,19 @@
 }
 
 .description {
-  font-size: 1.2rem;
   color: var(--auxiliary-color);
 }
 
-.counter {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: .4rem;
-}
-
-.counter-btn{
-  padding: 0;
-}
-
-.number-input {
-  width: 3rem;
-  background-color: transparent;
-  text-align: center;
-  max-width: min-content;
-  cursor: auto;
-}
-
 .error-baggage {
-  max-width: 25rem;
   margin: 0 auto;
-  font-size: 1.2rem;
   color: var(--error-color);
 }
 
-.invisible {
-  display: none;
+.error {
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
 }
 
-
-
-
-
+.error_visible {
+  opacity: 1;
+}

@@ -1,7 +1,7 @@
-<div [ngClass]="{'date-card': true, 'disabled': !dateItemDto.price || isDateInPast(), 'active': isActive}" (click)="selectDate()">
+<div [ngClass]="{'date-card': true, 'disabled': !dateItemDto.price || isDateInPast(), 'date-card_active': isActive}" (click)="selectDate()">
   <p class="date">{{ dateItemDto.date | date: 'dd MMM' }}</p>
-  <p class="week-day">{{ dateItemDto.date | date: 'EEEE' }}</p>
-  <p class="price-tag" *ngIf="dateItemDto.price && !isDateInPast() else noFlight">{{ dateItemDto.price | currency:'EUR':'symbol-narrow' }}</p>
+  <p class="week-day font-small">{{ dateItemDto.date | date: 'EEEE' }}</p>
+  <p class="price-tag font-large" *ngIf="dateItemDto.price && !isDateInPast() else noFlight">{{ dateItemDto.price | currency:'EUR':'symbol-narrow' }}</p>
   <ng-template #noFlight>
     <img class="no-flight" src="/assets/no-flight.svg" alt="no flight">
   </ng-template>

@@ -1,41 +1,18 @@
 .cart-container {
-  padding:3.5rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
-p {
-  margin: 0;
-}
-
-.account-title {
-  padding: 0 2.7rem;
-  font-size: 2.4rem;
-  font-weight: 700;
-  line-height: 2.8rem;
-}
-
-.page-wrapper {
   padding: 2rem;
-  width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+
+  @media screen and (max-width: 560px) {
+    padding: 2rem 1rem;
+ }
 }
 
 .paid-title {
-  padding: 0 3.5rem;
   text-align: center;
-  font-size: 2rem;
-  font-weight: 500;
-
-  @media screen and (max-width: 450px) {
-    padding: 2rem 1.5rem 0;
-  }
-
 }
 
 .btn-container {
-  padding: 0 3.5rem;
   align-self: flex-end;
 }

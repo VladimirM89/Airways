@@ -1,4 +1,4 @@
-<div class="passengers-select" [formGroup]="passengersForm">
+<div class="passengers-select font-main" [formGroup]="passengersForm">
   <div class="selected-option">
     <span [ngClass]="{'passengers-select__label': true, 'label_active': isSelectOpened, 'error': passengersForm.hasError('isPassengersValid')}">Passengers*</span>
     <div class="select" (click)="toggleSelect($event)">
@@ -14,23 +14,7 @@
           <span>{{pas.category}}</span>
           <span class="description">{{pas.description}}</span>
         </div>
-        <div class="counter">
-          <button
-            class="counter-btn"
-            (click)="decrement(pas.control)"
-            [disabled]="isDecrementDisabled(pas.control)" 
-          >
-            <mat-icon>remove</mat-icon>
-          </button>
-          <input class="number-input" type="number" [formControlName]="pas.controlName" min="0" max="9" readonly/>
-          <button
-            class="counter-btn"
-            (click)="increment(pas.control)"
-            [disabled]="isIncrementDisabled(pas.control)"
-          >
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>  
+        <app-counter [control]="pas.control" [min]="0" [max]="9"></app-counter>
       </li>
     </ul>
   </div>

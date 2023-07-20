@@ -6,7 +6,7 @@
 .search-panel {
   display: flex;
   flex-direction: row;
-  align-items: baseline;
+  align-items: center;
   gap: 4rem;
   padding: 1rem;
   box-shadow: var(--bottom-shadow);
@@ -14,9 +14,8 @@
 
 .search-panel_info {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 4rem;
-  padding: 1rem;
   user-select: none;
 }
 
@@ -24,6 +23,7 @@
 .dates-n-passengers {
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 1rem;
 }
 
@@ -33,6 +33,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+
     &::after {
       content: '';
       display: inline-block;
@@ -48,6 +49,10 @@
   padding: 0;
 }
 
+.ghost-btn {
+  padding: 0.5rem 1rem;
+}
+
 .settings-form {
   display: flex;
   flex-direction: row;
@@ -58,19 +63,50 @@
   align-items: stretch;
 }
 
-@media screen and (max-width: 600px) {
-  .search-panel {
-    align-items: flex-start;
-  }
+@media screen and (max-width: 700px) {
   .search-panel_info {
-    gap: 1rem;
-    flex-wrap: wrap;
+    gap: 2rem;
   }
 
   .dates-n-passengers {
-    order: 1;
     flex-shrink: 0;
-    min-width: 100%;
+  }
+
+  .settings-form {
+    flex-wrap: wrap;
+    row-gap: .2rem;
+    column-gap: 1rem;
+    padding: 1rem;
+  }
+
+  .input-container {
+    width: calc(50% - 1rem);
+  }
+
+  .validation .error-message {
+    padding: 0 2rem;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .search-panel_info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .search-panel {
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .dates-n-passengers {
+    gap: 0.7rem;
+
+    & .dotted {
+      gap: 0.7rem;
+    }
   }
 }
 

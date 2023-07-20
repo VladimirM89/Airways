@@ -1,10 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import {
-  INITIAL_BAGGAGE,
-  MAX_BAGGAGE,
-} from 'src/app/shared/constants/string-constants';
+import { INITIAL_BAGGAGE } from 'src/app/shared/constants/string-constants';
 import { PersonalInfoFormService } from 'src/app/shared/services/personal-info-form.service';
 import { PassengersFormsService } from 'src/app/shared/services/passengers-forms.service';
 import { Passenger } from 'src/app/shared/models/booking';
@@ -26,8 +23,6 @@ export class PassengerItemComponent implements OnInit {
   public personalFormGroup!: FormGroup;
 
   public passengerFormGroup!: FormGroup;
-
-  public isLuggageError = false;
 
   public constructor(
     private personalInfoFormService: PersonalInfoFormService,
@@ -62,8 +57,8 @@ export class PassengerItemComponent implements OnInit {
     return this.passengerFormGroup.get('specialAssistance');
   }
 
-  public get luggage(): AbstractControl | null {
-    return this.passengerFormGroup.get('luggage');
+  public get luggage(): FormControl<number> {
+    return this.passengerFormGroup.get('luggage') as FormControl;
   }
 
   public get luggageValue(): number {
@@ -72,28 +67,5 @@ export class PassengerItemComponent implements OnInit {
 
   public set luggageCount(value: number) {
     this.luggage?.setValue(value);
-  }
-
-  public decrement(): void {
-    this.luggage?.setValue(this.luggageValue - 1);
-  }
-
-  public increment(): void {
-    this.luggage?.setValue(this.luggageValue + 1);
-  }
-
-  public shouldDisableDecrement(): boolean {
-    if (this.luggageValue < MAX_BAGGAGE) {
-      this.isLuggageError = false;
-    }
-    return this.luggageValue <= INITIAL_BAGGAGE;
-  }
-
-  public shouldDisableIncrement(): boolean {
-    if (this.luggageValue >= MAX_BAGGAGE + 1) {
-      this.luggageCount = MAX_BAGGAGE;
-      this.isLuggageError = true;
-    }
-    return this.luggageValue >= MAX_BAGGAGE + 1;
   }
 }

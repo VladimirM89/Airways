@@ -13,7 +13,8 @@
     justify-content: space-evenly;
   }
 
-  .mat-mdc-select-value {
+  .mat-mdc-select-value,
+  .cdk-overlay-pane {
     width: auto !important;
   }
 
@@ -34,6 +35,10 @@
     color: var(--contrast-color);
   }
 
+  .mat-mdc-select-arrow-wrapper {
+    padding-left: 5px;
+  }
+
   .contrast {
     .select-btn__dark{
       border-color: var(--auxiliary-color);
@@ -46,3 +51,8 @@
   }
 }
 
+@media screen and (max-width: 720px) {
+  .form-container {
+    gap: 1rem;
+  }
+}

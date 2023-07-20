@@ -156,3 +156,9 @@
       }
   }
 }
+
+@media screen and (max-width: 650px) {
+  .user-state-title {
+   display: none;
+  }
+}

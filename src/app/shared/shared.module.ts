@@ -30,6 +30,7 @@ import { NgLetDirective } from './directives/ng-let.directive';
 import { FlightDetailsComponent } from './components/flight-summary/flight-details/flight-details.component';
 import { FlightSummaryComponent } from './components/flight-summary/flight-summary.component';
 import { PaymentsDetailsComponent } from './components/flight-summary/payments-details/payments-details.component';
+import { CounterComponent } from './components/counter/counter.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { PaymentsDetailsComponent } from './components/flight-summary/payments-d
     FlightDetailsComponent,
     PaymentsDetailsComponent,
     FlightSummaryComponent,
+    CounterComponent,
   ],
   imports: [
     CommonModule,
@@ -95,6 +97,7 @@ import { PaymentsDetailsComponent } from './components/flight-summary/payments-d
     FlightDetailsComponent,
     PaymentsDetailsComponent,
     FlightSummaryComponent,
+    CounterComponent,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },

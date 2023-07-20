@@ -18,7 +18,10 @@ import { Paths } from 'src/app/types/enums';
 @Component({
   selector: 'app-booking-item',
   templateUrl: './booking-item.component.html',
-  styleUrls: ['./booking-item.component.scss'],
+  styleUrls: [
+    '../booking-table.component.scss',
+    './booking-item.component.scss',
+  ],
 })
 export class BookingItemComponent implements OnInit {
   @Input() public booking!: UserBooking;

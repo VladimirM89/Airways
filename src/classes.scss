@@ -12,10 +12,14 @@
   max-width: 120rem;
   padding: 0 2rem;
   margin: 1rem auto;
+
+  @media screen and (max-width: 450px) {
+    padding: 0 1rem;
+  }
 }
 
 .title {
-  color: var(--primary-color);
+  color: var(--primary-color) !important;
 }
 
 .link {
@@ -73,9 +77,9 @@
 .select-btn {
   display: flex;
   gap: 1rem;
-  width: 16.2rem;
-  height: 4rem;
-  padding: 0;
+  width: 16rem;
+  min-height: 4rem;
+  padding: 0 1rem;
   background: var(--neutral-color-90);
   border: 0.5px solid var(--contrast-color);
   border-radius: 0.4rem;
@@ -87,15 +91,31 @@
   &__small {
     width: 8rem;
   }
+
+  @media screen and (max-width: 650px) {
+    width: fit-content;
+    min-height: 3rem;
+
+    &__medium, 
+    &__small {
+      width: fit-content;
+    }
+  }
 }
 
 .validation {
   font-size: 1.2rem;
   line-height: 1.6rem;
   color: var(--auxiliary-color);
+  display: flex;
+  flex-direction: column;
 
   .error-message {
     padding: 0 1rem;
     color: var(--error-color);
   }
+}
+
+.hidden {
+  display: none;
 }

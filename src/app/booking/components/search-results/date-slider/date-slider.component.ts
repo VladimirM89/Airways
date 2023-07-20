@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import {
   Component,
+  HostListener,
   Input,
   OnChanges,
   OnDestroy,
@@ -16,7 +17,7 @@ import { BehaviorSubject, Observable, Subscription, map, take } from 'rxjs';
 import { dateObjToString } from 'src/app/shared/utils';
 import { BookingService } from 'src/app/core/services/booking.service';
 import { BookingInfo } from 'src/app/shared/models/booking';
-import { DAYS_AFTER_CURRENT, DAYS_BEFORE_CURRENT, SLIDER_LENGTH } from 'src/app/booking/constants/slider-data.constants';
+import { INITIAL_SLIDER_CONFIG, SMALL_SLIDER_CONFIG, SliderConfig, SliderSizeOptions } from 'src/app/booking/constants/slider-data.constants';
 import { DateSliderItem, DirectionsData } from '../../../models/date-slider.models';
 
 @Component({
@@ -39,6 +40,22 @@ export class DateSliderComponent implements OnInit, OnChanges, OnDestroy {
   public sliderData: DateSliderItem[] = [];
 
   private sub!: Subscription;
+
+  public sliderSize: SliderSizeOptions = window.innerWidth <= 700 ? 'small' : 'full';
+  
+  @HostListener('window:resize', ['$event'])
+    private onResize(event: Event): void {
+      const smallScreen = (event.target as Window).innerWidth <= 700;
+      if (smallScreen && this.sliderSize === 'full') {
+        this.sliderSize = 'small';
+        this.createNewSliderItems();
+        
+      }
+      if (!smallScreen && this.sliderSize === 'small') {
+        this.sliderSize = 'full';
+        this.createNewSliderItems();
+      }
+  }
 
   public ngOnInit(): void {
     this.sub = this.sliderItemsSubject$.subscribe(items => {
@@ -65,13 +82,14 @@ export class DateSliderComponent implements OnInit, OnChanges, OnDestroy {
   }
   
   private createNewSliderItems(): void {
-    const fromDate = this.changeDateForDaysNumber(new Date(this.currentDate), DAYS_BEFORE_CURRENT);
-    const toDate = this.changeDateForDaysNumber(new Date(this.currentDate), DAYS_AFTER_CURRENT);
+    const sliderConfig: SliderConfig = this.sliderSize === 'full' ? INITIAL_SLIDER_CONFIG : SMALL_SLIDER_CONFIG;
+    const fromDate = this.changeDateForDaysNumber(new Date(this.currentDate), sliderConfig.daysBefore);
+    const toDate = this.changeDateForDaysNumber(new Date(this.currentDate), sliderConfig.daysAfter);
     const current = new Date(fromDate);
     this.getFaresForPeriod(fromDate, toDate).pipe(
       map(items => {
         const arr: DateSliderItem[] = [];
-        for (let i = 0; i < SLIDER_LENGTH; i += 1) {
+        for (let i = 0; i < sliderConfig.sliderLength; i += 1) {
           const fare = items.find(
             item => item.date === dateObjToString(current)
           );

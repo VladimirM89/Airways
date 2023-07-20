@@ -66,12 +66,12 @@
     <mat-error *ngIf="destination.hasError('isDirectionValid')">{{destination.errors?.['isDirectionValid']}}</mat-error>
   </mat-form-field>
 
-  <app-date-picker-range [datesForm]="range" *ngIf="bookingInfo?.roundTrip; else oneWayDatePicker"></app-date-picker-range>
+  <app-date-picker-range class="input-container" [datesForm]="range" *ngIf="bookingInfo?.roundTrip; else oneWayDatePicker"></app-date-picker-range>
   <ng-template #oneWayDatePicker>
-    <app-date-picker-single [departureDate]="departureDate"></app-date-picker-single>
+    <app-date-picker-single [departureDate]="departureDate" class="input-container"></app-date-picker-single>
   </ng-template>
 
-  <app-passengers-counter-form [passengersForm]="passengers"></app-passengers-counter-form>
+  <app-passengers-counter-form class="input-container" [passengersForm]="passengers"></app-passengers-counter-form>
 </form>
   
 <div class="validation" *ngIf="editMode && form.invalid">

@@ -35,7 +35,7 @@ export class FlightFormComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  public form!: FormGroup;
+  public form!: FormGroup<FlightsForm>;
 
   public airports: Airport[] = Airports;
 
@@ -74,7 +74,7 @@ export class FlightFormComponent implements OnInit, OnDestroy {
         passengers: new FormGroup<PassengersFormGroup>(
           {
             adult: new FormControl<number>(
-              this.bookingInfo?.passengers.adult || 1
+              this.bookingInfo ? this.bookingInfo.passengers.adult : 1
             ),
             children: new FormControl<number>(
               this.bookingInfo?.passengers.child || 0

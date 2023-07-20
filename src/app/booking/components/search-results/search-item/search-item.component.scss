@@ -35,6 +35,7 @@
 
 .auxiliary-info {
   color: var(--auxiliary-color);
+  line-height: 115%;
 }
 
 .time {
@@ -99,4 +100,88 @@
   flex-direction: column;
   gap: .5rem;
   text-align: end;
+}
+
+.seats {
+  max-width: 13rem;
+}
+
+@media screen and (max-width: 900px) {
+  .flight-info,
+  .ticket {
+    padding: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  .flight-info,
+  .ticket {
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  :host {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .flight-info {
+    border-right: none;
+    border-bottom: 2px dashed var(--auxiliary-color);
+  }
+
+  .time-data,
+  .price {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .utc, 
+  .city {
+    font-size: 1rem;
+  }
+
+  .price-n-seats {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+
+  .price-p {
+    display: none;
+  }
+
+  .seats {
+    max-width: fit-content;
+  }
+
+  .flight-number {
+    flex-grow: .3;
+    text-align: center;
+  }
+
+  .departure, 
+  .destination {
+    gap: .5rem;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .flight-number {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .time {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .departure, 
+  .destination {
+    max-width: 6.5rem;
+  }
 }

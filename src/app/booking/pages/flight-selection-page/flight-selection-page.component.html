@@ -1,7 +1,7 @@
 <section class="page" *ngIf="bookingInfo$ | async as bookingInfo">
   <section class="search-results-section">
     <div class="common-info">
-      <h2 class="title search-results">
+      <h2 class="title search-title">
         <img src="./assets/forward-flight-icon.svg" alt="" />
         {{ bookingInfo.departureAirport | airportToCity}} to {{ bookingInfo.destinationAirport | airportToCity}}
       </h2>

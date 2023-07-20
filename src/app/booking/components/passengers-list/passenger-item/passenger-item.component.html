@@ -1,7 +1,6 @@
-<p class="passenger-title">
-  <span class="count">{{index + 1}}. </span>
-  <span class="title">{{passengerCategory}}</span>
-</p>
+<h3 class="title">
+  {{index + 1}}.{{passengerCategory}}
+</h3>
 
 <form [formGroup]="passengerFormGroup" class="form-container">
 
@@ -22,31 +21,9 @@
           <span class="icon baggage-icon"></span>
           <span class="description">Additional baggage</span>
         </p>
-
-        <div class="counter">
-          <button
-            class="counter-btn"
-            (click)="decrement()"
-            [disabled]="shouldDisableDecrement()"
-          >
-            <mat-icon>remove</mat-icon>
-          </button>
-          <input class="number-input" matInput type="number" formControlName="luggage" readonly/>
-          <button
-            class="counter-btn"
-            (click)="increment()"
-            [disabled]="shouldDisableIncrement()"
-          >
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
+        <app-counter [control]="luggage" [max]="2"></app-counter>
       </div>
-
-      <p class="error-baggage" [ngClass]="{'invisible': !isLuggageError}">
-        You can't add more than 2 luggage items per person
-      </p>
     </div>
-
   </div>
 
 </form>
